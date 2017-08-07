@@ -1,0 +1,35 @@
+{% load crispy_forms_tags %}
+
+{% block content_main %}
+
+    <div class="list-view">
+
+
+        <div id="ctxObjectList" href="./all">
+            {% block object_list %}{% endblock %}
+        </div>
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ paginator.num_pages }}.
+        </span>
+
+        <ul class="pager">
+            {% if page_obj.has_previous %}
+                <li>
+                    <a href="?page={{ page_obj.previous_page_number }}&search_string={{ search_string }}" class="mxlajax" html-target="ctxObjectList" >previous</a>
+                </li>
+            {% endif %}
+            {% if page_obj.has_next %}
+                <li>
+                    <a href="?page={{ page_obj.next_page_number }}&search_string={{ search_string }}" class="mxlajax" html-target="ctxObjectList" >next</a>
+                </li>
+            {% endif %}
+        </ul>
+
+
+
+    </div>
+
+
+{% endblock %}
+

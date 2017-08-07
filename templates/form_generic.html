@@ -1,0 +1,57 @@
+{% extends request.is_ajax|yesno:"base_ajax.html,base.html" %}
+
+{% block title %}
+{{ page_title }}
+{% endblock %}
+
+{% block body_main %}
+<script2 src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script2>
+
+
+
+<script>
+    $(document).ready(function(){
+
+        // Date picker
+        $(".datePicker").datepicker({ dateFormat: 'dd/mm/yy'});
+
+        // Buttons
+        $( "input:submit").button();
+        $( ".form a").button();
+    });
+
+</script>
+
+<div id="debug"></div>
+
+<div class="grid_2">&nbsp;
+
+</div>
+<div class="grid_8">
+    {{  test }}
+    {% if form.Meta.title %}
+    <h1>{{ form.Meta.title }}</h1>
+    {% else %}
+    <h1>Fill out this form now</h1>
+    {% endif %}
+
+    <div class="form">
+        {% if form.Meta.instruction %}
+        <p>{{ form.Meta.instruction }}</p>
+        {% endif %}
+        {% if form_message %}
+        {{ form_message }}
+        {% endif %}
+        <form method="post" id="form">
+            {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+            <input type="submit" value="Save">
+            <a href="/">Cancel</a>
+        </form>
+    </div>
+</div>
+<div class="grid_2">&nbsp;
+</div>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends "xf_base.html" %}
+
+{% block main %}
+
+
+
+    <script>
+        //$(document).ready(function(){
+
+            // Date picker
+            //$(".datePicker").datepicker({ dateFormat: 'dd/mm/yy'});
+
+            // Buttons
+            //$( "input:submit").button();
+            //$( ".form a").button();
+            //$(".linkbutton").button();
+       // });
+
+    </script>
+
+
+    <h1>
+
+    </h1>
+    <hr>
+    {% include "content_ajax.html" %}
+    <div style="margin-bottom: 20px;">
+        {% if list_hint %}
+        {{ list_hint }}
+        {% endif %}
+    </div>
+    <div class="list-view">
+        <div class="row-fluid">
+            <div class="span3">
+                {% if add %}
+                <!--<a href="new" class="btn btn-primary">Create new</a>-->
+                <a data-toggle="modal" href="new" class="btn btn-primary" data-target="#frmDlg" html-target="#frmDlgHtml">Create new</a>
+                {% endif %}
+            </div>
+            <div class="span9" style="text-align: right">
+                <form class="form-search2 mxlget" method="get" id="frmSearch" html-target="ctxObjectList">
+                    <div class="input-append">
+                      <input class="span8" type="text" name="search_string" value="{{ search_string }}" >
+                      <button type="submit" class="btn"><i class="icon-search"></i></button>
+                      <a href="./all" class="btn mxlajax" html-target="ctxObjectList" id="lnkClear"><i class="icon-remove-sign"></i></a>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+
+        <div id="ctxObjectList" href="./all">
+        {% block object_list %}{% endblock %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ paginator.num_pages }}.
+        </span>
+
+        <ul class="pager">
+            {% if page_obj.has_previous %}
+            <li>
+                <a href="?page={{ page_obj.previous_page_number }}&search_string={{ search_string }}" class="mxlajax" html-target="ctxObjectList" >previous</a>
+            </li>
+            {% endif %}
+            {% if page_obj.has_next %}
+            <li>
+                <a href="?page={{ page_obj.next_page_number }}&search_string={{ search_string }}" class="mxlajax" html-target="ctxObjectList" >next</a>
+            </li>
+            {% endif %}
+        </ul>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block extrajs %}
+
+<script type="text/javascript">
+    function mxlSuccess() {
+        $("#lnkClear").click();
+    }
+</script>
+
+{% endblock %}

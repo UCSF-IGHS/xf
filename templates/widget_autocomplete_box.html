@@ -1,0 +1,10 @@
+<input type="text"
+       name="{{ name }}"
+       id="{{ attrs.id }}"
+{% if required %} required{% endif %}
+{% for name, value in attrs.iteritems %} {{ name }}{% if value != True %}="{{ value }}"{% endif %}{% endfor %}
+{% if value %}value="{{ value }}"{% endif %}
+>&nbsp;<i id="{{ attrs.id }}_ind" class=""></i><br/>
+<span id="{{ attrs.id }}_fb">&nbsp;</span>
+
+
