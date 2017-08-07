@@ -1,0 +1,8 @@
+{% load dashgent_filters %}
+
+<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+    <span class="count_top"><i class="fa row|lookup:'icon'"></i> {{ row|lookup:'caption' }}</span>
+    <div class="count {{ row|lookup:'count' }}">{{ row|lookup:'count' }}</div>
+    <!--<span class="count_bottom"><i class="{{ updown_colour|default:"green" }}"><i class="fa {{ updown }}"></i>{{ updown_number }} </i> {{ updown_caption }}</span>-->
+
+</div>

@@ -1,0 +1,5810 @@
+[
+{
+    "model": "contenttypes.contenttype",
+    "pk": 1,
+    "fields": {
+        "app_label": "admin",
+        "model": "logentry"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 2,
+    "fields": {
+        "app_label": "auth",
+        "model": "permission"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 3,
+    "fields": {
+        "app_label": "auth",
+        "model": "group"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 4,
+    "fields": {
+        "app_label": "auth",
+        "model": "user"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 5,
+    "fields": {
+        "app_label": "contenttypes",
+        "model": "contenttype"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 6,
+    "fields": {
+        "app_label": "sessions",
+        "model": "session"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 8,
+    "fields": {
+        "app_label": "dashgent",
+        "model": "navigationsection"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 10,
+    "fields": {
+        "app_label": "dashgent",
+        "model": "pagesection"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 11,
+    "fields": {
+        "app_label": "dashgent",
+        "model": "page"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 12,
+    "fields": {
+        "app_label": "dashgent",
+        "model": "template"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 13,
+    "fields": {
+        "app_label": "dashgent",
+        "model": "pagetype"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 14,
+    "fields": {
+        "app_label": "uc_dashboards",
+        "model": "navigationsection"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 15,
+    "fields": {
+        "app_label": "uc_dashboards",
+        "model": "template"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 16,
+    "fields": {
+        "app_label": "uc_dashboards",
+        "model": "pagesection"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 17,
+    "fields": {
+        "app_label": "uc_dashboards",
+        "model": "pagetype"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 18,
+    "fields": {
+        "app_label": "uc_dashboards",
+        "model": "page"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 19,
+    "fields": {
+        "app_label": "uc_dashboards",
+        "model": "widget"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 20,
+    "fields": {
+        "app_label": "uc_dashboards",
+        "model": "tag"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 21,
+    "fields": {
+        "app_label": "uc_dashboards",
+        "model": "groupprofile"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 22,
+    "fields": {
+        "app_label": "uc_dashboards",
+        "model": "perspective"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 23,
+    "fields": {
+        "app_label": "uc_dashboards",
+        "model": "groupperspective"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "3bo2hd2fj00y4j291pctg7lq19p584rs",
+    "fields": {
+        "session_data": "ZTg4MWJlZmQ1NDk0ZjI3YmVhZGEzNDc5YTFjYzVjM2E1OWQ1NjQ0Yzp7Il9hdXRoX3VzZXJfaGFzaCI6ImU3N2I4MzgzODc0MzBjYTRiNDk5NWZhYzkwMDM2YTUyOTA2ZmVhOWEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=",
+        "expire_date": "2016-09-14T08:41:18.258Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "711kpcmwcx3dsecmill1yhh4y2yf7tsw",
+    "fields": {
+        "session_data": "ZTg4MWJlZmQ1NDk0ZjI3YmVhZGEzNDc5YTFjYzVjM2E1OWQ1NjQ0Yzp7Il9hdXRoX3VzZXJfaGFzaCI6ImU3N2I4MzgzODc0MzBjYTRiNDk5NWZhYzkwMDM2YTUyOTA2ZmVhOWEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=",
+        "expire_date": "2016-08-02T02:56:06.526Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "9f0po4yx4bvvqucceom0cn9rbczecsu0",
+    "fields": {
+        "session_data": "ZTg4MWJlZmQ1NDk0ZjI3YmVhZGEzNDc5YTFjYzVjM2E1OWQ1NjQ0Yzp7Il9hdXRoX3VzZXJfaGFzaCI6ImU3N2I4MzgzODc0MzBjYTRiNDk5NWZhYzkwMDM2YTUyOTA2ZmVhOWEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=",
+        "expire_date": "2016-08-21T22:21:13.999Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "9zmorg1jzogotx54qt0i3mdrdwgj8tvo",
+    "fields": {
+        "session_data": "MWRkYTI1YjgwMmM2MDc2YTViYTA3YWJiZDU2NzM0NmM3NGM4MGQ2YTp7Il9hdXRoX3VzZXJfaGFzaCI6ImFhNWRjYmZhOWJlM2NlMzdkOTk5ZTJkNmNlNGI2ZDQzMzQ3OTU3NDEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=",
+        "expire_date": "2016-11-04T17:58:58.684Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "ax08cunqymkipkv3vcclbjk3h46u54az",
+    "fields": {
+        "session_data": "ZTg4MWJlZmQ1NDk0ZjI3YmVhZGEzNDc5YTFjYzVjM2E1OWQ1NjQ0Yzp7Il9hdXRoX3VzZXJfaGFzaCI6ImU3N2I4MzgzODc0MzBjYTRiNDk5NWZhYzkwMDM2YTUyOTA2ZmVhOWEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=",
+        "expire_date": "2016-08-15T17:36:09.957Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "k5hae11qedyoomjgd2xb1dt4srs82xwk",
+    "fields": {
+        "session_data": "ZTg4MWJlZmQ1NDk0ZjI3YmVhZGEzNDc5YTFjYzVjM2E1OWQ1NjQ0Yzp7Il9hdXRoX3VzZXJfaGFzaCI6ImU3N2I4MzgzODc0MzBjYTRiNDk5NWZhYzkwMDM2YTUyOTA2ZmVhOWEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=",
+        "expire_date": "2016-08-31T17:16:06.083Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "ldhsikjk1yrngogy39ob1meeyfzi3694",
+    "fields": {
+        "session_data": "MWRkYTI1YjgwMmM2MDc2YTViYTA3YWJiZDU2NzM0NmM3NGM4MGQ2YTp7Il9hdXRoX3VzZXJfaGFzaCI6ImFhNWRjYmZhOWJlM2NlMzdkOTk5ZTJkNmNlNGI2ZDQzMzQ3OTU3NDEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=",
+        "expire_date": "2016-11-01T22:02:40.162Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "pir5455msya71ks4rhoddhyeoktg3l7y",
+    "fields": {
+        "session_data": "NWE1OTRmZjY4MWM3NWVhMDExMWU3YTE3MzVhM2FkZTdjNzVlYmRiNTp7Il9hdXRoX3VzZXJfaGFzaCI6ImM0YmNkYzQyNDU3OWRlYTA1MzlkMjJjOWZiY2JiM2RkYTFiOWMwZWYiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIyIn0=",
+        "expire_date": "2016-09-16T06:26:07.841Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "taug7w1zpklwcf5ibhcugopjso8e3j0o",
+    "fields": {
+        "session_data": "MWRkYTI1YjgwMmM2MDc2YTViYTA3YWJiZDU2NzM0NmM3NGM4MGQ2YTp7Il9hdXRoX3VzZXJfaGFzaCI6ImFhNWRjYmZhOWJlM2NlMzdkOTk5ZTJkNmNlNGI2ZDQzMzQ3OTU3NDEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=",
+        "expire_date": "2016-11-15T22:11:06.910Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "we21b6niiqv7amq2kcs4znkg4yqdfq6q",
+    "fields": {
+        "session_data": "ZTg4MWJlZmQ1NDk0ZjI3YmVhZGEzNDc5YTFjYzVjM2E1OWQ1NjQ0Yzp7Il9hdXRoX3VzZXJfaGFzaCI6ImU3N2I4MzgzODc0MzBjYTRiNDk5NWZhYzkwMDM2YTUyOTA2ZmVhOWEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=",
+        "expire_date": "2016-08-22T18:08:44.257Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "wi6tt825qd897qc4bcfd04lb57dc8njv",
+    "fields": {
+        "session_data": "ZTg4MWJlZmQ1NDk0ZjI3YmVhZGEzNDc5YTFjYzVjM2E1OWQ1NjQ0Yzp7Il9hdXRoX3VzZXJfaGFzaCI6ImU3N2I4MzgzODc0MzBjYTRiNDk5NWZhYzkwMDM2YTUyOTA2ZmVhOWEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=",
+        "expire_date": "2016-10-05T11:14:04.013Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "xdnstf31q0jmks095fw10u6vgpul3jwa",
+    "fields": {
+        "session_data": "ZTg4MWJlZmQ1NDk0ZjI3YmVhZGEzNDc5YTFjYzVjM2E1OWQ1NjQ0Yzp7Il9hdXRoX3VzZXJfaGFzaCI6ImU3N2I4MzgzODc0MzBjYTRiNDk5NWZhYzkwMDM2YTUyOTA2ZmVhOWEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=",
+        "expire_date": "2016-07-22T16:24:38.651Z"
+    }
+},
+{
+    "model": "uc_dashboards.tag",
+    "pk": 1,
+    "fields": {
+        "text": "Uganda"
+    }
+},
+{
+    "model": "uc_dashboards.tag",
+    "pk": 2,
+    "fields": {
+        "text": "Built-in widget"
+    }
+},
+{
+    "model": "uc_dashboards.tag",
+    "pk": 3,
+    "fields": {
+        "text": "Built-in template"
+    }
+},
+{
+    "model": "uc_dashboards.navigationsection",
+    "pk": 1,
+    "fields": {
+        "caption": "_",
+        "parent_section": null,
+        "icon": "",
+        "index": 100,
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.navigationsection",
+    "pk": 5,
+    "fields": {
+        "caption": "Overview",
+        "parent_section": 1,
+        "icon": "fa-bar-chart",
+        "index": 0,
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.navigationsection",
+    "pk": 6,
+    "fields": {
+        "caption": "About us",
+        "parent_section": 1,
+        "icon": "fa-info",
+        "index": 1000,
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.template",
+    "pk": 1,
+    "fields": {
+        "name": "Basic page",
+        "template_type": "1",
+        "template_source": "1",
+        "template_path": "dashboards/t_dashboard_page.html",
+        "template_text": "",
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.template",
+    "pk": 2,
+    "fields": {
+        "name": "Summary page",
+        "template_type": "2",
+        "template_source": "1",
+        "template_path": "dashboards/t_ibbs_overview.html",
+        "template_text": "",
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.template",
+    "pk": 3,
+    "fields": {
+        "name": "Empty page",
+        "template_type": "1",
+        "template_source": "1",
+        "template_path": "dashboards/t_dashboard_empty.html",
+        "template_text": "",
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.template",
+    "pk": 6,
+    "fields": {
+        "name": "Home (landing) page",
+        "template_type": "1",
+        "template_source": "1",
+        "template_path": "dashboards/t_home.html",
+        "template_text": "{% extends \"t_base.html\" %}\r\n{% load dashgent_filters %}\r\n\r\n{% block main %}\r\n\r\n    <div class=\"page-title\">\r\n        <div class=\"title_left\">\r\n            <h3>Welcome to IBBS\r\n                \r\n            </h3>\r\n        </div>\r\n    </div>\r\n    <div class=\"clearfix\"></div>\r\n    <div class=\"row\">\r\n        <div class=\"col-md-12\">\r\n            <div class=\"x_panel\">\r\n                <div class=\"x_title\">\r\n                    <h2>Inbox Design\r\n                        <small>User Mail</small>\r\n                    </h2>\r\n                    <ul class=\"nav navbar-right panel_toolbox\">\r\n                        <li><a class=\"collapse-link\"><i class=\"fa fa-chevron-up\"></i></a>\r\n                        </li>\r\n                        <li class=\"dropdown\">\r\n                            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\"\r\n                               aria-expanded=\"false\"><i class=\"fa fa-wrench\"></i></a>\r\n                            <ul class=\"dropdown-menu\" role=\"menu\">\r\n                                <li><a href=\"#\">Settings 1</a>\r\n                                </li>\r\n                                <li><a href=\"#\">Settings 2</a>\r\n                                </li>\r\n                            </ul>\r\n                        </li>\r\n                        <li><a class=\"close-link\"><i class=\"fa fa-close\"></i></a>\r\n                        </li>\r\n                    </ul>\r\n                    <div class=\"clearfix\"></div>\r\n                </div>\r\n                <div class=\"x_content\">\r\n                    <div class=\"row\">\r\n                        <div class=\"col-sm-8 mail_list_column\">\r\n                            <p>{% lorem %}</p>\r\n                            <p>{% lorem %}</p>\r\n                            <p>{% lorem %}</p>\r\n                        </div>\r\n                        <!-- /Welcome panerl-->\r\n\r\n                        <!-- LOGIN MAIL -->\r\n                        <div class=\"col-sm-4 mail_view\">\r\n                        {% if user.is_authenticated %}\r\n\r\n                        {% endif %}\r\n                        {% if not user.is_authenticated %}\r\n                            <div class=\"jubmbotron\">\r\n                                <form id=\"demo-form2\" data-parsley-validate=\"\" class=\"form-horizontal form-label-left\"\r\n                                      novalidate=\"\" name=\"LoginForm\" action=\"\" method=\"post\">\r\n                                    {% csrf_token %}\r\n                                    {% if next %}\r\n                                        <input type=\"hidden\" name=\"next\" value=\"/\"/>\r\n                                    {% endif %}\r\n                                    <p>If you have a login and password for this site, enter it below.</p>\r\n                                    {% if login_incorrect %}\r\n                                        <p>The username and/or password is not correct.</p>\r\n                                    {% endif %}\r\n                                    <div class=\"form-group\">\r\n                                        <label class=\"control-label col-md-4 col-sm-4 col-xs-12\" for=\"username\">User\r\n                                            name<span class=\"required\">*</span>\r\n                                        </label>\r\n                                        <div class=\"col-md-8 col-sm-8 col-xs-12\">\r\n                                            <input type=\"text\" id=\"username\" name=\"username\" required=\"required\"\r\n                                                   class=\"form-control col-md-7 col-xs-12\">\r\n                                        </div>\r\n                                    </div>\r\n                                    <div class=\"form-group\">\r\n                                        <label class=\"control-label col-md-4 col-sm-4 col-xs-12\"\r\n                                               for=\"password\">Password<span class=\"required\">*</span>\r\n                                        </label>\r\n                                        <div class=\"col-md-8 col-sm-8 col-xs-12\">\r\n                                            <input type=\"password\" name=\"password\" id=\"password\" required=\"required\"\r\n                                                   class=\"form-control col-md-7 col-xs-12\">\r\n                                        </div>\r\n                                    </div>\r\n                                    <div class=\"ln_solid\"></div>\r\n                                    <div class=\"form-group\">\r\n                                        <div class=\"col-md-10 col-sm-4 col-xs-12 col-md-offset-4\">\r\n                                            <button type=\"submit\" class=\"btn btn-success btn-sm\">Log in</button>\r\n                                        </div>\r\n                                    </div>\r\n\r\n                                </form>\r\n                            </div>\r\n                            {% endif %}\r\n\r\n                        </div>\r\n                        <!-- /LOGIN MAIL -->\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n{% endblock %}",
+        "tags": [
+            3
+        ]
+    }
+},
+{
+    "model": "uc_dashboards.template",
+    "pk": 7,
+    "fields": {
+        "name": "Widget Pie",
+        "template_type": "3",
+        "template_source": "1",
+        "template_path": "generic_widgets/w_pie.html",
+        "template_text": "",
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.template",
+    "pk": 8,
+    "fields": {
+        "name": "Widget Table",
+        "template_type": "3",
+        "template_source": "1",
+        "template_path": "generic_widgets/w_table.html",
+        "template_text": "",
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.template",
+    "pk": 9,
+    "fields": {
+        "name": "Widget Tiles",
+        "template_type": "3",
+        "template_source": "1",
+        "template_path": "generic_widgets/w_tiles.html",
+        "template_text": "",
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.template",
+    "pk": 10,
+    "fields": {
+        "name": "Widget Line Chart",
+        "template_type": "3",
+        "template_source": "1",
+        "template_path": "generic_widgets/w_line_chart.html",
+        "template_text": "{% extends \"t_xpanel_control_base.html\" %}\r\n{% load dashgent_filters %}\r\n\r\n{% block widget_main %}\r\n{{ rows }} <p/>\r\n{{ labels }}\r\n{% endblock %}",
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.template",
+    "pk": 11,
+    "fields": {
+        "name": "Widget Bar Chart",
+        "template_type": "3",
+        "template_source": "1",
+        "template_path": "generic_widgets/w_bar_chart.html",
+        "template_text": "",
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.template",
+    "pk": 12,
+    "fields": {
+        "name": "Widget Progress Circle",
+        "template_type": "3",
+        "template_source": "1",
+        "template_path": "generic_widgets/w_progress_circle.html",
+        "template_text": "",
+        "tags": [
+            2
+        ]
+    }
+},
+{
+    "model": "uc_dashboards.template",
+    "pk": 13,
+    "fields": {
+        "name": "Widget Text",
+        "template_type": "3",
+        "template_source": "1",
+        "template_path": "generic_widgets/w_text.html",
+        "template_text": "",
+        "tags": [
+            2
+        ]
+    }
+},
+{
+    "model": "uc_dashboards.pagesection",
+    "pk": 1,
+    "fields": {
+        "title": "about"
+    }
+},
+{
+    "model": "uc_dashboards.pagesection",
+    "pk": 2,
+    "fields": {
+        "title": "uganda"
+    }
+},
+{
+    "model": "uc_dashboards.pagesection",
+    "pk": 3,
+    "fields": {
+        "title": "kenya"
+    }
+},
+{
+    "model": "uc_dashboards.pagesection",
+    "pk": 4,
+    "fields": {
+        "title": "home"
+    }
+},
+{
+    "model": "uc_dashboards.pagesection",
+    "pk": 5,
+    "fields": {
+        "title": "hello"
+    }
+},
+{
+    "model": "uc_dashboards.pagetype",
+    "pk": 1,
+    "fields": {
+        "name": "Basic page",
+        "url_section": "pages"
+    }
+},
+{
+    "model": "uc_dashboards.pagetype",
+    "pk": 2,
+    "fields": {
+        "name": "Dashboard",
+        "url_section": "dashboards"
+    }
+},
+{
+    "model": "uc_dashboards.perspective",
+    "pk": 1,
+    "fields": {
+        "name": "Test",
+        "code": "",
+        "default_page": 3,
+        "comment": "",
+        "pages": [
+            1
+        ],
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.perspective",
+    "pk": 2,
+    "fields": {
+        "name": "National",
+        "code": "",
+        "default_page": 11,
+        "comment": "",
+        "pages": [],
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.perspective",
+    "pk": 3,
+    "fields": {
+        "name": "District",
+        "code": "",
+        "default_page": 11,
+        "comment": "",
+        "pages": [],
+        "tags": []
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+        "name": "Can add log entry",
+        "content_type": 1,
+        "codename": "add_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+        "name": "Can change log entry",
+        "content_type": 1,
+        "codename": "change_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+        "name": "Can delete log entry",
+        "content_type": 1,
+        "codename": "delete_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+        "name": "Can add permission",
+        "content_type": 2,
+        "codename": "add_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 5,
+    "fields": {
+        "name": "Can change permission",
+        "content_type": 2,
+        "codename": "change_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 6,
+    "fields": {
+        "name": "Can delete permission",
+        "content_type": 2,
+        "codename": "delete_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 7,
+    "fields": {
+        "name": "Can add group",
+        "content_type": 3,
+        "codename": "add_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 8,
+    "fields": {
+        "name": "Can change group",
+        "content_type": 3,
+        "codename": "change_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 9,
+    "fields": {
+        "name": "Can delete group",
+        "content_type": 3,
+        "codename": "delete_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 10,
+    "fields": {
+        "name": "Can add user",
+        "content_type": 4,
+        "codename": "add_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 11,
+    "fields": {
+        "name": "Can change user",
+        "content_type": 4,
+        "codename": "change_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 12,
+    "fields": {
+        "name": "Can delete user",
+        "content_type": 4,
+        "codename": "delete_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 13,
+    "fields": {
+        "name": "Can add content type",
+        "content_type": 5,
+        "codename": "add_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 14,
+    "fields": {
+        "name": "Can change content type",
+        "content_type": 5,
+        "codename": "change_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 15,
+    "fields": {
+        "name": "Can delete content type",
+        "content_type": 5,
+        "codename": "delete_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 16,
+    "fields": {
+        "name": "Can add session",
+        "content_type": 6,
+        "codename": "add_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 17,
+    "fields": {
+        "name": "Can change session",
+        "content_type": 6,
+        "codename": "change_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 18,
+    "fields": {
+        "name": "Can delete session",
+        "content_type": 6,
+        "codename": "delete_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 22,
+    "fields": {
+        "name": "Can add navigation section",
+        "content_type": 8,
+        "codename": "add_navigationsection"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 23,
+    "fields": {
+        "name": "Can change navigation section",
+        "content_type": 8,
+        "codename": "change_navigationsection"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 24,
+    "fields": {
+        "name": "Can delete navigation section",
+        "content_type": 8,
+        "codename": "delete_navigationsection"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 28,
+    "fields": {
+        "name": "Can add page section",
+        "content_type": 10,
+        "codename": "add_pagesection"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 29,
+    "fields": {
+        "name": "Can change page section",
+        "content_type": 10,
+        "codename": "change_pagesection"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 30,
+    "fields": {
+        "name": "Can delete page section",
+        "content_type": 10,
+        "codename": "delete_pagesection"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 31,
+    "fields": {
+        "name": "Can add page",
+        "content_type": 11,
+        "codename": "add_page"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 32,
+    "fields": {
+        "name": "Can change page",
+        "content_type": 11,
+        "codename": "change_page"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 33,
+    "fields": {
+        "name": "Can delete page",
+        "content_type": 11,
+        "codename": "delete_page"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 34,
+    "fields": {
+        "name": "Can add template",
+        "content_type": 12,
+        "codename": "add_template"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 35,
+    "fields": {
+        "name": "Can change template",
+        "content_type": 12,
+        "codename": "change_template"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 36,
+    "fields": {
+        "name": "Can delete template",
+        "content_type": 12,
+        "codename": "delete_template"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 37,
+    "fields": {
+        "name": "Can add page type",
+        "content_type": 13,
+        "codename": "add_pagetype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 38,
+    "fields": {
+        "name": "Can change page type",
+        "content_type": 13,
+        "codename": "change_pagetype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 39,
+    "fields": {
+        "name": "Can delete page type",
+        "content_type": 13,
+        "codename": "delete_pagetype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 40,
+    "fields": {
+        "name": "Can add navigation section",
+        "content_type": 14,
+        "codename": "add_navigationsection"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 41,
+    "fields": {
+        "name": "Can change navigation section",
+        "content_type": 14,
+        "codename": "change_navigationsection"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 42,
+    "fields": {
+        "name": "Can delete navigation section",
+        "content_type": 14,
+        "codename": "delete_navigationsection"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 43,
+    "fields": {
+        "name": "Can add template",
+        "content_type": 15,
+        "codename": "add_template"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 44,
+    "fields": {
+        "name": "Can change template",
+        "content_type": 15,
+        "codename": "change_template"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 45,
+    "fields": {
+        "name": "Can delete template",
+        "content_type": 15,
+        "codename": "delete_template"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 46,
+    "fields": {
+        "name": "Can add page section",
+        "content_type": 16,
+        "codename": "add_pagesection"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 47,
+    "fields": {
+        "name": "Can change page section",
+        "content_type": 16,
+        "codename": "change_pagesection"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 48,
+    "fields": {
+        "name": "Can delete page section",
+        "content_type": 16,
+        "codename": "delete_pagesection"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 49,
+    "fields": {
+        "name": "Can add page type",
+        "content_type": 17,
+        "codename": "add_pagetype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 50,
+    "fields": {
+        "name": "Can change page type",
+        "content_type": 17,
+        "codename": "change_pagetype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 51,
+    "fields": {
+        "name": "Can delete page type",
+        "content_type": 17,
+        "codename": "delete_pagetype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 52,
+    "fields": {
+        "name": "Can add page",
+        "content_type": 18,
+        "codename": "add_page"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 53,
+    "fields": {
+        "name": "Can change page",
+        "content_type": 18,
+        "codename": "change_page"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 54,
+    "fields": {
+        "name": "Can delete page",
+        "content_type": 18,
+        "codename": "delete_page"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 55,
+    "fields": {
+        "name": "Can add widget",
+        "content_type": 19,
+        "codename": "add_widget"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 56,
+    "fields": {
+        "name": "Can change widget",
+        "content_type": 19,
+        "codename": "change_widget"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 57,
+    "fields": {
+        "name": "Can delete widget",
+        "content_type": 19,
+        "codename": "delete_widget"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 58,
+    "fields": {
+        "name": "Can add tag",
+        "content_type": 20,
+        "codename": "add_tag"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 59,
+    "fields": {
+        "name": "Can change tag",
+        "content_type": 20,
+        "codename": "change_tag"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 60,
+    "fields": {
+        "name": "Can delete tag",
+        "content_type": 20,
+        "codename": "delete_tag"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 61,
+    "fields": {
+        "name": "Can add group profile",
+        "content_type": 21,
+        "codename": "add_groupprofile"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 62,
+    "fields": {
+        "name": "Can change group profile",
+        "content_type": 21,
+        "codename": "change_groupprofile"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 63,
+    "fields": {
+        "name": "Can delete group profile",
+        "content_type": 21,
+        "codename": "delete_groupprofile"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 64,
+    "fields": {
+        "name": "Can add perspective",
+        "content_type": 22,
+        "codename": "add_perspective"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 65,
+    "fields": {
+        "name": "Can change perspective",
+        "content_type": 22,
+        "codename": "change_perspective"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 66,
+    "fields": {
+        "name": "Can delete perspective",
+        "content_type": 22,
+        "codename": "delete_perspective"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 67,
+    "fields": {
+        "name": "Can add group perspective",
+        "content_type": 23,
+        "codename": "add_groupperspective"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 68,
+    "fields": {
+        "name": "Can change group perspective",
+        "content_type": 23,
+        "codename": "change_groupperspective"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 69,
+    "fields": {
+        "name": "Can delete group perspective",
+        "content_type": 23,
+        "codename": "delete_groupperspective"
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+        "name": "Test",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+        "name": "District users",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 3,
+    "fields": {
+        "name": "National users",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 4,
+    "fields": {
+        "name": "All perspectives",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 5,
+    "fields": {
+        "name": "Jinja District Users",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 6,
+    "fields": {
+        "name": "Iganga District Users",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$1uE1MZmAabiu$uKPXL7LAeHZva/4LU+mQ5tkOkFdPQ657pab2liA9gG8=",
+        "last_login": "2016-11-01T22:11:06.906Z",
+        "is_superuser": true,
+        "username": "fitti",
+        "first_name": "Fitti",
+        "last_name": "Weissglas",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2016-07-08T00:37:55Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$eHMnQg4htmRs$BIz+h56Ac6Ni8d4nhbSQMi1ofS6xKr4B4pKvGXlEUK0=",
+        "last_login": "2016-09-02T06:26:07.835Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2016-07-11T02:16:21.772Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$GJuIxKDMtz4D$jR3OLEfKvToe5wBjyZoU52NKmOp9c31wj8NQoYTCt1k=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "nat1",
+        "first_name": "National",
+        "last_name": "User 1",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2016-11-02T19:00:19Z",
+        "groups": [
+            3
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$HRGYU5uOIKr8$blUh9ZeshpZ1LOZNzCPgeNAo8cdIJJM1aL5rThH8XSQ=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "nat2",
+        "first_name": "National",
+        "last_name": "User 2",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2016-11-02T19:01:06Z",
+        "groups": [
+            3
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$SlJ0p3mi2C3o$9atursKa8ZPp394hz5nP5QGx63Z9NezBC5VksGhvj0Q=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "dis1",
+        "first_name": "District",
+        "last_name": "User 1",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2016-11-02T19:01:33Z",
+        "groups": [
+            2
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$nlQQNCujmI38$ihv+L54jUkNeaJC89d3g1ovg6tfzs6NHEldrHF4Atvw=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "dis2",
+        "first_name": "District",
+        "last_name": "User 2",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2016-11-02T19:01:54Z",
+        "groups": [
+            2
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 7,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$Slp2HSpJWmW6$EbJaTZ/4eklf6yt9yyGb/jTSo1U8wBYi+hazVWN7ks4=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "natdis",
+        "first_name": "National/District",
+        "last_name": "User",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2016-11-02T19:02:12Z",
+        "groups": [
+            2,
+            3
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "uc_dashboards.page",
+    "pk": 1,
+    "fields": {
+        "title": "About PTBi",
+        "main_title": "About us",
+        "text": "<p>This is where I&#39;d like HTML to come in.</p>\r\n\r\n<p>Yes, this seems to work well, for now.</p>\r\n\r\n<p>Beautiful</p>\r\n\r\n<p>It works</p>",
+        "slug": "about-us",
+        "allow_anonymous": true,
+        "section": 1,
+        "navigation_section": 6,
+        "page_id": "",
+        "template": 1,
+        "page_type": 1,
+        "permissions_to_view": [],
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.page",
+    "pk": 3,
+    "fields": {
+        "title": "Summary",
+        "main_title": "Dashboard demo",
+        "text": "<blockquote>\r\n<ul>\r\n\t<li>\r\n\t<h1>ssddd</h1>\r\n\t</li>\r\n</ul>\r\n</blockquote>",
+        "slug": "overview",
+        "allow_anonymous": false,
+        "section": 4,
+        "navigation_section": 5,
+        "page_id": "",
+        "template": 2,
+        "page_type": 2,
+        "permissions_to_view": [],
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.page",
+    "pk": 11,
+    "fields": {
+        "title": "Welcome",
+        "main_title": "Welcome",
+        "text": "",
+        "slug": "welcome",
+        "allow_anonymous": true,
+        "section": 4,
+        "navigation_section": null,
+        "page_id": "0",
+        "template": 6,
+        "page_type": 2,
+        "permissions_to_view": [],
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.groupperspective",
+    "pk": 1,
+    "fields": {
+        "name": "Any district",
+        "group": 2,
+        "perspective": 3,
+        "preset_filter": "A district filter",
+        "comment": "",
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.groupperspective",
+    "pk": 2,
+    "fields": {
+        "name": "National - Uganda",
+        "group": 3,
+        "perspective": 2,
+        "preset_filter": "Uganda",
+        "comment": "",
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.groupperspective",
+    "pk": 5,
+    "fields": {
+        "name": "Jinja District",
+        "group": 5,
+        "perspective": 3,
+        "preset_filter": "district = jinja",
+        "comment": "",
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.groupperspective",
+    "pk": 6,
+    "fields": {
+        "name": "Iganga District",
+        "group": 6,
+        "perspective": 3,
+        "preset_filter": "district = Iganda",
+        "comment": "",
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.widget",
+    "pk": 8,
+    "fields": {
+        "title": "Introduction",
+        "slug": "introduction_widget",
+        "allow_anonymous": false,
+        "widget_id": "",
+        "template": 13,
+        "widget_type": "9",
+        "sql_query": "",
+        "filters": "",
+        "data_columns": "",
+        "sub_text": "",
+        "data_point_column": "",
+        "label_column": "",
+        "text": "Very simple widget with some HTML",
+        "database_key": "ibbs",
+        "custom_attributes": "",
+        "view_details_url": "",
+        "code": "W001",
+        "user_description": "",
+        "permissions_to_view": [],
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.widget",
+    "pk": 9,
+    "fields": {
+        "title": "List of provinces",
+        "slug": "list_of_provinces",
+        "allow_anonymous": false,
+        "widget_id": "",
+        "template": 8,
+        "widget_type": "2",
+        "sql_query": "SELECT t.* FROM provincias t",
+        "filters": "",
+        "data_columns": "'column_name' : 'pr_id', 'table_column_caption': 'ID', 'table_column_width': '25%',\r\n'column_name' : 'pr_provincia', 'table_column_caption': 'Province', 'table_column_width': '75%',",
+        "sub_text": "",
+        "data_point_column": "",
+        "label_column": "",
+        "text": "",
+        "database_key": "ibbs",
+        "custom_attributes": "",
+        "view_details_url": "",
+        "code": "W001",
+        "user_description": "",
+        "permissions_to_view": [],
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.groupprofile",
+    "pk": 1,
+    "fields": {
+        "group": 1,
+        "comment": "Test",
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.groupprofile",
+    "pk": 2,
+    "fields": {
+        "group": 2,
+        "comment": "",
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.groupprofile",
+    "pk": 3,
+    "fields": {
+        "group": 3,
+        "comment": "",
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.groupprofile",
+    "pk": 4,
+    "fields": {
+        "group": 4,
+        "comment": "",
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.groupprofile",
+    "pk": 5,
+    "fields": {
+        "group": 5,
+        "comment": "",
+        "tags": []
+    }
+},
+{
+    "model": "uc_dashboards.groupprofile",
+    "pk": 6,
+    "fields": {
+        "group": 6,
+        "comment": "",
+        "tags": []
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2016-07-08T00:43:47.469Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "1",
+        "object_repr": "NavBarItem object",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2016-07-08T00:54:13.821Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "1",
+        "object_repr": "NavigationSection object",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+        "action_time": "2016-07-08T00:54:21.046Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "2",
+        "object_repr": "NavigationSection object",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+        "action_time": "2016-07-08T00:55:20.402Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "1",
+        "object_repr": "NavigationItem object",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+        "action_time": "2016-07-08T02:00:05.010Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "2",
+        "object_repr": "Uganda",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+        "action_time": "2016-07-08T02:00:58.437Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "3",
+        "object_repr": "Data strengthening",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+        "action_time": "2016-07-08T02:14:06.395Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "4",
+        "object_repr": "Kenya",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+        "action_time": "2016-07-08T02:15:30.314Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "5",
+        "object_repr": "Cascade",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+        "action_time": "2016-07-08T02:35:55.147Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "5",
+        "object_repr": "Cascade",
+        "action_flag": 2,
+        "change_message": "No fields changed."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 10,
+    "fields": {
+        "action_time": "2016-07-08T02:36:00.442Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "2",
+        "object_repr": "Uganda",
+        "action_flag": 2,
+        "change_message": "Changed icon."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 11,
+    "fields": {
+        "action_time": "2016-07-08T02:36:05.653Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "4",
+        "object_repr": "Kenya",
+        "action_flag": 2,
+        "change_message": "Changed icon."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 12,
+    "fields": {
+        "action_time": "2016-07-08T02:36:53.950Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "6",
+        "object_repr": "Overview",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 13,
+    "fields": {
+        "action_time": "2016-07-08T03:01:58.887Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "7",
+        "object_repr": "Background",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 14,
+    "fields": {
+        "action_time": "2016-07-08T16:59:52.753Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "1",
+        "object_repr": "PageSection object",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 15,
+    "fields": {
+        "action_time": "2016-07-08T16:59:55.258Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "1",
+        "object_repr": "Page object",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 16,
+    "fields": {
+        "action_time": "2016-07-08T17:26:16.760Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "1",
+        "object_repr": "About PTBi",
+        "action_flag": 2,
+        "change_message": "Changed text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 17,
+    "fields": {
+        "action_time": "2016-07-08T17:45:26.252Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "8",
+        "object_repr": "About us",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 18,
+    "fields": {
+        "action_time": "2016-07-08T17:45:28.273Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "1",
+        "object_repr": "About PTBi",
+        "action_flag": 2,
+        "change_message": "Changed navigation_item."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 19,
+    "fields": {
+        "action_time": "2016-07-08T17:49:18.858Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "8",
+        "object_repr": "About us",
+        "action_flag": 2,
+        "change_message": "Changed parent_item."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 20,
+    "fields": {
+        "action_time": "2016-07-08T17:49:45.111Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "8",
+        "object_repr": "About us",
+        "action_flag": 2,
+        "change_message": "Changed parent_item."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 21,
+    "fields": {
+        "action_time": "2016-07-08T17:51:01.756Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "1",
+        "object_repr": "About PTBi",
+        "action_flag": 2,
+        "change_message": "No fields changed."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 22,
+    "fields": {
+        "action_time": "2016-07-08T18:11:20.655Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "1",
+        "object_repr": "About PTBi",
+        "action_flag": 2,
+        "change_message": "Changed text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 23,
+    "fields": {
+        "action_time": "2016-07-08T18:13:23.755Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "7",
+        "object_repr": "PTBi Background",
+        "action_flag": 2,
+        "change_message": "Changed caption."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 24,
+    "fields": {
+        "action_time": "2016-07-08T18:14:18.847Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "2",
+        "object_repr": "About data strengthening",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 25,
+    "fields": {
+        "action_time": "2016-07-08T18:14:49.398Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "9",
+        "object_repr": "About data strengthening",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 26,
+    "fields": {
+        "action_time": "2016-07-08T18:14:50.645Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "2",
+        "object_repr": "About data strengthening",
+        "action_flag": 2,
+        "change_message": "Changed navigation_item."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 27,
+    "fields": {
+        "action_time": "2016-07-08T18:15:27.527Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "6",
+        "object_repr": "Overview",
+        "action_flag": 2,
+        "change_message": "Changed url."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 28,
+    "fields": {
+        "action_time": "2016-07-08T18:32:05.366Z",
+        "user": 1,
+        "content_type": 12,
+        "object_id": "1",
+        "object_repr": "Basic page",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 29,
+    "fields": {
+        "action_time": "2016-07-08T18:41:32.008Z",
+        "user": 1,
+        "content_type": 13,
+        "object_id": "1",
+        "object_repr": "Basic page",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 30,
+    "fields": {
+        "action_time": "2016-07-08T18:41:42.106Z",
+        "user": 1,
+        "content_type": 13,
+        "object_id": "2",
+        "object_repr": "Dashboard",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 31,
+    "fields": {
+        "action_time": "2016-07-08T18:47:50.237Z",
+        "user": 1,
+        "content_type": 13,
+        "object_id": "1",
+        "object_repr": "Basic page",
+        "action_flag": 2,
+        "change_message": "Changed url_section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 32,
+    "fields": {
+        "action_time": "2016-07-08T18:47:56.603Z",
+        "user": 1,
+        "content_type": 13,
+        "object_id": "2",
+        "object_repr": "Dashboard",
+        "action_flag": 2,
+        "change_message": "Changed url_section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 33,
+    "fields": {
+        "action_time": "2016-07-08T19:16:08.735Z",
+        "user": 1,
+        "content_type": 12,
+        "object_id": "2",
+        "object_repr": "Dashboard Demo",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 34,
+    "fields": {
+        "action_time": "2016-07-08T19:17:11.042Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "10",
+        "object_repr": "Dashboard demo",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 35,
+    "fields": {
+        "action_time": "2016-07-08T19:17:41.457Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "3",
+        "object_repr": "Dashboard demo",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 36,
+    "fields": {
+        "action_time": "2016-07-08T19:18:15.114Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "10",
+        "object_repr": "Dashboard demo",
+        "action_flag": 2,
+        "change_message": "Changed parent_item."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 37,
+    "fields": {
+        "action_time": "2016-07-08T20:44:48.736Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "3",
+        "object_repr": "Dashboard demo",
+        "action_flag": 2,
+        "change_message": "Changed text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 38,
+    "fields": {
+        "action_time": "2016-07-08T20:45:29.006Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "6",
+        "object_repr": "Overview",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 39,
+    "fields": {
+        "action_time": "2016-07-08T21:12:27.266Z",
+        "user": 1,
+        "content_type": 12,
+        "object_id": "3",
+        "object_repr": "Empty page",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 40,
+    "fields": {
+        "action_time": "2016-07-08T21:25:29.761Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "11",
+        "object_repr": "Test",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 41,
+    "fields": {
+        "action_time": "2016-07-08T21:27:08.509Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "11",
+        "object_repr": "Test",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 42,
+    "fields": {
+        "action_time": "2016-07-08T21:28:24.270Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "2",
+        "object_repr": "Uganda Dashboards",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 43,
+    "fields": {
+        "action_time": "2016-07-08T21:28:40.492Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "4",
+        "object_repr": "Uganda - Data Strengthening",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 44,
+    "fields": {
+        "action_time": "2016-07-08T21:33:28.043Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "3",
+        "object_repr": "Data strengthening",
+        "action_flag": 2,
+        "change_message": "Changed url."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 45,
+    "fields": {
+        "action_time": "2016-07-08T21:41:26.657Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "5",
+        "object_repr": "Uganda - cascade",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 46,
+    "fields": {
+        "action_time": "2016-07-08T21:42:02.031Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "3",
+        "object_repr": "Kenya dashboards",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 47,
+    "fields": {
+        "action_time": "2016-07-08T21:42:17.877Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "12",
+        "object_repr": "Kenya dashboards",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 48,
+    "fields": {
+        "action_time": "2016-07-08T21:42:28.541Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "6",
+        "object_repr": "Kenya - data strengthening",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 49,
+    "fields": {
+        "action_time": "2016-07-08T21:47:01.916Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "2",
+        "object_repr": "Uganda",
+        "action_flag": 2,
+        "change_message": "Changed url."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 50,
+    "fields": {
+        "action_time": "2016-07-08T21:47:13.867Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "7",
+        "object_repr": "PTBi Background",
+        "action_flag": 2,
+        "change_message": "Changed url."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 51,
+    "fields": {
+        "action_time": "2016-07-08T21:47:21.798Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "4",
+        "object_repr": "Kenya",
+        "action_flag": 2,
+        "change_message": "Changed url."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 52,
+    "fields": {
+        "action_time": "2016-07-08T21:47:32.852Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "5",
+        "object_repr": "Uganda\\Cascade",
+        "action_flag": 2,
+        "change_message": "No fields changed."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 53,
+    "fields": {
+        "action_time": "2016-07-08T21:48:26.400Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "5",
+        "object_repr": "Uganda\\Cascade",
+        "action_flag": 2,
+        "change_message": "Changed url."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 54,
+    "fields": {
+        "action_time": "2016-07-08T21:56:01.626Z",
+        "user": 1,
+        "content_type": null,
+        "object_id": "5",
+        "object_repr": "Uganda\\Cascade",
+        "action_flag": 2,
+        "change_message": "No fields changed."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 55,
+    "fields": {
+        "action_time": "2016-07-08T21:58:01.183Z",
+        "user": 1,
+        "content_type": 12,
+        "object_id": "4",
+        "object_repr": "Uganda Data Strengthening",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 56,
+    "fields": {
+        "action_time": "2016-07-08T21:58:35.000Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "4",
+        "object_repr": "Uganda - Data Strengthening",
+        "action_flag": 2,
+        "change_message": "Changed template."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 57,
+    "fields": {
+        "action_time": "2016-07-10T03:27:12.249Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "2",
+        "object_repr": "uganda",
+        "action_flag": 2,
+        "change_message": "Changed title."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 58,
+    "fields": {
+        "action_time": "2016-07-10T03:28:59.072Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "4",
+        "object_repr": "home",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 59,
+    "fields": {
+        "action_time": "2016-07-10T03:48:21.506Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "3",
+        "object_repr": "Dashboard demo",
+        "action_flag": 2,
+        "change_message": "Changed section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 60,
+    "fields": {
+        "action_time": "2016-07-10T03:50:15.458Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "3",
+        "object_repr": "kenya",
+        "action_flag": 2,
+        "change_message": "Changed title."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 61,
+    "fields": {
+        "action_time": "2016-07-10T03:50:21.967Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "1",
+        "object_repr": "about",
+        "action_flag": 2,
+        "change_message": "Changed title."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 62,
+    "fields": {
+        "action_time": "2016-07-10T03:54:25.354Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "4",
+        "object_repr": "Uganda - Data Strengthening",
+        "action_flag": 2,
+        "change_message": "Changed page_id."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 63,
+    "fields": {
+        "action_time": "2016-07-10T04:17:55.318Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "5",
+        "object_repr": "Uganda - cascade",
+        "action_flag": 2,
+        "change_message": "Changed page_id."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 64,
+    "fields": {
+        "action_time": "2016-07-12T03:28:33.793Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "1",
+        "object_repr": "PTBI East Africa",
+        "action_flag": 2,
+        "change_message": "Changed index."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 65,
+    "fields": {
+        "action_time": "2016-07-12T03:28:48.107Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "3",
+        "object_repr": "Uganda",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 66,
+    "fields": {
+        "action_time": "2016-07-12T03:41:42.188Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "2",
+        "object_repr": "More information",
+        "action_flag": 2,
+        "change_message": "Changed index."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 67,
+    "fields": {
+        "action_time": "2016-07-12T03:45:31.588Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "4",
+        "object_repr": "Uganda - Data Strengthening",
+        "action_flag": 2,
+        "change_message": "Changed navigation_section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 68,
+    "fields": {
+        "action_time": "2016-07-12T03:49:17.341Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "5",
+        "object_repr": "Uganda - cascade",
+        "action_flag": 2,
+        "change_message": "Changed navigation_section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 69,
+    "fields": {
+        "action_time": "2016-07-12T03:52:06.433Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "4",
+        "object_repr": "Kenya",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 70,
+    "fields": {
+        "action_time": "2016-07-12T03:52:16.924Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "4",
+        "object_repr": "Kenya",
+        "action_flag": 2,
+        "change_message": "Changed index."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 71,
+    "fields": {
+        "action_time": "2016-07-12T03:52:22.241Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "3",
+        "object_repr": "Uganda",
+        "action_flag": 2,
+        "change_message": "Changed index."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 72,
+    "fields": {
+        "action_time": "2016-07-12T03:52:31.699Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "4",
+        "object_repr": "Kenya",
+        "action_flag": 2,
+        "change_message": "Changed icon."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 73,
+    "fields": {
+        "action_time": "2016-07-12T03:53:03.438Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "3",
+        "object_repr": "Uganda",
+        "action_flag": 2,
+        "change_message": "Changed icon."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 74,
+    "fields": {
+        "action_time": "2016-07-12T03:53:14.026Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "4",
+        "object_repr": "Kenya",
+        "action_flag": 2,
+        "change_message": "Changed icon."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 75,
+    "fields": {
+        "action_time": "2016-07-12T03:53:37.041Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "4",
+        "object_repr": "Data strengthening",
+        "action_flag": 2,
+        "change_message": "Changed title."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 76,
+    "fields": {
+        "action_time": "2016-07-12T03:53:47.194Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "5",
+        "object_repr": "Cascade",
+        "action_flag": 2,
+        "change_message": "Changed title."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 77,
+    "fields": {
+        "action_time": "2016-07-12T03:54:06.933Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "6",
+        "object_repr": "Data strengtening",
+        "action_flag": 2,
+        "change_message": "Changed title and navigation_section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 78,
+    "fields": {
+        "action_time": "2016-07-12T03:54:42.080Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "5",
+        "object_repr": "Overview",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 79,
+    "fields": {
+        "action_time": "2016-07-12T03:54:43.760Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "3",
+        "object_repr": "Dashboard demo",
+        "action_flag": 2,
+        "change_message": "Changed navigation_section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 80,
+    "fields": {
+        "action_time": "2016-07-12T03:54:53.665Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "3",
+        "object_repr": "Dashboard demo",
+        "action_flag": 2,
+        "change_message": "No fields changed."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 81,
+    "fields": {
+        "action_time": "2016-07-12T03:55:13.102Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "5",
+        "object_repr": "Overview",
+        "action_flag": 2,
+        "change_message": "Changed parent_section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 82,
+    "fields": {
+        "action_time": "2016-07-12T03:57:14.941Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "6",
+        "object_repr": "About us",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 83,
+    "fields": {
+        "action_time": "2016-07-12T03:57:39.602Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "2",
+        "object_repr": "About data strengthening",
+        "action_flag": 2,
+        "change_message": "Changed navigation_section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 84,
+    "fields": {
+        "action_time": "2016-07-12T03:57:53.100Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "1",
+        "object_repr": "About PTBi",
+        "action_flag": 2,
+        "change_message": "Changed navigation_section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 85,
+    "fields": {
+        "action_time": "2016-07-12T03:58:36.645Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "5",
+        "object_repr": "Overview",
+        "action_flag": 2,
+        "change_message": "Changed icon."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 86,
+    "fields": {
+        "action_time": "2016-07-12T03:58:56.033Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "6",
+        "object_repr": "About us",
+        "action_flag": 2,
+        "change_message": "Changed icon."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 87,
+    "fields": {
+        "action_time": "2016-07-12T04:00:47.095Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "5",
+        "object_repr": "Overview",
+        "action_flag": 2,
+        "change_message": "Changed icon."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 88,
+    "fields": {
+        "action_time": "2016-07-12T04:07:16.486Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "6",
+        "object_repr": "About us",
+        "action_flag": 2,
+        "change_message": "Changed parent_section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 89,
+    "fields": {
+        "action_time": "2016-07-12T04:07:29.343Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "2",
+        "object_repr": "More information",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 90,
+    "fields": {
+        "action_time": "2016-07-12T04:07:55.955Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "1",
+        "object_repr": "_",
+        "action_flag": 2,
+        "change_message": "Changed caption."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 91,
+    "fields": {
+        "action_time": "2016-07-12T04:09:40.888Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "3",
+        "object_repr": "Summary overview",
+        "action_flag": 2,
+        "change_message": "Changed title."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 92,
+    "fields": {
+        "action_time": "2016-07-12T04:10:03.460Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "3",
+        "object_repr": "Summary",
+        "action_flag": 2,
+        "change_message": "Changed title."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 93,
+    "fields": {
+        "action_time": "2016-07-12T04:15:50.427Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "6",
+        "object_repr": "Data strengtening",
+        "action_flag": 2,
+        "change_message": "Changed slug."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 94,
+    "fields": {
+        "action_time": "2016-07-12T04:16:09.334Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "4",
+        "object_repr": "Data strengthening",
+        "action_flag": 2,
+        "change_message": "Changed slug."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 95,
+    "fields": {
+        "action_time": "2016-07-12T04:16:21.972Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "5",
+        "object_repr": "Cascade",
+        "action_flag": 2,
+        "change_message": "Changed slug."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 96,
+    "fields": {
+        "action_time": "2016-07-12T04:20:42.532Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "4",
+        "object_repr": "Data strengthening",
+        "action_flag": 2,
+        "change_message": "Changed slug."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 97,
+    "fields": {
+        "action_time": "2016-07-12T04:20:52.532Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "6",
+        "object_repr": "Data strengtening",
+        "action_flag": 2,
+        "change_message": "Changed slug."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 98,
+    "fields": {
+        "action_time": "2016-07-12T18:45:32.148Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "5",
+        "object_repr": "hello",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 99,
+    "fields": {
+        "action_time": "2016-07-12T18:45:58.741Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "7",
+        "object_repr": "Hi david",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 100,
+    "fields": {
+        "action_time": "2016-07-12T18:50:47.049Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "7",
+        "object_repr": "Hi david",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 101,
+    "fields": {
+        "action_time": "2016-07-13T17:46:05.979Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "8",
+        "object_repr": "Pre-term mortality",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 102,
+    "fields": {
+        "action_time": "2016-07-13T17:46:46.041Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "9",
+        "object_repr": "Pre-term birth",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 103,
+    "fields": {
+        "action_time": "2016-07-13T17:47:06.872Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "5",
+        "object_repr": "Cascade",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 104,
+    "fields": {
+        "action_time": "2016-07-13T17:47:06.875Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "4",
+        "object_repr": "Data strengthening",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 105,
+    "fields": {
+        "action_time": "2016-07-13T17:48:26.521Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "9",
+        "object_repr": "Pre-term birth",
+        "action_flag": 2,
+        "change_message": "Changed page_id."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 106,
+    "fields": {
+        "action_time": "2016-07-19T02:59:12.582Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "1",
+        "object_repr": "fitti",
+        "action_flag": 2,
+        "change_message": "Changed first_name and last_name."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 107,
+    "fields": {
+        "action_time": "2016-07-19T03:39:21.054Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "3",
+        "object_repr": "Summary",
+        "action_flag": 2,
+        "change_message": "Changed allow_anonymous."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 108,
+    "fields": {
+        "action_time": "2016-07-19T03:39:35.014Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "3",
+        "object_repr": "Summary",
+        "action_flag": 2,
+        "change_message": "Changed allow_anonymous."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 109,
+    "fields": {
+        "action_time": "2016-07-28T22:24:11.108Z",
+        "user": 1,
+        "content_type": 12,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 110,
+    "fields": {
+        "action_time": "2016-07-28T22:25:29.840Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "10",
+        "object_repr": "Uganda Sample",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 111,
+    "fields": {
+        "action_time": "2016-07-28T22:26:10.334Z",
+        "user": 1,
+        "content_type": 12,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_path."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 112,
+    "fields": {
+        "action_time": "2016-07-31T01:49:41.748Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "6",
+        "object_repr": "Home page",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 113,
+    "fields": {
+        "action_time": "2016-07-31T01:50:32.391Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "11",
+        "object_repr": "PTBi East Africa",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 114,
+    "fields": {
+        "action_time": "2016-07-31T01:51:12.211Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "11",
+        "object_repr": "PTBi East Africa",
+        "action_flag": 2,
+        "change_message": "Changed slug, navigation_section and page_id."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 115,
+    "fields": {
+        "action_time": "2016-07-31T17:25:28.463Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "7",
+        "object_repr": "Widget Pie",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 116,
+    "fields": {
+        "action_time": "2016-07-31T17:28:37.823Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "1",
+        "object_repr": "Widget object",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 117,
+    "fields": {
+        "action_time": "2016-07-31T18:48:33.993Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "1",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed label_column."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 118,
+    "fields": {
+        "action_time": "2016-07-31T18:52:00.813Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "1",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed title and slug."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 119,
+    "fields": {
+        "action_time": "2016-07-31T19:01:43.899Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "8",
+        "object_repr": "Widget Table",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 120,
+    "fields": {
+        "action_time": "2016-07-31T19:02:36.090Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "2",
+        "object_repr": "Widget object",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 121,
+    "fields": {
+        "action_time": "2016-07-31T19:03:10.117Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "2",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 122,
+    "fields": {
+        "action_time": "2016-07-31T19:03:57.619Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "2",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed title."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 123,
+    "fields": {
+        "action_time": "2016-07-31T19:04:17.325Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "2",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed title."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 124,
+    "fields": {
+        "action_time": "2016-07-31T20:29:27.412Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 125,
+    "fields": {
+        "action_time": "2016-07-31T20:29:42.839Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_source."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 126,
+    "fields": {
+        "action_time": "2016-07-31T21:35:04.357Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 127,
+    "fields": {
+        "action_time": "2016-07-31T21:35:24.296Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_path."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 128,
+    "fields": {
+        "action_time": "2016-07-31T21:35:41.474Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_path."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 129,
+    "fields": {
+        "action_time": "2016-07-31T21:46:30.899Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_type."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 130,
+    "fields": {
+        "action_time": "2016-07-31T21:48:09.076Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 131,
+    "fields": {
+        "action_time": "2016-07-31T21:48:34.196Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 132,
+    "fields": {
+        "action_time": "2016-07-31T21:48:56.329Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_path."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 133,
+    "fields": {
+        "action_time": "2016-08-01T02:42:05.558Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "2",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed widget_id."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 134,
+    "fields": {
+        "action_time": "2016-08-01T02:46:59.208Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 135,
+    "fields": {
+        "action_time": "2016-08-01T02:52:34.649Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 136,
+    "fields": {
+        "action_time": "2016-08-01T02:54:04.689Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 137,
+    "fields": {
+        "action_time": "2016-08-01T02:54:54.201Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 138,
+    "fields": {
+        "action_time": "2016-08-01T02:56:10.300Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 139,
+    "fields": {
+        "action_time": "2016-08-01T02:57:48.862Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "3",
+        "object_repr": "Widget object",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 140,
+    "fields": {
+        "action_time": "2016-08-01T17:28:27.507Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "9",
+        "object_repr": "Widget Tiles",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 141,
+    "fields": {
+        "action_time": "2016-08-01T17:29:04.987Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "4",
+        "object_repr": "Widget object",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 142,
+    "fields": {
+        "action_time": "2016-08-01T17:30:52.711Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "4",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed widget_type."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 143,
+    "fields": {
+        "action_time": "2016-08-01T17:38:42.417Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "4",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 144,
+    "fields": {
+        "action_time": "2016-08-01T17:40:46.510Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "4",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 145,
+    "fields": {
+        "action_time": "2016-08-01T17:48:09.741Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 146,
+    "fields": {
+        "action_time": "2016-08-01T19:03:38.447Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 147,
+    "fields": {
+        "action_time": "2016-08-01T20:39:41.140Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "4",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed slug."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 148,
+    "fields": {
+        "action_time": "2016-08-01T20:42:28.861Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 149,
+    "fields": {
+        "action_time": "2016-08-01T20:42:55.865Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 150,
+    "fields": {
+        "action_time": "2016-08-01T20:46:29.813Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 151,
+    "fields": {
+        "action_time": "2016-08-01T21:51:26.841Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "4",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 152,
+    "fields": {
+        "action_time": "2016-08-01T21:52:57.447Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "4",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 153,
+    "fields": {
+        "action_time": "2016-08-02T03:52:15.413Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 154,
+    "fields": {
+        "action_time": "2016-08-07T17:33:03.249Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "11",
+        "object_repr": "PTBi East Africa",
+        "action_flag": 2,
+        "change_message": "Changed section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 155,
+    "fields": {
+        "action_time": "2016-08-07T17:34:23.786Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "11",
+        "object_repr": "PTBi East Africa",
+        "action_flag": 2,
+        "change_message": "Changed section and page_id."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 156,
+    "fields": {
+        "action_time": "2016-08-07T19:48:34.467Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "11",
+        "object_repr": "PTBi East Africa",
+        "action_flag": 2,
+        "change_message": "Changed page_id."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 157,
+    "fields": {
+        "action_time": "2016-08-07T20:00:46.079Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "3",
+        "object_repr": "Summary",
+        "action_flag": 2,
+        "change_message": "Changed allow_anonymous."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 158,
+    "fields": {
+        "action_time": "2016-08-07T20:11:34.197Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "1",
+        "object_repr": "About PTBi",
+        "action_flag": 2,
+        "change_message": "Changed text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 159,
+    "fields": {
+        "action_time": "2016-08-07T20:12:21.293Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "11",
+        "object_repr": "PTBi East Africa",
+        "action_flag": 2,
+        "change_message": "Changed navigation_section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 160,
+    "fields": {
+        "action_time": "2016-08-07T20:12:29.694Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "10",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed navigation_section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 161,
+    "fields": {
+        "action_time": "2016-08-07T20:12:42.045Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "9",
+        "object_repr": "Pre-term birth",
+        "action_flag": 2,
+        "change_message": "Changed navigation_section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 162,
+    "fields": {
+        "action_time": "2016-08-07T20:12:48.975Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "1",
+        "object_repr": "About PTBi",
+        "action_flag": 2,
+        "change_message": "Changed navigation_section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 163,
+    "fields": {
+        "action_time": "2016-08-07T20:12:58.217Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "2",
+        "object_repr": "About data strengthening",
+        "action_flag": 2,
+        "change_message": "Changed navigation_section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 164,
+    "fields": {
+        "action_time": "2016-08-07T20:13:07.433Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "3",
+        "object_repr": "Summary",
+        "action_flag": 2,
+        "change_message": "Changed navigation_section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 165,
+    "fields": {
+        "action_time": "2016-08-07T22:25:39.375Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "11",
+        "object_repr": "PTBi East Africa",
+        "action_flag": 2,
+        "change_message": "Changed navigation_section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 166,
+    "fields": {
+        "action_time": "2016-08-08T04:24:13.739Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "7",
+        "object_repr": "Widget Pie",
+        "action_flag": 2,
+        "change_message": "No fields changed."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 167,
+    "fields": {
+        "action_time": "2016-08-08T04:24:36.816Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "9",
+        "object_repr": "Widget Tiles",
+        "action_flag": 2,
+        "change_message": "Changed template_type."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 168,
+    "fields": {
+        "action_time": "2016-08-08T18:12:47.705Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "4",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "No fields changed."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 169,
+    "fields": {
+        "action_time": "2016-08-08T18:16:55.298Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "10",
+        "object_repr": "Widget Line Chart",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 170,
+    "fields": {
+        "action_time": "2016-08-08T18:17:18.979Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 171,
+    "fields": {
+        "action_time": "2016-08-08T18:18:06.465Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed slug."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 172,
+    "fields": {
+        "action_time": "2016-08-08T18:18:43.061Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed database_key."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 173,
+    "fields": {
+        "action_time": "2016-08-08T18:19:10.288Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "10",
+        "object_repr": "Widget Line Chart",
+        "action_flag": 2,
+        "change_message": "Changed template_source."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 174,
+    "fields": {
+        "action_time": "2016-08-08T18:20:35.358Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "10",
+        "object_repr": "Widget Line Chart",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 175,
+    "fields": {
+        "action_time": "2016-08-08T20:42:52.584Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns and label_column."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 176,
+    "fields": {
+        "action_time": "2016-08-08T20:43:10.911Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed label_column."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 177,
+    "fields": {
+        "action_time": "2016-08-08T20:43:27.218Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 178,
+    "fields": {
+        "action_time": "2016-08-08T20:52:19.584Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 179,
+    "fields": {
+        "action_time": "2016-08-08T20:53:53.118Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 180,
+    "fields": {
+        "action_time": "2016-08-08T20:55:09.172Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "10",
+        "object_repr": "Widget Line Chart",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 181,
+    "fields": {
+        "action_time": "2016-08-08T20:59:15.456Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 182,
+    "fields": {
+        "action_time": "2016-08-08T21:48:53.671Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "10",
+        "object_repr": "Widget Line Chart",
+        "action_flag": 2,
+        "change_message": "Changed template_source and template_path."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 183,
+    "fields": {
+        "action_time": "2016-08-08T21:48:58.579Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "10",
+        "object_repr": "Widget Line Chart",
+        "action_flag": 2,
+        "change_message": "Changed template_type."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 184,
+    "fields": {
+        "action_time": "2016-08-08T21:49:23.798Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "10",
+        "object_repr": "Widget Line Chart",
+        "action_flag": 2,
+        "change_message": "Changed template_path."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 185,
+    "fields": {
+        "action_time": "2016-08-08T21:58:53.826Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_point_column."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 186,
+    "fields": {
+        "action_time": "2016-08-09T03:38:49.241Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "2",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 187,
+    "fields": {
+        "action_time": "2016-08-09T03:42:29.541Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "3",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 188,
+    "fields": {
+        "action_time": "2016-08-09T03:52:49.191Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "1",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 189,
+    "fields": {
+        "action_time": "2016-08-09T03:54:10.174Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "4",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 190,
+    "fields": {
+        "action_time": "2016-08-09T18:46:31.020Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 191,
+    "fields": {
+        "action_time": "2016-08-09T18:46:53.421Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query and data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 192,
+    "fields": {
+        "action_time": "2016-08-09T18:47:43.733Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_point_column."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 193,
+    "fields": {
+        "action_time": "2016-08-09T18:53:08.133Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "No fields changed."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 194,
+    "fields": {
+        "action_time": "2016-08-09T19:01:29.502Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_point_column."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 195,
+    "fields": {
+        "action_time": "2016-08-09T19:19:51.963Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_point_column."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 196,
+    "fields": {
+        "action_time": "2016-08-09T23:30:38.386Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 197,
+    "fields": {
+        "action_time": "2016-08-09T23:41:56.709Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 198,
+    "fields": {
+        "action_time": "2016-08-09T23:46:18.034Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 199,
+    "fields": {
+        "action_time": "2016-08-09T23:47:55.473Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "2",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 200,
+    "fields": {
+        "action_time": "2016-08-09T23:49:09.660Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "3",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 201,
+    "fields": {
+        "action_time": "2016-08-09T23:49:26.233Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "3",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_point_column."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 202,
+    "fields": {
+        "action_time": "2016-08-09T23:52:26.626Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "1",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns and data_point_column."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 203,
+    "fields": {
+        "action_time": "2016-08-09T23:56:38.343Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "4",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 204,
+    "fields": {
+        "action_time": "2016-08-09T23:57:31.386Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "4",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 205,
+    "fields": {
+        "action_time": "2016-08-09T23:59:13.851Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "4",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 206,
+    "fields": {
+        "action_time": "2016-08-10T00:02:28.423Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "4",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_point_column."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 207,
+    "fields": {
+        "action_time": "2016-08-10T00:22:59.784Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 208,
+    "fields": {
+        "action_time": "2016-08-10T00:23:17.690Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 209,
+    "fields": {
+        "action_time": "2016-08-10T00:23:49.565Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 210,
+    "fields": {
+        "action_time": "2016-08-11T03:57:14.675Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 211,
+    "fields": {
+        "action_time": "2016-08-11T03:58:56.437Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 212,
+    "fields": {
+        "action_time": "2016-08-11T04:04:03.008Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_point_column."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 213,
+    "fields": {
+        "action_time": "2016-08-11T04:04:24.638Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_point_column."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 214,
+    "fields": {
+        "action_time": "2016-08-11T04:16:36.557Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_point_column."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 215,
+    "fields": {
+        "action_time": "2016-08-11T04:16:59.662Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_point_column."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 216,
+    "fields": {
+        "action_time": "2016-08-11T04:18:57.817Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_point_column."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 217,
+    "fields": {
+        "action_time": "2016-08-11T04:24:27.619Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "10",
+        "object_repr": "Widget Line Chart",
+        "action_flag": 2,
+        "change_message": "No fields changed."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 218,
+    "fields": {
+        "action_time": "2016-08-11T04:24:43.652Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "11",
+        "object_repr": "Widget Bar Chart",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 219,
+    "fields": {
+        "action_time": "2016-08-11T04:24:56.550Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed template and widget_type."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 220,
+    "fields": {
+        "action_time": "2016-08-11T04:25:28.029Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "11",
+        "object_repr": "Widget Bar Chart",
+        "action_flag": 2,
+        "change_message": "No fields changed."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 221,
+    "fields": {
+        "action_time": "2016-08-12T21:29:57.821Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "12",
+        "object_repr": "Widget Progress Circle",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 222,
+    "fields": {
+        "action_time": "2016-08-12T21:30:53.692Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "6",
+        "object_repr": "Widget object",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 223,
+    "fields": {
+        "action_time": "2016-08-12T21:31:59.720Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "6",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed widget_type."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 224,
+    "fields": {
+        "action_time": "2016-08-12T21:33:05.829Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "6",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query and data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 225,
+    "fields": {
+        "action_time": "2016-08-12T21:33:58.494Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "6",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_point_column."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 226,
+    "fields": {
+        "action_time": "2016-08-12T22:01:58.753Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "6",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query, data_columns and data_point_column."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 227,
+    "fields": {
+        "action_time": "2016-08-12T22:02:25.208Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "6",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "No fields changed."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 228,
+    "fields": {
+        "action_time": "2016-08-12T22:07:00.767Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "6",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns and data_point_column."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 229,
+    "fields": {
+        "action_time": "2016-08-12T22:10:24.630Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "6",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 230,
+    "fields": {
+        "action_time": "2016-08-12T22:49:34.438Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "6",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 231,
+    "fields": {
+        "action_time": "2016-08-12T22:50:22.020Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 232,
+    "fields": {
+        "action_time": "2016-08-12T22:51:08.149Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 233,
+    "fields": {
+        "action_time": "2016-08-17T17:17:31.782Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_path."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 234,
+    "fields": {
+        "action_time": "2016-08-17T17:18:05.886Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 2,
+        "change_message": "Changed template_source."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 235,
+    "fields": {
+        "action_time": "2016-08-17T17:32:19.405Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed template and widget_type."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 236,
+    "fields": {
+        "action_time": "2016-08-23T07:35:01.348Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "6",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed title."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 237,
+    "fields": {
+        "action_time": "2016-08-23T07:35:40.738Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "6",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed title."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 238,
+    "fields": {
+        "action_time": "2016-08-23T07:36:28.670Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "6",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed title."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 239,
+    "fields": {
+        "action_time": "2016-08-23T10:55:25.155Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 240,
+    "fields": {
+        "action_time": "2016-08-23T11:27:09.481Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 241,
+    "fields": {
+        "action_time": "2016-08-23T11:31:23.456Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 242,
+    "fields": {
+        "action_time": "2016-08-23T12:00:09.364Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query and filters."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 243,
+    "fields": {
+        "action_time": "2016-08-23T12:16:49.817Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 244,
+    "fields": {
+        "action_time": "2016-08-23T12:17:23.274Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 245,
+    "fields": {
+        "action_time": "2016-08-23T12:46:04.978Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 246,
+    "fields": {
+        "action_time": "2016-08-23T12:46:53.895Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 247,
+    "fields": {
+        "action_time": "2016-08-23T12:47:21.242Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 248,
+    "fields": {
+        "action_time": "2016-08-23T12:48:10.728Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 249,
+    "fields": {
+        "action_time": "2016-08-23T12:48:42.453Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 250,
+    "fields": {
+        "action_time": "2016-08-23T12:53:02.875Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 251,
+    "fields": {
+        "action_time": "2016-08-25T08:49:35.231Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query and filters."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 252,
+    "fields": {
+        "action_time": "2016-08-25T09:01:37.711Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query and filters."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 253,
+    "fields": {
+        "action_time": "2016-09-01T07:41:53.371Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query and filters."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 254,
+    "fields": {
+        "action_time": "2016-09-01T07:44:11.365Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 255,
+    "fields": {
+        "action_time": "2016-09-01T08:33:56.567Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "7",
+        "object_repr": "Widget object",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 256,
+    "fields": {
+        "action_time": "2016-09-01T08:35:18.693Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "7",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_point_column."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 257,
+    "fields": {
+        "action_time": "2016-09-02T06:34:23.230Z",
+        "user": 2,
+        "content_type": 19,
+        "object_id": "6",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed code, user_description and view_details_url."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 258,
+    "fields": {
+        "action_time": "2016-09-02T07:17:49.518Z",
+        "user": 2,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed code and user_description."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 259,
+    "fields": {
+        "action_time": "2016-09-02T07:20:45.784Z",
+        "user": 2,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed view_details_url."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 260,
+    "fields": {
+        "action_time": "2016-09-02T11:22:31.899Z",
+        "user": 2,
+        "content_type": 20,
+        "object_id": "1",
+        "object_repr": "Uganda",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 261,
+    "fields": {
+        "action_time": "2016-09-02T11:22:34.781Z",
+        "user": 2,
+        "content_type": 19,
+        "object_id": "6",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed tags."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 262,
+    "fields": {
+        "action_time": "2016-10-21T17:45:49.499Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "10",
+        "object_repr": "Uganda Sample",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 263,
+    "fields": {
+        "action_time": "2016-10-21T17:45:49.500Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "9",
+        "object_repr": "Pre-term birth",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 264,
+    "fields": {
+        "action_time": "2016-10-21T17:45:49.502Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "8",
+        "object_repr": "Pre-term mortality",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 265,
+    "fields": {
+        "action_time": "2016-10-21T17:45:49.503Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "6",
+        "object_repr": "Data strengtening",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 266,
+    "fields": {
+        "action_time": "2016-10-21T17:45:49.504Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "2",
+        "object_repr": "About data strengthening",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 267,
+    "fields": {
+        "action_time": "2016-10-21T18:06:01.364Z",
+        "user": 1,
+        "content_type": 20,
+        "object_id": "2",
+        "object_repr": "Built-in widget",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 268,
+    "fields": {
+        "action_time": "2016-10-21T18:06:11.826Z",
+        "user": 1,
+        "content_type": 20,
+        "object_id": "3",
+        "object_repr": "Built-in template",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 269,
+    "fields": {
+        "action_time": "2016-10-21T18:06:17.854Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "12",
+        "object_repr": "Widget Progress Circle",
+        "action_flag": 2,
+        "change_message": "Changed tags."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 270,
+    "fields": {
+        "action_time": "2016-10-21T18:08:14.282Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "6",
+        "object_repr": "Home (landing) page",
+        "action_flag": 2,
+        "change_message": "Changed name, template_source, template_path, template_text and tags."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 271,
+    "fields": {
+        "action_time": "2016-10-21T18:08:42.785Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "6",
+        "object_repr": "Home (landing) page",
+        "action_flag": 2,
+        "change_message": "Changed template_text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 272,
+    "fields": {
+        "action_time": "2016-10-21T18:11:48.981Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "2",
+        "object_repr": "Summary page",
+        "action_flag": 2,
+        "change_message": "Changed name, template_type, template_source, template_text and tags."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 273,
+    "fields": {
+        "action_time": "2016-10-21T18:13:34.450Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "11",
+        "object_repr": "Welcome",
+        "action_flag": 2,
+        "change_message": "Changed title and main_title."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 274,
+    "fields": {
+        "action_time": "2016-10-21T18:13:59.396Z",
+        "user": 1,
+        "content_type": 14,
+        "object_id": "4",
+        "object_repr": "Kenya",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 275,
+    "fields": {
+        "action_time": "2016-10-21T18:13:59.398Z",
+        "user": 1,
+        "content_type": 14,
+        "object_id": "3",
+        "object_repr": "Uganda",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 276,
+    "fields": {
+        "action_time": "2016-10-21T18:15:00.060Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "6",
+        "object_repr": "Home (landing) page",
+        "action_flag": 2,
+        "change_message": "Changed template_source and template_path."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 277,
+    "fields": {
+        "action_time": "2016-10-21T18:15:46.650Z",
+        "user": 1,
+        "content_type": 18,
+        "object_id": "11",
+        "object_repr": "Welcome",
+        "action_flag": 2,
+        "change_message": "Changed navigation_section."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 278,
+    "fields": {
+        "action_time": "2016-10-21T18:16:32.618Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "5",
+        "object_repr": "Uganda Sample",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 279,
+    "fields": {
+        "action_time": "2016-10-21T18:16:32.620Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "4",
+        "object_repr": "Uganda Data Strengthening",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 280,
+    "fields": {
+        "action_time": "2016-10-21T18:18:12.698Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "2",
+        "object_repr": "Summary page",
+        "action_flag": 2,
+        "change_message": "Changed template_source, template_path, template_text and tags."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 281,
+    "fields": {
+        "action_time": "2016-10-21T18:33:09.754Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "13",
+        "object_repr": "Text widget",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 282,
+    "fields": {
+        "action_time": "2016-10-21T18:33:46.997Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "13",
+        "object_repr": "Widget text",
+        "action_flag": 2,
+        "change_message": "Changed name."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 283,
+    "fields": {
+        "action_time": "2016-10-21T18:40:16.720Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "8",
+        "object_repr": "Widget object",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 284,
+    "fields": {
+        "action_time": "2016-10-21T18:42:08.408Z",
+        "user": 1,
+        "content_type": 15,
+        "object_id": "13",
+        "object_repr": "Widget Text",
+        "action_flag": 2,
+        "change_message": "Changed name."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 285,
+    "fields": {
+        "action_time": "2016-10-21T23:09:33.011Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "7",
+        "object_repr": "Widget object",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 286,
+    "fields": {
+        "action_time": "2016-10-21T23:09:33.013Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "6",
+        "object_repr": "Widget object",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 287,
+    "fields": {
+        "action_time": "2016-10-21T23:09:33.015Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "5",
+        "object_repr": "Widget object",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 288,
+    "fields": {
+        "action_time": "2016-10-21T23:09:33.016Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "4",
+        "object_repr": "Widget object",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 289,
+    "fields": {
+        "action_time": "2016-10-21T23:09:33.017Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "3",
+        "object_repr": "Widget object",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 290,
+    "fields": {
+        "action_time": "2016-10-21T23:09:33.018Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "2",
+        "object_repr": "Widget object",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 291,
+    "fields": {
+        "action_time": "2016-10-21T23:09:33.020Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "1",
+        "object_repr": "Widget object",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 292,
+    "fields": {
+        "action_time": "2016-10-21T23:12:46.582Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "9",
+        "object_repr": "Widget object",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 293,
+    "fields": {
+        "action_time": "2016-10-21T23:13:46.903Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "9",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 294,
+    "fields": {
+        "action_time": "2016-10-21T23:14:48.350Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "9",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed sql_query, data_columns and text."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 295,
+    "fields": {
+        "action_time": "2016-11-01T22:30:07.548Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "9",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "No fields changed."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 296,
+    "fields": {
+        "action_time": "2016-11-01T22:30:57.178Z",
+        "user": 1,
+        "content_type": 19,
+        "object_id": "9",
+        "object_repr": "Widget object",
+        "action_flag": 2,
+        "change_message": "Changed data_columns."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 297,
+    "fields": {
+        "action_time": "2016-11-01T23:37:40.728Z",
+        "user": 1,
+        "content_type": 3,
+        "object_id": "1",
+        "object_repr": "Test",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 298,
+    "fields": {
+        "action_time": "2016-11-01T23:44:14.937Z",
+        "user": 1,
+        "content_type": 3,
+        "object_id": "1",
+        "object_repr": "Test",
+        "action_flag": 2,
+        "change_message": "Added group profile \"GroupProfile object\"."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 299,
+    "fields": {
+        "action_time": "2016-11-02T15:27:43.798Z",
+        "user": 1,
+        "content_type": 22,
+        "object_id": "1",
+        "object_repr": "Test",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 300,
+    "fields": {
+        "action_time": "2016-11-02T18:57:50.888Z",
+        "user": 1,
+        "content_type": 22,
+        "object_id": "2",
+        "object_repr": "National",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 301,
+    "fields": {
+        "action_time": "2016-11-02T18:57:59.788Z",
+        "user": 1,
+        "content_type": 22,
+        "object_id": "3",
+        "object_repr": "District",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 302,
+    "fields": {
+        "action_time": "2016-11-02T18:59:47.050Z",
+        "user": 1,
+        "content_type": 3,
+        "object_id": "1",
+        "object_repr": "Test",
+        "action_flag": 2,
+        "change_message": "No fields changed."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 303,
+    "fields": {
+        "action_time": "2016-11-02T18:59:55.228Z",
+        "user": 1,
+        "content_type": 3,
+        "object_id": "2",
+        "object_repr": "District users",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 304,
+    "fields": {
+        "action_time": "2016-11-02T19:00:19.497Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "3",
+        "object_repr": "nat1",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 305,
+    "fields": {
+        "action_time": "2016-11-02T19:00:42.352Z",
+        "user": 1,
+        "content_type": 3,
+        "object_id": "3",
+        "object_repr": "National users",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 306,
+    "fields": {
+        "action_time": "2016-11-02T19:00:46.648Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "3",
+        "object_repr": "nat1",
+        "action_flag": 2,
+        "change_message": "Changed first_name, last_name and groups."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 307,
+    "fields": {
+        "action_time": "2016-11-02T19:01:06.488Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "4",
+        "object_repr": "nat2",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 308,
+    "fields": {
+        "action_time": "2016-11-02T19:01:19.788Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "4",
+        "object_repr": "nat2",
+        "action_flag": 2,
+        "change_message": "Changed first_name, last_name and groups."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 309,
+    "fields": {
+        "action_time": "2016-11-02T19:01:34.029Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "5",
+        "object_repr": "dis1",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 310,
+    "fields": {
+        "action_time": "2016-11-02T19:01:43.525Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "5",
+        "object_repr": "dis1",
+        "action_flag": 2,
+        "change_message": "Changed first_name, last_name and groups."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 311,
+    "fields": {
+        "action_time": "2016-11-02T19:01:55.050Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "6",
+        "object_repr": "dis2",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 312,
+    "fields": {
+        "action_time": "2016-11-02T19:02:04.433Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "6",
+        "object_repr": "dis2",
+        "action_flag": 2,
+        "change_message": "Changed first_name, last_name and groups."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 313,
+    "fields": {
+        "action_time": "2016-11-02T19:02:12.538Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "7",
+        "object_repr": "natdis",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 314,
+    "fields": {
+        "action_time": "2016-11-02T19:02:35.050Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "7",
+        "object_repr": "natdis",
+        "action_flag": 2,
+        "change_message": "Changed first_name, last_name and groups."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 315,
+    "fields": {
+        "action_time": "2016-11-02T21:29:36.206Z",
+        "user": 1,
+        "content_type": 22,
+        "object_id": "3",
+        "object_repr": "District",
+        "action_flag": 2,
+        "change_message": "Changed groups."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 316,
+    "fields": {
+        "action_time": "2016-11-02T21:29:41.399Z",
+        "user": 1,
+        "content_type": 22,
+        "object_id": "2",
+        "object_repr": "National",
+        "action_flag": 2,
+        "change_message": "Changed groups."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 317,
+    "fields": {
+        "action_time": "2016-11-03T17:23:45.737Z",
+        "user": 1,
+        "content_type": 23,
+        "object_id": "1",
+        "object_repr": "GroupPerspective object",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 318,
+    "fields": {
+        "action_time": "2016-11-03T17:24:14.899Z",
+        "user": 1,
+        "content_type": 23,
+        "object_id": "2",
+        "object_repr": "GroupPerspective object",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 319,
+    "fields": {
+        "action_time": "2016-11-03T17:50:03.232Z",
+        "user": 1,
+        "content_type": 3,
+        "object_id": "4",
+        "object_repr": "All perspectives",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 320,
+    "fields": {
+        "action_time": "2016-11-03T17:50:14.071Z",
+        "user": 1,
+        "content_type": 23,
+        "object_id": "3",
+        "object_repr": "All perspectives - National",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 321,
+    "fields": {
+        "action_time": "2016-11-03T17:50:26.931Z",
+        "user": 1,
+        "content_type": 23,
+        "object_id": "4",
+        "object_repr": "All perspectives - District",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 322,
+    "fields": {
+        "action_time": "2016-11-03T17:51:36.427Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "7",
+        "object_repr": "natdis",
+        "action_flag": 2,
+        "change_message": "No fields changed."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 323,
+    "fields": {
+        "action_time": "2016-11-03T18:14:39.774Z",
+        "user": 1,
+        "content_type": 23,
+        "object_id": "4",
+        "object_repr": "Perspective",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 324,
+    "fields": {
+        "action_time": "2016-11-03T18:14:39.779Z",
+        "user": 1,
+        "content_type": 23,
+        "object_id": "3",
+        "object_repr": "Perspective",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 325,
+    "fields": {
+        "action_time": "2016-11-03T18:14:57.026Z",
+        "user": 1,
+        "content_type": 23,
+        "object_id": "2",
+        "object_repr": "National - Uganda",
+        "action_flag": 2,
+        "change_message": "Changed name and preset_filter."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 326,
+    "fields": {
+        "action_time": "2016-11-03T18:15:43.926Z",
+        "user": 1,
+        "content_type": 3,
+        "object_id": "5",
+        "object_repr": "Jinja District Users",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 327,
+    "fields": {
+        "action_time": "2016-11-03T18:15:58.000Z",
+        "user": 1,
+        "content_type": 23,
+        "object_id": "5",
+        "object_repr": "Jinja District",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 328,
+    "fields": {
+        "action_time": "2016-11-03T18:16:06.633Z",
+        "user": 1,
+        "content_type": 23,
+        "object_id": "1",
+        "object_repr": "Any district",
+        "action_flag": 2,
+        "change_message": "Changed name."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 329,
+    "fields": {
+        "action_time": "2016-11-03T18:16:47.621Z",
+        "user": 1,
+        "content_type": 3,
+        "object_id": "6",
+        "object_repr": "Iganga District Users",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 330,
+    "fields": {
+        "action_time": "2016-11-03T18:16:59.351Z",
+        "user": 1,
+        "content_type": 23,
+        "object_id": "6",
+        "object_repr": "Iganga District Users",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 331,
+    "fields": {
+        "action_time": "2016-11-03T18:17:14.523Z",
+        "user": 1,
+        "content_type": 23,
+        "object_id": "6",
+        "object_repr": "Iganga District",
+        "action_flag": 2,
+        "change_message": "Changed name."
+    }
+}
+]

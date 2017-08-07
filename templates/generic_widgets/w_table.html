@@ -1,0 +1,23 @@
+{% extends "t_xpanel_control_base.html" %}
+{% load dashgent_filters %}
+
+{% block caption %}
+    {{ caption }}
+{% endblock %}
+
+{% block spanner %}
+     {% include "generic_widgets/include_more_menu.html" %}
+{% endblock %}
+
+{% block widget_main %}
+
+    {% include 'generic_widgets/include_table_list.html' %}
+
+    <script type="text/javascript">
+
+        $(function () {
+            //$('#diagnosis_list').dataTable();
+        });
+
+    </script>
+{% endblock %}

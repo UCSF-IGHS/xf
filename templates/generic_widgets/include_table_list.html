@@ -1,0 +1,25 @@
+{% load dashgent_filters %}
+
+   <table class="table table-hover table-scrollable table200" id="diagnosis_list">
+        <thead>
+        <tr>
+            {% for data_column in data_columns %}
+                <th style="width:{{ data_column|lookup:'table_column_width' }}">{{ data_column|lookup:'table_column_caption' }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in rows %}
+            <tr>
+            {% for data_column in data_columns %}
+                <td style="width:{{ data_column|lookup:'table_column_width' }}">
+
+                    {% with data_column|lookup:'column_name' as column_name %}
+                        {{ row|lookup:column_name }}
+                    {% endwith %}
+                </td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>

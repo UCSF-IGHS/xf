@@ -1,0 +1,20 @@
+<div class="x_panel tile fixed_height_320">
+    <div class="x_title">
+        <h2>{{ caption  }}</h2>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <div style="text-align: center; margin-bottom: 17px">
+                              <span class="chart" data-percent="{{ data.data_percent }}">
+                                                  <span class="percent">{{ data.data_percent }}</span>
+                              <canvas id="canvas3" height="220" width="220"
+                                      style="height: 110px; width: 110px;"></canvas></span>
+            <p>{{ numdem_caption }}</p>
+            <div class="divider"></div>
+            <p><span class="message">{{ explanation }}</span>
+            </p>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>

@@ -1,0 +1,91 @@
+table.table-scrollable {
+    display: table;
+    width: 100%;
+}
+table.table-scrollable thead, table.table-scrollable tbody {
+    float: left;
+    width: 100%;
+}
+table.table-scrollable tbody {
+    overflow: auto;
+}
+table.table200 tbody {
+    height: 200px;
+}
+table.table320 tbody {
+    height: 320px;
+}
+table.table-scrollable tr {
+    width: 100%;
+    display: table;
+    text-align: left;
+}
+table.table-scrollable th, table.table-scrollable td {
+
+}
+
+.divfullheight {
+    height: 100%;
+}
+
+.panel_toolbox {
+    min-width: 0;
+}
+
+.space-me {
+    margin-right: 20px;
+}
+
+/* Used in the navigation bar to make an item selected, i.e. a perspective */
+.nav.navbar-nav>li.selected>a {
+    background-color: #D9DEE4;
+    color: rgb(26, 187, 156) !important;
+}
+
+.top_nav .navbar-title {
+    margin: 0;
+    float: left;
+    padding-top: 10px;
+}
+
+.filter-bar {
+    background-color: #F2F5F7;
+    border-bottom: 1px solid #D9DEE4;
+    padding: 5px;
+    display: block;
+    margin-left: 230px
+}
+
+@media (max-width: 991px) {
+    .filter-bar {
+        width: 100%;
+        margin: 0;
+    }
+}
+/*
+.select2-container .select2-choice, .select2-result-label {
+  font-size: 1.5em;
+  height: 23px;
+  overflow: auto;
+}
+
+.select2-arrow, .select2-chosen {
+  padding-top: 6px;
+}
+
+.select2-selection.select2-selection--multiple{
+    min-height: 25px;
+    max-height: 25px;
+    }
+
+.select2-selection__rendered {
+  line-height: 12px !important;
+}
+
+.select2-selection {
+  height: 12px !important;
+}
+
+.select2-container .select2-selection--single {
+    height: 12px;
+}*/
