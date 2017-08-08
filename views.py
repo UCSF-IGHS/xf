@@ -6,7 +6,7 @@ class XFNavigationViewMixin():
     This class enables the new navigation tree. You should use it by calling self.set_navigation_context() within the
     get_context_data method of your view.
 
-    The navigation tree is shared across apps.
+    The navigation tree is shared across apps. Each app will get their own tree.
 
     """
 
