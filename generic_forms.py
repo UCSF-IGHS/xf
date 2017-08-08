@@ -4,10 +4,10 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.forms.models import ModelForm
-import floppyforms as forms
-from floppyforms.widgets import PasswordInput
+#import floppyforms as forms
+#from floppyforms.widgets import PasswordInput
 
-class XFAjaxForm(forms.Form):
+class XFAjaxForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
 
