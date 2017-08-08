@@ -13,19 +13,22 @@ class PermissionMixin(object):
         """
         Returns whether the current user has a specific persmission.
         """
-        return True
-        #TODO Fix This
-        return self.request.user.has_perm('%s.%s_%s' % (self.model._meta.app_label, permission, self.model._meta.module_name))
+        return self.request.user.has_perm('%s.%s_%s' % (self.model._meta.app_label, permission, self.model._meta.model_name))
+
+    @staticmethod
+    def user_has_model_perm(self, model, permission):
+        """
+        Returns whether the current user has a specific persmission.
+        """
+        return self.request.user.has_perm('%s.%s_%s' % (model._meta.app_label, permission, model._meta.model_name))
+
 
     def ensure_model_perm_or_403(self, permission):
         """
         Ensure that the user has the model permission. If not, a 403 is thrown.
         This method is currently IN USE.
         """
-        return True
-        #TODO Fix This
-
-        if not self.request.user.has_perm('%s.%s_%s' % (self.model._meta.app_label, permission, self.model._meta.module_name)):
+        if not self.request.user.has_perm('%s.%s_%s' % (self.model._meta.app_label, permission, self.model._meta.model_name)):
             raise PermissionDenied
 
     def ensure_set_context_perm(self, permission):
