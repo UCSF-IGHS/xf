@@ -14,10 +14,10 @@
     <title>{{ title }}</title>
 
     <!-- jQuery -->
-    <script src="{{ STATIC_URL }}gla/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="{% static "gla/vendors/jquery/dist/jquery.min.js" %}"></script>
 
     <!-- Internal uh AJAX Library -->
-    <script src="{{ STATIC_URL }}gla/js/ajax.js"></script>
+    <script src="{% static  "gla/js/ajax.js" %}"></script>
 
 
     <!-- Bootstrap -->
@@ -66,7 +66,7 @@
                 <!-- menu profile quick info -->
                 <div class="profile">
                     <div class="profile_pic">
-                        <img src="{{ STATIC_URL }}gla/images/img.jpg" alt="..." class="img-circle profile_img">
+                        <img src="{% static "gla/images/img.jpg" %}" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
                         {% if user.is_authenticated %}
@@ -103,7 +103,7 @@
                                     {% for navigation_link in navigation_section.navigation_links %}
 
                                     {# For URLs that don't have children #}
-                                    {% if navigation_link.sub_navigation_links|length = 0 %}
+                                    {% if navigation_link.sub_navigation_links|length == 0 %}
                                         <li><a href="{{ navigation_link.url }}">{{ navigation_link.caption }}</a></li>
                                     {% endif %}
 
@@ -166,7 +166,7 @@
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="{{ STATIC_URL }}gla/images/img.jpg" alt="">
+                                <img src="{% static "gla/images/img.jpg" %} alt="">
                                 {% if user.is_authenticated %}{{ user.get_full_name|default:user.username }}{% endif %}
                                 {% if not user.is_authenticated %}Log in{% endif %}
                                 <span class=" fa fa-angle-down"></span>
@@ -177,7 +177,7 @@
                                             class="fa fa-sign-out pull-right"></i> Log in</a></li>
                                 {% endif %}
                                 {% if user.is_authenticated %}
-                                    <li><a href="{% url "django.contrib.auth.views.logout" %}"><i
+                                    <li><a href=""><i
                                             class="fa fa-sign-out pull-right"></i> Log out</a></li>
                                 {% endif %}
                                 {% if request.user.is_superuser %}
@@ -272,64 +272,64 @@
 </div>
 
 <!-- Bootstrap -->
-<script src="{{ STATIC_URL }}gla/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="{% static "gla/vendors/bootstrap/dist/js/bootstrap.min.js" %}"></script>
 <!-- FastClick -->
-<script src="{{ STATIC_URL }}gla/vendors/fastclick/lib/fastclick.js"></script>
+<script src="{% static "gla/vendors/fastclick/lib/fastclick.js" %}"></script>
 <!-- NProgress -->
-<script src="{{ STATIC_URL }}gla/vendors/nprogress/nprogress.js"></script>
+<script src="{% static "gla/vendors/nprogress/nprogress.js" %}"></script>
 <!-- Chart.js -->
-<script src="{{ STATIC_URL }}gla/vendors/Chart.js/dist/Chart.min.js"></script>
+<script src="{% static "gla/vendors/Chart.js/dist/Chart.min.js" %}"></script>
 <!-- gauge.js -->
-<script src="{{ STATIC_URL }}gla/vendors/gauge.js/dist/gauge.min.js"></script>
+<script src="{% static "gla/vendors/gauge.js/dist/gauge.min.js" %}"></script>
 <!-- bootstrap-progressbar -->
-<script src="{{ STATIC_URL }}gla/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<script src="{% static "gla/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js" %}"></script>
 <!-- iCheck -->
-<script src="{{ STATIC_URL }}gla/vendors/iCheck/icheck.min.js"></script>
+<script src="{% static "gla/vendors/iCheck/icheck.min.js" %}"></script>
 <!-- Skycons -->
-<script src="{{ STATIC_URL }}gla/vendors/skycons/skycons.js"></script>
+<script src="{% static "gla/vendors/skycons/skycons.js" %}"></script>
 <!-- EasyPieChart-->
-<script src="{{ STATIC_URL }}gla/vendors/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
+<script src="{% static "gla/vendors/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js" %}"></script>
 <!-- ECharts -->
-<script src="{{ STATIC_URL }}gla/vendors/echarts/dist/echarts.min.js"></script>
-<script src="{{ STATIC_URL }}gla/vendors/echarts/map/js/world.js"></script>
+<script src="{% static "gla/vendors/echarts/dist/echarts.min.js" %}"></script>
+<script src="{% static "gla/vendors/echarts/map/js/world.js" %}"></script>
 <!-- Flot -->
-<script src="{{ STATIC_URL }}gla/vendors/Flot/jquery.flot.js"></script>
-<script src="{{ STATIC_URL }}gla/vendors/Flot/jquery.flot.pie.js"></script>
-<script src="{{ STATIC_URL }}gla/vendors/Flot/jquery.flot.time.js"></script>
-<script src="{{ STATIC_URL }}gla/vendors/Flot/jquery.flot.stack.js"></script>
-<script src="{{ STATIC_URL }}gla/vendors/Flot/jquery.flot.resize.js"></script>
+<script src="{% static "gla/vendors/Flot/jquery.flot.js" %}"></script>
+<script src="{% static "gla/vendors/Flot/jquery.flot.pie.js" %}"></script>
+<script src="{% static "gla/vendors/Flot/jquery.flot.time.js" %}"></script>
+<script src="{% static "gla/vendors/Flot/jquery.flot.stack.js" %}"></script>
+<script src="{% static "gla/vendors/Flot/jquery.flot.resize.js" %}"></script>
 <!-- Flot plugins -->
-<script src="{{ STATIC_URL }}gla/js/flot/jquery.flot.orderBars.js"></script>
-<script src="{{ STATIC_URL }}gla/js/flot/date.js"></script>
-<script src="{{ STATIC_URL }}gla/js/flot/jquery.flot.spline.js"></script>
-<script src="{{ STATIC_URL }}gla/js/flot/curvedLines.js"></script>
+<script src="{% static "gla/js/flot/jquery.flot.orderBars.js" %}"></script>
+<script src="{% static "gla/js/flot/date.js" %}"></script>
+<script src="{% static "gla/js/flot/jquery.flot.spline.js" %}"></script>
+<script src="{% static "gla/js/flot/curvedLines.js" %}"></script>
 <!-- JQVMap -->
-<script src="{{ STATIC_URL }}gla/vendors/jqvmap/dist/jquery.vmap.js"></script>
-<script src="{{ STATIC_URL }}gla/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-<script src="{{ STATIC_URL }}gla/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+<script src="{% static "gla/vendors/jqvmap/dist/jquery.vmap.js" %}"></script>
+<script src="{% static "gla/vendors/jqvmap/dist/maps/jquery.vmap.world.js" %}"></script>
+<script src="{% static "gla/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js" %}"></script>
 <!-- bootstrap-daterangepicker -->
-<script src="{{ STATIC_URL }}gla/js/moment/moment.min.js"></script>
-<script src="{{ STATIC_URL }}gla/js/datepicker/daterangepicker.js"></script>
+<script src="{% static "gla/js/moment/moment.min.js" %}"></script>
+<script src="{% static "gla/js/datepicker/daterangepicker.js" %}"></script>
 
 <!-- Custom Theme Scripts -->
-<script src="{{ STATIC_URL }}gla/build/js/custom.min.js"></script>
+<script src="{% static "gla/build/js/custom.min.js" %}"></script>
 
 <!-- Data Tables -->
-<script src="{{ STATIC_URL }}gla/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="{{ STATIC_URL }}gla/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="{{ STATIC_URL }}gla/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-<script src="{{ STATIC_URL }}gla/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-<script src="{{ STATIC_URL }}gla/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-<script src="{{ STATIC_URL }}gla/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-<script src="{{ STATIC_URL }}gla/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-<script src="{{ STATIC_URL }}gla/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-<script src="{{ STATIC_URL }}gla/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-<script src="{{ STATIC_URL }}gla/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="{{ STATIC_URL }}gla/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-<script src="{{ STATIC_URL }}gla/vendors/datatables.net-scroller/js/datatables.scroller.min.js"></script>
-<script src="{{ STATIC_URL }}gla/vendors/select2/dist/js/select2.full.min.js"></script>
+<script src="{% static "gla/vendors/datatables.net/js/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-buttons/js/dataTables.buttons.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-buttons/js/buttons.flash.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-buttons/js/buttons.html5.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-buttons/js/buttons.print.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-responsive/js/dataTables.responsive.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-scroller/js/datatables.scroller.min.js" %}"></script>
+<script src="{% static "gla/vendors/select2/dist/js/select2.full.min.js" %}"></script>
 <!-- more -->
-<!--<script src="{{ STATIC_URL }}gla/more/ajax.js"></script>-->
+<!--<script src="{% static "gla/more/ajax.js" %}"></script>-->
 {% block j %}{% endblock %}
 
 
