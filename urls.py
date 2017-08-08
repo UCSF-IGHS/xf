@@ -6,13 +6,14 @@ from django.views.generic import TemplateView, RedirectView
 
 from views import DashboardView, DashboardPageView, WidgetView, StartView
 from django.conf import settings
+from django.contrib.auth import views as auth_views
 
 from . import views
 
 urlpatterns = [
     url(r'^$', views.home_page, name='home_page'),
-    url(r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'other/t_login.html'}),
-    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'} ),
+    url(r'^accounts/login/$', auth_views.login, {'template_name': 'other/t_login.html'}),
+    url(r'^accounts/logout/$', auth_views.logout, {'next_page': '/'} ),
     url(r'^widgets/(?P<slug>[-\w]+)/$', WidgetView.as_view(), name='widgets'),
     url(r'^start/$', StartView.as_view(), name='dashboards', kwargs={'slug': 'welcome'}),
     url(r'^dashboards/perspectives/clear/$', views.clear_perspective, name='clear_perspective'),
