@@ -36,6 +36,11 @@ from xf_system.views import XFNavigationViewMixin
 from xf_system.xf_navigation import add_navigation
 
 def get_current_perspective(request):
+    """
+    Returns the currently active perspective, if any. Otherwise it returns None
+    :param request:
+    :return:
+    """
 
     # If a perspective is set in the session, return that
     if request.session.has_key("perspective_id"):
@@ -80,7 +85,7 @@ def load_navigation(sender, navigation_trees, request):
 
         current_perspective = get_current_perspective(request)
         if current_perspective:
-            for page in current_perspective.pages.all():
+            for page in current_perspective.pages.all().order_by('navigation_section__index'):
 
                 if page.page_id:
                     url = reverse(viewname=page.page_type.url_section, kwargs= {'section' : page.section.title, 'slug' : page.slug, 'page_id' :page.page_id})
@@ -159,7 +164,8 @@ def load_navigation(sender, navigation_trees, request):
     print "Request in UC Dashboards completed"
 
 
-
+# This statement adds a callback function to the XFNavigationMixin - when the navigation menus need to be loaded,
+# this callback will be called.
 XFNavigationViewMixin.navigation_tree_observers.append(load_navigation)
 
 
