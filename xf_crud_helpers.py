@@ -4,7 +4,7 @@ from django.forms import ALL_FIELDS
 from generic_forms import XFModelForm
 
 __author__ = 'Fitti'
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from generic_views import XFCreateView, XFDetailView, XFDeleteView, XFListView, XFUpdateView
 
 def mmodelform_factory(model, form=XFModelForm, fields=None, exclude=None,
@@ -78,12 +78,19 @@ def crudurl(appname, modelname, model, form_class):
 
         form_class.Meta.title = modelname.capitalize()
 
-    return patterns('',
-                    (r'^%s/%s/new' % (appname, modelname) , XFCreateView.as_view(model=model, form_class=form_class, success_url="%s/%s/" % (appname, modelname))),
-                    (r'^%s/%s/(?P<pk>(\d))/edit' % (appname, modelname) , XFUpdateView.as_view(model=model, form_class=form_class, success_url="%s/%s/" % (appname, modelname))),
-                    (r'^%s/%s/(?P<pk>(\d))/delete' % (appname, modelname) , XFDeleteView.as_view(model=model, success_url="%s/%s/" % (appname, modelname))),
-                    (r'^%s/%s/' % (appname, modelname) , XFListView.as_view(model=model, generic=True, queryset= model.objects.order_by("name"))),
+    return [
+        url(r'^%s/%s/new' % (appname, modelname), XFCreateView.as_view(model=model, form_class=form_class, success_url="%s/%s/" % (appname, modelname))),
+        url(r'^%s/%s/(?P<pk>(\d))/edit' % (appname, modelname), XFUpdateView.as_view(model=model, form_class=form_class, success_url="%s/%s/" % (appname, modelname))),
+        url(r'^%s/%s/(?P<pk>(\d))/delete' % (appname, modelname), XFDeleteView.as_view(model=model, success_url="%s/%s/" % (appname, modelname))),
+        url(r'^%s/%s/' % (appname, modelname), XFListView.as_view(model=model, generic=True, queryset=model.objects.order_by("name"))),
+    ]
 
-                    )
+#    return patterns('',
+#                    (r'^%s/%s/new' % (appname, modelname) , XFCreateView.as_view(model=model, form_class=form_class, success_url="%s/%s/" % (appname, modelname))),
+#                    (r'^%s/%s/(?P<pk>(\d))/edit' % (appname, modelname) , XFUpdateView.as_view(model=model, form_class=form_class, success_url="%s/%s/" % (appname, modelname))),
+#                    (r'^%s/%s/(?P<pk>(\d))/delete' % (appname, modelname) , XFDeleteView.as_view(model=model, success_url="%s/%s/" % (appname, modelname))),
+#                    (r'^%s/%s/' % (appname, modelname) , XFListView.as_view(model=model, generic=True, queryset= model.objects.order_by("name"))),
+
+#                    )
 
 
