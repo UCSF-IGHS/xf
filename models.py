@@ -203,6 +203,7 @@ class Widget(models.Model):
     MAP = '8'
     TEXT_BLOCK = '9'
     PROGRESS_CIRCLE = '10'
+    FILTER_DROP_DOWN = '11'
     OTHER = '0'
 
     WIDGET_TYPE_CHOICES = (
@@ -216,6 +217,7 @@ class Widget(models.Model):
         (PROGRESS_CIRCLE, 'Progress circle'),
         (MAP, 'Map'),
         (TEXT_BLOCK, 'Text block'),
+        (FILTER_DROP_DOWN, 'Filter drop down'),
         (OTHER, 'Other'),
     )
 

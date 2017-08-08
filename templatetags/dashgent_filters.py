@@ -46,7 +46,11 @@ def columnwidth(value):
 
 @register.filter(name='lookup')
 def cut(value, arg):
-    return value[arg]
+    if value.has_key(arg):
+        return value[arg]
+    else:
+        return ""
+
 
 @register.filter(name='findforkey')
 def findforkey(value, arg):

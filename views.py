@@ -407,6 +407,7 @@ class WidgetView(DashboardView):
 
             if self.widget.widget_type == Widget.PIE or \
                             self.widget.widget_type == Widget.TABLE or \
+                            self.widget.widget_type == Widget.FILTER_DROP_DOWN or \
                             self.widget.widget_type == Widget.TILES or \
                             self.widget.widget_type == Widget.LINE_GRAPH or \
                             self.widget.widget_type == Widget.PROGRESS_CIRCLE or \
