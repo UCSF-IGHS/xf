@@ -16,7 +16,7 @@ class TagAdmin(admin.ModelAdmin):
 
 
 class PageAdmin(admin.ModelAdmin):
-    list_display = ('title', 'main_title', 'slug', 'section', 'allow_anonymous', 'template', 'page_type', 'navigation_section', 'page_id')
+    list_display = ('title', 'main_title', 'slug', 'section', 'allow_anonymous', 'template', 'page_type', 'navigation_section', 'page_id', 'index')
     list_filter = ('tags', 'template', 'page_type', 'navigation_section')
     save_as = True;
     formfield_overrides = {models.TextField: {'widget': forms.Textarea(attrs={'class': 'ckeditor'})},}

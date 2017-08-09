@@ -6,6 +6,6 @@ Creates an "tile panel". This is also the main host for an AJAX control.
 {% load dashgent_filters %}
 <div class="uh-dashgent-widget uh-ajax-autoload"
 {% if widget_slug %}widget-url="{% url 'widgets' widget_slug %}{{ filter_query_string }}"{% endif %} {% if not widget_slug %}widget-url="{{ id|rev}}{{ filter_query_string }}" {% endif %}   >
-Loading filters...
+    <div class="{{ 3|cw }}">Loading... </div>
 </div>
 

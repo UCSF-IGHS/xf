@@ -4,7 +4,7 @@
 
 
 {% block widget_main %}
-    <select name="{{ widget.code }}" class="select2_single form-control" style="max-width:200px">
+    <select name="{{ widget.code }}" class="select2_single form-control" style="width: 250px;">
 
         {% with data_columns|columnnameforkey:'id' as id_column %}
             {% with data_columns|columnnameforkey:'name' as name_column %}

@@ -79,24 +79,37 @@ def load_navigation(sender, navigation_trees, request):
     # Dictionary: {ParentNavigationItemID, Dictionary}
 
     # Create a navigation tree for dashboards
+
+
     if not navigation_trees.has_key("dashboard"):
         navigation_tree = []
         navigation_trees["dashboard"] = navigation_tree
 
         current_perspective = get_current_perspective(request)
         if current_perspective:
-            for page in current_perspective.pages.all().order_by('navigation_section__index'):
+
+            print "******* Calling load_navigation with pperspective"
+
+            for page in current_perspective.pages.order_by('navigation_section__index', 'index'):
+                print "Processing: %s: " % page.title
+
 
                 if page.page_id:
+
                     url = reverse(viewname=page.page_type.url_section, kwargs= {'section' : page.section.title, 'slug' : page.slug, 'page_id' :page.page_id})
-                    print url
                 else:
                     url = reverse(viewname=page.page_type.url_section,
                                   kwargs={'section': page.section.title, 'slug': page.slug})
-                    print url
 
-                add_navigation(navigation_tree, 'Dashboard', page.navigation_section.caption, url,
-                    page.navigation_section.icon, page.title)
+                if page.parent_page:
+                    add_navigation(navigation_tree, 'Dashboard', page.parent_page.navigation_section.caption, url,
+                        page.parent_page.navigation_section.icon, page.title, page.parent_page.title)
+
+                elif page.navigation_section:
+                    add_navigation(navigation_tree, 'Dashboard', page.navigation_section.caption, url,
+                        page.navigation_section.icon, page.title)
+
+
 
     return
 

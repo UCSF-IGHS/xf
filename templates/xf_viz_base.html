@@ -1,0 +1,44 @@
+{% extends "xf_base.html" %}
+
+{% load staticfiles %}
+{% load admin_urls %}
+{% load dashgent_filters %}
+
+{% block h %}
+
+{% endblock %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block filterbar %}
+    {%   if page.show_filter_bar %}
+    <div class="filter-bar ">
+        <form method="get">
+            <input type="hidden" name="filter" value="active">
+
+            {% block filterbar_main %}{% endblock %}
+            <div class="{{ 3|cw }} pull-right .navbar-right"><input type="submit" value="Apply filter"
+                                                                    class="btn btn-primary"/>
+
+                {% if request.GET.filter == "active" %}
+
+                    <input type="submit" value="Clear filter" class="btn btn-default">
+
+                {% endif %}
+            </div>
+        </form>
+    </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block main %}
+
+{% endblock %}
+
+
+{% block j %}{% endblock %}
+
+{% block extrajs %}{% endblock %}
