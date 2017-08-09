@@ -149,7 +149,12 @@ class Page(models.Model):
     navigation_section = models.ForeignKey(
         NavigationSection, blank=True, null=True,
         related_name='page',
-        help_text='Specifies the navigation item to link this item to. ')
+        help_text='Specifies the navigation item to link this item to. Do not specify this if a parent page is set')
+    parent_page = models.ForeignKey(
+        "Page", blank=True, null=True,
+        related_name='childma_page',
+        help_text='Specifies a parent page for this item. Leave this empty if a page is immediately below a navigation section ')
+
     page_id = models.CharField(
         max_length=50,
         help_text="Can be used in the view to load a specific set of context data, e.g. a dashboard",
@@ -159,6 +164,8 @@ class Page(models.Model):
     page_type = models.ForeignKey(PageType, default=1,
                                   help_text='Determines if this is a normal page, or a dashboard')
 
+    show_filter_bar = models.BooleanField(blank=True, help_text='Check this field if you want to display the filter bar. Otherwise it will be hidden.')
+    index = models.IntegerField(blank=True, default=0, help_text='Pages with a lower index will be added to the navigation tree before those with a higher index. This is used to sort the navigation tree.')
     tags = models.ManyToManyField(Tag, related_name='pages', blank=True)
 
     def __unicode__(self):
@@ -203,6 +210,7 @@ class Widget(models.Model):
     MAP = '8'
     TEXT_BLOCK = '9'
     PROGRESS_CIRCLE = '10'
+    FILTER_DROP_DOWN = '11'
     OTHER = '0'
 
     WIDGET_TYPE_CHOICES = (
@@ -216,6 +224,7 @@ class Widget(models.Model):
         (PROGRESS_CIRCLE, 'Progress circle'),
         (MAP, 'Map'),
         (TEXT_BLOCK, 'Text block'),
+        (FILTER_DROP_DOWN, 'Filter drop down'),
         (OTHER, 'Other'),
     )
 

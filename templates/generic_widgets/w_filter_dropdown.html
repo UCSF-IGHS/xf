@@ -1,0 +1,39 @@
+{% extends "t_filter_control_base.html" %}
+{% load dashgent_filters %}
+
+
+
+{% block widget_main %}
+    <select name="{{ widget.code }}" class="select2_single form-control" style="width: 250px;">
+
+        {% with data_columns|columnnameforkey:'id' as id_column %}
+            {% with data_columns|columnnameforkey:'name' as name_column %}
+                <option></option>
+                {% for row in rows %}
+                    <option value="{{ row|lookup:id_column }}" {% if request.GET|lookup:widget.code == row|lookup:id_column %} selected {% endif %}  >{{ row|lookup:name_column }}</option>
+                {% endfor %}
+            {% endwith %}
+        {% endwith %}
+    </select>
+
+
+<!-- Select2 -->
+<script>
+    $(document).ready(function () {
+        $(".select2_single").select2({
+            placeholder: "{{ widget.text }}",
+            allowClear: true
+
+        });
+        $(".select2_group").select2({});
+        $(".select2_multiple").select2({
+            maximumSelectionLength: 4,
+            placeholder: "With Max Selection limit 4",
+            allowClear: true
+        });
+    });
+</script>
+<!-- /Select2 -->
+
+
+{% endblock %}

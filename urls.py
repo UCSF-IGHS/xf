@@ -12,8 +12,8 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.home_page, name='home_page'),
-    url(r'^accounts/login/$', auth_views.login, {'template_name': 'other/t_login.html'}),
-    url(r'^accounts/logout/$', auth_views.logout, {'next_page': '/'} ),
+    url(r'^accounts/login/$', auth_views.login, {'template_name': 'other/t_login.html'}, name='login'),
+    url(r'^accounts/logout/$', auth_views.logout, {'next_page': '/'}, name='logout' ),
     url(r'^widgets/(?P<slug>[-\w]+)/$', WidgetView.as_view(), name='widgets'),
     url(r'^start/$', StartView.as_view(), name='dashboards', kwargs={'slug': 'welcome'}),
     url(r'^dashboards/perspectives/clear/$', views.clear_perspective, name='clear_perspective'),
