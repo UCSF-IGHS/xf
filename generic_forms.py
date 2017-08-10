@@ -28,13 +28,13 @@ class XFAjaxForm(ModelForm):
             if kwargs['initial']['ajax']:
                 self.helper.form_action = reverse("accounthandler.changepwd.view") + "?ajax"
                 self.helper.form_tag = False
-                print self.helper.form_action
+                print(self.helper.form_action)
         except:
             pass
 
         try:
             if kwargs['initial']['no-submit']:
-                print kwargs['initial']['no-submit']
+                print(kwargs['initial']['no-submit'])
         except:
             self.helper.add_input(Submit('submit', 'Submit'))
             self.helper.add_input(Button('cancel', 'Cancel'))
