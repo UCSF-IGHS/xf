@@ -5,7 +5,7 @@ from django.db import models
 from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from models import *
+from .models import *
 
 
 class NavigationSectionAdmin(admin.ModelAdmin):
