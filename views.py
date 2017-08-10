@@ -21,11 +21,10 @@ from django import template
 import ast
 from django.db.models import Q
 from django.http import HttpResponse
-import extensions
+from . import extensions
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-import models as UCModels
-import extensions
+from . import models as UCModels
 
 # Create your views here.
 from uc_dashboards.models import NavigationSection, Page, Widget, Perspective
@@ -43,7 +42,9 @@ def get_current_perspective(request):
     """
 
     # If a perspective is set in the session, return that
-    if request.session.has_key("perspective_id"):
+    #if request.session.has_key("perspective_id"):
+    # PYTHON3 UPDATE
+    if "perspective_id" in request.session:
         perspective = Perspective.objects.get(pk=request.session["perspective_id"])
         return perspective
 
@@ -81,17 +82,19 @@ def load_navigation(sender, navigation_trees, request):
     # Create a navigation tree for dashboards
 
 
-    if not navigation_trees.has_key("dashboard"):
+    #if not navigation_trees.has_key("dashboard"):
+    # PYTHON3 UPDATE
+    if not "dashboard" in navigation_trees:
         navigation_tree = []
         navigation_trees["dashboard"] = navigation_tree
 
         current_perspective = get_current_perspective(request)
         if current_perspective:
 
-            print "******* Calling load_navigation with pperspective"
+            print("******* Calling load_navigation with pperspective")
 
             for page in current_perspective.pages.order_by('navigation_section__index', 'index'):
-                print "Processing: %s: " % page.title
+                print("Processing: %s: " % page.title)
 
 
                 if page.page_id:
@@ -112,69 +115,6 @@ def load_navigation(sender, navigation_trees, request):
 
 
     return
-
-
-
-
-    if request.session.has_key("perspective_id"):
-        perspective = Perspective.objects.get(pk=request.session["perspective_id"])
-        pages = perspective.pages.all()
-
-        for page in pages:
-            navigation_section = None
-            if not navigation_sections.has_key(page.navigation_section_id):
-                navigation_sections[page.navigation_section_id] = (page.navigation_section, [page])
-            else:
-                navigation_sections[page.navigation_section_id][1].append(page)
-    else:
-        pages = Page.objects.all()
-
-    if not navigation_trees.has_key("dashboard"):
-        navigation_tree = []
-        navigation_trees["dashboard"] = navigation_tree
-
-        #for page in pages:
-        #    add_navigation(navigation_tree, 'Dashboard', page.navigation_section.caption, "/library/book/",
-        #               page.navigation_section.icon, page.title)
-
-        add_navigation(navigation_tree, '-', 'All dashboards', "/", "fa-home", "Home")
-
-
-    # Load all perspectives available to this user
-    if request.user.is_authenticated():
-        request.user.load_perspectives()
-        perspectives = request.user.perspectives
-
-        # Set preset filters for groups
-        for group in request.user.groups.all():
-            if group.profile:
-                if group.profile.preset_filters:
-                    filters = ast.literal_eval('{' + group.profile.preset_filters + '}')
-                    if perspective:
-                        if filters.has_key("*"):
-                            preset_filters = filters["*"]
-                        if filters.has_key(perspective.code):
-                            preset_filters = filters[perspective.code]
-
-        # Set preset filters for users - this means that user filters superseed group filters
-        if request.user.profile:
-            if request.user.profile.preset_filters:
-                #load all the filters as a dictionary and load the filter for the particular perspective
-                #a * may be used for all perspectives - and this can be overridden by a more specific filter
-                filters = ast.literal_eval('{' + request.user.profile.preset_filters + '}')
-                if perspective:
-                    if filters.has_key("*"):
-                        preset_filters = filters["*"]
-                    if filters.has_key(perspective.code):
-                        preset_filters = filters[perspective.code]
-
-        #if hasattr(user, "profile"):
-        #    if hasattr(user.profile, "default_perspective") and user.profile.default_perspective is not None:
-        #        print user.profile.default_perspective
-
-
-
-    print "Request in UC Dashboards completed"
 
 
 # This statement adds a callback function to the XFNavigationMixin - when the navigation menus need to be loaded,
@@ -233,13 +173,17 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
         # Dictionary: {NavivationItemID, (Tuple)}
         # Dictionary: {ParentNavigationItemID, Dictionary}
 
-        if self.request.session.has_key("perspective_id"):
+        #if self.request.session.has_key("perspective_id"):
+        # PYTHON3 UPDATE
+        if "perspective_id" in self.request.session:
             self.perspective = Perspective.objects.get(pk=self.request.session["perspective_id"])
             self.pages = self.perspective.pages.all()
 
             for page in self.pages:
                 navigation_section = None
-                if not self.navigation_sections.has_key(page.navigation_section_id):
+                #if not self.navigation_sections.has_key(page.navigation_section_id):
+                # PYTHON3 UPDATE
+                if not page.navigation_section.id in self.navigation_sections:
                     self.navigation_sections[page.navigation_section_id] = (page.navigation_section, [page])
                 else:
                     self.navigation_sections[page.navigation_section_id][1].append(page)
@@ -255,9 +199,13 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
                     if group.profile.preset_filters:
                         filters = ast.literal_eval('{' + group.profile.preset_filters + '}')
                         if self.perspective:
-                            if filters.has_key("*"):
+                            #if filters.has_key("*"):
+                            # PYTHON3 UPDATE
+                            if "*" in filters:
                                 self.preset_filters = filters["*"]
-                            if filters.has_key(self.perspective.code):
+                            #if filters.has_key(self.perspective.code):
+                            # PYTHON3 UPDATE
+                            if self.perspective.code in filters:
                                 self.preset_filters = filters[self.perspective.code]
 
             # Set preset filters for users - this means that user filters superseed group filters
@@ -267,9 +215,13 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
                     #a * may be used for all perspectives - and this can be overridden by a more specific filter
                     filters = ast.literal_eval('{' + self.request.user.profile.preset_filters + '}')
                     if self.perspective:
-                        if filters.has_key("*"):
+                        #if filters.has_key("*"):
+                        # PYTHON3 UPDATE
+                        if "*" in filters:
                             self.preset_filters = filters["*"]
-                        if filters.has_key(self.perspective.code):
+                        #if filters.has_key(self.perspective.code):
+                        # PYTHON3 UPDATE
+                        if self.perspective.code in filters:
                             self.preset_filters = filters[self.perspective.code]
 
 
@@ -444,7 +396,7 @@ class WidgetView(DashboardView):
                             self.widget.widget_type == Widget.BAR_GRAPH:
                 labels = []
                 for row in rows:
-                    if isinstance(row[self.widget.label_column], basestring):
+                    if isinstance(row[self.widget.label_column], str):
                         # UNICODE MAY FAIL HERE - without the str a 'u' will be added
                         labels.append(str(row[self.widget.label_column]))
                     else:
@@ -461,7 +413,9 @@ class WidgetView(DashboardView):
 
                     # create a dictionary like {'legend_label': 'number of admissions', 'column_name': 'admissions'}
                     data_point_column_description = ast.literal_eval('{' + column + '}')
-                    if data_point_column_description.has_key('legend_label'):
+                    #if data_point_column_description.has_key('legend_label'):
+                    # PYTHON3 UPDATE
+                    if "legend_label" in data_point_column_description:
                         legend_labels.append(data_point_column_description['legend_label'])
                     # single row with data points, for a line chart with 2 lines will have two of them
                     datapoint_row = []
@@ -562,11 +516,9 @@ class StartView(DashboardPageView):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                print "LOGIN DONE!"
 
                 if hasattr(user, "profile"):
                     if hasattr(user.profile, "default_perspective") and user.profile.default_perspective is not None:
-                        print user.profile.default_perspective
                         url = reverse("load_perspective", args=[user.profile.default_perspective.id])
                         return HttpResponseRedirect(url)
 
@@ -603,7 +555,9 @@ def home_page(request):
     '''
 
     #If there is a perspective, try to load that perspective's home page
-    if request.session.has_key("perspective_id"):
+    #if request.session.has_key("perspective_id"):
+    # PYTHON3 UPDATE
+    if "perspective_id" in request.session:
         perspective = Perspective.objects.get(pk = request.session["perspective_id"])
         url = reverse("dashboards", args=[perspective.default_page.section.title, perspective.default_page.slug])
         #perspective.default_page

@@ -46,7 +46,9 @@ def columnwidth(value):
 
 @register.filter(name='lookup')
 def cut(value, arg):
-    if value.has_key(arg):
+    #if value.has_key(arg):
+    # PYTHON3 UPDATE
+    if arg in value:
         return value[arg]
     else:
         return ""
