@@ -44,7 +44,7 @@ def add_navigation(navigation_tree, header_name="Home", section_name="Welcome", 
                         return
                     else:
                         # Search for a parent caption link
-                        print "adding %s to %s with url %s" % (caption, parent_caption, url)
+                        print("adding %s to %s with url %s" % (caption, parent_caption, url))
                         for navigation_link in section.navigation_links:
    #                         print ">>> searching for " % (navigation_link.caption, parent_caption, url)
                             if navigation_link.caption == parent_caption:
@@ -64,4 +64,5 @@ def add_navigation(navigation_tree, header_name="Home", section_name="Welcome", 
 
     # Repeat the procedure and this time it will be found
     add_navigation(navigation_tree, header_name, section_name, url, icon, caption, parent_caption)
+
 
