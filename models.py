@@ -117,9 +117,6 @@ class PageType(models.Model):
     name = models.CharField(max_length=150)
     url_section = models.CharField(max_length=150, blank=True)
 
-    def clean(self):
-        raise ValidationError('Draft entries may not have a publication date.')
-
     def __unicode__(self):
         return self.name
 
