@@ -1,1 +1,1 @@
-import xf_navigation
+from . import xf_navigation

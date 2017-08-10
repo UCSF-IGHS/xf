@@ -19,7 +19,9 @@ class XFNavigationViewMixin():
         """
 
         # Create a navigation_tree list in the context if it doesn't exist already
-        if not self.context.has_key("navigation_trees"):
+        #if not self.context.has_key("navigation_trees"):
+        # PYTHON3 UPDATE
+        if not "navigation_trees" in self.context:
             self.context["navigation_trees"] = {}
 
         # Call all observers and provide them an opportunity to add their links to the navigation tree
