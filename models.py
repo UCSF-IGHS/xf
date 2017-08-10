@@ -35,7 +35,7 @@ class HTMLField(models.TextField):
 class Tag(models.Model):
     text = models.CharField(max_length=255)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.text
 
 class NavigationSection(models.Model):
@@ -55,7 +55,7 @@ class NavigationSection(models.Model):
             if self.parent_section.parent_section:
                 raise ValidationError('Nested navigation items are not currently supported beyond one level.')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.caption
 
 
@@ -100,7 +100,7 @@ class Template(models.Model):
 
     tags = models.ManyToManyField(Tag, related_name='templates', blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -109,7 +109,7 @@ class Template(models.Model):
 class PageSection(models.Model):
     title = models.CharField(max_length=150)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
 
@@ -117,7 +117,7 @@ class PageType(models.Model):
     name = models.CharField(max_length=150)
     url_section = models.CharField(max_length=150, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -165,7 +165,7 @@ class Page(models.Model):
     index = models.IntegerField(blank=True, default=0, help_text='Pages with a lower index will be added to the navigation tree before those with a higher index. This is used to sort the navigation tree.')
     tags = models.ManyToManyField(Tag, related_name='pages', blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
 
@@ -190,7 +190,7 @@ class Perspective(models.Model):
         help_text='Any comment.')
     tags = models.ManyToManyField(Tag, related_name='perspectives', blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
