@@ -7,7 +7,9 @@ from django.contrib.auth.views import redirect_to_login, login
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.template import Template
+from django.template import Template, TemplateDoesNotExist
+from django.template.backends.django import Template as Template2, DjangoTemplates
+from django.template.loader import _engine_list
 from django.template.response import TemplateResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
@@ -396,11 +398,12 @@ class WidgetView(DashboardView):
                             self.widget.widget_type == Widget.BAR_GRAPH:
                 labels = []
                 for row in rows:
-                    if isinstance(row[self.widget.label_column], str):
+                    labels.append(str(row[self.widget.label_column]))
+                    #if isinstance(row[self.widget.label_column], str):
                         # UNICODE MAY FAIL HERE - without the str a 'u' will be added
-                        labels.append(str(row[self.widget.label_column]))
-                    else:
-                        labels.append("")
+                    #    labels.append(str(row[self.widget.label_column]))
+                    #else:
+                    #    labels.append("XXX")
 
                 context["labels"] = str(labels).replace("'", '"')
 
@@ -489,6 +492,22 @@ class DashboardPageView(DashboardView):
         self.template_name = page.template.template_path
         return context
 
+    def get_template2(self, template_name, using=None):
+        """
+        Loads and returns a template for the given name.
+
+        Raises TemplateDoesNotExist if no such template exists.
+        """
+        chain = []
+        engines = _engine_list(using)
+        for engine in engines:
+            try:
+                return engine.get_template(template_name)
+            except TemplateDoesNotExist as e:
+                chain.append(e)
+
+        raise TemplateDoesNotExist(template_name, chain=chain)
+
     def response_class(self, request, template, context, **response_kwargs):
         """
         We are override this method so that it can inject a template that is loaded with content from the database,
@@ -503,7 +522,16 @@ class DashboardPageView(DashboardView):
         if int(self.page.template.template_source) == int(UCModels.Template.DATABASE):
             template = Template(self.page.template.template_text)
 
-        return super(DashboardPageView, self).response_class(request, template, context, **response_kwargs)
+            template2 = self.get_template2(template_name="dashboards/t_ibbs_overview.html")
+            template2.template = template
+
+
+            # We need to return the template here directly
+            return super(DashboardPageView, self).response_class(request, template2, context, **response_kwargs)
+            t = TemplateResponse(request, template)
+            return t
+        else:
+            return super(DashboardPageView, self).response_class(request, template, context, **response_kwargs)
 
 
 ########################################################################################################################
