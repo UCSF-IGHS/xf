@@ -36,6 +36,11 @@ from xf_system.views import XFNavigationViewMixin
 from xf_system.xf_navigation import add_navigation
 
 def get_current_perspective(request):
+    """
+    Returns the currently active perspective, if any. Otherwise it returns None
+    :param request:
+    :return:
+    """
 
     # If a perspective is set in the session, return that
     if request.session.has_key("perspective_id"):
@@ -74,24 +79,37 @@ def load_navigation(sender, navigation_trees, request):
     # Dictionary: {ParentNavigationItemID, Dictionary}
 
     # Create a navigation tree for dashboards
+
+
     if not navigation_trees.has_key("dashboard"):
         navigation_tree = []
         navigation_trees["dashboard"] = navigation_tree
 
         current_perspective = get_current_perspective(request)
         if current_perspective:
-            for page in current_perspective.pages.all():
+
+            print "******* Calling load_navigation with pperspective"
+
+            for page in current_perspective.pages.order_by('navigation_section__index', 'index'):
+                print "Processing: %s: " % page.title
+
 
                 if page.page_id:
+
                     url = reverse(viewname=page.page_type.url_section, kwargs= {'section' : page.section.title, 'slug' : page.slug, 'page_id' :page.page_id})
-                    print url
                 else:
                     url = reverse(viewname=page.page_type.url_section,
                                   kwargs={'section': page.section.title, 'slug': page.slug})
-                    print url
 
-                add_navigation(navigation_tree, 'Dashboard', page.navigation_section.caption, url,
-                    page.navigation_section.icon, page.title)
+                if page.parent_page:
+                    add_navigation(navigation_tree, 'Dashboard', page.parent_page.navigation_section.caption, url,
+                        page.parent_page.navigation_section.icon, page.title, page.parent_page.title)
+
+                elif page.navigation_section:
+                    add_navigation(navigation_tree, 'Dashboard', page.navigation_section.caption, url,
+                        page.navigation_section.icon, page.title)
+
+
 
     return
 
@@ -159,7 +177,8 @@ def load_navigation(sender, navigation_trees, request):
     print "Request in UC Dashboards completed"
 
 
-
+# This statement adds a callback function to the XFNavigationMixin - when the navigation menus need to be loaded,
+# this callback will be called.
 XFNavigationViewMixin.navigation_tree_observers.append(load_navigation)
 
 
@@ -401,6 +420,7 @@ class WidgetView(DashboardView):
 
             if self.widget.widget_type == Widget.PIE or \
                             self.widget.widget_type == Widget.TABLE or \
+                            self.widget.widget_type == Widget.FILTER_DROP_DOWN or \
                             self.widget.widget_type == Widget.TILES or \
                             self.widget.widget_type == Widget.LINE_GRAPH or \
                             self.widget.widget_type == Widget.PROGRESS_CIRCLE or \
