@@ -13,8 +13,8 @@ from django.http import Http404, HttpResponseRedirect, HttpResponse
 # Override get_queryset to benefit from this search_string
 
 from django.views.generic.edit import FormMixin, ModelFormMixin, ProcessFormView
-from auth.permission_mixin import *
-from auth.permission_mixin import PermissionMixin
+from .auth.permission_mixin import *
+from .auth.permission_mixin import PermissionMixin
 from xf_system.views import XFNavigationViewMixin
 
 
@@ -22,8 +22,9 @@ def errors_to_json2(errors):
     """
     Convert a Form error list to JSON::
     """
+    # TODO PYTHON3: CHECK THIS
     return dict(
-        (k, map(unicode, v))
+        (k, v)
             for (k,v) in errors.iteritems()
     )
 
@@ -332,7 +333,7 @@ class XFCreateView(CreateView, PermissionMixin, XFAjaxViewMixin):
     def get_context_data(self, **kwargs):
         self.context = context = super(XFCreateView, self).get_context_data(**kwargs)
         context['action'] = "Create"
-        print self.get_form_class().Meta.model.__name__.lower()
+        print(self.get_form_class().Meta.model.__name__.lower())
         self.ensure_set_context_perm("add")
         return context
 
