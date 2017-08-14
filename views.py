@@ -440,6 +440,21 @@ class WidgetView(DashboardView):
                 self.widget.widget_type == Widget.PIE \
                 else False
 
+    def get_template2(self, template_name, using=None):
+        """
+        Loads and returns a template for the given name.
+
+        Raises TemplateDoesNotExist if no such template exists.
+        """
+        chain = []
+        engines = _engine_list(using)
+        for engine in engines:
+            try:
+                return engine.get_template(template_name)
+            except TemplateDoesNotExist as e:
+                chain.append(e)
+
+        raise TemplateDoesNotExist(template_name, chain=chain)
 
 
     def response_class(self, request, template, context, **response_kwargs):
@@ -456,6 +471,14 @@ class WidgetView(DashboardView):
         if self.widget:
             if int(self.widget.template.template_source) == int(UCModels.Template.DATABASE):
                 template = Template(self.widget.template.template_text)
+                template2 = self.get_template2(template_name="dashboards/t_ibbs_overview.html")
+                template2.template = template
+
+
+                # We need to return the template here directly
+                return super(WidgetView, self).response_class(request, template2, context, **response_kwargs)
+                t = TemplateResponse(request, template)
+                return t
 
         return super(WidgetView, self).response_class(request, template, context, **response_kwargs)
 
