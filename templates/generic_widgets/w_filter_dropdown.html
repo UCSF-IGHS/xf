@@ -4,7 +4,7 @@
 
 
 {% block widget_main %}
-    <select name="{{ widget.code }}" class="select2_single form-control" style="width: 250px;">
+    <select id="{{ widget.code }}" name="{{ widget.code }}" class="select2_single form-control" style="width: 250px;">
 
         {% with data_columns|columnnameforkey:'id' as id_column %}
             {% with data_columns|columnnameforkey:'name' as name_column %}
@@ -20,17 +20,12 @@
 <!-- Select2 -->
 <script>
     $(document).ready(function () {
-        $(".select2_single").select2({
+        $("#{{ widget.code }}").select2({
             placeholder: "{{ widget.text }}",
             allowClear: true
 
         });
-        $(".select2_group").select2({});
-        $(".select2_multiple").select2({
-            maximumSelectionLength: 4,
-            placeholder: "With Max Selection limit 4",
-            allowClear: true
-        });
+
     });
 </script>
 <!-- /Select2 -->
