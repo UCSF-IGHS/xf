@@ -56,10 +56,23 @@ table.table-scrollable th, table.table-scrollable td {
     margin-left: 230px
 }
 
+.nav-md.stripped .container.body .right_col {
+    margin-left: 0px;
+}
+
+.nav-md.stripped .container.body .filter-bar {
+    margin-left: 0px;
+    padding: 5px 10px;
+}
+
 @media (max-width: 991px) {
     .filter-bar {
         width: 100%;
         margin: 0;
+    }
+
+    .nav-md.stripped .container.body .filter-bar {
+        padding: 5px 0px;
     }
 }
 /*

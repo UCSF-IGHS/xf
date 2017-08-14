@@ -1,0 +1,181 @@
+{% load staticfiles %}
+{% load admin_urls %}
+{% load dashgent_filters %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+
+
+    <!-- jQuery -->
+    <script src="{% static "gla/vendors/jquery/dist/jquery.min.js" %}"></script>
+
+    <!-- Internal uh AJAX Library -->
+    <script src="{% static  "gla/js/ajax.js" %}"></script>
+
+
+    <!-- Bootstrap -->
+
+
+    <link href="{% static "gla/vendors/bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{% static "gla/vendors/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="{% static "gla/vendors/nprogress/nprogress.css" %}" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="{% static "gla/vendors/iCheck/skins/flat/green.css" %}" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="{% static "gla/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" %}"
+          rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="{% static "gla/vendors/jqvmap/dist/jqvmap.min.css" %}" rel="stylesheet"/>
+
+
+    <!-- Select2 -->
+    <link href="{% static "gla/vendors/select2/dist/css/select2.min.css" %}" rel="stylesheet">
+
+
+    <!-- Custom Theme Style -->
+    <link href="{% static "gla/build/css/custom.min.css" %}" rel="stylesheet">
+
+    <!-- UC extra css -->
+    <link href="{% static "gla/more/uc-extra.css" %}" rel="stylesheet">
+
+
+    {% block h %}{% endblock %}
+</head>
+
+<body class="nav-md stripped">
+{% csrf_token %}
+<div class="container body">
+    <div class="main_container">
+
+        {% block filterbar %}{% endblock %}
+
+        <div class="modal fade bs-example-modal-md" id="{{ page_id }}-modal-about" tabindex="-1" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">More information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            {{ page.title }}
+                        </div>
+                        <div>
+                            Template: {{ page.template }}<br/>
+                            {{ page.template.template_source }} {% if page.template.template_source != 2 %} -
+                            {{ page.template.template_path }} {% endif %}
+                        </div>
+                        <p/>
+                        <p>{{ page.code }}</p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            {% block main %}{% endblock %}
+        </div>
+        <!-- /page content -->
+    </div>
+</div>
+
+<!-- Bootstrap -->
+<script src="{% static "gla/vendors/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+<!-- FastClick -->
+<script src="{% static "gla/vendors/fastclick/lib/fastclick.js" %}"></script>
+<!-- NProgress -->
+<script src="{% static "gla/vendors/nprogress/nprogress.js" %}"></script>
+<!-- Chart.js -->
+<script src="{% static "gla/vendors/Chart.js/dist/Chart.min.js" %}"></script>
+<!-- gauge.js -->
+<script src="{% static "gla/vendors/gauge.js/dist/gauge.min.js" %}"></script>
+<!-- bootstrap-progressbar -->
+<script src="{% static "gla/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js" %}"></script>
+<!-- iCheck -->
+<script src="{% static "gla/vendors/iCheck/icheck.min.js" %}"></script>
+<!-- Skycons -->
+<script src="{% static "gla/vendors/skycons/skycons.js" %}"></script>
+<!-- EasyPieChart-->
+<script src="{% static "gla/vendors/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js" %}"></script>
+<!-- ECharts -->
+<script src="{% static "gla/vendors/echarts/dist/echarts.min.js" %}"></script>
+<script src="{% static "gla/vendors/echarts/map/js/world.js" %}"></script>
+<!-- Flot -->
+<script src="{% static "gla/vendors/Flot/jquery.flot.js" %}"></script>
+<script src="{% static "gla/vendors/Flot/jquery.flot.pie.js" %}"></script>
+<script src="{% static "gla/vendors/Flot/jquery.flot.time.js" %}"></script>
+<script src="{% static "gla/vendors/Flot/jquery.flot.stack.js" %}"></script>
+<script src="{% static "gla/vendors/Flot/jquery.flot.resize.js" %}"></script>
+<!-- Flot plugins -->
+<script src="{% static "gla/js/flot/jquery.flot.orderBars.js" %}"></script>
+<script src="{% static "gla/js/flot/date.js" %}"></script>
+<script src="{% static "gla/js/flot/jquery.flot.spline.js" %}"></script>
+<script src="{% static "gla/js/flot/curvedLines.js" %}"></script>
+<!-- JQVMap -->
+<script src="{% static "gla/vendors/jqvmap/dist/jquery.vmap.js" %}"></script>
+<script src="{% static "gla/vendors/jqvmap/dist/maps/jquery.vmap.world.js" %}"></script>
+<script src="{% static "gla/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js" %}"></script>
+<!-- bootstrap-daterangepicker -->
+<script src="{% static "gla/js/moment/moment.min.js" %}"></script>
+<script src="{% static "gla/js/datepicker/daterangepicker.js" %}"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="{% static "gla/build/js/custom.min.js" %}"></script>
+
+<!-- Data Tables -->
+<script src="{% static "gla/vendors/datatables.net/js/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-buttons/js/dataTables.buttons.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-buttons/js/buttons.flash.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-buttons/js/buttons.html5.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-buttons/js/buttons.print.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-responsive/js/dataTables.responsive.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-scroller/js/datatables.scroller.min.js" %}"></script>
+<script src="{% static "gla/vendors/select2/dist/js/select2.full.min.js" %}"></script>
+<!-- more -->
+<!--<script src="{% static "gla/more/ajax.js" %}"></script>-->
+{% block j %}{% endblock %}
+
+
+<script type="text/javascript">
+    $(function () {
+
+        //bindAjax(); // uhih - defined in ajax.js
+        setTimeout(bindAjax, 0);
+
+        {% block starterjs %}
+        {% endblock %}
+
+    });
+
+
+</script>
+{% block extrajs %}{% endblock %}
+
+
+</body>
+</html>
