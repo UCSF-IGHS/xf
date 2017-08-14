@@ -136,6 +136,8 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
 
     def __init__(self):
         super(DashboardView, self).__init__()
+        XFNavigationViewMixin.__init__(self)
+
 
         print ("delegate set")
 
@@ -240,6 +242,7 @@ class WidgetView(DashboardView):
 
     def __init__(self):
         # Data columns that may be displayed
+        super(WidgetView, self).__init__()
         self.data_columns = []
         self.widget = None
 
@@ -464,6 +467,9 @@ class DashboardPageView(DashboardView):
     """
 
     def __init__(self):
+        super().__init__()
+        XFNavigationViewMixin.__init__(self)
+
         self.page = None
 
     def dispatch(self, request, *args, **kwargs):

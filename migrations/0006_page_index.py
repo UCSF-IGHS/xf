@@ -18,3 +18,4 @@ class Migration(migrations.Migration):
             field=models.IntegerField(blank=True, default=0, help_text='Pages with a lower index will be added to the navigation tree before those with a higher index. This is used to sort the navigation tree.'),
         ),
     ]
+
