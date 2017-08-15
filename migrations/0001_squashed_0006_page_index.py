@@ -183,6 +183,23 @@ class Migration(migrations.Migration):
             field=models.ManyToManyField(blank=True, related_name='widgets', to='uc_dashboards.Tag'),
         ),
         migrations.CreateModel(
+            name='Perspective',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('name', models.CharField(help_text='The name of this perspective.', max_length=255)),
+                ('comment', models.TextField(blank=True, help_text='Any comment.')),
+                ('pages', models.ManyToManyField(blank=True, help_text='The pages that are part of this perspective.',
+                                                 related_name='perspectives', to='uc_dashboards.Page')),
+                ('tags', models.ManyToManyField(blank=True, related_name='perspectives', to='uc_dashboards.Tag')),
+                ('code', models.CharField(blank=True,
+                                          help_text='A code for this perspective. The code will be used to preset filters.',
+                                          max_length=128)),
+                ('default_page',
+                 models.ForeignKey(default=0, help_text='The default page that will be displayed when a user logs on.',
+                                   on_delete=django.db.models.deletion.CASCADE, to='uc_dashboards.Page')),
+            ],
+        ),
+        migrations.CreateModel(
             name='GroupProfile',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -197,18 +214,6 @@ class Migration(migrations.Migration):
             model_name='template',
             name='template_source',
             field=models.CharField(choices=[('1', 'File system'), ('2', 'From database')], default='1', help_text='Specifies whether the template should be loaded from the file system, or from the database.', max_length=2),
-        ),
-        migrations.CreateModel(
-            name='Perspective',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(help_text='The name of this perspective.', max_length=255)),
-                ('comment', models.TextField(blank=True, help_text='Any comment.')),
-                ('pages', models.ManyToManyField(blank=True, help_text='The pages that are part of this perspective.', related_name='perspectives', to='uc_dashboards.Page')),
-                ('tags', models.ManyToManyField(blank=True, related_name='perspectives', to='uc_dashboards.Tag')),
-                ('code', models.CharField(blank=True, help_text='A code for this perspective. The code will be used to preset filters.', max_length=128)),
-                ('default_page', models.ForeignKey(default=0, help_text='The default page that will be displayed when a user logs on.', on_delete=django.db.models.deletion.CASCADE, to='uc_dashboards.Page')),
-            ],
         ),
         migrations.CreateModel(
             name='UserProfile',
