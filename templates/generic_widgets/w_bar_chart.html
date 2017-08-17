@@ -34,35 +34,31 @@
     </div>
 
     <canvas id="{{ widget_id }}"></canvas>
-    <!--<canvas id="" width="300" height="150"></canvas>-->
     <p>{{ extra_text }}</p>
     <script type="text/javascript">
 
         $(function () {
 
             var ctx = $("#{{ widget_id }}");
-            var lineChart = new Chart(ctx, {
+            var colors = ["#26B99A", "#03586A", "#73879C", "#9CC2CB", "#9CA9AE"];
+            var dataset = [];
+            {% for i in datapoints %}
+                dataset.push(
+                    {   label: "{{legend_labels|lookup:forloop.counter0}}",
+                        backgroundColor: colors[{{forloop.counter0}}],
+                        data: {{ datapoints|lookup:forloop.counter0 }}
+                    });
+            {% endfor %}
+            var first = 0;
+            var chartDef = {
                 type: 'bar',
                 data: {
                     labels: {{ labels|safe }},
+                    datasets: dataset.slice()
+                }
+            };
 
-                    datasets: [
-                        {
-                            label: "{{ legend_labels.0 }}",
-                            backgroundColor: "#26B99A",
-                            data: {{ datapoints.0|safe }}
-                        },
-                        {% if datapoints|length > 1 %}
-                            {
-                                label: "{{ legend_labels.1 }}",
-                                backgroundColor: "#03586A",
-                                data: {{ datapoints.1|safe }}
-                            },
-                        {% endif %}
-                    ]
-                },
-            });
-
+            new Chart(ctx, chartDef);
 
         });
     </script>
