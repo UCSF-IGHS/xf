@@ -13,9 +13,9 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+#@receiver(post_save, sender=User)
+#def save_user_profile(sender, instance, **kwargs):
+#    instance.profile.save()
 
 @receiver(post_init, sender=User)
 def create_user_profile_on_post_init(sender, instance, **kwargs):
@@ -353,7 +353,7 @@ class UserProfile(models.Model):
     '''
     Extends the standard user profile
     '''
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile", blank=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     tags = models.ManyToManyField(
         Tag,
         related_name='user_profiles',
@@ -372,3 +372,16 @@ class UserProfile(models.Model):
         blank=True,
         help_text='Any comment.'
     )
+
+    def save(self, *args, **kwargs):
+    #See https://stackoverflow.com/questions/6117373/django-userprofile-m2m-field-in-admin-error/6117457#6117457
+
+        print("user profile saved")
+        if not self.pk:
+            try:
+                p = UserProfile.objects.get(user=self.user)
+                self.pk = p.pk
+            except UserProfile.DoesNotExist:
+                pass
+
+        super(UserProfile, self).save(*args, **kwargs)
