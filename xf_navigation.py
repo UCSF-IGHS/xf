@@ -40,16 +40,16 @@ def add_navigation(navigation_tree, header_name="Home", section_name="Welcome", 
                 if section.name == section_name:
                     # Section found, add the link to it
                     if parent_caption == None:
-                        print "addingn %s to %s" % (caption, section.name)
                         section.navigation_links.append(XFNavigationLink(caption=caption, url=url))
                         return
                     else:
                         # Search for a parent caption link
-                        print "sub found"
+                        print "adding %s to %s with url %s" % (caption, parent_caption, url)
                         for navigation_link in section.navigation_links:
-                           if navigation_link.caption == parent_caption:
-                              print "adding sub link"
-                              navigation_link.sub_navigation_links.append(XFNavigationLink(caption=caption, url=url))
+   #                         print ">>> searching for " % (navigation_link.caption, parent_caption, url)
+                            if navigation_link.caption == parent_caption:
+                               navigation_link.sub_navigation_links.append(XFNavigationLink(caption=caption, url=url))
+
                         return
 
             # Section not found, create and add it
