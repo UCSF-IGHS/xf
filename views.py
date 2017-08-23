@@ -367,6 +367,10 @@ class WidgetView(DashboardView):
             context["caption"] = self.widget.title
             context["extra_text"] = self.widget.sub_text
 
+            custom_attributes = ast.literal_eval(self.widget.custom_attributes)
+            for k, v in custom_attributes.items():
+                context[k] = v
+
             try:
                 cursor = conn.cursor()
                 cursor.execute(sql_query)
@@ -377,6 +381,7 @@ class WidgetView(DashboardView):
 
             if self.widget.widget_type == Widget.PIE or \
                             self.widget.widget_type == Widget.TABLE or \
+                            self.widget.widget_type == Widget.MAP or \
                             self.widget.widget_type == Widget.FILTER_DROP_DOWN or \
                             self.widget.widget_type == Widget.TILES or \
                             self.widget.widget_type == Widget.LINE_GRAPH or \
