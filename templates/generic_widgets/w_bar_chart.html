@@ -34,6 +34,7 @@
     </div>
 
     <canvas id="{{ widget_id }}"></canvas>
+    <!--<canvas id="" width="300" height="150"></canvas>-->
     <p>{{ extra_text }}</p>
     <script type="text/javascript">
 
@@ -42,24 +43,27 @@
             var ctx = $("#{{ widget_id }}");
             var colors = ["#26B99A", "#03586A", "#73879C", "#9CC2CB", "#9CA9AE"];
             var dataset = [];
-            {% for i in datapoints %}
+            var legend_labels = JSON.parse('{{ legend_labels | jsonify | safe }}');
+            var data_points = JSON.parse('{{ datapoints | jsonify | safe}}');
+
+            data_points.forEach(function (point, index) {
                 dataset.push(
-                    {   label: "{{legend_labels|lookup:forloop.counter0}}",
-                        backgroundColor: colors[{{forloop.counter0}}],
-                        data: {{ datapoints|lookup:forloop.counter0 }}
-                    });
-            {% endfor %}
-            var first = 0;
-            var chartDef = {
+                    {
+                        label: legend_labels[index],
+                        backgroundColor: colors[index],
+                        data: JSON.parse(data_points[index])
+                    }
+                );
+            });
+
+            new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: {{ labels|safe }},
+
                     datasets: dataset.slice()
                 }
-            };
-
-            new Chart(ctx, chartDef);
-
+            });
         });
     </script>
 

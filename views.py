@@ -1,4 +1,4 @@
-#import MySQLdb
+# import MySQLdb
 from django.db import connections
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
@@ -31,10 +31,10 @@ from . import models as UCModels
 # Create your views here.
 from uc_dashboards.models import NavigationSection, Page, Widget, Perspective
 
-
-#== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+# == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
 from xf_system.views import XFNavigationViewMixin
 from xf_system.xf_navigation import add_navigation
+
 
 def get_current_perspective(request):
     """
@@ -44,12 +44,11 @@ def get_current_perspective(request):
     """
 
     # If a perspective is set in the session, return that
-    #if request.session.has_key("perspective_id"):
+    # if request.session.has_key("perspective_id"):
     # PYTHON3 UPDATE
     if "perspective_id" in request.session:
         perspective = Perspective.objects.get(pk=request.session["perspective_id"])
         return perspective
-
 
     # No perspective set. Try to get the default perspective from the user
     # Load all perspectives available to this user
@@ -66,8 +65,6 @@ def get_current_perspective(request):
 
 
 def load_navigation(sender, navigation_trees, request):
-
-
     preset_filters = ""
     perspective = None
     perspectives = None
@@ -84,7 +81,7 @@ def load_navigation(sender, navigation_trees, request):
     # Create a navigation tree for dashboards
 
 
-    #if not navigation_trees.has_key("dashboard"):
+    # if not navigation_trees.has_key("dashboard"):
     # PYTHON3 UPDATE
     if not "dashboard" in navigation_trees:
         navigation_tree = []
@@ -98,23 +95,21 @@ def load_navigation(sender, navigation_trees, request):
             for page in current_perspective.pages.order_by('navigation_section__index', 'index'):
                 print("Processing: %s: " % page.title)
 
-
                 if page.page_id:
 
-                    url = reverse(viewname=page.page_type.url_section, kwargs= {'section' : page.section.title, 'slug' : page.slug, 'page_id' :page.page_id})
+                    url = reverse(viewname=page.page_type.url_section,
+                                  kwargs={'section': page.section.title, 'slug': page.slug, 'page_id': page.page_id})
                 else:
                     url = reverse(viewname=page.page_type.url_section,
                                   kwargs={'section': page.section.title, 'slug': page.slug})
 
                 if page.parent_page:
                     add_navigation(navigation_tree, 'Dashboard', page.parent_page.navigation_section.caption, url,
-                        page.parent_page.navigation_section.icon, page.title, page.parent_page.title)
+                                   page.parent_page.navigation_section.icon, page.title, page.parent_page.title)
 
                 elif page.navigation_section:
                     add_navigation(navigation_tree, 'Dashboard', page.navigation_section.caption, url,
-                        page.navigation_section.icon, page.title)
-
-
+                                   page.navigation_section.icon, page.title)
 
     return
 
@@ -138,8 +133,7 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
         super(DashboardView, self).__init__()
         XFNavigationViewMixin.__init__(self)
 
-
-        print ("delegate set")
+        print("delegate set")
 
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
@@ -151,7 +145,7 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
             context["navigation_sections"] = self.navigation_sections
 
         else:
-            #No perspective - load legacy menus
+            # No perspective - load legacy menus
             navigationsections = NavigationSection.objects.order_by("index")
             context["legacy_navigation"] = True
             context["navigationsections"] = navigationsections
@@ -159,8 +153,6 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
         self.context = context
         self.set_navigation_context()
         return context
-
-
 
     def load_perspectives(self):
 
@@ -177,7 +169,7 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
         # Dictionary: {NavivationItemID, (Tuple)}
         # Dictionary: {ParentNavigationItemID, Dictionary}
 
-        #if self.request.session.has_key("perspective_id"):
+        # if self.request.session.has_key("perspective_id"):
         # PYTHON3 UPDATE
         if "perspective_id" in self.request.session:
             self.perspective = Perspective.objects.get(pk=self.request.session["perspective_id"])
@@ -185,7 +177,7 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
 
             for page in self.pages:
                 navigation_section = None
-                #if not self.navigation_sections.has_key(page.navigation_section_id):
+                # if not self.navigation_sections.has_key(page.navigation_section_id):
                 # PYTHON3 UPDATE
                 if not page.navigation_section.id in self.navigation_sections:
                     self.navigation_sections[page.navigation_section_id] = (page.navigation_section, [page])
@@ -203,11 +195,11 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
                     if group.profile.preset_filters:
                         filters = ast.literal_eval('{' + group.profile.preset_filters + '}')
                         if self.perspective:
-                            #if filters.has_key("*"):
+                            # if filters.has_key("*"):
                             # PYTHON3 UPDATE
                             if "*" in filters:
                                 self.preset_filters = filters["*"]
-                            #if filters.has_key(self.perspective.code):
+                            # if filters.has_key(self.perspective.code):
                             # PYTHON3 UPDATE
                             if self.perspective.code in filters:
                                 self.preset_filters = filters[self.perspective.code]
@@ -215,26 +207,23 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
             # Set preset filters for users - this means that user filters superseed group filters
             if self.request.user.profile:
                 if self.request.user.profile.preset_filters:
-                    #load all the filters as a dictionary and load the filter for the particular perspective
-                    #a * may be used for all perspectives - and this can be overridden by a more specific filter
+                    # load all the filters as a dictionary and load the filter for the particular perspective
+                    # a * may be used for all perspectives - and this can be overridden by a more specific filter
                     filters = ast.literal_eval('{' + self.request.user.profile.preset_filters + '}')
                     if self.perspective:
-                        #if filters.has_key("*"):
+                        # if filters.has_key("*"):
                         # PYTHON3 UPDATE
                         if "*" in filters:
                             self.preset_filters = filters["*"]
-                        #if filters.has_key(self.perspective.code):
+                        # if filters.has_key(self.perspective.code):
                         # PYTHON3 UPDATE
                         if self.perspective.code in filters:
                             self.preset_filters = filters[self.perspective.code]
 
-
         pass
 
 
-
-
-#== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+# == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
 class WidgetView(DashboardView):
     """
     Serves as a base class for widgets, which are content types of a dashboard.
@@ -275,7 +264,8 @@ class WidgetView(DashboardView):
 
         context["widget_id"] = self.__class__.__name__
         if self.widget:
-            context['change_url'] = reverse('admin:uc_dashboards_widget_change', args=(self.widget.id,), current_app='uc_dashboards')
+            context['change_url'] = reverse('admin:uc_dashboards_widget_change', args=(self.widget.id,),
+                                            current_app='uc_dashboards')
 
         context["widget"] = self.widget
         context['filter_query_string'] = "?" + self.request.META['QUERY_STRING']
@@ -327,7 +317,6 @@ class WidgetView(DashboardView):
         conn = connections[database_key]
         return conn
 
-
     def load_widget_data(self, context):
         """
         Loads the data for the widget. Some widget fields must be set as follows:
@@ -339,7 +328,6 @@ class WidgetView(DashboardView):
         :param context:
         :return:
         """
-
 
         if self.widget:
 
@@ -357,26 +345,27 @@ class WidgetView(DashboardView):
                     try:
                         sql_query = sql_query.replace("@" + filter, conn.literal(self.request.GET.get(filter, '')))
                     except:
-                        #UNSAFE!!!!
-                        #TODO: FIX
+                        # UNSAFE!!!!
+                        # TODO: FIX
                         sql_query = sql_query.replace("@" + filter, "'" + self.request.GET.get(filter, '') + "'")
 
-            #print sql_query
+            # print sql_query
 
             context["widget_id"] += self.widget.slug
             context["caption"] = self.widget.title
             context["extra_text"] = self.widget.sub_text
 
-            custom_attributes = ast.literal_eval(self.widget.custom_attributes)
-            for k, v in custom_attributes.items():
-                context[k] = v
+            if self.widget.custom_attributes != "":
+                custom_attributes = ast.literal_eval("{" + self.widget.custom_attributes + "}")
+                for k, v in custom_attributes.items():
+                    context[k] = v
 
             try:
                 cursor = conn.cursor()
                 cursor.execute(sql_query)
                 rows = cursor.fetchall()
             finally:
-                #conn.close()
+                # conn.close()
                 pass
 
             if self.widget.widget_type == Widget.PIE or \
@@ -407,10 +396,10 @@ class WidgetView(DashboardView):
                 labels = []
                 for row in rows:
                     labels.append(str(row[self.widget.label_column]))
-                    #if isinstance(row[self.widget.label_column], str):
-                        # UNICODE MAY FAIL HERE - without the str a 'u' will be added
+                    # if isinstance(row[self.widget.label_column], str):
+                    # UNICODE MAY FAIL HERE - without the str a 'u' will be added
                     #    labels.append(str(row[self.widget.label_column]))
-                    #else:
+                    # else:
                     #    labels.append("XXX")
 
                 context["labels"] = str(labels).replace("'", '"')
@@ -424,7 +413,7 @@ class WidgetView(DashboardView):
 
                     # create a dictionary like {'legend_label': 'number of admissions', 'column_name': 'admissions'}
                     data_point_column_description = ast.literal_eval('{' + column + '}')
-                    #if data_point_column_description.has_key('legend_label'):
+                    # if data_point_column_description.has_key('legend_label'):
                     # PYTHON3 UPDATE
                     if "legend_label" in data_point_column_description:
                         legend_labels.append(data_point_column_description['legend_label'])
@@ -461,7 +450,6 @@ class WidgetView(DashboardView):
 
         raise TemplateDoesNotExist(template_name, chain=chain)
 
-
     def response_class(self, request, template, context, **response_kwargs):
         """
         We are overloading this method so that it can inject a template that is loaded with content from the database,
@@ -479,7 +467,6 @@ class WidgetView(DashboardView):
                 template2 = self.get_template2(template_name="dashboards/t_ibbs_overview.html")
                 template2.template = template
 
-
                 # We need to return the template here directly
                 return super(WidgetView, self).response_class(request, template2, context, **response_kwargs)
                 t = TemplateResponse(request, template)
@@ -488,7 +475,7 @@ class WidgetView(DashboardView):
         return super(WidgetView, self).response_class(request, template, context, **response_kwargs)
 
 
-#== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+# == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
 class DashboardPageView(DashboardView):
     """
     The base view for any dashboard type page. It checks for security as needed.
@@ -514,10 +501,12 @@ class DashboardPageView(DashboardView):
         context = super(DashboardPageView, self).get_context_data(**kwargs)
         page = self.page
         context['change_url'] = reverse('admin:uc_dashboards_page_change', args=(page.id,), current_app='uc_dashboards')
-        context['change_template_url'] = reverse('admin:uc_dashboards_template_change', args=(page.template.id,), current_app='uc_dashboards')
-        if self.perspective:
-            context['change_perspective_url'] = reverse('admin:uc_dashboards_perspective_change', args=(self.perspective.id,),
+        context['change_template_url'] = reverse('admin:uc_dashboards_template_change', args=(page.template.id,),
                                                  current_app='uc_dashboards')
+        if self.perspective:
+            context['change_perspective_url'] = reverse('admin:uc_dashboards_perspective_change',
+                                                        args=(self.perspective.id,),
+                                                        current_app='uc_dashboards')
         context['delete_url'] = reverse('admin:uc_dashboards_page_delete', args=(page.id,), current_app='uc_dashboards')
         context['page'] = page
         context['title'] = page.title
@@ -559,7 +548,6 @@ class DashboardPageView(DashboardView):
             template2 = self.get_template2(template_name="dashboards/t_ibbs_overview.html")
             template2.template = template
 
-
             # We need to return the template here directly
             return super(DashboardPageView, self).response_class(request, template2, context, **response_kwargs)
             t = TemplateResponse(request, template)
@@ -593,9 +581,9 @@ class StartView(DashboardPageView):
         return super(TemplateView, self).render_to_response(context)
 
 
-#== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+# == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
 
-#Don't like these non-class based views, but they work, for now
+# Don't like these non-class based views, but they work, for now
 def load_perspective(request, perspective_id):
     perspective = get_object_or_404(UCModels.Perspective, id=perspective_id)
     perspective = request.user.load_perspective(perspective, True)
@@ -603,6 +591,7 @@ def load_perspective(request, perspective_id):
         request.session["perspective_id"] = perspective.id
     return home_page(request)
     pass
+
 
 def clear_perspective(request):
     request.session["perspective_id"] = None
@@ -616,14 +605,14 @@ def home_page(request):
     :return:
     '''
 
-    #If there is a perspective, try to load that perspective's home page
-    #if request.session.has_key("perspective_id"):
+    # If there is a perspective, try to load that perspective's home page
+    # if request.session.has_key("perspective_id"):
     # PYTHON3 UPDATE
     if "perspective_id" in request.session:
-        perspective = Perspective.objects.get(pk = request.session["perspective_id"])
+        perspective = Perspective.objects.get(pk=request.session["perspective_id"])
         url = reverse("dashboards", args=[perspective.default_page.section.title, perspective.default_page.slug])
-        #perspective.default_page
+        # perspective.default_page
         return HttpResponseRedirect(url)
 
-    #No perspecive - load default homepage
+    # No perspecive - load default homepage
     return HttpResponseRedirect("/dashboards/home/overview/")
