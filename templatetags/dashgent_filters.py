@@ -38,6 +38,9 @@ def columnwidth(value):
         return "col-md-5 col-sm-5 col-xs-12"
     elif value == 7:
         return "col-md-7 col-sm-7 col-xs-12"
+    elif value == 9:
+        return "col-md-9 col-sm-9 col-xs-12"
+
 
     elif value == 3:
         return "col-md-3 col-sm-3 col-xs-12"

@@ -13,23 +13,21 @@
 {% endblock %}
 
 {% block filterbar %}
-    {%   if page.show_filter_bar %}
-    <div class="filter-bar ">
-        <form method="get">
-            <input type="hidden" name="filter" value="active">
+    {% if page.show_filter_bar %}
+        <div class="filter-bar"  >
+            <form method="get">
+                <input type="hidden" name="filter" value="active">
+                <div class="filter-widget" style="position: relative; top: 50%; transform: translateY(20%);" >Filter: </div>
 
-            {% block filterbar_main %}{% endblock %}
-            <div class="{{ 3|cw }} pull-right .navbar-right"><input type="submit" value="Apply filter"
-                                                                    class="btn btn-primary"/>
+                {% block filterbar_main %}{% endblock %}
+                <div class="filter-buttons"><input type="submit" value="Apply filter" class="btn btn-primary"/>
+                            {% if request.GET.filter == "active" %}
+                                <a class="btn btn-default" href="./">Clear filter</a>
+                            {% endif %}</div>
+            </form>
+        </div>
 
-                {% if request.GET.filter == "active" %}
 
-                    <input type="submit" value="Clear filter" class="btn btn-default">
-
-                {% endif %}
-            </div>
-        </form>
-    </div>
     {% endif %}
 
 {% endblock %}
