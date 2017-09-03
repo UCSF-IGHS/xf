@@ -95,8 +95,19 @@ table.table-scrollable th, table.table-scrollable td {
     padding-left: 15px;
 }
 
+.x_content h2.small {
+    color: #777;
+    margin-top: -5px;
+}
 
+.x_content h3 {
+    font-size: 14px;
+}
 
+.tile_count {
+    margin-top: 5px; !important;
+    margin-bottom: 5px; !important;
+}
 
 /*
 .select2-container .select2-choice, .select2-result-label {
