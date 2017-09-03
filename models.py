@@ -28,6 +28,7 @@ def create_user_profile_on_post_init(sender, instance, **kwargs):
 class HTMLField(models.TextField):
     pass
 
+
 # Create your models here.
 
 ### Navigation models
@@ -276,7 +277,7 @@ class Widget(models.Model):
         blank=True,
         help_text="Pie: the column that has the labels to be shown in the pie"
     )
-    text = models.TextField(
+    text = HTMLField(
         blank=True,
         help_text='If this is a text widget, the text will be displayed in the widget. Useful for static widgets.'
     )
@@ -297,7 +298,7 @@ class Widget(models.Model):
         blank=True,
         help_text = 'A code that can be used to identify this widget. The code will be displayed in the "About this widget" box.'
     )
-    user_description = models.TextField(
+    user_description = HTMLField(
         blank=True,
         help_text='A description that helps the user understand what this widget shows. It will be shown in a pop-up window. '
     )

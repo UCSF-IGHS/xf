@@ -12,6 +12,7 @@
 
 {% block widget_main %}
 
+    {% include 'generic_widgets/include_sub_text.html' %}
     <div class="modal fade bs-example-modal-lg" id="{{ widget_id }}-modal" tabindex="-1" role="dialog"
          aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -35,7 +36,6 @@
 
     <canvas id="{{ widget_id }}"></canvas>
     <!--<canvas id="" width="300" height="150"></canvas>-->
-    <p>{{ extra_text }}</p>
     <script type="text/javascript">
 
         $(function () {

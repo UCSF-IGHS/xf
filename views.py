@@ -351,12 +351,17 @@ class WidgetView(DashboardView):
 
             # print sql_query
 
-            context["widget_id"] += self.widget.slug
+            context["widget_id"] += self.widget.slug.replace("-", "_")
             context["caption"] = self.widget.title
             context["extra_text"] = self.widget.sub_text
+            context["widget_type"] = self.widget.widget_type
 
+            # Custom attributes
             if self.widget.custom_attributes != "":
                 custom_attributes = ast.literal_eval("{" + self.widget.custom_attributes + "}")
+                context["custom_attr"] = custom_attributes
+
+                print("Direct custom attributes will be deprecated soon")
                 for k, v in custom_attributes.items():
                     context[k] = v
 
@@ -388,6 +393,7 @@ class WidgetView(DashboardView):
                 rows = self.result_set_to_dict(rows, column_names)
                 context["rows"] = rows;
                 context["data_columns"] = self.data_columns
+                context["tile_width"] = int(12 / len(rows))
 
             # Data points
             if self.widget.widget_type == Widget.PIE or \
