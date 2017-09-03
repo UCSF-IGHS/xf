@@ -49,11 +49,14 @@ class PerspectiveAdmin(admin.ModelAdmin):
 #    list_filter = ('tags', )
 #    save_as = True;
 
+
+
 class WidgetTypeAdmin(admin.ModelAdmin):
 
     list_display = ('title', 'slug', 'allow_anonymous', 'template', 'widget_type', 'widget_id', 'code')
     list_filter = ('tags', 'template', 'widget_type')
     save_as = True;
+    formfield_overrides = {HTMLField: {'widget': forms.Textarea(attrs={'class': 'ckeditor'})}, }
     fieldsets = (
         ('General', {
             'fields': ('title', 'slug', 'code', 'permissions_to_view', 'allow_anonymous', 'widget_id', 'template', 'widget_type', 'user_description', 'view_details_url', 'tags')
@@ -74,7 +77,9 @@ class WidgetTypeAdmin(admin.ModelAdmin):
         }),
     )
 
-    pass
+    class Media:
+        js = ('//cdn.ckeditor.com/4.5.9/standard/ckeditor.js',)
+
 
 class GroupProfileInline(admin.StackedInline):
     model = GroupProfile

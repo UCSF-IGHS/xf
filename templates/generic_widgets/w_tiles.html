@@ -4,102 +4,17 @@
 
 
 {% block widget_main %}
-<!--    <div class="{{ 12|cw }} collapse" id="filterwell">
-        <div class="well well-sm" >
-            <form id="demo-form2" method="get" data-parsley-validate class="form-inline ">
-                <input type="hidden" name="filter" value="active">
-                <div class="form-group {{ 4|cw }}">
-                    <label class="control-label space-me ">Date range:</label>
-
-
-<div id="reportrange3" class="pull-left form-control" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;">
-    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
-    <span></span> <b class="caret"></b>
-</div>
-
-
-                </div>
-                <div class="form-group {{ 4|cw }}">
-                    <label class="control-label space-me">Countries:</label>
-                    <select class="select2_multiple form-control " style="width: 300px;" multiple="multiple" name="countries">
-                        <option>Choose countries</option>
-                        <option>Uganda</option>
-                        <option>Kenya</option>
-                        <option>Rwanda</option>
-                    </select>
-                </div>
-                <div class="form-group {{ 4|cw }}">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <input type="submit" value="Apply filter" class="btn btn-primary" data-dismiss2="modal"/>
-                </div>
-                <input type="hidden" id="fromdate" name="fromdate">
-                <input type="hidden" id="todate" name="todate">
-            </form>
-        </div>
-    </div>-->
 
     <div>
         {% for row in rows %}
-            {% include 'generic_widgets/include_tile.html' with row=row %}
+            {% include 'generic_widgets/include_tile.html' with row=row cw=tile_width %}
             </div>
         {% endfor %}
-    {% include 'widgets/filter_date_location.html' %}
+
     </div>
 
 
-    <!-- bootstrap-daterangepicker -->
-    <script>
-        $(document).ready(function () {
-            $('#birthday').daterangepicker({
-                singleDatePicker: true,
-                calender_style: "picker_4"
-            }, function (start, end, label) {
-                console.log(start.toISOString(), end.toISOString(), label);
-            });
-        });
-    </script>
-    <!-- /bootstrap-daterangepicker -->
 
-
-
-    <!-- Select2 -->
-    <script>
-        $(document).ready(function () {
-            $(".select2_single").select2({
-                placeholder: "Select a state",
-                allowClear: true
-            });
-            $(".select2_group").select2({});
-            $(".select2_multiple").select2({
-                maximumSelectionLength: 4,
-                placeholder: "Select countries",
-                allowClear: true
-            });
-        });
-    </script>
-    <!-- /Select2 -->
-
-    <script type="text/javascript">
-        $(function () {
-            $('input[name="daterange"]').daterangepicker();
-        });
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            $('input[name="datefrom"]').daterangepicker(
-                    {
-                        locale: {
-                            format: 'YYYY-MM-DD'
-                        },
-                        startDate: '2013-01-01',
-                        endDate: '2013-12-31'
-                    },
-                    function (start, end, label) {
-                        alert("A new date range was chosen: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-                    });
-        });
-    </script>
 
 
 
