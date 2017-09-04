@@ -5,11 +5,11 @@
 
 {% block widget_main %}
 
+   {% if request.user.is_superuser %}
    <div style="position: absolute; right: 20px;z-index: 100">
     <ul class="nav navbar-right panel_toolbox">
 
         {# Spanner dropdown. Only available to admins #}
-       {% if request.user.is_superuser %}
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                aria-expanded="false"><i
@@ -19,7 +19,7 @@
                     {% if change_url %}
                         <li><a href="{{ change_url }}" target="_blank">Edit widget</a></li>
                     {% endif %}
-                {% endif %}
+
                 {% if widget.slug %}
                 <li><a href="{% url 'widgets' widget.slug %}{{ filter_query_string }}" target="_blank">View as stand-alone</a></li>
                 {% endif %}
@@ -34,7 +34,7 @@
         {% endfor %}
 
     </div>
-
+    {% endif %}
 
 
 <div class="modal fade bs-example-modal-md" id="{{ widget_id }}-modal-about" tabindex="-1" role="dialog"
