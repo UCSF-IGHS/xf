@@ -27,6 +27,7 @@
         </li>
     </ul>
     </div>
+    {% endif %}
     <div>
         {% for row in rows %}
             {% include 'generic_widgets/include_tile.html' with row=row cw=tile_width %}
@@ -34,7 +35,7 @@
         {% endfor %}
 
     </div>
-    {% endif %}
+
 
 
 <div class="modal fade bs-example-modal-md" id="{{ widget_id }}-modal-about" tabindex="-1" role="dialog"
