@@ -2,7 +2,11 @@
 from django.core.urlresolvers import reverse
 from django import template
 
+import json
+from django.core.serializers.json import DjangoJSONEncoder
+
 register = template.Library()
+
 
 @register.filter(name='rev')
 def rev(value):
@@ -13,6 +17,7 @@ def rev(value):
     :return: the URl to return
     """
     return reverse(value)
+
 
 @register.filter(name='cw')
 def columnwidth(value):
@@ -33,6 +38,9 @@ def columnwidth(value):
         return "col-md-5 col-sm-5 col-xs-12"
     elif value == 7:
         return "col-md-7 col-sm-7 col-xs-12"
+    elif value == 9:
+        return "col-md-9 col-sm-9 col-xs-12"
+
 
     elif value == 3:
         return "col-md-3 col-sm-3 col-xs-12"
@@ -44,9 +52,12 @@ def columnwidth(value):
         return "col-md-12 col-sm-12 col-xs-12"
     return "col-md-12 col-sm-12 col-xs-12"
 
+
 @register.filter(name='lookup')
 def cut(value, arg):
-    if value.has_key(arg):
+    #if value.has_key(arg):
+    # PYTHON3 UPDATE
+    if arg in value:
         return value[arg]
     else:
         return ""
@@ -63,8 +74,14 @@ def findforkey(value, arg):
 
     return my_item
 
+
 @register.filter(name='columnnameforkey')
 def column_name_for_key(columns, key):
 
     return findforkey(columns, key)['column_name']
     pass
+
+
+@register.filter(name='jsonify')
+def get_object_by_property(objects):
+    return json.dumps(list(objects), cls=DjangoJSONEncoder)
