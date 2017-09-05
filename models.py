@@ -13,9 +13,9 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+#@receiver(post_save, sender=User)
+#def save_user_profile(sender, instance, **kwargs):
+#    instance.profile.save()
 
 @receiver(post_init, sender=User)
 def create_user_profile_on_post_init(sender, instance, **kwargs):
@@ -28,6 +28,7 @@ def create_user_profile_on_post_init(sender, instance, **kwargs):
 class HTMLField(models.TextField):
     pass
 
+
 # Create your models here.
 
 ### Navigation models
@@ -35,7 +36,7 @@ class HTMLField(models.TextField):
 class Tag(models.Model):
     text = models.CharField(max_length=255)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.text
 
 class NavigationSection(models.Model):
@@ -55,7 +56,7 @@ class NavigationSection(models.Model):
             if self.parent_section.parent_section:
                 raise ValidationError('Nested navigation items are not currently supported beyond one level.')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.caption
 
 
@@ -100,7 +101,7 @@ class Template(models.Model):
 
     tags = models.ManyToManyField(Tag, related_name='templates', blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -109,7 +110,7 @@ class Template(models.Model):
 class PageSection(models.Model):
     title = models.CharField(max_length=150)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
 
@@ -117,10 +118,7 @@ class PageType(models.Model):
     name = models.CharField(max_length=150)
     url_section = models.CharField(max_length=150, blank=True)
 
-    def clean(self):
-        raise ValidationError('Draft entries may not have a publication date.')
-
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -168,7 +166,7 @@ class Page(models.Model):
     index = models.IntegerField(blank=True, default=0, help_text='Pages with a lower index will be added to the navigation tree before those with a higher index. This is used to sort the navigation tree.')
     tags = models.ManyToManyField(Tag, related_name='pages', blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
 
@@ -193,7 +191,7 @@ class Perspective(models.Model):
         help_text='Any comment.')
     tags = models.ManyToManyField(Tag, related_name='perspectives', blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -279,7 +277,7 @@ class Widget(models.Model):
         blank=True,
         help_text="Pie: the column that has the labels to be shown in the pie"
     )
-    text = models.TextField(
+    text = HTMLField(
         blank=True,
         help_text='If this is a text widget, the text will be displayed in the widget. Useful for static widgets.'
     )
@@ -300,7 +298,7 @@ class Widget(models.Model):
         blank=True,
         help_text = 'A code that can be used to identify this widget. The code will be displayed in the "About this widget" box.'
     )
-    user_description = models.TextField(
+    user_description = HTMLField(
         blank=True,
         help_text='A description that helps the user understand what this widget shows. It will be shown in a pop-up window. '
     )
@@ -356,7 +354,7 @@ class UserProfile(models.Model):
     '''
     Extends the standard user profile
     '''
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile", blank=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     tags = models.ManyToManyField(
         Tag,
         related_name='user_profiles',
@@ -375,3 +373,16 @@ class UserProfile(models.Model):
         blank=True,
         help_text='Any comment.'
     )
+
+    def save(self, *args, **kwargs):
+    #See https://stackoverflow.com/questions/6117373/django-userprofile-m2m-field-in-admin-error/6117457#6117457
+
+        print("user profile saved")
+        if not self.pk:
+            try:
+                p = UserProfile.objects.get(user=self.user)
+                self.pk = p.pk
+            except UserProfile.DoesNotExist:
+                pass
+
+        super(UserProfile, self).save(*args, **kwargs)

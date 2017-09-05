@@ -65,6 +65,6 @@ def iif(parser, token):
             tag, exp1, exp2 = token.split_contents()
             exp3 = None
         except ValueError:
-            raise template.TemplateSyntaxError, "%r tag requires two or three arguments" % token.contents.split()[0]
+            raise template.TemplateSyntaxError("%r tag requires two or three arguments" % token.contents.split()[0])
 
     return IifNode(exp1 = exp1, exp2 = exp2, exp3 = exp3)

@@ -4,7 +4,7 @@ from django.views.generic import TemplateView, RedirectView
 
 
 
-from views import DashboardView, DashboardPageView, WidgetView, StartView
+from .views import DashboardView, DashboardPageView, WidgetView, StartView
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 
