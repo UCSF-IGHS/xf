@@ -45,6 +45,8 @@
             var dataset = [];
             var legend_labels = JSON.parse('{{ legend_labels | jsonify | safe }}');
             var data_points = JSON.parse('{{ datapoints | jsonify | safe}}');
+            var vertical_bar_widget = '6';
+            var begin_at_zero = "{{custom_attr|lookup:'begin_at_zero'}}" == 'true' ? true : false;
 
             data_points.forEach(function (point, index) {
                 dataset.push(
@@ -57,11 +59,37 @@
             });
 
             new Chart(ctx, {
-                type: 'bar',
+                type: '{{ widget_type }}' ==  vertical_bar_widget ? 'bar' : 'horizontalBar',
                 data: {
                     labels: {{ labels|safe }},
-
                     datasets: dataset.slice()
+                },
+                options: {
+                    scales: {
+                        {% if widget_type == '12' %}
+                            xAxes: [{
+                                stacked: true,
+                                beginAtZero:begin_at_zero,
+                                ticks: {
+                                    {% if   custom_attr|lookup:'maximum_scale' != null %}
+                                        max: parseInt('{{ custom_attr|lookup:'maximum_scale' }}')
+                                    {% endif %}
+                                }
+                            }],
+                        {% endif %}
+
+                        {% if widget_type == '6' %}
+                            yAxes: [{
+                                stacked: true,
+                                beginAtZero:begin_at_zero,
+                                ticks: {
+                                    {% if   custom_attr|lookup:'maximum_scale' != null %}
+                                        max: parseInt('{{ custom_attr|lookup:'maximum_scale' }}')
+                                    {% endif %}
+                                }
+                            }],
+                        {% endif %}
+                    }
                 }
             });
         });

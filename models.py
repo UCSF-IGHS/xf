@@ -209,6 +209,7 @@ class Widget(models.Model):
     TEXT_BLOCK = '9'
     PROGRESS_CIRCLE = '10'
     FILTER_DROP_DOWN = '11'
+    BAR_GRAPH_HORIZONTAL = '12'
     OTHER = '0'
 
     WIDGET_TYPE_CHOICES = (
@@ -217,7 +218,8 @@ class Widget(models.Model):
         (TILES, 'Tiles'),
         (EASY_PIE, 'Easy pie'),
         (LINE_GRAPH, 'Line graph'),
-        (BAR_GRAPH, 'Bar graph'),
+        (BAR_GRAPH, 'Bar graph Vertical'),
+        (BAR_GRAPH_HORIZONTAL, 'Bar graph Horizontal'),
         (DOUGHNUT_GRAPH, 'Doughnut graph'),
         (PROGRESS_CIRCLE, 'Progress circle'),
         (MAP, 'Map'),
