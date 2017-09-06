@@ -71,7 +71,7 @@
                                 stacked: true,
                                 beginAtZero:begin_at_zero,
                                 ticks: {
-                                    {% if   custom_attr|lookup:'maximum_scale' != null %}
+                                    {% if   custom_attr|lookup:'maximum_scale' != '' %}
                                         max: parseInt('{{ custom_attr|lookup:'maximum_scale' }}')
                                     {% endif %}
                                 }
@@ -83,7 +83,7 @@
                                 stacked: true,
                                 beginAtZero:begin_at_zero,
                                 ticks: {
-                                    {% if   custom_attr|lookup:'maximum_scale' != null %}
+                                    {% if   custom_attr|lookup:'maximum_scale' != '' %}
                                         max: parseInt('{{ custom_attr|lookup:'maximum_scale' }}')
                                     {% endif %}
                                 }
