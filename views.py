@@ -361,10 +361,6 @@ class WidgetView(DashboardView):
                 custom_attributes = ast.literal_eval("{" + self.widget.custom_attributes + "}")
                 context["custom_attr"] = custom_attributes
 
-                print("Direct custom attributes will be deprecated soon")
-                for k, v in custom_attributes.items():
-                    context[k] = v
-
             try:
                 cursor = conn.cursor()
                 cursor.execute(sql_query)

@@ -36,9 +36,8 @@
         </div>
     </div>
 
-   <div id="{{  widget.code }}" style=" height: 600px;"></div>
+   <div id="{{  widget_id }}" style=" height: 600px;"></div>
 
-    <p>{{extra_text}}</p>
     <script type="text/javascript">
         var objectList = JSON.parse('{{rows|jsonify|safe}}');
         var data = {};
@@ -48,8 +47,8 @@
         });
 
         jQuery(document).ready(function () {
-            jQuery("#{{  widget.code }}").vectorMap({
-              map: '{{map_name}}',
+            jQuery("#{{  widget_id }}").vectorMap({
+              map: '{{custom_attr|lookup:'map_name'}}',
               backgroundColor: 'transparent',
               color: '#ffffff',
               hoverOpacity: 0.7,
