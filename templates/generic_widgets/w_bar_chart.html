@@ -47,7 +47,7 @@
             var data_points = JSON.parse('{{ datapoints | jsonify | safe}}');
             var vertical_bar_widget = '6';
             var begin_at_zero = "{{custom_attr|lookup:'begin_at_zero'}}" == 'yes' ? true : false;
-            console.log(begin_at_zero);
+
             data_points.forEach(function (point, index) {
                 dataset.push(
                     {
