@@ -92,7 +92,10 @@ def load_navigation(sender, navigation_trees, request):
 
             print("******* Calling load_navigation with pperspective")
 
-            pages = current_perspective.pages.select_related().order_by('navigation_section__index', 'index')
+            pages = current_perspective.pages\
+                .select_related('section', 'navigation_section', 'parent_page', 'template', 'page_type')\
+                .order_by('navigation_section__index', 'index')
+
             for page in pages:
                 print("Processing: %s: " % page.title)
 
@@ -225,7 +228,7 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
 
 
 # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
-class WidgetView(DashboardView):
+class WidgetView(TemplateView):
     """
     Serves as a base class for widgets, which are content types of a dashboard.
     """
@@ -258,7 +261,10 @@ class WidgetView(DashboardView):
         :return:
         """
         context = super(WidgetView, self).get_context_data(**kwargs)
-        if self.request.is_ajax():
+        if 'zoom' in self.request.GET:
+            context["extends_template"] = "dashboards/t_dashboard_widget_zoom.html"
+            context["disable_zoom"] = True
+        elif self.request.is_ajax():
             context["extends_template"] = "dashboards/t_dashboard_widget_ajax_container.html"
         else:
             context["extends_template"] = "dashboards/t_dashboard_widget_container_tester.html"
@@ -332,6 +338,9 @@ class WidgetView(DashboardView):
 
         if self.widget:
 
+            if "perspective_id" in self.request.session:
+                self.perspective = Perspective.objects.get(pk=self.request.session["perspective_id"])
+
             if self.widget.widget_type == Widget.TEXT_BLOCK:
                 return
 
@@ -352,7 +361,8 @@ class WidgetView(DashboardView):
 
             # Add a perspective code as a filter, which allows you to filter any widget based on the current perspective
             # Very useful if you want to filter a filter based on a perspective
-            sql_query = sql_query.replace("@perspective_code", self.perspective.code)
+            if self.perspective:
+                sql_query = sql_query.replace("@perspective_code", self.perspective.code)
 
             # print sql_query
 
@@ -360,7 +370,8 @@ class WidgetView(DashboardView):
             context["caption"] = self.widget.title
             context["extra_text"] = self.widget.sub_text
             context["widget_type"] = self.widget.widget_type
-            context["perspective_code"] = self.perspective.code
+            if self.perspective:
+                context["perspective_code"] = self.perspective.code
 
             # Custom attributes
             if self.widget.custom_attributes != "":

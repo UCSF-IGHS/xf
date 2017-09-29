@@ -48,6 +48,11 @@
            data-target="#{{ widget_id }}-modal-about">More info</a></li>
             {% endif %}
 
+            {% if widget.slug and disable_zoom != True %}
+{#                 TODO: check for zoom in query string#}
+{#                Check if disable zoom is not set to yes in custom attributes#}
+            <li><a href="{% url 'widgets' widget.slug %}{{ filter_query_string }}&zoom" target="_blank">Enlarge</a></li>
+            {% endif %}
 
         </ul>
         {% endif %}
