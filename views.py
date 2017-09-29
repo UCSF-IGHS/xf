@@ -92,7 +92,8 @@ def load_navigation(sender, navigation_trees, request):
 
             print("******* Calling load_navigation with pperspective")
 
-            for page in current_perspective.pages.order_by('navigation_section__index', 'index'):
+            pages = current_perspective.pages.select_related().order_by('navigation_section__index', 'index')
+            for page in pages:
                 print("Processing: %s: " % page.title)
 
                 if page.page_id:
@@ -349,12 +350,17 @@ class WidgetView(DashboardView):
                         # TODO: FIX
                         sql_query = sql_query.replace("@" + filter, "'" + self.request.GET.get(filter, '') + "'")
 
+            # Add a perspective code as a filter, which allows you to filter any widget based on the current perspective
+            # Very useful if you want to filter a filter based on a perspective
+            sql_query = sql_query.replace("@perspective_code", self.perspective.code)
+
             # print sql_query
 
             context["widget_id"] += self.widget.slug.replace("-", "_")
             context["caption"] = self.widget.title
             context["extra_text"] = self.widget.sub_text
             context["widget_type"] = self.widget.widget_type
+            context["perspective_code"] = self.perspective.code
 
             # Custom attributes
             if self.widget.custom_attributes != "":
