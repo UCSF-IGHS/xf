@@ -210,6 +210,7 @@ class Widget(models.Model):
     PROGRESS_CIRCLE = '10'
     FILTER_DROP_DOWN = '11'
     BAR_GRAPH_HORIZONTAL = '12'
+    GAUGE = '13'
     OTHER = '0'
 
     WIDGET_TYPE_CHOICES = (
@@ -225,6 +226,7 @@ class Widget(models.Model):
         (MAP, 'Map'),
         (TEXT_BLOCK, 'Text block'),
         (FILTER_DROP_DOWN, 'Filter drop down'),
+        (GAUGE, 'Gauge'),
         (OTHER, 'Other'),
     )
 

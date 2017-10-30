@@ -1,0 +1,36 @@
+{% extends "t_gauge_control_base.html" %}
+{% load dashgent_filters %}
+
+{% block widget_main %}
+
+    <h4 id="{{ widget_id }}-caption"></h4>
+    <div id="{{ widget_id }}" style="height: 330px; margin-top: -30px;"></div>
+    <script type="text/javascript">
+        var objectList = JSON.parse('{{rows|jsonify|safe}}');
+        var data = {};
+        objectList.forEach(function (obj) {
+            data = obj;
+        });
+        var dom = document.getElementById("{{ widget_id }}");
+        var myChart = echarts.init(dom);
+        option = null;
+        option = {
+            tooltip : {
+                formatter: "{a} <br/>{b} : {c}"
+            },
+            series: [
+                {
+                    name: data.caption,
+                    type: 'gauge',
+                    detail: {formatter:'{value}'},
+                    data: [{value: data.value, name: ""}]
+                }
+            ]
+        };
+
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+            document.getElementById("{{ widget_id }}-caption").innerText = data.caption;
+        }
+    </script>
+{% endblock %}
