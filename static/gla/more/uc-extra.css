@@ -108,7 +108,9 @@ table.table-scrollable th, table.table-scrollable td {
     margin-top: 5px; !important;
     margin-bottom: 5px; !important;
 }
-
+.stripped-gauge-title{
+    font-size: 18px;
+}
 /*
 .select2-container .select2-choice, .select2-result-label {
   font-size: 1.5em;
