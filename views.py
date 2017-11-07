@@ -377,6 +377,12 @@ class WidgetView(TemplateView):
             if self.widget.custom_attributes != "":
                 custom_attributes = ast.literal_eval("{" + self.widget.custom_attributes + "}")
                 context["custom_attr"] = custom_attributes
+                if "stripped_base" in custom_attributes and custom_attributes.get("stripped_base") == "yes":
+                    context["extends_base_template"] = "t_xpanel_stripped_control_base.html"
+                else:
+                    context["extends_base_template"] = "t_xpanel_control_base.html"
+            else:
+                context["extends_base_template"] = "t_xpanel_control_base.html"
 
             try:
                 cursor = conn.cursor()
@@ -394,6 +400,7 @@ class WidgetView(TemplateView):
                             self.widget.widget_type == Widget.LINE_GRAPH or \
                             self.widget.widget_type == Widget.PROGRESS_CIRCLE or \
                             self.widget.widget_type == Widget.BAR_GRAPH or \
+                            self.widget.widget_type == Widget.GAUGE or \
                             self.widget.widget_type == Widget.BAR_GRAPH_HORIZONTAL:
 
                 column_names = []
@@ -453,6 +460,7 @@ class WidgetView(TemplateView):
                 self.widget.widget_type == Widget.LINE_GRAPH or \
                 self.widget.widget_type == Widget.BAR_GRAPH or \
                 self.widget.widget_type == Widget.BAR_GRAPH_HORIZONTAL or \
+                self.widget.widget_type == Widget.GAUGE or \
                 self.widget.widget_type == Widget.PIE \
                 else False
 

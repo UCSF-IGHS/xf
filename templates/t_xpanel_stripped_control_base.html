@@ -1,0 +1,18 @@
+{% extends extends_template %}
+{% load dashgent_filters %}
+
+{% comment %}
+This template is a container for an XPanel. It is designed to be hosted within ajax_container when outputed on a dashboard,
+or within container_tester when debugging/testing this widget as a standalone.
+{% endcomment %}
+
+{% block ajax_main  %}
+    <div class="x_title_no_line">
+        <h2>{% block caption %}{% endblock %}</h2>
+        <div class="clearfix">{% block spanner %}{% endblock %}</div>
+    </div>
+    <div class="x_content"  >
+        {% block widget_main %}{% endblock %}
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}
