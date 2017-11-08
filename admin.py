@@ -1,21 +1,26 @@
+import modeltranslation
 from django.contrib import admin
 from django import forms
 from django.forms import TextInput, Textarea
 from django.db import models
 from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from modeltranslation.admin import TranslationAdmin
 
 from .models import *
 
 
-class NavigationSectionAdmin(admin.ModelAdmin):
+class NavigationSectionAdmin(TranslationAdmin):
     list_display  = ('caption', 'index', 'parent_section')
 
 class TagAdmin(admin.ModelAdmin):
     pass
 
+class PageStatusAdmin(TranslationAdmin):
+    pass
 
-class PageAdmin(admin.ModelAdmin):
+
+class PageAdmin(TranslationAdmin):
     list_display = ('title', 'main_title', 'slug', 'section', 'allow_anonymous', 'template', 'page_type', 'navigation_section', 'page_id', 'index')
     list_filter = ('tags', 'template', 'page_type', 'navigation_section')
     save_as = True;
@@ -25,7 +30,7 @@ class PageAdmin(admin.ModelAdmin):
         js = ('//cdn.ckeditor.com/4.5.9/standard/ckeditor.js',)
 
 
-class PageSectionAdmin(admin.ModelAdmin):
+class PageSectionAdmin(TranslationAdmin):
     list_display = ('title',)
 
 class GroupProfileAdmin(admin.ModelAdmin):
@@ -39,7 +44,7 @@ class TemplateAdmin(admin.ModelAdmin):
     list_filter = ('tags', 'template_type', 'template_source')
     save_as = True;
 
-class PerspectiveAdmin(admin.ModelAdmin):
+class PerspectiveAdmin(TranslationAdmin):
     list_display = ('name', 'code')
     list_filter = ('tags', )
     save_as = True;
@@ -51,7 +56,7 @@ class PerspectiveAdmin(admin.ModelAdmin):
 
 
 
-class WidgetTypeAdmin(admin.ModelAdmin):
+class WidgetTypeAdmin(TranslationAdmin):
 
     list_display = ('title', 'slug', 'allow_anonymous', 'template', 'widget_type', 'widget_id', 'code')
     list_filter = ('tags', 'template', 'widget_type')
@@ -108,6 +113,7 @@ admin.site.register(NavigationSection, NavigationSectionAdmin)
 admin.site.register(Page, PageAdmin)
 admin.site.register(Template, TemplateAdmin)
 admin.site.register(PageType, PageTypeAdmin)
+admin.site.register(PageStatus, PageStatusAdmin)
 admin.site.register(PageSection, PageSectionAdmin)
 admin.site.register(Widget, WidgetTypeAdmin)
 admin.site.register(Tag, TagAdmin)
