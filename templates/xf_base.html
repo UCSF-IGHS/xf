@@ -1,6 +1,7 @@
 {% load staticfiles %}
 {% load admin_urls %}
 {% load dashgent_filters %}
+{% load i18n %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +21,7 @@
     <script src="{% static "gla/vendors/jquery/dist/jquery.min.js" %}"></script>
 
     <!-- Internal uh AJAX Library -->
-    <script src="{% static  "gla/js/ajax.js" %}"></script>
+    <script src="{% static "gla/js/ajax.js" %}"></script>
 
 
     <!-- Bootstrap -->
@@ -67,7 +68,8 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="index.html" class="site_title"><i class="fa {{ site_icon }}"></i> <span>{{ site_title }}</span></a>
+                    <a href="index.html" class="site_title"><i class="fa {{ site_icon }}"></i>
+                        <span>{{ site_title }}</span></a>
                 </div>
 
                 <div class="clearfix"></div>
@@ -93,66 +95,79 @@
                 <!-- sidebar menu -->
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 
-                {% for app, navigation_tree in navigation_trees.items %}
+                    {% for app, navigation_tree in navigation_trees.items %}
 
-                    {% for navigation_header in navigation_tree %}
+                        {% for navigation_header in navigation_tree %}
 
-                    {# Navigation Headers – the first tier #}
-                    <div class="menu_section">
-                        <h3>{{ navigation_header.name }}</h3>
-                        {% for navigation_section in navigation_header.navigation_sections %}
-                        <ul class="nav side-menu">
+                            {# Navigation Headers – the first tier #}
+                            <div class="menu_section">
+                                <h3>{{ navigation_header.name }}</h3>
+                                {% for navigation_section in navigation_header.navigation_sections %}
+                                    <ul class="nav side-menu">
 
-                            {# Navigation Sections – the second tier #}
-                            {# This includes the icon #}
-                            <li><a><i class="fa {{ navigation_section.icon }}"></i> {{ navigation_section.name }}<span class="fa fa-chevron-down"></span></a>
+                                        {# Navigation Sections – the second tier #}
+                                        {# This includes the icon #}
+                                        <li><a><i
+                                                class="fa {{ navigation_section.icon }}"></i> {{ navigation_section.name }}<span
+                                                class="fa fa-chevron-down"></span></a>
 
-                                {# Navigation URLs #}
-                                <ul class="nav child_menu">
-                                    {% for navigation_link in navigation_section.navigation_links %}
+                                            {# Navigation URLs #}
+                                            <ul class="nav child_menu">
+                                                {% for navigation_link in navigation_section.navigation_links %}
 
-                                    {# For URLs that don't have children #}
-                                    {% if navigation_link.sub_navigation_links|length == 0 %}
-                                        <li><a href="{{ navigation_link.url }}">{{ navigation_link.caption }}</a></li>
-                                    {% endif %}
+                                                    {# For URLs that don't have children #}
+                                                    {% if navigation_link.sub_navigation_links|length == 0 %}
+                                                        <li>
+                                                            <a href="{{ navigation_link.url }}">{{ navigation_link.caption }}</a>
+                                                        </li>
+                                                    {% endif %}
 
-                                    {# For URLs that have children #}
-                                    {% if navigation_link.sub_navigation_links|length > 0 %}
-                                    <li><a>{{ navigation_link.caption }}
-                                    <span class="fa fa-chevron-down"></span></a>
-                                        <ul class="nav sub_menu">
-                                        {% for sub_navigation_link in navigation_link.sub_navigation_links %}
-                                            <li><a href="{{ sub_navigation_link.url }}">{{ sub_navigation_link.caption }}</a></li>
-                                        {% endfor %}
-                                        </ul>
+                                                    {# For URLs that have children #}
+                                                    {% if navigation_link.sub_navigation_links|length > 0 %}
+                                                        <li><a>{{ navigation_link.caption }}
+                                                            <span class="fa fa-chevron-down"></span></a>
+                                                            <ul class="nav sub_menu">
+                                                                {% for sub_navigation_link in navigation_link.sub_navigation_links %}
+                                                                    <li>
+                                                                        <a href="{{ sub_navigation_link.url }}">{{ sub_navigation_link.caption }}</a>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
                                         </li>
-                                    {% endif %}
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                        </ul>
+                                    </ul>
+                                {% endfor %}
+                            </div>
                         {% endfor %}
-                    </div>
                     {% endfor %}
-                {% endfor %}
 
                 </div>
                 <!-- /sidebar menu -->
 
                 <!-- /menu footer buttons -->
-                <div class="sidebar-footer hidden-small">
-                    <a data-toggle="tooltip" data-placement="top" title="Settings">
-                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                        <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Lock">
-                        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Logout">
-                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                    </a>
+                <!-- TODO: This will become the language selector -->
+
+
+                <div id="language_chooser" class="sidebar-footer hidden-small">
+
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as languages %}
+                    {% for language in languages %}
+
+                        <form action="{% url 'set_language' %}" method="post" style="display:inline-block">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ redirect_to }}"/>
+                            <input name="language" type="hidden" value="{{ language.0 }}"/>
+                            <button class="btn btn-round  {% if language.0 == LANGUAGE_CODE %} btn-success {% endif %} {% if language.0 != LANGUAGE_CODE %} btn-dark {% endif %}" type="submit"
+                                    style="display: inline-block">{{ language.0 }}</button>
+                        </form>
+
+                    {% endfor %}
+
+
                 </div>
                 <!-- /menu footer buttons -->
             </div>
@@ -166,7 +181,7 @@
                         <a id="menu_toggle"><i class="fa fa-bars"></i></a>
                     </div>
                     <div class="nav navbar-nav navbar-title">
-                        <h2>{{ page.title }} {{ list_title }}</h2>
+                        <h2> {{ list_title }} {% block main_title %}{% endblock %}</h2>
                     </div>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -229,12 +244,11 @@
                     </ul>
                 </nav>
             </div>
-        <div style="background-color: #5b90bf; padding: 0; display: block;clear: both; ">
+            <div style="background-color: #5b90bf; padding: 0; display: block;clear: both; ">
 
+            </div>
+            {% block filterbar %}{% endblock %}
         </div>
-        {% block filterbar %}{% endblock %}
-        </div>
-
 
 
         <div class="modal fade bs-example-modal-md" id="{{ page_id }}-modal-about" tabindex="-1" role="dialog"

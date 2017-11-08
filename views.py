@@ -1,4 +1,7 @@
-
+from django.conf import settings
+from django.http import HttpResponseRedirect, response
+from django.utils import translation
+from django.utils.translation import get_language
 
 
 class XFNavigationViewMixin(object):
@@ -50,4 +53,6 @@ class XFNavigationViewMixin(object):
         else:
             self.context["site_title"] = XFNavigationViewMixin.site_settings.translate("site_title", "en")
         self.context["site_icon"] = XFNavigationViewMixin.site_settings.site_icon
+
+        print(get_language())
 

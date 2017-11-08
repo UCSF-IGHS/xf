@@ -24,6 +24,10 @@ table.table-scrollable th, table.table-scrollable td {
 
 }
 
+.top_nav .navbar-right {
+    width:auto
+}
+
 .divfullheight {
     height: 100%;
 }
@@ -159,3 +163,27 @@ table.table-scrollable th, table.table-scrollable td {
 .select2-container .select2-selection--single {
     height: 12px;
 }*/
+
+div#language_chooser {
+
+}
+
+
+
+div#language_chooser form {
+    display: inline-block!important;
+
+}
+
+div#language_chooser button2 {
+    margin: 0;
+    display:inline-block;
+    border: none;
+    background: none;
+    text-decoration: none; /* if you like */
+    padding: 7px 10px 3px;
+    text-align: center;
+    font-size: 17px;
+    float: left;
+    background: #172D44
+}
