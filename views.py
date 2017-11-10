@@ -401,6 +401,7 @@ class WidgetView(TemplateView):
                             self.widget.widget_type == Widget.PROGRESS_CIRCLE or \
                             self.widget.widget_type == Widget.BAR_GRAPH or \
                             self.widget.widget_type == Widget.GAUGE or \
+                            self.widget.widget_type == Widget.STACKED_BAR_GRAPH or \
                             self.widget.widget_type == Widget.BAR_GRAPH_HORIZONTAL:
 
                 column_names = []
@@ -420,6 +421,7 @@ class WidgetView(TemplateView):
             if self.widget.widget_type == Widget.PIE or \
                             self.widget.widget_type == Widget.LINE_GRAPH or \
                             self.widget.widget_type == Widget.BAR_GRAPH_HORIZONTAL or \
+                            self.widget.widget_type == Widget.STACKED_BAR_GRAPH or \
                             self.widget.widget_type == Widget.BAR_GRAPH:
                 labels = []
                 for row in rows:
@@ -461,6 +463,7 @@ class WidgetView(TemplateView):
                 self.widget.widget_type == Widget.BAR_GRAPH or \
                 self.widget.widget_type == Widget.BAR_GRAPH_HORIZONTAL or \
                 self.widget.widget_type == Widget.GAUGE or \
+                self.widget.widget_type == Widget.STACKED_BAR_GRAPH or \
                 self.widget.widget_type == Widget.PIE \
                 else False
 
