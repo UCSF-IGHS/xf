@@ -20,7 +20,8 @@
     {% endif %}
 
 
-    {# Data Dropdown #}
+    {# Data Dropdown - only available to all other widgets except the gauge widget#}
+    {% if widget.widget_type != "13" %}
     {% if supports_view_data or  widget.view_details_url or widget.user_description or custom_attr|lookup:'dynamic' == 'yes' %}
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -55,8 +56,10 @@
             {% endif %}
 
         </ul>
-        {% endif %}
+
     </li>
+    {% endif %}
+    {% endif %}
 
 
 </ul>

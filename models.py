@@ -121,6 +121,17 @@ class PageType(models.Model):
     def __str__(self):
         return self.name
 
+class PageStatus(models.Model):
+    code = models.CharField(
+        max_length=50,
+        help_text='Code of the status.')
+    name = models.CharField(
+        max_length=150,
+        help_text='Name of the status.')
+
+    def __str__(self):
+        return self.name
+
 
 class Page(models.Model):
     title = models.CharField(
@@ -165,6 +176,16 @@ class Page(models.Model):
     show_filter_bar = models.BooleanField(blank=True, help_text='Check this field if you want to display the filter bar. Otherwise it will be hidden.')
     index = models.IntegerField(blank=True, default=0, help_text='Pages with a lower index will be added to the navigation tree before those with a higher index. This is used to sort the navigation tree.')
     tags = models.ManyToManyField(Tag, related_name='pages', blank=True)
+    page_status = models.ForeignKey(
+        PageStatus, blank=True, null=True,
+        related_name='page_status',
+        help_text='Specifies a the status of this page')
+    data_sources = HTMLField(blank=True, null=True,
+                             help_text='Specify the data sources for this page, if applicable.')
+    about = HTMLField(blank=True, null=True,
+                             help_text='Allows you to specify "about" information for this page, e.g. methods.')
+
+
 
     def __str__(self):
         return self.title
@@ -210,6 +231,7 @@ class Widget(models.Model):
     PROGRESS_CIRCLE = '10'
     FILTER_DROP_DOWN = '11'
     BAR_GRAPH_HORIZONTAL = '12'
+    GAUGE = '13'
     OTHER = '0'
 
     WIDGET_TYPE_CHOICES = (
@@ -225,6 +247,7 @@ class Widget(models.Model):
         (MAP, 'Map'),
         (TEXT_BLOCK, 'Text block'),
         (FILTER_DROP_DOWN, 'Filter drop down'),
+        (GAUGE, 'Gauge'),
         (OTHER, 'Other'),
     )
 
