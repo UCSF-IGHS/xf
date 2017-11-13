@@ -1,4 +1,4 @@
-
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django import template
 import re
@@ -150,3 +150,13 @@ def iif(parser, token):
             raise template.TemplateSyntaxError("%r tag requires two or three arguments" % token.contents.split()[0])
 
     return IifNode(exp1 = exp1, exp2 = exp2, exp3 = exp3)
+
+
+
+def trans(context, text, language_code):
+    request = context["request"]
+    current_language = request.LANGUAGE_CODE
+    return text if language_code == current_language else ""
+
+
+

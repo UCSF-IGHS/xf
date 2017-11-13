@@ -24,6 +24,10 @@ table.table-scrollable th, table.table-scrollable td {
 
 }
 
+.top_nav .navbar-right {
+    width:auto
+}
+
 .divfullheight {
     height: 100%;
 }
@@ -108,7 +112,30 @@ table.table-scrollable th, table.table-scrollable td {
     margin-top: 5px; !important;
     margin-bottom: 5px; !important;
 }
+.x_title_no_line{
+  padding: 1px 5px 6px;
+  margin-bottom: 10px;
+  z-index: 999;
+}
+.x_title_no_line .filter {
+  width: 40%;
+  float: right; }
 
+.x_title_no_line h2 {
+  width: 90%;
+  margin: 5px 0 6px;
+  float: left;
+  text-align: center;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap; }
+
+.x_title_no_line h2 small {
+  margin-left: 10px; }
+
+.x_title_no_line span {
+  color: #BDBDBD; }
 /*
 .select2-container .select2-choice, .select2-result-label {
   font-size: 1.5em;
@@ -136,3 +163,27 @@ table.table-scrollable th, table.table-scrollable td {
 .select2-container .select2-selection--single {
     height: 12px;
 }*/
+
+div#language_chooser {
+
+}
+
+
+
+div#language_chooser form {
+    display: inline-block!important;
+
+}
+
+div#language_chooser button2 {
+    margin: 0;
+    display:inline-block;
+    border: none;
+    background: none;
+    text-decoration: none; /* if you like */
+    padding: 7px 10px 3px;
+    text-align: center;
+    font-size: 17px;
+    float: left;
+    background: #172D44
+}
