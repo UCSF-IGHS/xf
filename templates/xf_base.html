@@ -76,17 +76,17 @@
 
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
-                    <div class="profile_pic">
+                    <!--<div class="profile_pic">
                         <img src="{% static "gla/images/img.jpg" %}" alt="..." class="img-circle profile_img">
-                    </div>
-                    <div class="profile_info">
+                    </div>-->
+                    <!--<div class="profile_info">
                         {% if user.is_authenticated %}
                             <span>Welcome,</span>
                             <h2>{{ user.get_full_name|default:user.username }}</h2>
                         {% endif %}
                         {% if not user.is_authenticated %}<span>&nbsp;</span><h2>Not logged in</h2>
                         {% endif %}
-                    </div>
+                    </div>-->
                 </div>
                 <!-- /menu profile quick info -->
 
@@ -187,10 +187,10 @@
                     <ul class="nav navbar-nav navbar-right">
 
 
-                        <li class="">
+                        <li class="" style="margin-left: 20px;">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
-                               aria-expanded="false">
-                                <img src="{% static "gla/images/img.jpg" %}" alt="">
+                               aria-expanded="false" >
+                                <!--<img src="{% static "gla/images/img.jpg" %}" alt="">-->
                                 {% if user.is_authenticated %}{{ user.get_full_name|default:user.username }}{% endif %}
                                 {% if not user.is_authenticated %}Log in{% endif %}
                                 <span class=" fa fa-angle-down"></span>
