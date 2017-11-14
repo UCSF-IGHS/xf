@@ -139,6 +139,7 @@ class IifNode(template.Node):
 
 @register.tag("?:")
 @register.tag("xf_iif")
+@register.tag("iif")
 def iif(parser, token):
     try:
         tag, exp1, exp2, exp3 = token.split_contents()

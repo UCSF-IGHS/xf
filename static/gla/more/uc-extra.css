@@ -187,3 +187,28 @@ div#language_chooser button2 {
     float: left;
     background: #172D44
 }
+
+
+
+/* IGONRE */
+
+.page article {
+    line-height: 1.75;
+    color: #515356;
+    font-size: 110%;
+    text-align: left;
+}
+
+
+.page article h2 {
+    color: #1c7963;
+    margin-top: 30px;
+}
+
+.page h4 {
+    border-bottom: 1px solid #D9DEE4;
+    padding-bottom: 5px;
+    color: #1c7963;
+    margin-top: 20px;
+
+}
