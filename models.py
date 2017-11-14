@@ -100,6 +100,11 @@ class Template(models.Model):
                                      help_text='Allows you to specificy the content of a template.')
 
     tags = models.ManyToManyField(Tag, related_name='templates', blank=True)
+    built_in = models.BooleanField(
+        blank=True,
+        default=False,
+        help_text='Specifies whether this is a built-in template, which should not be modified')
+
 
     def __str__(self):
         return self.name
@@ -140,7 +145,7 @@ class Page(models.Model):
     main_title = models.CharField(
         max_length=150,
         help_text='Main title on top of the page')
-    text = models.TextField(blank=True)
+    text = HTMLField(blank=True)
         #text = HTMLField('Approve place', null=True, blank=True)
 
     slug = models.SlugField(
@@ -184,6 +189,16 @@ class Page(models.Model):
                              help_text='Specify the data sources for this page, if applicable.')
     about = HTMLField(blank=True, null=True,
                              help_text='Allows you to specify "about" information for this page, e.g. methods.')
+
+    widgets = models.TextField(
+        blank=True,
+        help_text='A python dictionary specifiying widget slugs for this template.'
+    )
+
+    custom_attributes = models.TextField(
+        blank=True,
+        help_text='Any custom attributes, which may be forwarded to the template. Must be a Python dictionary format.'
+    )
 
 
 

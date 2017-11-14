@@ -57,6 +57,10 @@ def columnwidth(value):
 def cut(value, arg):
     #if value.has_key(arg):
     # PYTHON3 UPDATE
+
+    if value is None:
+        return None
+
     if arg in value:
         return value[arg]
     else:

@@ -1,5 +1,9 @@
 {% load dashgent_filters %}
 
+
+{% if renderer == None or renderer == "default" %}
+
+
    <table class="table table-hover table-scrollable table200" id="{{ widget_id }}_table">
         <thead>
         <tr>
@@ -69,3 +73,6 @@
             {% endif %}
         });
     </script>
+
+
+{% endif %}

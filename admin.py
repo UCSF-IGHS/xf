@@ -24,10 +24,10 @@ class PageAdmin(TranslationAdmin):
     list_display = ('title', 'main_title', 'slug', 'section', 'allow_anonymous', 'template', 'page_type', 'navigation_section', 'page_id', 'index')
     list_filter = ('tags', 'template', 'page_type', 'navigation_section')
     save_as = True;
-    formfield_overrides = {models.TextField: {'widget': forms.Textarea(attrs={'class': 'ckeditor'})},}
+    formfield_overrides = {HTMLField: {'widget': forms.Textarea(attrs={'class': 'ckeditor'})}, }
 
     class Media:
-        js = ('//cdn.ckeditor.com/4.5.9/standard/ckeditor.js',)
+        js = ('//cdn.ckeditor.com/4.5.9/standard/ckeditor.js', 'gla/more/configuration-ckeditor.js')
 
 
 class PageSectionAdmin(TranslationAdmin):
@@ -38,6 +38,9 @@ class GroupProfileAdmin(admin.ModelAdmin):
 
 class PageTypeAdmin(admin.ModelAdmin):
     list_display = ('name', 'url_section')
+
+
+
 
 class TemplateAdmin(admin.ModelAdmin):
     list_display = ('name', 'template_type', 'template_source', 'template_path')
@@ -83,8 +86,9 @@ class WidgetTypeAdmin(TranslationAdmin):
     )
 
     class Media:
-        js = ('//cdn.ckeditor.com/4.5.9/standard/ckeditor.js',)
+        js = ('//cdn.ckeditor.com/4.5.9/standard/ckeditor.js', 'gla/more/configuration-ckeditor.js')
 
+# config.allowedContent = true;
 
 class GroupProfileInline(admin.StackedInline):
     model = GroupProfile
