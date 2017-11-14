@@ -43,6 +43,7 @@
         var legend_labels = JSON.parse('{{ legend_labels | jsonify | safe }}');
 
         var data_points = JSON.parse('{{ datapoints | jsonify | safe}}');
+        var colors = ["rgba(38, 185, 154, 0.5)", "rgba(3, 88, 106, 0.5)", "rgba(115, 135, 156, 0.5)", "rgba(156, 194, 203, 0.5)", "rgba(156, 169, 174, 0.5)", "rgba(12, 99, 81, 0.5)"];
 
         data_points.forEach(function (point, index) {
             if(index < (data_points.length - 1)) {
@@ -75,6 +76,7 @@
                     type : 'shadow'        // type ：'line' | 'shadow'
                 }
             },
+            color: colors,
             legend: {
                 data: legend_labels
             },
