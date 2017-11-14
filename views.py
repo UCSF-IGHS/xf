@@ -382,6 +382,8 @@ class WidgetView(TemplateView):
             context["caption"] = self.widget.title
             context["extra_text"] = self.widget.sub_text
             context["widget_type"] = self.widget.widget_type
+            context["locale_code"] = get_language()
+
             if self.perspective:
                 context["perspective_code"] = self.perspective.code
 
@@ -545,6 +547,7 @@ class DashboardPageView(DashboardView):
         context['page'] = page
         context['title'] = page.title
         context['filter_query_string'] = "?" + self.preset_filters + self.request.META['QUERY_STRING']
+        context["locale_code"] = get_language()
 
         # Version 2.4: Pre-loading widgets for the template
         if self.page.widgets != "":

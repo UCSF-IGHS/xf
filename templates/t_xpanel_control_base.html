@@ -1,5 +1,6 @@
 {% extends extends_template %}
 {% load dashgent_filters %}
+{% load i18n %}
 
 
 {% comment %}
@@ -32,11 +33,11 @@ or within container_tester when debugging/testing this widget as a standalone.
             <ul class="dropdown-menu" role="menu">
 
                     {% if change_url %}
-                        <li><a href="{{ change_url }}" target="_blank">Edit widget</a></li>
+                        <li><a href="{{ change_url }}" target="_blank">{% trans "Edit widget" %}</a></li>
                     {% endif %}
 
                 {% if widget.slug %}
-                <li><a href="{% url 'widgets' widget.slug %}{{ filter_query_string }}" target="_blank">View as stand-alone</a></li>
+                <li><a href="{% url 'widgets' widget.slug %}{{ filter_query_string }}" target="_blank">{%  trans "View as stand-alone" %}</a></li>
                 {% endif %}
             </ul>
         </li>
