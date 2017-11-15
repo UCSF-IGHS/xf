@@ -66,8 +66,12 @@
                 },
                 options: {
                     scales: {
-                        {% if widget_type == '12' %}
-                            xAxes: [{
+
+                        xAxes: [{
+                            {% if custom_attr|lookup:'stacked' == 'yes'%}
+                                    stacked:true,
+                            {% endif %}
+                            {% if widget_type == '12' %}
                                 ticks: {
                                     beginAtZero:begin_at_zero,
 
@@ -75,11 +79,14 @@
                                         max: parseInt('{{ custom_attr|lookup:'maximum_scale' }}')
                                     {% endif %}
                                 }
-                            }],
-                        {% endif %}
+                            {% endif %}
+                        }],
 
-                        {% if widget_type == '6' %}
-                            yAxes: [{
+                        yAxes: [{
+                            {% if custom_attr|lookup:'stacked' == 'yes'%}
+                                    stacked:true,
+                            {% endif %}
+                            {% if widget_type == '6' %}
                                 ticks: {
                                     beginAtZero:begin_at_zero,
 
@@ -87,8 +94,9 @@
                                         max: parseInt('{{ custom_attr|lookup:'maximum_scale' }}')
                                     {% endif %}
                                 }
-                            }],
-                        {% endif %}
+                            {% endif %}
+                        }],
+
                     }
                 }
             });
