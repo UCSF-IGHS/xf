@@ -10,12 +10,12 @@
 {% endblock %}
 
 {% block title %}
-    {{ title }}
+
 {% endblock %}
 
 {% block main_title %}
     {{ page.main_title }} <button type="button" class="btn btn-dark btn-xs" style="margin-left: 20px" data-toggle="modal" role="button"
-           data-target="#page-modal-about">{% trans "Info and data sources"  %}</button>
+           data-target="#page-modal-about">{% trans "About this page"  %}</button>
 {% endblock %}
 
 {% block filterbar %}
@@ -23,10 +23,10 @@
         <div class="filter-bar"  >
             <form method="get">
                 <input type="hidden" name="filter" value="active">
-                <div class="filter-widget" style="position: relative; top: 50%; transform: translateY(20%);" >{% trans "Filter:"  %}</div>
+                <div class="filter-widget" style="position: relative; top: 50%; transform: translateY(20%);" >{% trans "Filter:" %} </div>
 
                 {% block filterbar_main %}{% endblock %}
-                <div class="filter-buttons"><input type="submit" value="Apply filter" class="btn btn-primary"/>
+                <div class="filter-buttons"><input type="submit" value="{% trans "Apply filter" %}" class="btn btn-primary"/>
                             {% if request.GET.filter == "active" %}
                                 <a class="btn btn-default" href="./">{% trans "Clear filter" %}</a>
                             {% endif %}</div>
@@ -76,3 +76,4 @@
 
 
 {% endblock %}
+

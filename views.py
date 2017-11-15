@@ -12,6 +12,7 @@ from django.template.backends.django import Template as Template2, DjangoTemplat
 from django.template.loader import _engine_list
 from django.template.response import TemplateResponse
 from django.utils.decorators import method_decorator
+from django.utils.translation import get_language
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
@@ -341,28 +342,39 @@ class WidgetView(TemplateView):
             if "perspective_id" in self.request.session:
                 self.perspective = Perspective.objects.get(pk=self.request.session["perspective_id"])
 
-            if self.widget.widget_type == Widget.TEXT_BLOCK:
-                return
+            if self.widget.widget_type != Widget.TEXT_BLOCK:
 
-            params = []
-            sql_query = self.widget.sql_query
-            conn = self.get_connection(self.widget.database_key)
+                params = []
+                sql_query = self.widget.sql_query
+                conn = self.get_connection(self.widget.database_key)
 
-            if self.widget.filters:
-                filters = ast.literal_eval(self.widget.filters)
-                for filter in filters:
-                    params.append(self.request.GET.get(filter, ''))
-                    try:
-                        sql_query = sql_query.replace("@" + filter, conn.literal(self.request.GET.get(filter, '')))
-                    except:
-                        # UNSAFE!!!!
-                        # TODO: FIX
-                        sql_query = sql_query.replace("@" + filter, "'" + self.request.GET.get(filter, '') + "'")
+                if self.widget.filters:
+                    filters = ast.literal_eval(self.widget.filters)
+                    for filter in filters:
+                        params.append(self.request.GET.get(filter, ''))
+                        try:
+                            sql_query = sql_query.replace("@" + filter, conn.literal(self.request.GET.get(filter, '')))
+                        except:
+                            # UNSAFE!!!!
+                            # TODO: FIX
+                            sql_query = sql_query.replace("@" + filter, "'" + self.request.GET.get(filter, '') + "'")
 
-            # Add a perspective code as a filter, which allows you to filter any widget based on the current perspective
-            # Very useful if you want to filter a filter based on a perspective
-            if self.perspective:
-                sql_query = sql_query.replace("@perspective_code", self.perspective.code)
+                # Add a perspective code as a filter, which allows you to filter any widget based on the current perspective
+                # Very useful if you want to filter a filter based on a perspective
+                if self.perspective:
+                    sql_query = sql_query.replace("@perspective_code", self.perspective.code)
+
+                # Send the locale code to the database
+                locale = get_language()
+                sql_query = sql_query.replace("@locale_code", locale)
+
+                try:
+                    cursor = conn.cursor()
+                    cursor.execute(sql_query)
+                    rows = cursor.fetchall()
+                finally:
+                    # conn.close()
+                    pass
 
             # print sql_query
 
@@ -370,6 +382,8 @@ class WidgetView(TemplateView):
             context["caption"] = self.widget.title
             context["extra_text"] = self.widget.sub_text
             context["widget_type"] = self.widget.widget_type
+            context["locale_code"] = get_language()
+
             if self.perspective:
                 context["perspective_code"] = self.perspective.code
 
@@ -377,20 +391,12 @@ class WidgetView(TemplateView):
             if self.widget.custom_attributes != "":
                 custom_attributes = ast.literal_eval("{" + self.widget.custom_attributes + "}")
                 context["custom_attr"] = custom_attributes
-                if "stripped_base" in custom_attributes and custom_attributes.get("stripped_base") == "yes":
-                    context["extends_base_template"] = "t_xpanel_stripped_control_base.html"
-                else:
-                    context["extends_base_template"] = "t_xpanel_control_base.html"
-            else:
-                context["extends_base_template"] = "t_xpanel_control_base.html"
 
-            try:
-                cursor = conn.cursor()
-                cursor.execute(sql_query)
-                rows = cursor.fetchall()
-            finally:
-                # conn.close()
-                pass
+                # Putting back what was once lost
+                for (key) in custom_attributes:
+                    context[key] = custom_attributes[key]
+
+            context["extends_base_template"] = "t_xpanel_control_base.html"
 
             if self.widget.widget_type == Widget.PIE or \
                             self.widget.widget_type == Widget.TABLE or \
@@ -541,6 +547,15 @@ class DashboardPageView(DashboardView):
         context['page'] = page
         context['title'] = page.title
         context['filter_query_string'] = "?" + self.preset_filters + self.request.META['QUERY_STRING']
+        context["locale_code"] = get_language()
+
+        # Version 2.4: Pre-loading widgets for the template
+        if self.page.widgets != "":
+            widgets = ast.literal_eval("{" + self.page.widgets + "}")
+
+            for (key) in widgets:
+                context[key] = widgets[key]
+
 
         self.template_name = page.template.template_path
         return context
