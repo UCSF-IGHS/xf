@@ -219,6 +219,10 @@ class Perspective(models.Model):
         related_name='perspectives',
         blank=True,
         help_text='The pages that are part of this perspective.')
+    slug = models.SlugField(
+        max_length=150,
+        null=True, blank=True,
+        help_text='This field identifies part of the URL that makes it friendly')
     default_page = models.ForeignKey(
         Page,
         help_text='The default page that will be displayed when a user logs on.')

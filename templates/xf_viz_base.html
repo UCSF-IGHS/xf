@@ -55,7 +55,7 @@
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
                                 {% for perspective in perspectives %}
                                     <li {% if perspective.id == current_perspective.id %}
-                                    class="selected" {% endif %}><a href="{% url "load_perspective" perspective.id %}" class="selected">
+                                    class="selected" {% endif %}><a href="{% url "load_perspective" perspective.slug %}" class="selected">
                                         {% if perspective.id == current_perspective.id %}
                                             <i class="fa fa-check pull-right"></i>{% endif %}{{ perspective.name }}</a>
                                     </li>

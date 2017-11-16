@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import redirect_to_login, login
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.template import Template, TemplateDoesNotExist
 from django.template.backends.django import Template as Template2, DjangoTemplates
@@ -103,10 +103,17 @@ def load_navigation(sender, navigation_trees, request):
                 if page.page_id:
 
                     url = reverse(viewname=page.page_type.url_section,
-                                  kwargs={'section': page.section.title, 'slug': page.slug, 'page_id': page.page_id})
+                                  kwargs={'section': page.section.title,
+                                          'perspective_slug': current_perspective.slug,
+                                          'slug': page.slug,
+                                          'page_id': page.page_id
+                                          })
                 else:
                     url = reverse(viewname=page.page_type.url_section,
-                                  kwargs={'section': page.section.title, 'slug': page.slug})
+                                  kwargs={'section': page.section.title,
+                                          'perspective_slug': current_perspective.slug,
+                                          'slug': page.slug
+                                          })
 
                 if page.parent_page:
                     add_navigation(navigation_tree, 'Dashboard', page.parent_page.navigation_section.caption, url,
@@ -166,6 +173,8 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
         self.perspectives = None
         self.pages = None
         self.navigation_sections = {}
+        print ("load perspectives")
+        print(self.kwargs)
 
         # Load the current perspective
 
@@ -176,8 +185,18 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
 
         # if self.request.session.has_key("perspective_id"):
         # PYTHON3 UPDATE
-        if "perspective_id" in self.request.session:
+
+        if "perspective_slug" in self.kwargs:
+            perspective = get_object_or_404(UCModels.Perspective, slug=self.kwargs["perspective_slug"])
+            perspective = self.request.user.load_perspective(perspective, True)
+            if perspective:
+                self.perspective = perspective
+                self.request.session["perspective_id"] = self.perspective.id
+
+        elif "perspective_id" in self.request.session:
             self.perspective = Perspective.objects.get(pk=self.request.session["perspective_id"])
+
+        if self.perspective:
             self.pages = self.perspective.pages.all()
 
             for page in self.pages:
@@ -188,6 +207,16 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
                     self.navigation_sections[page.navigation_section_id] = (page.navigation_section, [page])
                 else:
                     self.navigation_sections[page.navigation_section_id][1].append(page)
+
+        # Don't allow loading a page outside the current perspective
+        found = False
+        for page in self.pages:
+            if self.page.id == page.id:
+                found = True
+                break
+
+        if not found:
+            raise Http404("This page does not exist in this perspective")
 
         # Load all perspectives available to this user
         if self.request.user.is_authenticated():
@@ -338,6 +367,13 @@ class WidgetView(TemplateView):
         """
 
         if self.widget:
+
+            if "perspective_slug" in self.kwargs:
+                perspective = get_object_or_404(UCModels.Perspective, slug=self.kwargs["perspective_slug"])
+                perspective = self.request.user.load_perspective(perspective, True)
+                if perspective:
+                    self.perspective = perspective
+                    self.request.session["perspective_id"] = self.perspective.id
 
             if "perspective_id" in self.request.session:
                 self.perspective = Perspective.objects.get(pk=self.request.session["perspective_id"])
@@ -522,9 +558,19 @@ class DashboardPageView(DashboardView):
         XFNavigationViewMixin.__init__(self)
 
         self.page = None
+        self.perspective = None
 
     def dispatch(self, request, *args, **kwargs):
+        '''
+        This method loads a page. If a perspective is provided in the URL, it will first load that perspective.
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        '''
         self.page = Page.objects.get(slug=self.kwargs['slug'])
+        print(self.kwargs)
+
 
         if not self.page.allow_anonymous:
             if not self.request.user.is_authenticated():
@@ -534,8 +580,11 @@ class DashboardPageView(DashboardView):
         return super(DashboardPageView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
+
+        print("B")
         context = super(DashboardPageView, self).get_context_data(**kwargs)
         page = self.page
+
         context['change_url'] = reverse('admin:uc_dashboards_page_change', args=(page.id,), current_app='uc_dashboards')
         context['change_template_url'] = reverse('admin:uc_dashboards_template_change', args=(page.template.id,),
                                                  current_app='uc_dashboards')
@@ -651,6 +700,13 @@ def load_perspective(request, perspective_id):
     return home_page(request)
     pass
 
+def load_perspective(request, slug):
+    perspective = get_object_or_404(UCModels.Perspective, slug=slug)
+    perspective = request.user.load_perspective(perspective, True)
+    if perspective:
+        request.session["perspective_id"] = perspective.id
+    return home_page(request)
+    pass
 
 def clear_perspective(request):
     request.session["perspective_id"] = None
@@ -669,7 +725,7 @@ def home_page(request):
     # PYTHON3 UPDATE
     if "perspective_id" in request.session:
         perspective = Perspective.objects.get(pk=request.session["perspective_id"])
-        url = reverse("dashboards", args=[perspective.default_page.section.title, perspective.default_page.slug])
+        url = reverse("dashboards", args=[perspective.default_page.section.title, perspective.slug, perspective.default_page.slug])
         # perspective.default_page
         return HttpResponseRedirect(url)
 

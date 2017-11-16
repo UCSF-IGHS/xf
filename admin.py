@@ -53,7 +53,7 @@ class TemplateAdmin(admin.ModelAdmin):
     save_as = True;
 
 class PerspectiveAdmin(TranslationAdmin):
-    list_display = ('name', 'code')
+    list_display = ('name', 'code', 'slug')
     list_filter = ('tags', )
     save_as = True;
 
