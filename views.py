@@ -615,8 +615,22 @@ class StartView(DashboardPageView):
                 if hasattr(user, "profile"):
                     if hasattr(user.profile, "default_perspective") and user.profile.default_perspective is not None:
                         url = reverse("load_perspective", args=[user.profile.default_perspective.id])
+
+                        # Load the user's default perspective
+                        perspective = get_object_or_404(UCModels.Perspective, id=user.profile.default_perspective.id)
+                        perspective = request.user.load_perspective(perspective, True)
+                        if perspective:
+                            request.session["perspective_id"] = perspective.id
+
+                        # If a next parameter is available, navigate to that page
+                        # If not, load the perspective's default page
+                        next_url = request.GET.get('next', '/')
+                        if next_url != "/":
+                            url = next_url
+
                         return HttpResponseRedirect(url)
 
+                # If the user doesn't have a profile, check the next parameter, or go to the home page
                 return HttpResponseRedirect(request.GET.get('next', '/'))
             else:
                 context["login_incorrect"] = True
