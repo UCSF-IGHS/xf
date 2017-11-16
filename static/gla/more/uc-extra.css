@@ -46,6 +46,14 @@ table.table-scrollable th, table.table-scrollable td {
     color: rgb(26, 187, 156) !important;
 }
 
+.top_nav .dropdown-menu li.selected {
+    /*background-color: #D9DEE4;*/
+}
+.top_nav .dropdown-menu li.selected a {
+    color: rgb(26, 187, 156) !important;
+
+}
+
 .top_nav .navbar-title {
     margin: 0;
     float: left;
@@ -190,7 +198,7 @@ div#language_chooser button2 {
 
 
 
-/* IGONRE */
+
 
 .page article {
     line-height: 1.75;
