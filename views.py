@@ -209,14 +209,16 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
                     self.navigation_sections[page.navigation_section_id][1].append(page)
 
         # Don't allow loading a page outside the current perspective
-        found = False
-        for page in self.pages:
-            if self.page.id == page.id:
-                found = True
-                break
 
-        if not found:
-            raise Http404("This page does not exist in this perspective")
+        if not self.page.allow_anonymous:
+            found = False
+            for page in self.pages:
+                if self.page.id == page.id:
+                    found = True
+                    break
+
+            if not found:
+                raise Http404("This page does not exist in this perspective")
 
         # Load all perspectives available to this user
         if self.request.user.is_authenticated():
@@ -663,7 +665,7 @@ class StartView(DashboardPageView):
 
                 if hasattr(user, "profile"):
                     if hasattr(user.profile, "default_perspective") and user.profile.default_perspective is not None:
-                        url = reverse("load_perspective", args=[user.profile.default_perspective.id])
+                        url = reverse("load_perspective", args=[user.profile.default_perspective.slug])
 
                         # Load the user's default perspective
                         perspective = get_object_or_404(UCModels.Perspective, id=user.profile.default_perspective.id)
@@ -674,7 +676,7 @@ class StartView(DashboardPageView):
                         # If a next parameter is available, navigate to that page
                         # If not, load the perspective's default page
                         next_url = request.GET.get('next', '/')
-                        if next_url != "/":
+                        if next_url != "/" and next_url != "/dashboards/home/overview/":
                             url = next_url
 
                         return HttpResponseRedirect(url)
@@ -731,3 +733,4 @@ def home_page(request):
 
     # No perspecive - load default homepage
     return HttpResponseRedirect("/dashboards/home/overview/")
+    #return HttpResponseRedirect("/")
