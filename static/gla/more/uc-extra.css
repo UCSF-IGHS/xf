@@ -46,6 +46,14 @@ table.table-scrollable th, table.table-scrollable td {
     color: rgb(26, 187, 156) !important;
 }
 
+.top_nav .dropdown-menu li.selected {
+    /*background-color: #D9DEE4;*/
+}
+.top_nav .dropdown-menu li.selected a {
+    color: rgb(26, 187, 156) !important;
+
+}
+
 .top_nav .navbar-title {
     margin: 0;
     float: left;
@@ -190,7 +198,7 @@ div#language_chooser button2 {
 
 
 
-/* IGONRE */
+
 
 .page article {
     line-height: 1.75;
@@ -212,3 +220,64 @@ div#language_chooser button2 {
     margin-top: 20px;
 
 }
+
+
+
+/* flexible widgets */
+
+.flex_row {
+  /*display: flex; */
+  /* equal height of the children */
+  /*flex-wrap: wrap*/
+
+
+
+}
+
+
+@media only screen and (min-width : 481px) {
+    .flex-row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .flex-row > [class*='col-'] {
+        display: flex;
+        flex-direction: column;
+    }
+    .flex-row.row:after,
+    .flex-row.row:before {
+        display: flex;
+    }
+}
+
+/*
+.flex_row div.width_50 {
+    background-color: red;
+    padding: 5px;
+    flex: 1 1 40%;
+    display: flex;
+}
+
+@media (max-width: 768px) {
+  .flex_row div.width_50 {
+    flex: 1 1 100%;
+    border: solid 1px yellow
+  }
+}
+
+@media (max-width: 480px) {
+  .flex_row div.width_50 {
+    flex: 1 1 100%;
+    border: solid 1px green
+  }
+}
+*/
+
+
+
+
+
+
+
+
+
