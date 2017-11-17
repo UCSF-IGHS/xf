@@ -131,11 +131,8 @@
                 });
 
                 var myChart = echarts.init(dom);
-                var app = {};
-                option = null;
-                app.title = '{{ caption }}';
 
-                option = {
+                var option = {
                     tooltip : {
                         trigger: 'axis',
                         axisPointer : {
@@ -155,7 +152,6 @@
                     {% if widget_type == '6' %}
                         yAxis:  {
                             type: 'value',
-                            min: null,
                             {% if   custom_attr|lookup:'maximum_scale' != '' %}
                                 max: parseInt('{{ custom_attr|lookup:'maximum_scale' }}')
                             {% endif %}
@@ -167,7 +163,6 @@
                     {% elif widget_type == '12' %}
                         xAxis:  {
                             type: 'value',
-                            min: null,
                             {% if   custom_attr|lookup:'maximum_scale' != '' %}
                                 max: parseInt('{{ custom_attr|lookup:'maximum_scale' }}')
                             {% endif %}
