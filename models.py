@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User, Group
@@ -25,7 +26,7 @@ def create_user_profile_on_post_init(sender, instance, **kwargs):
 
 
 
-class HTMLField(models.TextField):
+class HTMLField(RichTextUploadingField):
     pass
 
 
