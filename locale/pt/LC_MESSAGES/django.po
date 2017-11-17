@@ -21,70 +21,70 @@ msgstr ""
 #: templates/generic_widgets/include_more_menu.html:16
 #: templates/t_xpanel_control_base.html:36
 msgid "Edit widget"
-msgstr ""
+msgstr "Editar widget"
 
 #: templates/generic_widgets/include_more_menu.html:19
 #: templates/t_xpanel_control_base.html:40
 msgid "View as stand-alone"
-msgstr ""
+msgstr "Ver como autônomo"
 
 #: templates/generic_widgets/include_more_menu.html:31
 msgid "Data"
-msgstr ""
+msgstr "Dados"
 
 #: templates/generic_widgets/include_more_menu.html:35
 msgid "View data"
-msgstr ""
+msgstr "Ver dados"
 
 #: templates/generic_widgets/include_more_menu.html:39
 msgid "View details"
-msgstr ""
+msgstr "Ver detalhes"
 
 #: templates/generic_widgets/include_more_menu.html:52
 msgid "More info"
-msgstr ""
+msgstr "Mais infor."
 
 #: templates/generic_widgets/include_more_menu.html:58
 msgid "Enlarge"
-msgstr ""
+msgstr "Ampliar"
 
 #: templates/generic_widgets/include_more_menu.html:79
 msgid "More information"
-msgstr ""
+msgstr "Mais informaçōes"
 
 #: templates/generic_widgets/include_more_menu.html:90
 #: templates/xf_viz_base.html:71
 msgid "Close"
-msgstr ""
+msgstr "Fechar"
 
 #: templates/generic_widgets/include_sub_text.html:6
 msgid "Read more"
-msgstr ""
+msgstr "Ler mais"
 
 #: templates/t_block_ajxldr_xpanel.html:12
 msgid "Loading"
-msgstr ""
+msgstr "Processando"
 
 #: templates/t_block_ajxldr_xpanel.html:17
 msgid "Loading..."
-msgstr ""
+msgstr "Processando..."
 
 #: templates/xf_viz_base.html:18 templates/xf_viz_base.html:58
 msgid "About this page"
-msgstr ""
+msgstr "Sobre esta página"
 
 #: templates/xf_viz_base.html:26
 msgid "Filter:"
-msgstr ""
+msgstr "Filtro"
 
 #: templates/xf_viz_base.html:29
 msgid "Apply filter"
-msgstr ""
+msgstr "Aplicar Filtro"
 
 #: templates/xf_viz_base.html:31
 msgid "Clear filter"
-msgstr ""
+msgstr "Limpar Filtro"
 
 #: templates/xf_viz_base.html:66
 msgid "Data sources"
-msgstr ""
+msgstr "Fontes de dados"

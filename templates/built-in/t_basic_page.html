@@ -1,0 +1,41 @@
+{% extends "xf_viz_base.html" %}
+{% load dashgent_filters %}
+
+{% block main_title %}
+    {{ page.main_title }}
+{% endblock %}
+
+{% block title %}
+    {{ page.title }}
+{% endblock %}
+
+
+{% block main %}
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="{{ 2|cw }}">
+        </div>
+        <div class="{{ 8|cw }} ">
+            <div class="x_panel">
+
+                <div class="x_content page">
+                    <div class="row">
+                        <div class="{{ 12|cw }}">
+                            <article>
+                                {{ page.text | safe }}
+
+                            </article>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="{{ 2|cw }}">
+
+        </div>
+    </div>
+
+{% endblock %}

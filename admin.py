@@ -19,15 +19,20 @@ class TagAdmin(admin.ModelAdmin):
 class PageStatusAdmin(TranslationAdmin):
     pass
 
+class PerspectivesInline(admin.TabularInline):
+    model = Perspective.pages.through
 
 class PageAdmin(TranslationAdmin):
     list_display = ('title', 'main_title', 'slug', 'section', 'allow_anonymous', 'template', 'page_type', 'navigation_section', 'page_id', 'index')
     list_filter = ('tags', 'template', 'page_type', 'navigation_section')
     save_as = True;
     formfield_overrides = {HTMLField: {'widget': forms.Textarea(attrs={'class': 'ckeditor'})}, }
+    inlines = [PerspectivesInline,]
 
     class Media:
         js = ('//cdn.ckeditor.com/4.5.9/standard/ckeditor.js', 'gla/more/configuration-ckeditor.js')
+
+
 
 
 class PageSectionAdmin(TranslationAdmin):
@@ -48,7 +53,7 @@ class TemplateAdmin(admin.ModelAdmin):
     save_as = True;
 
 class PerspectiveAdmin(TranslationAdmin):
-    list_display = ('name', 'code')
+    list_display = ('name', 'code', 'slug')
     list_filter = ('tags', )
     save_as = True;
 
