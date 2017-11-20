@@ -26,7 +26,7 @@ def create_user_profile_on_post_init(sender, instance, **kwargs):
 
 
 
-class HTMLField(models.TextField):
+class HTMLField(RichTextUploadingField):
     pass
 
 
