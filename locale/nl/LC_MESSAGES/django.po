@@ -1,0 +1,95 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-11-14 23:06+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: templates/generic_widgets/include_more_menu.html:16
+#: templates/t_xpanel_control_base.html:36
+msgid "Edit widget"
+msgstr "Widget bewerken"
+
+#: templates/generic_widgets/include_more_menu.html:19
+#: templates/t_xpanel_control_base.html:40
+msgid "View as stand-alone"
+msgstr "Apart bekijken"
+
+#: templates/generic_widgets/include_more_menu.html:31
+msgid "Data"
+msgstr "Data"
+
+#: templates/generic_widgets/include_more_menu.html:35
+msgid "View data"
+msgstr "Data bekijken"
+
+#: templates/generic_widgets/include_more_menu.html:39
+msgid "View details"
+msgstr "Details bekijken"
+
+#: templates/generic_widgets/include_more_menu.html:52
+msgid "More info"
+msgstr "Meer info"
+
+#: templates/generic_widgets/include_more_menu.html:58
+msgid "Enlarge"
+msgstr "Vergroten"
+
+#: templates/generic_widgets/include_more_menu.html:79
+msgid "More information"
+msgstr "Meer informatie"
+
+#: templates/generic_widgets/include_more_menu.html:90
+#: templates/xf_viz_base.html:71
+msgid "Close"
+msgstr "Sluiten"
+
+#: templates/generic_widgets/include_sub_text.html:6
+msgid "Read more"
+msgstr "Lees meer"
+
+#: templates/t_block_ajxldr_xpanel.html:12
+msgid "Loading"
+msgstr "Laden"
+
+#: templates/t_block_ajxldr_xpanel.html:17
+msgid "Loading..."
+msgstr "Bezig met laden..."
+
+#: templates/xf_viz_base.html:18 templates/xf_viz_base.html:58
+msgid "About this page"
+msgstr "Over deze pagina"
+
+#: templates/xf_viz_base.html:26
+msgid "Filter:"
+msgstr "Filter:"
+
+#: templates/xf_viz_base.html:29
+msgid "Apply filter"
+msgstr "Filter toepassen"
+
+#: templates/xf_viz_base.html:31
+msgid "Clear filter"
+msgstr "Filter wissen"
+
+#: templates/xf_viz_base.html:66
+#, fuzzy
+#| msgid "Info and data sources"
+msgid "Data sources"
+msgstr "Gegevensbronnen"
+
+#~ msgid "Info and data sources"
+#~ msgstr "Meer info"
