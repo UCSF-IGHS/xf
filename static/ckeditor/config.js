@@ -9,4 +9,5 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.uiColor = '#AADC6E';
 
     CKEDITOR.config.allowedContent = true;
+    CKEDITOR.config.skin = 'moono-lisa';
 };
