@@ -247,6 +247,7 @@ class Widget(models.Model):
     FILTER_DROP_DOWN = '11'
     BAR_GRAPH_HORIZONTAL = '12'
     GAUGE = '13'
+    STACKED_BAR_GRAPH = '14'
     OTHER = '0'
 
     WIDGET_TYPE_CHOICES = (
@@ -263,6 +264,7 @@ class Widget(models.Model):
         (TEXT_BLOCK, 'Text block'),
         (FILTER_DROP_DOWN, 'Filter drop down'),
         (GAUGE, 'Gauge'),
+        (STACKED_BAR_GRAPH, 'Stacked bar graph'),
         (OTHER, 'Other'),
     )
 
