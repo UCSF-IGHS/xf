@@ -76,3 +76,4 @@ You can use the mixin yourself as well on views. In XF Crud,
 `XFListView`, `XFDetailView`, `XFUpdateView`, `XFCreateView` and `XFDeleteView`
 all inherit from `XFAjaxViewMixin`.
 
+
