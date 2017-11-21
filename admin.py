@@ -29,6 +29,8 @@ class PageAdmin(TranslationAdmin):
     formfield_overrides = {HTMLField: {'widget': forms.Textarea(attrs={'class': 'ckeditor'})}, }
     inlines = [PerspectivesInline,]
 
+    class Media:
+        js = ('gla/more/configuration-ckeditor.js',)
 
 
 
@@ -88,6 +90,8 @@ class WidgetTypeAdmin(TranslationAdmin):
         }),
     )
 
+    class Media:
+        js = ('gla/more/configuration-ckeditor.js',)
 
 # config.allowedContent = true;
 
