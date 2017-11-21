@@ -109,26 +109,131 @@
             {% endif %}
             {% if custom_attr|lookup:'renderer' == 'echarts' %}
 
+                function renderItem(params, api) {
+                    var xValue = api.value(0);
+                    var highPoint = api.coord([xValue, api.value(1)]);
+
+                    var lowPoint = api.coord([xValue, api.value(2)]);
+                    var halfWidth = api.size([1, 0])[0] * 0.1;
+                    var style = api.style({
+                        stroke: api.visual('color'),
+                        fill: null
+                    });
+
+                    return {
+                        type: 'group',
+                        children: [
+                         {% if custom_attr|lookup:'stacked' != 'yes' %}
+                            {
+                                type: 'line',
+                                shape: {
+                                    x1: highPoint[0] - halfWidth, y1: highPoint[1],
+                                    x2: highPoint[0] + halfWidth, y2: highPoint[1]
+                                },
+                                style: style
+                            },
+                         {% endif %}
+                            {
+                                type: 'line',
+                                shape: {
+                                    x1: highPoint[0], y1: highPoint[1],
+                                    x2: lowPoint[0], y2: lowPoint[1]
+                                },
+                                style: style
+                            },
+                            {
+                                type: 'line',
+                                shape: {
+                                    x1: lowPoint[0] - halfWidth, y1: lowPoint[1],
+                                    x2: lowPoint[0] + halfWidth, y2: lowPoint[1]
+                                },
+                                style: style
+                            }]
+                    };
+                }
                 var dom = document.getElementById("{{ widget_id }}");
+                var errorBars = "{{ custom_attr|lookup:'error_bars' }}";
+                var errorData = [];
+                var errorBarLabels = [];
 
                 data_points.forEach(function (point, index) {
-                    dataset.push(
-                        {
-                            name: legend_labels[index],
-                            type: 'bar',
-                            {% if custom_attr|lookup:'stacked' == 'yes'%}
-                                stack: true,
-                            {% endif %}
-                            label: {
-                                normal: {
-                                    show: true,
-                                    position: 'insideRight'
+                    var data = JSON.parse(data_points[index]);
+                    if(errorBars == 'yes'){
+                        if(String(legend_labels[index]).includes("Error")){
+                            var errorPoints = [];
+                            var split = String(data).split(',');
+                            split.forEach(function(_point, _index){
+                                var val = parseInt(split[_index]);
+                                errorPoints.push([
+                                    _index,
+                                    echarts.number.round(val-10),
+                                    echarts.number.round(val)
+                                ]);
+                            });
+                            errorData.push(errorPoints);
+                            errorBarLabels.push(legend_labels[index]);
+                        }else{
+                            dataset.push(
+                                {
+                                    name: legend_labels[index],
+                                    type: 'bar',
+                                    {% if custom_attr|lookup:'stacked' == 'yes'%}
+                                        stack: true,
+                                    {% endif %}
+                                    label: {
+                                        normal: {
+                                            show: true,
+                                            position: 'insideRight'
+                                        }
+                                    },
+                                    data: data
                                 }
-                            },
-                            data: JSON.parse(data_points[index])
+                            );
                         }
-                    );
+                    }else {
+                        dataset.push(
+                            {
+                                name: legend_labels[index],
+                                type: 'bar',
+                                {% if custom_attr|lookup:'stacked' == 'yes'%}
+                                    stack: true,
+                                {% endif %}
+                                label: {
+                                    normal: {
+                                        show: true,
+                                        position: 'insideRight'
+                                    }
+                                },
+                                data: data
+                            }
+                        );
+                    }
                 });
+
+                {% if custom_attr|lookup:'error_bars' == 'yes' and widget_type == '6' %}
+                    var errorColors = ["rgb(232,0,0)", "rgb(240,0,0)", "rgb(248,0,0)", "rgb(255,0,0)"];
+                    errorData.forEach(function(point, index){
+                        dataset.push(
+                            {
+                                type: 'custom',
+                                name: errorBarLabels[index],
+                                itemStyle: {
+                                    normal: {
+                                        borderWidth: 1.5,
+                                        color: errorColors[index]
+                                    }
+                                },
+                                renderItem: renderItem,
+                                encode: {
+                                    x: 0,
+                                    y: [1, 2]
+                                },
+                                data: errorData[index],
+                                z: 100
+                            }
+                        );
+                    });
+                {% endif %}
 
                 var myChart = echarts.init(dom);
 
