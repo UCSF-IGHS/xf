@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-14 23:08+0000\n"
+"POT-Creation-Date: 2017-11-20 21:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,7 +53,7 @@ msgid "More information"
 msgstr "Mais informaçōes"
 
 #: templates/generic_widgets/include_more_menu.html:90
-#: templates/xf_viz_base.html:71
+#: templates/xf_viz_base.html:127
 msgid "Close"
 msgstr "Fechar"
 
@@ -69,22 +69,35 @@ msgstr "Processando"
 msgid "Loading..."
 msgstr "Processando..."
 
-#: templates/xf_viz_base.html:18 templates/xf_viz_base.html:58
+#: templates/xf_viz_base.html:38
+msgid "Edit this page"
+msgstr "Editar esta página"
+
+#: templates/xf_viz_base.html:40
+msgid "Edit this page's template"
+msgstr "Editar o template desta página"
+
+#: templates/xf_viz_base.html:42
+msgid "Edit this perspective"
+msgstr "Editar esta prespectiva"
+
+#: templates/xf_viz_base.html:45 templates/xf_viz_base.html:73
+#: templates/xf_viz_base.html:114
 msgid "About this page"
 msgstr "Sobre esta página"
 
-#: templates/xf_viz_base.html:26
+#: templates/xf_viz_base.html:82
 msgid "Filter:"
 msgstr "Filtro"
 
-#: templates/xf_viz_base.html:29
+#: templates/xf_viz_base.html:85
 msgid "Apply filter"
 msgstr "Aplicar Filtro"
 
-#: templates/xf_viz_base.html:31
+#: templates/xf_viz_base.html:87
 msgid "Clear filter"
 msgstr "Limpar Filtro"
 
-#: templates/xf_viz_base.html:66
+#: templates/xf_viz_base.html:122
 msgid "Data sources"
 msgstr "Fontes de dados"
