@@ -42,42 +42,60 @@
         $(function () {
 
             var ctx = $("#{{ widget_id }}");
-            var lineChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: {{ labels|safe }},
-
-                    datasets: [
+            var dataset = [];
+            var legend_labels = JSON.parse('{{ legend_labels | jsonify | safe }}');
+            var data_points = JSON.parse('{{ datapoints | jsonify | safe}}');
+            var begin_at_zero = "{{custom_attr|lookup:'begin_at_zero'}}" == 'yes' ? true : false;
+            var is_line_graph = "{{ custom_attr|lookup:'is_line_graph' }}" == 'yes' ? true : false;
+            var colors = is_line_graph == true ? ["rgba(38, 185, 154, 1)", "rgba(3, 88, 106, 1)", "rgba(115, 135, 156, 1)", "rgba(156, 194, 203, 1)", "rgba(156, 169, 174, 1)", "rgba(12, 99, 81, 1)"] : ["rgba(38, 185, 154, 0.4)", "rgba(3, 88, 106, 0.4)", "rgba(115, 135, 156, 0.4)", "rgba(156, 194, 203, 0.4)", "rgba(156, 169, 174, 0.4)", "rgba(12, 99, 81, 0.4)"];
+            data_points.forEach(function (point, index) {
+                if(is_line_graph){
+                    dataset.push(
                         {
-                            label: "{{ legend_labels.0 }}",
-                            backgroundColor: "rgba(38, 185, 154, 0.31)",
-                            borderColor: "rgba(38, 185, 154, 0.7)",
-                            pointBorderColor: "rgba(38, 185, 154, 0.7)",
-                            pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                            label: legend_labels[index],
+                            backgroundColor: "Transparent",
+                            borderColor: colors[index],
+                            pointBorderWidth: 1,
+                            data: JSON.parse(data_points[index])
+                        }
+                    );
+                }else{
+                    dataset.push(
+                        {
+                            label: legend_labels[index],
+                            backgroundColor: colors[index],
+                            borderColor: colors[index],
+                            pointBorderColor: colors[index],
+                            pointBackgroundColor: colors[index],
                             pointHoverBackgroundColor: "#fff",
                             pointHoverBorderColor: "rgba(220,220,220,1)",
                             pointBorderWidth: 1,
-                            data: {{ datapoints.0|safe }}
-                        },
-                        {% if datapoints|length > 1 %}
-                            {
-                                label: "{{ legend_labels.1 }}",
-                                backgroundColor: "rgba(3, 88, 106, 0.3)",
-                                borderColor: "rgba(3, 88, 106, 0.70)",
-                                pointBorderColor: "rgba(3, 88, 106, 0.70)",
-                                pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-                                pointHoverBackgroundColor: "#fff",
-                                pointHoverBorderColor: "rgba(151,187,205,1)",
-                                pointBorderWidth: 1,
-                                data: {{ datapoints.1|safe }}
-
-                            },
-                        {% endif %}
-                    ]
-                },
+                            data: JSON.parse(data_points[index])
+                        }
+                    );
+                }
             });
 
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: {{ labels|safe }},
+                    datasets: dataset.slice()
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:begin_at_zero,
 
+                                {% if   custom_attr|lookup:'maximum_scale' != '' %}
+                                    max: parseInt('{{ custom_attr|lookup:'maximum_scale' }}')
+                                {% endif %}
+                            }
+                        }],
+                    }
+                }
+            });
         });
     </script>
 

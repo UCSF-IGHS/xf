@@ -1,0 +1,6 @@
+{% extends "admin/base.html" %}
+
+{% block footer %}
+    <script src="{{STATIC_URL}}ckeditor/ckeditor.js"></script>
+    {{ block.super }}
+{% endblock %}

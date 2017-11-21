@@ -34,36 +34,150 @@
         </div>
     </div>
 
-    <canvas id="{{ widget_id }}"></canvas>
-    <!--<canvas id="" width="300" height="150"></canvas>-->
+    {% if custom_attr|lookup:'renderer'|length == 0 or custom_attr|lookup:'renderer' == 'default' %}
+        <canvas id="{{ widget_id }}"></canvas>
+    {% endif %}
+    {% if custom_attr|lookup:'renderer' == 'echarts' %}
+        <div id="{{ widget_id }}" style="height: {{ custom_attr|lookup:"widget_height" }};"></div>
+    {% endif %}
+
+
     <script type="text/javascript">
 
         $(function () {
 
-            var ctx = $("#{{ widget_id }}");
-            var colors = ["#26B99A", "#03586A", "#73879C", "#9CC2CB", "#9CA9AE"];
-            var dataset = [];
             var legend_labels = JSON.parse('{{ legend_labels | jsonify | safe }}');
             var data_points = JSON.parse('{{ datapoints | jsonify | safe}}');
+            var dataset = [];
+            var colors = ["#26B99A", "#03586A", "#73879C", "#9CC2CB", "#9CA9AE"];
 
-            data_points.forEach(function (point, index) {
-                dataset.push(
-                    {
-                        label: legend_labels[index],
-                        backgroundColor: colors[index],
-                        data: JSON.parse(data_points[index])
+            {% if custom_attr|lookup:'renderer'|length == 0 or custom_attr|lookup:'renderer' == 'default' %}
+                var ctx = $("#{{ widget_id }}");
+                var begin_at_zero = "{{custom_attr|lookup:'begin_at_zero'}}" == 'yes' ? true : false;
+
+                data_points.forEach(function (point, index) {
+                    dataset.push(
+                        {
+                            label: legend_labels[index],
+                            backgroundColor: colors[index],
+                            data: JSON.parse(data_points[index])
+                        }
+                    );
+                });
+                new Chart(ctx, {
+                    type: '{{ widget_type }}' ==  '6' ? 'bar' : 'horizontalBar',
+                    data: {
+                        labels: {{ labels|safe }},
+                        datasets: dataset.slice()
+                    },
+                    options: {
+                        scales: {
+
+                            xAxes: [{
+                                {% if custom_attr|lookup:'stacked' == 'yes'%}
+                                        stacked:true,
+                                {% endif %}
+                                {% if widget_type == '12' %}
+                                    ticks: {
+                                        beginAtZero:begin_at_zero,
+
+                                        {% if   custom_attr|lookup:'maximum_scale' != '' %}
+                                            max: parseInt('{{ custom_attr|lookup:'maximum_scale' }}')
+                                        {% endif %}
+                                    }
+                                {% endif %}
+                            }],
+
+                            yAxes: [{
+                                {% if custom_attr|lookup:'stacked' == 'yes'%}
+                                        stacked:true,
+                                {% endif %}
+                                {% if widget_type == '6' %}
+                                    ticks: {
+                                        beginAtZero:begin_at_zero,
+
+                                        {% if   custom_attr|lookup:'maximum_scale' != '' %}
+                                            max: parseInt('{{ custom_attr|lookup:'maximum_scale' }}')
+                                        {% endif %}
+                                    }
+                                {% endif %}
+                            }],
+
+                        }
                     }
-                );
-            });
+                });
+            {% endif %}
+            {% if custom_attr|lookup:'renderer' == 'echarts' %}
 
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: {{ labels|safe }},
+                var dom = document.getElementById("{{ widget_id }}");
 
-                    datasets: dataset.slice()
+                data_points.forEach(function (point, index) {
+                    dataset.push(
+                        {
+                            name: legend_labels[index],
+                            type: 'bar',
+                            {% if custom_attr|lookup:'stacked' == 'yes'%}
+                                stack: true,
+                            {% endif %}
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'insideRight'
+                                }
+                            },
+                            data: JSON.parse(data_points[index])
+                        }
+                    );
+                });
+
+                var myChart = echarts.init(dom);
+
+                var option = {
+                    tooltip : {
+                        trigger: 'axis',
+                        axisPointer : {
+                            type : 'shadow'        // type ：'line' | 'shadow'
+                        }
+                    },
+                    color: colors,
+                    legend: {
+                        data: legend_labels
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    {% if widget_type == '6' %}
+                        yAxis:  {
+                            type: 'value',
+                            {% if   custom_attr|lookup:'maximum_scale' != '' %}
+                                max: parseInt('{{ custom_attr|lookup:'maximum_scale' }}')
+                            {% endif %}
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: {{ labels|safe }}
+                        },
+                    {% elif widget_type == '12' %}
+                        xAxis:  {
+                            type: 'value',
+                            {% if   custom_attr|lookup:'maximum_scale' != '' %}
+                                max: parseInt('{{ custom_attr|lookup:'maximum_scale' }}')
+                            {% endif %}
+                        },
+                        yAxis: {
+                            type: 'category',
+                            data: {{ labels|safe }}
+                        },
+                    {% endif %}
+                    series: dataset
+                };
+                if (option && typeof option === "object") {
+                    myChart.setOption(option, true);
                 }
-            });
+            {% endif %}
         });
     </script>
 
