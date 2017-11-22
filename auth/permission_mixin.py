@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponseForbidden
 
+
 class PermissionMixin(object):
     """
     Provides a basic security model for views.
@@ -85,6 +86,15 @@ class PermissionMixin(object):
 
         # Set to true if permission is available
         self.context[group] = True
+
+    def ensure_groups_or_403(self, groups):
+        """
+        Ensures that a user is a member of any of the the groups. If not, a 403 is thrown.
+        This method is currently IN USE.
+        """
+
+        if not self.user_in_group(self.request.user, groups):
+            raise PermissionDenied
 
     def ensure_perm_or_403(self, permission, model_name):
         """
