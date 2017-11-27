@@ -66,6 +66,14 @@ def cut(value, arg):
     else:
         return ""
 
+@register.filter(name='lookup_list')
+def cut_list(value, arg):
+
+    if value is not None:
+        return value.getlist(arg, None)
+    else:
+        return ""
+
 
 @register.filter(name='findforkey')
 def findforkey(value, arg):

@@ -4,13 +4,19 @@
 
 
 {% block widget_main %}
-    <select id="{{ widget.code }}" name="{{ widget.code }}" class="select2_single form-control" style="width: 100%;">
+    <select id="{{ widget.code }}" name="{{ widget.code }}"
+            class="{% if multiselect == 'yes' %}multiselect-ui hidden{% else %}select2_single{%  endif %} form-control"
+             {% if multiselect == 'yes' %}multiple="multiple"{% endif %}>
 
         {% with data_columns|columnnameforkey:'id' as id_column %}
             {% with data_columns|columnnameforkey:'name' as name_column %}
-                <option></option>
+                {% if multiselect == 'no' %}<option></option>{% endif %}
                 {% for row in rows %}
-                    <option value="{{ row|lookup:id_column }}" {% if request.GET|lookup:widget.code == row|lookup:id_column %} selected {% endif %}  >{{ row|lookup:name_column }}</option>
+                    {% if multiselect == 'no' %}
+                        <option value="{{ row|lookup:id_column }}" {% if request.GET|lookup:widget.code == row|lookup:id_column %} selected {% endif %}  >{{ row|lookup:name_column }}</option>
+                    {% else %}
+                        <option value="{{ row|lookup:id_column }}" {% if row|lookup:id_column in request.GET|lookup_list:widget.code %} selected {% endif %}  >{{ row|lookup:name_column }}</option>
+                    {% endif %}
                 {% endfor %}
             {% endwith %}
         {% endwith %}
@@ -20,11 +26,19 @@
 <!-- Select2 -->
 <script>
     $(document).ready(function () {
-        $("#{{ widget.code }}").select2({
-            placeholder: "{{ widget.text }}",
-            allowClear: true
 
-        });
+        {% if multiselect == 'yes' %}
+            $('#{{ widget.code }}').multiselect({
+                includeSelectAllOption: true,
+                placeholder: "{{ widget.text }}",
+                allowClear: true
+            });
+        {% else %}
+                $("#{{ widget.code }}").select2({
+                    placeholder: "{{ widget.text }}",
+                    allowClear: true,
+                });
+        {% endif %}
 
     });
 </script>
