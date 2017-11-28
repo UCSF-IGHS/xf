@@ -45,7 +45,6 @@
     <script type="text/javascript">
 
         $(function () {
-
             var legend_labels = JSON.parse('{{ legend_labels | jsonify | safe }}');
             var data_points = JSON.parse('{{ datapoints | jsonify | safe}}');
             var dataset = [];
@@ -109,25 +108,148 @@
             {% endif %}
             {% if custom_attr|lookup:'renderer' == 'echarts' %}
 
+                var cursor = 0;
+
+                function renderItem(params, api) {
+                    var xValue = api.value(0);
+                    var highPoint = api.coord([xValue, api.value(1)]);
+
+                    var lowPoint = api.coord([xValue, api.value(2)]);
+                    var halfWidth = api.size([1, 0])[0] * 0.1;
+                    var style = api.style({
+                        stroke: api.visual('color'),
+                        fill: null
+                    });
+
+                    return {
+                        type: 'group',
+                        children: [
+                         {% if custom_attr|lookup:'stacked' != 'yes' %}
+                            {
+                                type: 'line',
+                                shape: {
+                                    x1: highPoint[0] - halfWidth, y1: highPoint[1],
+                                    x2: highPoint[0] + halfWidth, y2: highPoint[1]
+                                },
+                                style: style
+                            },
+                         {% endif %}
+                            {
+                                type: 'line',
+                                shape: {
+                                    x1: highPoint[0], y1: highPoint[1],
+                                    x2: lowPoint[0], y2: lowPoint[1]
+                                },
+                                style: style
+                            },
+                            {
+                                type: 'line',
+                                shape: {
+                                    x1: lowPoint[0] - halfWidth, y1: lowPoint[1],
+                                    x2: lowPoint[0] + halfWidth, y2: lowPoint[1]
+                                },
+                                style: style
+                            }]
+                    };
+                }
                 var dom = document.getElementById("{{ widget_id }}");
+                var plottedLowerLimit = [];
 
                 data_points.forEach(function (point, index) {
-                    dataset.push(
-                        {
-                            name: legend_labels[index],
-                            type: 'bar',
-                            {% if custom_attr|lookup:'stacked' == 'yes'%}
-                                stack: true,
-                            {% endif %}
-                            label: {
-                                normal: {
-                                    show: true,
-                                    position: 'insideRight'
+                    var data = JSON.parse(data_points[index]);
+                    {% if custom_attr|lookup:'error_bars' == 'yes' %}
+                        if(String(legend_labels[index]).toLowerCase().includes("ci high") || String(legend_labels[index]).toLowerCase().includes("ci low")){
+                            var errorPoints = [];
+                            if(String(legend_labels[index]).toLowerCase().includes("ci high")){
+                                var upperLimits = String(data).split(',');
+                                var lowerLimits = String(JSON.parse(data_points[index + 1])).split(',');
+                                if('{{ custom_attr|lookup:'stacked' }}' == 'yes'){
+                                    upperLimits.forEach(function (_point, _index) {
+                                        errorPoints.push([
+                                            _index,
+                                            echarts.number.round(parseInt(plottedLowerLimit[_index])),
+                                            echarts.number.round(parseInt(upperLimits[_index]))
+                                        ]);
+                                    });
+                                }else if ('{{ custom_attr|lookup:'stacked' }}' != 'yes'){
+                                    upperLimits.forEach(function (_point, _index) {
+                                        errorPoints.push([
+                                            _index,
+                                            echarts.number.round(parseInt(lowerLimits[_index])),
+                                            echarts.number.round(parseInt(upperLimits[_index]))
+                                        ]);
+                                    });
                                 }
-                            },
-                            data: JSON.parse(data_points[index])
+
+                                {% if widget_type == '6' %}
+                                    legend_labels[index] = String(legend_labels[index]).replace("High", "");
+                                    dataset.push(
+                                        {
+                                            type: 'custom',
+                                            name: legend_labels[index],
+                                            itemStyle: {
+                                                normal: {
+                                                    borderWidth: 1.5,
+                                                    color: "rgb(232,0,0)"
+                                                }
+                                            },
+                                            renderItem: renderItem,
+                                            encode: {
+                                                x: 0,
+                                                y: [1, 2]
+                                            },
+                                            data: errorPoints,
+                                            z: 100
+                                        }
+                                    );
+                                {% endif %}
+                            }
+                        }else{
+                            dataset.push(
+                                {
+                                    name: legend_labels[index],
+                                    type: 'bar',
+                                    {% if custom_attr|lookup:'stacked' == 'yes'%}
+                                        stack: true,
+                                    {% endif %}
+                                    label: {
+                                        normal: {
+                                            show: true,
+                                            position: 'insideRight'
+                                        }
+                                    },
+                                    data: data
+                                }
+                            );
+                            {% if custom_attr|lookup:'stacked' == 'yes'%}
+                                var split = String(data).split(',');
+                                if(plottedLowerLimit.length > 0) {
+                                    for(i = 0; i < split.length; i++){
+                                        plottedLowerLimit[i] = parseInt(plottedLowerLimit[i]) + parseInt(split[i]);
+                                    }
+                                }else{
+                                    plottedLowerLimit = split;
+                                }
+                            {% endif %}
                         }
-                    );
+                    {% elif custom_attr|lookup:'error_bars' != 'yes' %}
+                        dataset.push(
+                            {
+                                name: legend_labels[index],
+                                type: 'bar',
+                                {% if custom_attr|lookup:'stacked' == 'yes'%}
+                                    stack: true,
+                                {% endif %}
+                                label: {
+                                    normal: {
+                                        show: true,
+                                        position: 'insideRight'
+                                    }
+                                },
+                                data: data
+                            }
+                        );
+                    {% endif %}
                 });
 
                 var myChart = echarts.init(dom);
