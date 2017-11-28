@@ -45,7 +45,6 @@
     <script type="text/javascript">
 
         $(function () {
-
             var legend_labels = JSON.parse('{{ legend_labels | jsonify | safe }}');
             var data_points = JSON.parse('{{ datapoints | jsonify | safe}}');
             var dataset = [];
@@ -109,6 +108,8 @@
             {% endif %}
             {% if custom_attr|lookup:'renderer' == 'echarts' %}
 
+                var cursor = 0;
+
                 function renderItem(params, api) {
                     var xValue = api.value(0);
                     var highPoint = api.coord([xValue, api.value(1)]);
@@ -152,26 +153,57 @@
                     };
                 }
                 var dom = document.getElementById("{{ widget_id }}");
-                var errorBars = "{{ custom_attr|lookup:'error_bars' }}";
-                var errorData = [];
-                var errorBarLabels = [];
+                var plottedLowerLimit = [];
 
                 data_points.forEach(function (point, index) {
                     var data = JSON.parse(data_points[index]);
-                    if(errorBars == 'yes'){
-                        if(String(legend_labels[index]).includes("Error")){
+                    {% if custom_attr|lookup:'error_bars' == 'yes' %}
+                        if(String(legend_labels[index]).toLowerCase().includes("ci high") || String(legend_labels[index]).toLowerCase().includes("ci low")){
                             var errorPoints = [];
-                            var split = String(data).split(',');
-                            split.forEach(function(_point, _index){
-                                var val = parseInt(split[_index]);
-                                errorPoints.push([
-                                    _index,
-                                    echarts.number.round(val-10),
-                                    echarts.number.round(val)
-                                ]);
-                            });
-                            errorData.push(errorPoints);
-                            errorBarLabels.push(legend_labels[index]);
+                            if(String(legend_labels[index]).toLowerCase().includes("ci high")){
+                                var upperLimits = String(data).split(',');
+                                var lowerLimits = String(JSON.parse(data_points[index + 1])).split(',');
+                                if('{{ custom_attr|lookup:'stacked' }}' == 'yes'){
+                                    upperLimits.forEach(function (_point, _index) {
+                                        errorPoints.push([
+                                            _index,
+                                            echarts.number.round(parseInt(plottedLowerLimit[_index])),
+                                            echarts.number.round(parseInt(upperLimits[_index]))
+                                        ]);
+                                    });
+                                }else if ('{{ custom_attr|lookup:'stacked' }}' != 'yes'){
+                                    upperLimits.forEach(function (_point, _index) {
+                                        errorPoints.push([
+                                            _index,
+                                            echarts.number.round(parseInt(lowerLimits[_index])),
+                                            echarts.number.round(parseInt(upperLimits[_index]))
+                                        ]);
+                                    });
+                                }
+
+                                {% if widget_type == '6' %}
+                                    legend_labels[index] = String(legend_labels[index]).replace("High", "");
+                                    dataset.push(
+                                        {
+                                            type: 'custom',
+                                            name: legend_labels[index],
+                                            itemStyle: {
+                                                normal: {
+                                                    borderWidth: 1.5,
+                                                    color: "rgb(232,0,0)"
+                                                }
+                                            },
+                                            renderItem: renderItem,
+                                            encode: {
+                                                x: 0,
+                                                y: [1, 2]
+                                            },
+                                            data: errorPoints,
+                                            z: 100
+                                        }
+                                    );
+                                {% endif %}
+                            }
                         }else{
                             dataset.push(
                                 {
@@ -189,8 +221,18 @@
                                     data: data
                                 }
                             );
+                            {% if custom_attr|lookup:'stacked' == 'yes'%}
+                                var split = String(data).split(',');
+                                if(plottedLowerLimit.length > 0) {
+                                    for(i = 0; i < split.length; i++){
+                                        plottedLowerLimit[i] = parseInt(plottedLowerLimit[i]) + parseInt(split[i]);
+                                    }
+                                }else{
+                                    plottedLowerLimit = split;
+                                }
+                            {% endif %}
                         }
-                    }else {
+                    {% elif custom_attr|lookup:'error_bars' != 'yes' %}
                         dataset.push(
                             {
                                 name: legend_labels[index],
@@ -207,33 +249,8 @@
                                 data: data
                             }
                         );
-                    }
+                    {% endif %}
                 });
-
-                {% if custom_attr|lookup:'error_bars' == 'yes' and widget_type == '6' %}
-                    var errorColors = ["rgb(232,0,0)", "rgb(240,0,0)", "rgb(248,0,0)", "rgb(255,0,0)"];
-                    errorData.forEach(function(point, index){
-                        dataset.push(
-                            {
-                                type: 'custom',
-                                name: errorBarLabels[index],
-                                itemStyle: {
-                                    normal: {
-                                        borderWidth: 1.5,
-                                        color: errorColors[index]
-                                    }
-                                },
-                                renderItem: renderItem,
-                                encode: {
-                                    x: 0,
-                                    y: [1, 2]
-                                },
-                                data: errorData[index],
-                                z: 100
-                            }
-                        );
-                    });
-                {% endif %}
 
                 var myChart = echarts.init(dom);
 
