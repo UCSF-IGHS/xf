@@ -1,4 +1,5 @@
 {% extends "xf_base.html" %}
+{% load i18n %}
 
 {% load staticfiles %}
 {% load admin_urls %}
@@ -9,7 +10,68 @@
 {% endblock %}
 
 {% block title %}
-    {{ title }}
+
+{% endblock %}
+
+{% block navbar %}
+
+     <li>
+        <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+           aria-expanded="false" >
+            <!--<img src="{% static "gla/images/img.jpg" %}" alt="">-->
+            {% if user.is_authenticated %}{{ user.get_full_name|default:user.username }}{% endif %}
+            {% if not user.is_authenticated %}Log in{% endif %}
+            <span class=" fa fa-angle-down"></span>
+        </a>
+        <ul class="dropdown-menu dropdown-usermenu pull-right">
+            {% if not user.is_authenticated %}
+                <li><a href="{% url 'login' %}"><i
+                        class="fa fa-sign-out pull-right"></i> Log in</a></li>
+            {% endif %}
+            {% if user.is_authenticated %}
+
+                <li><a href="{% url 'logout' %}"><i
+                        class="fa fa-sign-out pull-right"></i> Log out</a></li>
+            {% endif %}
+            {% if request.user.is_superuser %}
+                <li><a href="{{ change_url }} " target="_blank"><i
+                        class="fa fa-edit pull-right"></i>{% trans "Edit this page" %}</a></li>
+                <li><a href="{{ change_template_url }} " target="_blank"><i
+                        class="fa fa-edit pull-right"></i>{% trans "Edit this page's template" %}</a></li>
+                <li><a href="{{ change_perspective_url }} " target="_blank"><i
+                        class="fa fa-edit pull-right"></i>{% trans "Edit this perspective" %}</a></li>
+                <li><a href="#" data-toggle="modal" role="button"
+                       data-target="#{{ page_id }}-modal-about"><i
+                        class="fa fa-info pull-right"></i>{% trans "About this page" %}</a></li>
+            {% endif %}
+        </ul>
+    </li>
+
+    <li class="">
+        <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+           aria-expanded="false">{{ current_perspective.name }} <span
+                class=" fa fa-angle-down"></span>
+        </a>
+        <ul class="dropdown-menu dropdown-usermenu pull-right">
+            {% for perspective in perspectives %}
+                <li {% if perspective.id == current_perspective.id %}
+                class="selected" {% endif %}><a href="{% url "load_perspective" perspective.slug %}" class="selected">
+                    {% if perspective.id == current_perspective.id %}
+                        <i class="fa fa-check pull-right"></i>{% endif %}{{ perspective.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </li>
+
+
+{% endblock %}
+
+{% block main_title %}
+    {{ page.main_title }}
+    {% if page.about %}
+        <button type="button" class="btn btn-dark btn-xs" style="margin-left: 20px" data-toggle="modal" role="button"
+                data-target="#page-modal-about">{% trans "About this page" %}</button>
+    {% endif %}
 {% endblock %}
 
 {% block filterbar %}
@@ -17,12 +79,12 @@
         <div class="filter-bar"  >
             <form method="get">
                 <input type="hidden" name="filter" value="active">
-                <div class="filter-widget" style="position: relative; top: 50%; transform: translateY(20%);" >Filter: </div>
+                <div class="filter-widget" style="position: relative; top: 50%; transform: translateY(20%);" >{% trans "Filter:" %} </div>
 
                 {% block filterbar_main %}{% endblock %}
-                <div class="filter-buttons"><input type="submit" value="Apply filter" class="btn btn-primary"/>
+                <div class="filter-buttons"><input type="submit" value="{% trans "Apply filter" %}" class="btn btn-primary"/>
                             {% if request.GET.filter == "active" %}
-                                <a class="btn btn-default" href="./">Clear filter</a>
+                                <a class="btn btn-default" href="./">{% trans "Clear filter" %}</a>
                             {% endif %}</div>
             </form>
         </div>
@@ -39,4 +101,35 @@
 
 {% block j %}{% endblock %}
 
-{% block extrajs %}{% endblock %}
+{% block extrajs %}
+
+  <div class="modal fade bs-example-modal-md" id="page-modal-about" tabindex="-1" role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">{% trans "About this page" %}</h4>
+                </div>
+                <div class="modal-body">
+                    {% if page.about %}
+                    {{ page.about|safe }}
+                    {% endif %}
+
+                    {% if page.data_sources%}
+                    <h5>{% trans "Data sources" %}</h5>
+                    {{ page.data_sources|safe }}
+                    {% endif %}
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-primary" data-dismiss="modal">{% trans "Close" %}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+

@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User, Group
@@ -25,7 +26,7 @@ def create_user_profile_on_post_init(sender, instance, **kwargs):
 
 
 
-class HTMLField(models.TextField):
+class HTMLField(RichTextUploadingField):
     pass
 
 
@@ -100,6 +101,11 @@ class Template(models.Model):
                                      help_text='Allows you to specificy the content of a template.')
 
     tags = models.ManyToManyField(Tag, related_name='templates', blank=True)
+    built_in = models.BooleanField(
+        blank=True,
+        default=False,
+        help_text='Specifies whether this is a built-in template, which should not be modified')
+
 
     def __str__(self):
         return self.name
@@ -121,6 +127,17 @@ class PageType(models.Model):
     def __str__(self):
         return self.name
 
+class PageStatus(models.Model):
+    code = models.CharField(
+        max_length=50,
+        help_text='Code of the status.')
+    name = models.CharField(
+        max_length=150,
+        help_text='Name of the status.')
+
+    def __str__(self):
+        return self.name
+
 
 class Page(models.Model):
     title = models.CharField(
@@ -129,7 +146,7 @@ class Page(models.Model):
     main_title = models.CharField(
         max_length=150,
         help_text='Main title on top of the page')
-    text = models.TextField(blank=True)
+    text = HTMLField(blank=True)
         #text = HTMLField('Approve place', null=True, blank=True)
 
     slug = models.SlugField(
@@ -165,6 +182,26 @@ class Page(models.Model):
     show_filter_bar = models.BooleanField(blank=True, help_text='Check this field if you want to display the filter bar. Otherwise it will be hidden.')
     index = models.IntegerField(blank=True, default=0, help_text='Pages with a lower index will be added to the navigation tree before those with a higher index. This is used to sort the navigation tree.')
     tags = models.ManyToManyField(Tag, related_name='pages', blank=True)
+    page_status = models.ForeignKey(
+        PageStatus, blank=True, null=True,
+        related_name='page_status',
+        help_text='Specifies a the status of this page')
+    data_sources = HTMLField(blank=True, null=True,
+                             help_text='Specify the data sources for this page, if applicable.')
+    about = HTMLField(blank=True, null=True,
+                             help_text='Allows you to specify "about" information for this page, e.g. methods.')
+
+    widgets = models.TextField(
+        blank=True,
+        help_text='A python dictionary specifiying widget slugs for this template.'
+    )
+
+    custom_attributes = models.TextField(
+        blank=True,
+        help_text='Any custom attributes, which may be forwarded to the template. Must be a Python dictionary format.'
+    )
+
+
 
     def __str__(self):
         return self.title
@@ -183,6 +220,10 @@ class Perspective(models.Model):
         related_name='perspectives',
         blank=True,
         help_text='The pages that are part of this perspective.')
+    slug = models.SlugField(
+        max_length=150,
+        null=True, blank=True,
+        help_text='This field identifies part of the URL that makes it friendly')
     default_page = models.ForeignKey(
         Page,
         help_text='The default page that will be displayed when a user logs on.')

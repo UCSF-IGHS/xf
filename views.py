@@ -1,17 +1,19 @@
 # import MySQLdb
+from django.core.exceptions import PermissionDenied
 from django.db import connections
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import redirect_to_login, login
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.template import Template, TemplateDoesNotExist
 from django.template.backends.django import Template as Template2, DjangoTemplates
 from django.template.loader import _engine_list
 from django.template.response import TemplateResponse
 from django.utils.decorators import method_decorator
+from django.utils.translation import get_language
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
@@ -27,6 +29,7 @@ from . import extensions
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from . import models as UCModels
+from xf_crud.auth.permission_mixin import PermissionMixin
 
 # Create your views here.
 from uc_dashboards.models import NavigationSection, Page, Widget, Perspective
@@ -102,18 +105,28 @@ def load_navigation(sender, navigation_trees, request):
                 if page.page_id:
 
                     url = reverse(viewname=page.page_type.url_section,
-                                  kwargs={'section': page.section.title, 'slug': page.slug, 'page_id': page.page_id})
+                                  kwargs={'section': page.section.title,
+                                          'perspective_slug': current_perspective.slug,
+                                          'slug': page.slug,
+                                          'page_id': page.page_id
+                                          })
                 else:
                     url = reverse(viewname=page.page_type.url_section,
-                                  kwargs={'section': page.section.title, 'slug': page.slug})
+                                  kwargs={'section': page.section.title,
+                                          'perspective_slug': current_perspective.slug,
+                                          'slug': page.slug
+                                          })
 
-                if page.parent_page:
-                    add_navigation(navigation_tree, 'Dashboard', page.parent_page.navigation_section.caption, url,
-                                   page.parent_page.navigation_section.icon, page.title, page.parent_page.title)
+                # Check if user is part of one of the allowed groups to view this page, before adding menu item
+                # to navigation
+                if PermissionMixin.user_in_group(request.user, page.permissions_to_view.all()):
+                    if page.parent_page:
+                        add_navigation(navigation_tree, 'Dashboard', page.parent_page.navigation_section.caption, url,
+                                       page.parent_page.navigation_section.icon, page.title, page.parent_page.title)
 
-                elif page.navigation_section:
-                    add_navigation(navigation_tree, 'Dashboard', page.navigation_section.caption, url,
-                                   page.navigation_section.icon, page.title)
+                    elif page.navigation_section:
+                        add_navigation(navigation_tree, 'Dashboard', page.navigation_section.caption, url,
+                                       page.navigation_section.icon, page.title)
 
     return
 
@@ -165,6 +178,8 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
         self.perspectives = None
         self.pages = None
         self.navigation_sections = {}
+        print ("load perspectives")
+        print(self.kwargs)
 
         # Load the current perspective
 
@@ -175,23 +190,49 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
 
         # if self.request.session.has_key("perspective_id"):
         # PYTHON3 UPDATE
-        if "perspective_id" in self.request.session:
+
+        if "perspective_slug" in self.kwargs:
+            perspective = get_object_or_404(UCModels.Perspective, slug=self.kwargs["perspective_slug"])
+            perspective = self.request.user.load_perspective(perspective, True)
+            if perspective:
+                self.perspective = perspective
+                self.request.session["perspective_id"] = self.perspective.id
+
+        elif "perspective_id" in self.request.session:
             self.perspective = Perspective.objects.get(pk=self.request.session["perspective_id"])
+
+        if self.perspective:
             self.pages = self.perspective.pages.all()
 
             for page in self.pages:
                 navigation_section = None
                 # if not self.navigation_sections.has_key(page.navigation_section_id):
                 # PYTHON3 UPDATE
+
                 if not page.navigation_section.id in self.navigation_sections:
                     self.navigation_sections[page.navigation_section_id] = (page.navigation_section, [page])
                 else:
                     self.navigation_sections[page.navigation_section_id][1].append(page)
 
+            # Don't allow loading a page outside the current perspective
+
+            if not self.page.allow_anonymous:
+                found = False
+                for page in self.pages:
+                    if self.page.id == page.id:
+                        found = True
+                        break
+
+                if not found:
+                    raise Http404("This page does not exist in this perspective")
+
         # Load all perspectives available to this user
         if self.request.user.is_authenticated():
             self.request.user.load_perspectives()
             self.perspectives = self.request.user.perspectives
+
+            if not self.perspectives:
+                raise PermissionDenied("User doesn't have any associated perspectives")
 
             # Set preset filters for groups
             for group in self.request.user.groups.all():
@@ -338,31 +379,49 @@ class WidgetView(TemplateView):
 
         if self.widget:
 
+            if "perspective_slug" in self.kwargs:
+                perspective = get_object_or_404(UCModels.Perspective, slug=self.kwargs["perspective_slug"])
+                perspective = self.request.user.load_perspective(perspective, True)
+                if perspective:
+                    self.perspective = perspective
+                    self.request.session["perspective_id"] = self.perspective.id
+
             if "perspective_id" in self.request.session:
                 self.perspective = Perspective.objects.get(pk=self.request.session["perspective_id"])
 
-            if self.widget.widget_type == Widget.TEXT_BLOCK:
-                return
+            if self.widget.widget_type != Widget.TEXT_BLOCK:
 
-            params = []
-            sql_query = self.widget.sql_query
-            conn = self.get_connection(self.widget.database_key)
+                params = []
+                sql_query = self.widget.sql_query
+                conn = self.get_connection(self.widget.database_key)
 
-            if self.widget.filters:
-                filters = ast.literal_eval(self.widget.filters)
-                for filter in filters:
-                    params.append(self.request.GET.get(filter, ''))
-                    try:
-                        sql_query = sql_query.replace("@" + filter, conn.literal(self.request.GET.get(filter, '')))
-                    except:
-                        # UNSAFE!!!!
-                        # TODO: FIX
-                        sql_query = sql_query.replace("@" + filter, "'" + self.request.GET.get(filter, '') + "'")
+                if self.widget.filters:
+                    filters = ast.literal_eval(self.widget.filters)
+                    for filter in filters:
+                        params.append(self.request.GET.get(filter, ''))
+                        try:
+                            sql_query = sql_query.replace("@" + filter, conn.literal(self.request.GET.get(filter, '')))
+                        except:
+                            # UNSAFE!!!!
+                            # TODO: FIX
+                            sql_query = sql_query.replace("@" + filter, "'" + self.request.GET.get(filter, '') + "'")
 
-            # Add a perspective code as a filter, which allows you to filter any widget based on the current perspective
-            # Very useful if you want to filter a filter based on a perspective
-            if self.perspective:
-                sql_query = sql_query.replace("@perspective_code", self.perspective.code)
+                # Add a perspective code as a filter, which allows you to filter any widget based on the current perspective
+                # Very useful if you want to filter a filter based on a perspective
+                if self.perspective:
+                    sql_query = sql_query.replace("@perspective_code", self.perspective.code)
+
+                # Send the locale code to the database
+                locale = get_language()
+                sql_query = sql_query.replace("@locale_code", locale)
+
+                try:
+                    cursor = conn.cursor()
+                    cursor.execute(sql_query)
+                    rows = cursor.fetchall()
+                finally:
+                    # conn.close()
+                    pass
 
             # print sql_query
 
@@ -370,6 +429,8 @@ class WidgetView(TemplateView):
             context["caption"] = self.widget.title
             context["extra_text"] = self.widget.sub_text
             context["widget_type"] = self.widget.widget_type
+            context["locale_code"] = get_language()
+
             if self.perspective:
                 context["perspective_code"] = self.perspective.code
 
@@ -377,20 +438,12 @@ class WidgetView(TemplateView):
             if self.widget.custom_attributes != "":
                 custom_attributes = ast.literal_eval("{" + self.widget.custom_attributes + "}")
                 context["custom_attr"] = custom_attributes
-                if "stripped_base" in custom_attributes and custom_attributes.get("stripped_base") == "yes":
-                    context["extends_base_template"] = "t_xpanel_stripped_control_base.html"
-                else:
-                    context["extends_base_template"] = "t_xpanel_control_base.html"
-            else:
-                context["extends_base_template"] = "t_xpanel_control_base.html"
 
-            try:
-                cursor = conn.cursor()
-                cursor.execute(sql_query)
-                rows = cursor.fetchall()
-            finally:
-                # conn.close()
-                pass
+                # Putting back what was once lost
+                for (key) in custom_attributes:
+                    context[key] = custom_attributes[key]
+
+            context["extends_base_template"] = "t_xpanel_control_base.html"
 
             if self.widget.widget_type == Widget.PIE or \
                             self.widget.widget_type == Widget.TABLE or \
@@ -509,7 +562,7 @@ class WidgetView(TemplateView):
 
 
 # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
-class DashboardPageView(DashboardView):
+class DashboardPageView(DashboardView, PermissionMixin):
     """
     The base view for any dashboard type page. It checks for security as needed.
     """
@@ -519,20 +572,34 @@ class DashboardPageView(DashboardView):
         XFNavigationViewMixin.__init__(self)
 
         self.page = None
+        self.perspective = None
 
     def dispatch(self, request, *args, **kwargs):
+        '''
+        This method loads a page. If a perspective is provided in the URL, it will first load that perspective.
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        '''
         self.page = Page.objects.get(slug=self.kwargs['slug'])
+        print(self.kwargs)
 
         if not self.page.allow_anonymous:
             if not self.request.user.is_authenticated():
                 # return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, self.request.path))
                 return redirect_to_login(self.request.path)
+            else:
+                self.ensure_groups_or_403(self.page.permissions_to_view.all())
 
         return super(DashboardPageView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
+
+        print("B")
         context = super(DashboardPageView, self).get_context_data(**kwargs)
         page = self.page
+
         context['change_url'] = reverse('admin:uc_dashboards_page_change', args=(page.id,), current_app='uc_dashboards')
         context['change_template_url'] = reverse('admin:uc_dashboards_template_change', args=(page.template.id,),
                                                  current_app='uc_dashboards')
@@ -544,6 +611,15 @@ class DashboardPageView(DashboardView):
         context['page'] = page
         context['title'] = page.title
         context['filter_query_string'] = "?" + self.preset_filters + self.request.META['QUERY_STRING']
+        context["locale_code"] = get_language()
+
+        # Version 2.4: Pre-loading widgets for the template
+        if self.page.widgets != "":
+            widgets = ast.literal_eval("{" + self.page.widgets + "}")
+
+            for (key) in widgets:
+                context[key] = widgets[key]
+
 
         self.template_name = page.template.template_path
         return context
@@ -602,9 +678,23 @@ class StartView(DashboardPageView):
 
                 if hasattr(user, "profile"):
                     if hasattr(user.profile, "default_perspective") and user.profile.default_perspective is not None:
-                        url = reverse("load_perspective", args=[user.profile.default_perspective.id])
+                        url = reverse("load_perspective", args=[user.profile.default_perspective.slug])
+
+                        # Load the user's default perspective
+                        perspective = get_object_or_404(UCModels.Perspective, id=user.profile.default_perspective.id)
+                        perspective = request.user.load_perspective(perspective, True)
+                        if perspective:
+                            request.session["perspective_id"] = perspective.id
+
+                        # If a next parameter is available, navigate to that page
+                        # If not, load the perspective's default page
+                        next_url = request.GET.get('next', '/')
+                        if next_url != "/" and next_url != "/dashboards/home/overview/":
+                            url = next_url
+
                         return HttpResponseRedirect(url)
 
+                # If the user doesn't have a profile, check the next parameter, or go to the home page
                 return HttpResponseRedirect(request.GET.get('next', '/'))
             else:
                 context["login_incorrect"] = True
@@ -625,6 +715,13 @@ def load_perspective(request, perspective_id):
     return home_page(request)
     pass
 
+def load_perspective(request, slug):
+    perspective = get_object_or_404(UCModels.Perspective, slug=slug)
+    perspective = request.user.load_perspective(perspective, True)
+    if perspective:
+        request.session["perspective_id"] = perspective.id
+    return home_page(request)
+    pass
 
 def clear_perspective(request):
     request.session["perspective_id"] = None
@@ -643,9 +740,10 @@ def home_page(request):
     # PYTHON3 UPDATE
     if "perspective_id" in request.session:
         perspective = Perspective.objects.get(pk=request.session["perspective_id"])
-        url = reverse("dashboards", args=[perspective.default_page.section.title, perspective.default_page.slug])
+        url = reverse("dashboards", args=[perspective.default_page.section.title, perspective.slug, perspective.default_page.slug])
         # perspective.default_page
         return HttpResponseRedirect(url)
 
     # No perspecive - load default homepage
     return HttpResponseRedirect("/dashboards/home/overview/")
+    #return HttpResponseRedirect("/")
