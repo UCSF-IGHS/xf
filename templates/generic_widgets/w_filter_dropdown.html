@@ -25,17 +25,28 @@
 
 <!-- Select2 -->
 <script>
+
+    function stripTags(string) {
+        var decoded_string = $("<div/>").html(string).text();
+        return $("<div/>").html(decoded_string).text();
+    }
+
     $(document).ready(function () {
 
         {% if multiselect == 'yes' %}
             $('#{{ widget.code }}').multiselect({
                 includeSelectAllOption: true,
-                placeholder: "{{ widget.text }}",
-                allowClear: true
+                enableCaseInsensitiveFiltering: true,
+                buttonWidth: {% if widget_size %}'{{ widget_size }}'{% else %}'100%'{% endif %},
+                {% if widget_height %}maxHeight: '{{ widget_height }}',{% endif %}
+                {% if filtering == 'yes' %}enableFiltering: true,{% endif %}
+                {% if link_button == 'yes' %}buttonClass: 'btn btn-link',{% endif %}
+                {% if drop_right == 'yes' %}dropRight: true,{% endif %}
+                nonSelectedText: stripTags("{{ widget.text }}"),
             });
         {% else %}
                 $("#{{ widget.code }}").select2({
-                    placeholder: "{{ widget.text }}",
+                    placeholder: stripTags("{{ widget.text }}"),
                     allowClear: true,
                 });
         {% endif %}
