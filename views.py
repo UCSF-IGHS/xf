@@ -398,13 +398,20 @@ class WidgetView(TemplateView):
                 if self.widget.filters:
                     filters = ast.literal_eval(self.widget.filters)
                     for filter in filters:
+                        multiselect = filter.endswith('[]')
+                        filter = filter[:-2] if multiselect else filter
                         params.append(self.request.GET.get(filter, ''))
                         try:
-                            sql_query = sql_query.replace("@" + filter, conn.literal(self.request.GET.get(filter, '')))
+                            sql_query = sql_query.replace("@" + filter, conn.literal(
+                                "'" + "', '".join(self.request.GET.getlist(filter, '')) + "'"
+                                if multiselect else conn.literal(self.request.GET.get(filter, ''))))
                         except:
                             # UNSAFE!!!!
                             # TODO: FIX
-                            sql_query = sql_query.replace("@" + filter, "'" + self.request.GET.get(filter, '') + "'")
+                            sql_query = sql_query.replace("@" + filter,
+                                                          "'" + "', '".join(self.request.GET.getlist(filter, '')) + "'"
+                                                          if multiselect else "'" + self.request.GET.get(filter,
+                                                                                                         '') + "'")
 
                 # Add a perspective code as a filter, which allows you to filter any widget based on the current perspective
                 # Very useful if you want to filter a filter based on a perspective
