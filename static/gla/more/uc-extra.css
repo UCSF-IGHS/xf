@@ -66,6 +66,7 @@ table.table-scrollable th, table.table-scrollable td {
     overflow: hidden;
     padding-top: 5px;
     padding-bottom: 5px;
+    /*overflow: inherit !important;*/
 }
 .filter-widget {
     float: left;
