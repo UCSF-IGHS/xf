@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+
+    Summary
+
+    </title>
+
+
+    <!-- jQuery -->
+    <script src="/static/gla/vendors/jquery/dist/jquery.min.js"></script>
+
+    <!-- Internal uh AJAX Library -->
+    <script src="/static/gla/js/ajax.js"></script>
+
+
+    <!-- Bootstrap -->
+
+
+    <link href="/static/gla/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Data Tables -->
+    <link href="/static/gla/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="/static/gla/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/static/gla/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="/static/gla/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="/static/gla/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
+          rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="/static/gla/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+
+    <!-- ECharts -->
+    <script src="/static/gla/vendors/echarts/dist/echarts.min.js"></script>
+    <script src="/static/gla/vendors/echarts/map/js/world.js"></script>
+
+    <!-- Select2 -->
+    <link href="/static/gla/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+
+
+    <!-- Custom Theme Style -->
+    <link href="/static/gla/build/css/custom.min.css" rel="stylesheet">
+
+    <!-- UC extra css -->
+    <link href="/static/gla/more/uc-extra.css" rel="stylesheet">
+
+
+
+
+
+</head>
+
+<body class="nav-md">
+<input type='hidden' name='csrfmiddlewaretoken' value='dYwj5VHlckKOU891o2Qtvdmbr7iKCAjjh1whQkKq1f9dP0bseBI8IOEW8ENcgsOa' />
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="index.html" class="site_title"><i class="fa fa-globe"></i>
+                        <span>ONS Dashboard</span></a>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <!-- menu profile quick info -->
+                <div class="profile clearfix">
+                    <div class="profile_pic">
+                        <img src="/static/gla/images/img.jpg" alt="..." class="img-circle profile_img">
+                    </div>
+                    <div class="profile_info">
+
+                            <span>Welcome,</span>
+                            <h2>Fitti Weissglas</h2>
+
+
+                    </div>
+                </div>
+                <!-- /menu profile quick info -->
+
+                <br/>
+
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+
+
+
+
+
+
+                            <div class="menu_section">
+                                <h3>Dashboard</h3>
+
+                                    <ul class="nav side-menu">
+
+
+
+                                        <li><a><i
+                                                class="fa fa-bar-chart"></i> Overview<span
+                                                class="fa fa-chevron-down"></span></a>
+
+
+                                            <ul class="nav child_menu">
+
+
+
+
+
+
+
+                                                        <li><a>Summary
+                                                            <span class="fa fa-chevron-down"></span></a>
+                                                            <ul class="nav sub_menu">
+
+                                                                    <li>
+                                                                        <a href="/somedashboardpage/home/sub-page2/">Sub page 2</a>
+                                                                    </li>
+
+                                                                    <li>
+                                                                        <a href="/somedashboardpage/home/sub-page/">Sub page</a>
+                                                                    </li>
+
+                                                            </ul>
+                                                        </li>
+
+
+
+
+
+                                                        <li>
+                                                            <a href="/dashboards/0/home/welcome/">Welcome</a>
+                                                        </li>
+
+
+
+
+
+                                            </ul>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="nav side-menu">
+
+
+
+                                        <li><a><i
+                                                class="fa fa-info"></i> About us<span
+                                                class="fa fa-chevron-down"></span></a>
+
+
+                                            <ul class="nav child_menu">
+
+
+
+
+                                                        <li>
+                                                            <a href="/somedashboardpage/about/about-us/">About PTBi</a>
+                                                        </li>
+
+
+
+
+
+                                            </ul>
+                                        </li>
+                                    </ul>
+
+                            </div>
+
+
+
+                </div>
+                <!-- /sidebar menu -->
+
+                <!-- /menu footer buttons -->
+                <!-- TODO: This will become the language selector -->
+
+
+                <div id="language_chooser" class="sidebar-footer hidden-small">
+
+
+
+
+
+                        <form action="/i18n/setlang/" method="post" style="display:inline-block">
+                            <input type='hidden' name='csrfmiddlewaretoken' value='dYwj5VHlckKOU891o2Qtvdmbr7iKCAjjh1whQkKq1f9dP0bseBI8IOEW8ENcgsOa' />
+                            <input name="next" type="hidden" value=""/>
+                            <input name="language" type="hidden" value="en"/>
+                            <button class="btn btn-round   btn-success  " type="submit"
+                                    style="display: inline-block">en</button>
+                        </form>
+
+
+
+                        <form action="/i18n/setlang/" method="post" style="display:inline-block">
+                            <input type='hidden' name='csrfmiddlewaretoken' value='dYwj5VHlckKOU891o2Qtvdmbr7iKCAjjh1whQkKq1f9dP0bseBI8IOEW8ENcgsOa' />
+                            <input name="next" type="hidden" value=""/>
+                            <input name="language" type="hidden" value="pt"/>
+                            <button class="btn btn-round    btn-dark " type="submit"
+                                    style="display: inline-block">pt</button>
+                        </form>
+
+
+
+                        <form action="/i18n/setlang/" method="post" style="display:inline-block">
+                            <input type='hidden' name='csrfmiddlewaretoken' value='dYwj5VHlckKOU891o2Qtvdmbr7iKCAjjh1whQkKq1f9dP0bseBI8IOEW8ENcgsOa' />
+                            <input name="next" type="hidden" value=""/>
+                            <input name="language" type="hidden" value="nl"/>
+                            <button class="btn btn-round    btn-dark " type="submit"
+                                    style="display: inline-block">nl</button>
+                        </form>
+
+
+
+
+                </div>
+                <!-- /menu footer buttons -->
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <nav>
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+                    <div class="nav navbar-nav navbar-title">
+                        <h2>
+    Dashboard demo
+    <button type="button" class="btn btn-dark btn-xs" style="margin-left: 20px" data-toggle="modal" role="button"
+           data-target="#page-modal-about">Info and data sources</button>
+
+
+
+
+
+
+</h2>
+                    </div>
+
+                    <ul class="nav navbar-nav navbar-right">
+
+
+                        <li class="">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                               aria-expanded="false">
+                                <img src="/static/gla/images/img.jpg" alt="">
+                                Fitti Weissglas
+
+                                <span class=" fa fa-angle-down"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-usermenu pull-right">
+
+
+
+                                    <li><a href="/accounts/logout/"><i
+                                            class="fa fa-sign-out pull-right"></i> Log out</a></li>
+
+
+                                    <li><a href="/admin/uc_dashboards/page/3/change/ " target="_blank"><i
+                                            class="fa fa-edit pull-right"></i> Edit this page</a></li>
+                                    <li><a href="/admin/uc_dashboards/template/2/change/ " target="_blank"><i
+                                            class="fa fa-edit pull-right"></i> Edit this page's template</a></li>
+                                    <li><a href="/admin/uc_dashboards/perspective/2/change/ " target="_blank"><i
+                                            class="fa fa-edit pull-right"></i> Edit this perspective</a></li>
+                                    <li><a href="#" data-toggle="modal" role="button"
+                                           data-target="#-modal-about"><i
+                                            class="fa fa-info pull-right"></i> About this page</a></li>
+
+                            </ul>
+                        </li>
+                        <!--
+                        <li class="">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                               aria-expanded="false">More <span
+                                    class=" fa fa-angle-down"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-usermenu pull-right">
+
+                                    <li><a href="/dashboards/perspectives/1/">
+                                        Test</a>
+                                    </li>
+
+                                    <li><a href="/dashboards/perspectives/2/">
+
+                                            <i class="fa fa-check pull-right"></i>National</a>
+                                    </li>
+
+                                    <li><a href="/dashboards/perspectives/3/">
+                                        District</a>
+                                    </li>
+
+                            </ul>
+                        </li>-->
+
+
+                            <li class="dropdown "><a href="/dashboards/perspectives/1/">
+                                Test</a>
+                            </li>
+
+                            <li class="dropdown
+                                    selected"><a href="/dashboards/perspectives/2/">
+                                National</a>
+                            </li>
+
+                            <li class="dropdown "><a href="/dashboards/perspectives/3/">
+                                District</a>
+                            </li>
+
+
+                    </ul>
+                </nav>
+            </div>
+            <div style="background-color: #5b90bf; padding: 0; display: block;clear: both; ">
+
+            </div>
+
+
+        <div class="filter-bar">
+            <form method="get">
+                <input type="hidden" name="filter" value="active">
+                <div class="filter-widget" style="position: relative; top: 50%; transform: translateY(20%);">Filter:
+                </div>
+
+
+
+
+
+
+<div class="uh-dashgent-widget uh-ajax-autoload"
+widget-url="/widgets/filter-province/?"    >
+    <div class="col-md-4 col-sm-4 col-xs-12">Loading... </div>
+</div>
+
+
+
+
+
+
+<div class="uh-dashgent-widget uh-ajax-autoload"
+widget-url="/widgets/filter-date-range/?"    >
+    <div class="col-md-4 col-sm-4 col-xs-12">Loading... </div>
+</div>
+
+
+
+
+
+
+<div class="uh-dashgent-widget uh-ajax-autoload"
+widget-url="/widgets/filter-province/?"    >
+    <div class="col-md-4 col-sm-4 col-xs-12">Loading... </div>
+</div>
+
+
+
+                <div class="filter-buttons"><input type="submit" value="Apply filter" class="btn btn-primary"/>
+                    </div>
+            </form>
+        </div>
+
+
+
+
+
+        </div>
+
+
+        <div class="modal fade bs-example-modal-md" id="-modal-about" tabindex="-1" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">More information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            Summary
+                        </div>
+                        <div>
+                            Template: Summary page<br/>
+                            1  -
+                            dashboards/t_ibbs_overview.html
+                        </div>
+                        <p/>
+                        <p></p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+
+
+    <!-- top tiles -->
+
+
+
+
+
+<div class="row tile_count uh-dashgent-widget uh-ajax-autoload"
+widget-url="/widgets/sample_tiles/?"    >
+<div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+    <span class="count_top"><i class="fa &nbsp;"></i> Loading...</span>
+<div class="count ">&nbsp;</div>
+<span class="count_bottom"><i class="green"><i
+        class="fa &nbsp;"></i>&nbsp; </i> &nbsp;</span>
+</div>
+
+</div>
+
+
+
+    <!-- /top tiles -->
+
+
+    <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-12">
+
+
+
+
+<div class="x_panel tile fixed_height_320 uh-dashgent-widget uh-ajax-autoload" style="overflow2:scroll" id=""
+     widget-url="/widgets/list_of_provinces/?" >
+    <div class="x_title">
+        <h2>Loading</h2>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content loading-indicator">
+        Loading...
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+
+
+
+
+<div class="x_panel tile   uh-dashgent-widget uh-ajax-autoload" style="overflow2:scroll" id=""
+     widget-url="/widgets/mean-bruto/?" >
+    <div class="x_title">
+        <h2>Loading</h2>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content loading-indicator">
+        Loading...
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+
+
+
+
+<div class="x_panel tile   uh-dashgent-widget uh-ajax-autoload" style="overflow2:scroll" id=""
+     widget-url="/widgets/introduction_widget/?" >
+    <div class="x_title">
+        <h2>Loading</h2>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content loading-indicator">
+        Loading...
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+
+
+
+
+<div class="x_panel tile   uh-dashgent-widget uh-ajax-autoload" style="overflow2:scroll" id=""
+     widget-url="/widgets/introduction_widget/?" >
+    <div class="x_title">
+        <h2>Loading</h2>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content loading-indicator">
+        Loading...
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+
+
+
+
+<div class="x_panel tile fixed_height_320 uh-dashgent-widget uh-ajax-autoload" style="overflow2:scroll" id=""
+     widget-url="/widgets/introduction_widget/?" >
+    <div class="x_title">
+        <h2>Loading</h2>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content loading-indicator">
+        Loading...
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+
+
+
+
+
+<div class="x_panel tile fixed_height_320 uh-dashgent-widget uh-ajax-autoload" style="overflow2:scroll" id="widget_current_time"
+      widget-url="/dashboards/widgets/current_time?" >
+    <div class="x_title">
+        <h2>Loading</h2>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content loading-indicator">
+        Loading...
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+
+        </div>
+    </div>
+
+
+
+
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+            <div class="pull-right">
+                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+    </div>
+</div>
+
+<!-- Bootstrap -->
+<script src="/static/gla/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="/static/gla/vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<script src="/static/gla/vendors/nprogress/nprogress.js"></script>
+<!-- Chart.js -->
+<script src="/static/gla/vendors/Chart.js/dist/Chart.min.js"></script>
+<!-- gauge.js -->
+<script src="/static/gla/vendors/gauge.js/dist/gauge.min.js"></script>
+<!-- bootstrap-progressbar -->
+<script src="/static/gla/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<!-- iCheck -->
+<script src="/static/gla/vendors/iCheck/icheck.min.js"></script>
+<!-- Skycons -->
+<script src="/static/gla/vendors/skycons/skycons.js"></script>
+<!-- EasyPieChart-->
+<script src="/static/gla/vendors/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
+<!-- Flot -->
+<script src="/static/gla/vendors/Flot/jquery.flot.js"></script>
+<script src="/static/gla/vendors/Flot/jquery.flot.pie.js"></script>
+<script src="/static/gla/vendors/Flot/jquery.flot.time.js"></script>
+<script src="/static/gla/vendors/Flot/jquery.flot.stack.js"></script>
+<script src="/static/gla/vendors/Flot/jquery.flot.resize.js"></script>
+<!-- Flot plugins -->
+<script src="/static/gla/js/flot/jquery.flot.orderBars.js"></script>
+<script src="/static/gla/js/flot/date.js"></script>
+<script src="/static/gla/js/flot/jquery.flot.spline.js"></script>
+<script src="/static/gla/js/flot/curvedLines.js"></script>
+<!-- JQVMap -->
+<script src="/static/gla/vendors/jqvmap/dist/jquery.vmap.js"></script>
+<script src="/static/gla/vendors/jqvmap/dist/maps/jquery.vmap.custom.js"></script>
+<script src="/static/gla/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+<script src="/static/gla/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+<!-- bootstrap-daterangepicker -->
+<script src="/static/gla/js/moment/moment.min.js"></script>
+<script src="/static/gla/js/datepicker/daterangepicker.js"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="/static/gla/build/js/custom.min.js"></script>
+
+<!-- Data Tables -->
+<script src="/static/gla/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/static/gla/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="/static/gla/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/static/gla/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="/static/gla/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="/static/gla/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="/static/gla/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="/static/gla/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+<script src="/static/gla/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="/static/gla/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/static/gla/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="/static/gla/vendors/datatables.net-scroller/js/datatables.scroller.min.js"></script>
+<script src="/static/gla/vendors/select2/dist/js/select2.full.min.js"></script>
+<!-- more -->
+<!--<script src="/static/gla/more/ajax.js"></script>-->
+
+    <!-- easy-pie-chart -->
+    <script src="dashgent/vendors/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
+
+
+    <!-- bootstrap-daterangepicker -->
+    <script>
+        $(document).ready(function () {
+
+            var cb = function (start, end, label) {
+                console.log(start.toISOString(), end.toISOString(), label);
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            };
+
+            var optionSet1 = {
+                startDate: moment().subtract(29, 'days'),
+                endDate: moment(),
+                minDate: '01/01/2012',
+                maxDate: '12/31/2015',
+                dateLimit: {
+                    days: 60
+                },
+                showDropdowns: true,
+                showWeekNumbers: true,
+                timePicker: false,
+                timePickerIncrement: 1,
+                timePicker12Hour: true,
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                opens: 'left',
+                buttonClasses: ['btn btn-default'],
+                applyClass: 'btn-small btn-primary',
+                cancelClass: 'btn-small',
+                format: 'MM/DD/YYYY',
+                separator: ' to ',
+                locale: {
+                    applyLabel: 'Submit',
+                    cancelLabel: 'Clear',
+                    fromLabel: 'From',
+                    toLabel: 'To',
+                    customRangeLabel: 'Custom',
+                    daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                    monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    firstDay: 1
+                }
+            };
+            $('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+            $('#reportrange').daterangepicker(optionSet1, cb);
+            $('#reportrange').on('show.daterangepicker', function () {
+                console.log("show event fired");
+            });
+            $('#reportrange').on('hide.daterangepicker', function () {
+                console.log("hide event fired");
+            });
+            $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
+                console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
+            });
+            $('#reportrange').on('cancel.daterangepicker', function (ev, picker) {
+                console.log("cancel event fired");
+            });
+            $('#options1').click(function () {
+                $('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
+            });
+            $('#options2').click(function () {
+                $('#reportrange').data('daterangepicker').setOptions(optionSet2, cb);
+            });
+            $('#destroy').click(function () {
+                $('#reportrange').data('daterangepicker').remove();
+            });
+        });
+    </script>
+    <!-- /bootstrap-daterangepicker -->
+
+    <!-- easy-pie-chart -->
+    <script>
+        $(document).ready(function () {
+            $('.chart').easyPieChart({
+                easing: 'easeOutElastic',
+                delay: 3000,
+                barColor: '#26B99A',
+                trackColor: '#fff',
+                scaleColor: false,
+                lineWidth: 20,
+                trackWidth: 16,
+                lineCap: 'butt',
+                onStep: function (from, to, percent) {
+                    $(this.el).find('.percent').text(Math.round(percent));
+                }
+            });
+            var chart = window.chart = $('.chart').data('easyPieChart');
+            $('.js_update').on('click', function () {
+                chart.update(Math.random() * 200 - 100);
+            });
+
+            //hover and retain popover when on popover content
+            var originalLeave = $.fn.popover.Constructor.prototype.leave;
+            $.fn.popover.Constructor.prototype.leave = function (obj) {
+                var self = obj instanceof this.constructor ?
+                        obj : $(obj.currentTarget)[this.type](this.getDelegateOptions()).data('bs.' + this.type);
+                var container, timeout;
+
+                originalLeave.call(this, obj);
+
+                if (obj.currentTarget) {
+                    container = $(obj.currentTarget).siblings('.popover');
+                    timeout = self.timeout;
+                    container.one('mouseenter', function () {
+                        //We entered the actual popover – call off the dogs
+                        clearTimeout(timeout);
+                        //Let's monitor popover content instead
+                        container.one('mouseleave', function () {
+                            $.fn.popover.Constructor.prototype.leave.call(self, self);
+                        });
+                    });
+                }
+            };
+
+            $('body').popover({
+                selector: '[data-popover]',
+                trigger: 'click hover',
+                delay: {
+                    show: 50,
+                    hide: 400
+                }
+            });
+        });
+    </script>
+    <!-- easy-pie-chart -->
+
+
+
+
+
+
+
+<script type="text/javascript">
+    $(function () {
+
+        //bindAjax(); // uhih - defined in ajax.js
+        setTimeout(bindAjax, 0);
+
+
+
+
+    });
+
+
+</script>
+
+   <div class="modal fade bs-example-modal-md" id="page-modal-about" tabindex="-1" role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">About this page</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        None
+                    </div>
+                    <p/>
+
+                    <h5>Data sources</h5>
+                    <p><p>The data sources for this page are as follows:</p>
+
+<ul>
+	<li>IMASIDA 2015</li>
+	<li>UNAIDS 2013</li>
+	<li>SIS-MA</li>
+</ul>
+
+<p>&nbsp;</p></p>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</body>
+</html>
+

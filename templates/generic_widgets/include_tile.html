@@ -2,8 +2,10 @@
 
 {%  if custom_attr|lookup:'style' == "modern"%}
 
-<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-    <div class="tile-stats">
+
+
+<div class="{{ tile_width|cw }}" style="flex:4; display: flex; width: 100%">
+    <div class="tile-stats" style="flex:4">
         <div class="icon"><i class="fa {{ row|lookup:'icon' }}"></i></div>
         <div class="count">{{ row|lookup:'count' }}</div>
         <a href="#" data-toggle="modal" role="button"
