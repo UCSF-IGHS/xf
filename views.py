@@ -752,5 +752,5 @@ def home_page(request):
         return HttpResponseRedirect(url)
 
     # No perspecive - load default homepage
-    return HttpResponseRedirect("/dashboards/home/overview/")
+    return HttpResponseRedirect(settings.HOME_PAGE)
     #return HttpResponseRedirect("/")
