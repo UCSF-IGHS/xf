@@ -24,6 +24,10 @@ table.table-scrollable th, table.table-scrollable td {
 
 }
 
+.top_nav .navbar-right {
+    width:auto
+}
+
 .divfullheight {
     height: 100%;
 }
@@ -42,6 +46,14 @@ table.table-scrollable th, table.table-scrollable td {
     color: rgb(26, 187, 156) !important;
 }
 
+.top_nav .dropdown-menu li.selected {
+    /*background-color: #D9DEE4;*/
+}
+.top_nav .dropdown-menu li.selected a {
+    color: rgb(26, 187, 156) !important;
+
+}
+
 .top_nav .navbar-title {
     margin: 0;
     float: left;
@@ -54,6 +66,7 @@ table.table-scrollable th, table.table-scrollable td {
     overflow: hidden;
     padding-top: 5px;
     padding-bottom: 5px;
+    overflow: inherit !important;
 }
 .filter-widget {
     float: left;
@@ -108,7 +121,30 @@ table.table-scrollable th, table.table-scrollable td {
     margin-top: 5px; !important;
     margin-bottom: 5px; !important;
 }
+.x_title_no_line{
+  padding: 1px 5px 6px;
+  margin-bottom: 10px;
+  z-index: 999;
+}
+.x_title_no_line .filter {
+  width: 40%;
+  float: right; }
 
+.x_title_no_line h2 {
+  width: 90%;
+  margin: 5px 0 6px;
+  float: left;
+  text-align: center;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap; }
+
+.x_title_no_line h2 small {
+  margin-left: 10px; }
+
+.x_title_no_line span {
+  color: #BDBDBD; }
 /*
 .select2-container .select2-choice, .select2-result-label {
   font-size: 1.5em;
@@ -136,3 +172,113 @@ table.table-scrollable th, table.table-scrollable td {
 .select2-container .select2-selection--single {
     height: 12px;
 }*/
+
+div#language_chooser {
+
+}
+
+
+
+div#language_chooser form {
+    display: inline-block!important;
+
+}
+
+div#language_chooser button2 {
+    margin: 0;
+    display:inline-block;
+    border: none;
+    background: none;
+    text-decoration: none; /* if you like */
+    padding: 7px 10px 3px;
+    text-align: center;
+    font-size: 17px;
+    float: left;
+    background: #172D44
+}
+
+
+
+
+
+.page article {
+    line-height: 1.75;
+    color: #515356;
+    font-size: 110%;
+    text-align: left;
+}
+
+
+.page article h2 {
+    color: #1c7963;
+    margin-top: 30px;
+}
+
+.page h4 {
+    border-bottom: 1px solid #D9DEE4;
+    padding-bottom: 5px;
+    color: #1c7963;
+    margin-top: 20px;
+
+}
+
+
+
+/* flexible widgets */
+
+.flex_row {
+  /*display: flex; */
+  /* equal height of the children */
+  /*flex-wrap: wrap*/
+
+
+
+}
+
+
+@media only screen and (min-width : 481px) {
+    .flex-row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .flex-row > [class*='col-'] {
+        display: flex;
+        flex-direction: column;
+    }
+    .flex-row.row:after,
+    .flex-row.row:before {
+        display: flex;
+    }
+}
+
+/*
+.flex_row div.width_50 {
+    background-color: red;
+    padding: 5px;
+    flex: 1 1 40%;
+    display: flex;
+}
+
+@media (max-width: 768px) {
+  .flex_row div.width_50 {
+    flex: 1 1 100%;
+    border: solid 1px yellow
+  }
+}
+
+@media (max-width: 480px) {
+  .flex_row div.width_50 {
+    flex: 1 1 100%;
+    border: solid 1px green
+  }
+}
+*/
+
+
+
+
+
+
+
+
+
