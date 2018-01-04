@@ -21,7 +21,10 @@ class XFSiteSettings(models.Model, XFTranslationHelper):
                                  blank=False,
                                  help_text="The default language code for the site.",
                                  default="en")
-
+    custom_theme = models.CharField(max_length=50,
+                                    null=True,
+                                    blank=True,
+                                    help_text="Custom theme defined for the site.")
 
     def __str__(self):
         return self.settings_key
