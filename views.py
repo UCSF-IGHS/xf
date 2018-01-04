@@ -1,4 +1,5 @@
 # import MySQLdb
+from django.core.exceptions import PermissionDenied
 from django.db import connections
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
@@ -28,6 +29,7 @@ from . import extensions
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from . import models as UCModels
+from xf_crud.auth.permission_mixin import PermissionMixin
 
 # Create your views here.
 from uc_dashboards.models import NavigationSection, Page, Widget, Perspective
@@ -115,13 +117,16 @@ def load_navigation(sender, navigation_trees, request):
                                           'slug': page.slug
                                           })
 
-                if page.parent_page:
-                    add_navigation(navigation_tree, 'Dashboard', page.parent_page.navigation_section.caption, url,
-                                   page.parent_page.navigation_section.icon, page.title, page.parent_page.title)
+                # Check if user is part of one of the allowed groups to view this page, before adding menu item
+                # to navigation
+                if PermissionMixin.user_in_group(request.user, page.permissions_to_view.all()):
+                    if page.parent_page:
+                        add_navigation(navigation_tree, 'Dashboard', page.parent_page.navigation_section.caption, url,
+                                       page.parent_page.navigation_section.icon, page.title, page.parent_page.title)
 
-                elif page.navigation_section:
-                    add_navigation(navigation_tree, 'Dashboard', page.navigation_section.caption, url,
-                                   page.navigation_section.icon, page.title)
+                    elif page.navigation_section:
+                        add_navigation(navigation_tree, 'Dashboard', page.navigation_section.caption, url,
+                                       page.navigation_section.icon, page.title)
 
     return
 
@@ -203,27 +208,31 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
                 navigation_section = None
                 # if not self.navigation_sections.has_key(page.navigation_section_id):
                 # PYTHON3 UPDATE
+
                 if not page.navigation_section.id in self.navigation_sections:
                     self.navigation_sections[page.navigation_section_id] = (page.navigation_section, [page])
                 else:
                     self.navigation_sections[page.navigation_section_id][1].append(page)
 
-        # Don't allow loading a page outside the current perspective
+            # Don't allow loading a page outside the current perspective
 
-        if not self.page.allow_anonymous:
-            found = False
-            for page in self.pages:
-                if self.page.id == page.id:
-                    found = True
-                    break
+            if not self.page.allow_anonymous:
+                found = False
+                for page in self.pages:
+                    if self.page.id == page.id:
+                        found = True
+                        break
 
-            if not found:
-                raise Http404("This page does not exist in this perspective")
+                if not found:
+                    raise Http404("This page does not exist in this perspective")
 
         # Load all perspectives available to this user
         if self.request.user.is_authenticated():
             self.request.user.load_perspectives()
             self.perspectives = self.request.user.perspectives
+
+            if not self.perspectives:
+                raise PermissionDenied("User doesn't have any associated perspectives")
 
             # Set preset filters for groups
             for group in self.request.user.groups.all():
@@ -389,13 +398,20 @@ class WidgetView(TemplateView):
                 if self.widget.filters:
                     filters = ast.literal_eval(self.widget.filters)
                     for filter in filters:
+                        multiselect = filter.endswith('[]')
+                        filter = filter[:-2] if multiselect else filter
                         params.append(self.request.GET.get(filter, ''))
                         try:
-                            sql_query = sql_query.replace("@" + filter, conn.literal(self.request.GET.get(filter, '')))
+                            sql_query = sql_query.replace("@" + filter, conn.literal(
+                                "'" + "', '".join(self.request.GET.getlist(filter, '')) + "'"
+                                if multiselect else conn.literal(self.request.GET.get(filter, ''))))
                         except:
                             # UNSAFE!!!!
                             # TODO: FIX
-                            sql_query = sql_query.replace("@" + filter, "'" + self.request.GET.get(filter, '') + "'")
+                            sql_query = sql_query.replace("@" + filter,
+                                                          "'" + "', '".join(self.request.GET.getlist(filter, '')) + "'"
+                                                          if multiselect else "'" + self.request.GET.get(filter,
+                                                                                                         '') + "'")
 
                 # Add a perspective code as a filter, which allows you to filter any widget based on the current perspective
                 # Very useful if you want to filter a filter based on a perspective
@@ -553,7 +569,7 @@ class WidgetView(TemplateView):
 
 
 # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
-class DashboardPageView(DashboardView):
+class DashboardPageView(DashboardView, PermissionMixin):
     """
     The base view for any dashboard type page. It checks for security as needed.
     """
@@ -576,11 +592,12 @@ class DashboardPageView(DashboardView):
         self.page = Page.objects.get(slug=self.kwargs['slug'])
         print(self.kwargs)
 
-
         if not self.page.allow_anonymous:
             if not self.request.user.is_authenticated():
                 # return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, self.request.path))
                 return redirect_to_login(self.request.path)
+            else:
+                self.ensure_groups_or_403(self.page.permissions_to_view.all())
 
         return super(DashboardPageView, self).dispatch(request, *args, **kwargs)
 
@@ -735,5 +752,5 @@ def home_page(request):
         return HttpResponseRedirect(url)
 
     # No perspecive - load default homepage
-    return HttpResponseRedirect("/dashboards/home/overview/")
+    return HttpResponseRedirect(settings.HOME_PAGE)
     #return HttpResponseRedirect("/")

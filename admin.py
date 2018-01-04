@@ -30,7 +30,7 @@ class PageAdmin(TranslationAdmin):
     inlines = [PerspectivesInline,]
 
     class Media:
-        js = ('//cdn.ckeditor.com/4.5.9/standard/ckeditor.js', 'gla/more/configuration-ckeditor.js')
+        js = ('gla/more/configuration-ckeditor.js',)
 
 
 
@@ -91,7 +91,7 @@ class WidgetTypeAdmin(TranslationAdmin):
     )
 
     class Media:
-        js = ('//cdn.ckeditor.com/4.5.9/standard/ckeditor.js', 'gla/more/configuration-ckeditor.js')
+        js = ('gla/more/configuration-ckeditor.js',)
 
 # config.allowedContent = true;
 

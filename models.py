@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User, Group
@@ -25,7 +26,7 @@ def create_user_profile_on_post_init(sender, instance, **kwargs):
 
 
 
-class HTMLField(models.TextField):
+class HTMLField(RichTextUploadingField):
     pass
 
 
@@ -383,6 +384,19 @@ class GroupProfile(models.Model):
         blank=True,
         help_text='Any comment.'
     )
+
+    def save(self, *args, **kwargs):
+    #See https://stackoverflow.com/questions/6117373/django-userprofile-m2m-field-in-admin-error/6117457#6117457
+
+        print("user profile saved")
+        if not self.pk:
+            try:
+                p = GroupProfile.objects.get(group=self.group)
+                self.pk = p.pk
+            except GroupProfile.DoesNotExist:
+                pass
+
+        super(GroupProfile, self).save(*args, **kwargs)
 
 
 @receiver(post_save, sender=Group)
