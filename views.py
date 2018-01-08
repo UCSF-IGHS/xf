@@ -48,6 +48,7 @@ class XFNavigationViewMixin(object):
         # Site settings are passed here
 
         self.context["site_title"] = XFNavigationViewMixin.site_settings.site_title
+        self.context["custom_theme"] = XFNavigationViewMixin.site_settings.custom_theme
         if hasattr(self, "lc"):
             self.context["site_title"] = XFNavigationViewMixin.site_settings.translate("site_title", self.lc)
         else:

@@ -61,6 +61,12 @@
     <!-- UC extra css -->
     <link href="{% static "gla/more/uc-extra.css" %}" rel="stylesheet">
 
+    <!-- XF custom app based css -->
+    {% if custom_theme %}
+        {% with 'themes/'|add:custom_theme|add:'/styles.css' as custom_css_path%}
+             <link href="{% static custom_css_path %}" rel="stylesheet">
+        {% endwith %}
+    {% endif %}
 
     {% block h %}{% endblock %}
 </head>
@@ -152,8 +158,6 @@
                 <!-- /sidebar menu -->
 
                 <!-- /menu footer buttons -->
-                <!-- TODO: This will become the language selector -->
-
 
                 <div id="language_chooser" class="sidebar-footer hidden-small">
 
@@ -315,6 +319,12 @@
 
 <!-- more -->
 <!--<script src="{% static "gla/more/ajax.js" %}"></script>-->
+
+{% if custom_theme %}
+    {% with 'themes/'|add:custom_theme|add:'/scripts.css' as custom_script_path%}
+        <script src="{% static custom_script_path %}"></script>
+    {% endwith %}
+{% endif %}
 {% block j %}{% endblock %}
 
 
