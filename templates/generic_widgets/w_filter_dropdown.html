@@ -10,7 +10,7 @@
 
         {% with data_columns|columnnameforkey:'id' as id_column %}
             {% with data_columns|columnnameforkey:'name' as name_column %}
-                {% if multiselect == 'no' %}<option></option>{% endif %}
+                {% if not multiselect or multiselect == 'no' %}<option></option>{% endif %}
                 {% for row in rows %}
                     {% if multiselect == 'no' %}
                         <option value="{{ row|lookup:id_column }}" {% if request.GET|lookup:widget.code == row|lookup:id_column %} selected {% endif %}  >{{ row|lookup:name_column }}</option>
