@@ -136,12 +136,17 @@
                 },
                 series : [
                     {
-                        name: "{{custom_attr|lookup:'over_label'}}",
+                        name: "{{custom_attr|lookup:'hover_label'}}",
                         type: 'map',
                         roam: true,
                         map: map_name,
                         itemStyle:{
                             emphasis:{label:{show:true}}
+                        },
+
+                        scaleLimit:{
+                           min:1,
+                           max:1
                         },
 
                         label: {
