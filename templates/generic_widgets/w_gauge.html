@@ -38,7 +38,11 @@
                     clockwise:true,
                     type: 'gauge',
                     detail: {
+                    {% if custom_attr|lookup:'show_percentage' == 'yes' %}
                         formatter:'{value}%'
+                    {% else %}
+                        formatter:'{value}'
+                    {% endif %}
                     },
                     data: [{value: data.value, name: ""}]
                 }
