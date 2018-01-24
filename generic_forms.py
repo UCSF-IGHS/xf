@@ -45,16 +45,17 @@ class XFAjaxForm(ModelForm):
 class XFModelForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
+        super(XFModelForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_method = 'POST'
         self.helper.form_id = ''
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-3'
-        self.helper.field_class = 'col-lg-7'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
         self.helper.form_action = ''  # redirect in the view
         self.helper.form_tag = False
         self.helper.help_text_inline = True  # means that I want <span> elements
-        super(XFModelForm, self).__init__(*args, **kwargs)
+
 
     def create_locater(self, target_field, api_call_url, api_call, api_return_field, existing_value, *args, **kwargs):
 
