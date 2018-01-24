@@ -170,8 +170,9 @@ class XFGenericListView(ListView, XFNavigationViewMixin):
 
         # Get the search string from the text box, if entered - needed by the sub class
         #TODO: Fix The Search
-        #self.search_string = request.get('search_string', '')
-        self.search_string = ""
+
+        self.search_string = request.GET.get('search_string', '')
+        #self.search_string = ""
         self.request = request
         return super(XFGenericListView, self).get(request, *args, **kwargs)
 

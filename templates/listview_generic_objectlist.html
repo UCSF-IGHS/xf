@@ -7,46 +7,56 @@
 
 {% block object_list %}
 
-    <table class="table table-striped table-bordered table-condensed">
+    <table class="table table-hovered">
+        <thead>
         <tr>
             {% for column in columns %}
-            <th>{{ column }}</th>
+                <th>{{ column }}</th>
             {% endfor %}
             <th>Actions</th>
         </tr>
+        </thead>
+        <tbody>
         {% for object in object_list %}
-        <tr>
-            {% for field in fields %}
-                <td>{{ object|getattribute:field }} </td>
-            {% endfor %}
-            <td>
-               {% if false%}
-                    <a data-toggle="modal" href="{{ object|getattribute:primary_key }}/edit" class="btn btn-mini" data-target="#frmDlg" html-target="#frmDlgHtml"><i class="icon-pencil"></i></a>
-                {%  endif %}
-                {% if false %}
-                    <a data-toggle="modal" href="{{ object|getattribute:primary_key }}/delete" class="btn btn-mini" data-target="#frmDlg" html-target="#frmDlgHtml"><i class="icon-remove"></i></a>
-                {%  endif %}
-                <div class="btn-group">
-                  <a class="btn btn-mini btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-                    Actions
-                    <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu small">
-                    {% if change %}
-                        <li><a data-toggle="modal" href="{{ object|getattribute:primary_key }}/edit" data-target="#frmDlg" html-target="#frmDlgHtml"><i class="icon-pencil"></i> Edit</a></li>
-                    {%  endif %}
-                    {% if delete %}
-                        <li><a data-toggle="modal" href="{{ object|getattribute:primary_key }}/delete" data-target="#frmDlg" html-target="#frmDlgHtml"><i class="icon-remove"></i> Delete</a></li>
-                    {%  endif %}
-                      {% if edit or delete %}
-                        <li class="divider"></li>
-                    {%  endif %}
+            <tr>
+                {% for field in fields %}
+                    <td>{{ object|getattribute:field }} </td>
+                {% endfor %}
+                <td>
+                    {% if false %}
+                        <a data-toggle="modal" href="{{ object|getattribute:primary_key }}/edit" class="btn btn-mini"
+                           data-target="#frmDlg" html-target="#frmDlgHtml"><i class="icon-pencil"></i></a>
+                    {% endif %}
+                    {% if false %}
+                        <a data-toggle="modal" href="{{ object|getattribute:primary_key }}/delete" class="btn btn-mini"
+                           data-target="#frmDlg" html-target="#frmDlgHtml"><i class="icon-remove"></i></a>
+                    {% endif %}
+                    <div class="btn-group">
+                        <a class="btn btn-mini btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                            Actions
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu small">
+                            {% if change %}
+                                <li><a data-toggle="modal" href="{{ object|getattribute:primary_key }}/edit"
+                                       data-target="#frmDlg" html-target="#frmDlgHtml"><i class="icon-pencil"></i> Edit</a>
+                                </li>
+                            {% endif %}
+                            {% if delete %}
+                                <li><a data-toggle="modal" href="{{ object|getattribute:primary_key }}/delete"
+                                       data-target="#frmDlg" html-target="#frmDlgHtml"><i class="icon-remove"></i>
+                                    Delete</a></li>
+                            {% endif %}
+                            {% if edit or delete %}
+                                {# <li class="divider"></li>  #}
+                            {% endif %}
 
-                  </ul>
-                </div>
+                        </ul>
+                    </div>
                 </td>
-        </tr>
+            </tr>
         {% endfor %}
+        </tbody>
     </table>
 
 {% endblock %}
