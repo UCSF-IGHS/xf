@@ -108,6 +108,8 @@ class XFGenericListView(ListView, XFNavigationViewMixin):
 
     paginate_by = 3
     generic = False
+    list_class = None
+
 
     def get_template_names(self):
         """
@@ -124,10 +126,13 @@ class XFGenericListView(ListView, XFNavigationViewMixin):
         self.context = context = super(XFGenericListView, self).get_context_data(**kwargs)
         context['primary_key'] = self.model._meta.pk.name
 
+        meta_list_model_to_use = self.list_class.Meta if self.list_class else self.model._meta
+
         if self.generic:
 
+            #print(meta_list_model_to_use.list_field_list)
             try:
-                context['fields'] = self.model._meta.list_field_list
+                context['fields'] = meta_list_model_to_use.list_field_list
             except:
                 # First pick the fields
                 context['fields'] = []
@@ -141,8 +146,8 @@ class XFGenericListView(ListView, XFNavigationViewMixin):
                 context['columns'].append(self.model._meta.get_field(field).verbose_name.title())
 
         try:
-            context['list_title'] = self.model._meta.list_title
-            context['list_hint'] = self.model._meta.list_hint
+            context['list_title'] = meta_list_model_to_use.list_title
+            context['list_hint'] = meta_list_model_to_use.list_hint
         except:
             pass
 
@@ -181,6 +186,8 @@ class XFListView(XFGenericListView, PermissionMixin, XFAjaxViewMixin):
     """
     A list view that requires authentication.
     """
+
+
 
     def get(self, request, *args, **kwargs):
 

@@ -50,8 +50,8 @@ class XFModelForm(ModelForm):
         self.helper.form_method = 'POST'
         self.helper.form_id = ''
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-2'
-        self.helper.field_class = 'col-lg-8'
+        self.helper.label_class = 'col-lg-3 col-sm-3 col-xs-3'
+        self.helper.field_class = 'col-lg-9 col-sm-9 col-xs-9'
         self.helper.form_action = ''  # redirect in the view
         self.helper.form_tag = False
         self.helper.help_text_inline = True  # means that I want <span> elements
@@ -69,3 +69,9 @@ class XFModelForm(ModelForm):
             kwargs['initial'][target_field] = existing_value
             super(XFModelForm, self).__init__(*args, **kwargs)
             self.fields[target_field].widget.attrs['readonly'] = True
+
+
+class XFModelList():
+
+    pass
+
