@@ -60,7 +60,7 @@ def mmodelform_factory(model, form=XFModelForm, fields=None, exclude=None,
 
     return type(form)(class_name, (form,), form_class_attrs)
 
-def crudurl(appname, modelname, model, form_class):
+def crudurl(appname, modelname, model, form_class, list_class=None):
 
     """
     Generates a set of CRUL URLs for the given model.
@@ -83,7 +83,7 @@ def crudurl(appname, modelname, model, form_class):
         url(r'^%s/%s/new' % (appname, modelname), XFCreateView.as_view(model=model, form_class=form_class, success_url="%s/%s/" % (appname, modelname))),
         url(r'^%s/%s/(?P<pk>[-\w]+)/edit' % (appname, modelname), XFUpdateView.as_view(model=model, form_class=form_class, success_url="%s/%s/" % (appname, modelname))),
         url(r'^%s/%s/(?P<pk>[-\w]+)/delete' % (appname, modelname), XFDeleteView.as_view(model=model, success_url="%s/%s/" % (appname, modelname))),
-        url(r'^%s/%s/' % (appname, modelname), XFListView.as_view(model=model, generic=True, queryset=model.objects.order_by("name"))),
+        url(r'^%s/%s/' % (appname, modelname), XFListView.as_view(model=model, generic=True, queryset=model.objects.order_by("name"), list_class=list_class)),
     ]
 
 #    return patterns('',
