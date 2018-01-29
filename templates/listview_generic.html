@@ -4,9 +4,6 @@
 
 
 
-
-
-
     <h1>
 
     </h1>
@@ -15,21 +12,32 @@
 
     <div class="list-view">
         <div class="row-fluid">
-
-            <div class="col-md-5">
+            <div class="col-md-2">
                 {% if add %}
                     <!--<a href="new" class="btn btn-primary">Create new</a>-->
                     <a data-toggle="modal" href="new" class="btn btn-primary btn-default" data-target="#frmDlg"
                        html-target="#frmDlgHtml">Create new</a>
                 {% endif %}
             </div>
+
+
+            <div class="col-md-5">
+            {% if preset_filter_list|length > 1 %}
+            <div class="btn-group">
+                {% for preset_filter_name, preset_filter_caption in preset_filter_list.items %}
+                    <a href="./{{ preset_filter_name }}" class="btn btn-info {% if preset_filter_name == preset_filter %} active {% endif %}" type="button">{{ preset_filter_caption  }}</a>
+                {% endfor %}
+            {% endif %}
+            </div>
+            </div>
+
             <div class="nav navbar-right col-md-5">
-                <form class="form-search2 mxlget" method="get" id="frmSearch4" html-target="ctxObjectList">
+                <form class="form-search2 mxlget" method="get" id="frmSearch4" html-target="ctxObjectList" action="{{ current_url }}">
                     <div class="input-group">
                         <input type="text" class="form-control" name="search_string" value="{{ search_string }}"
                                placeholder="Search for...">
                         <span class="input-group-btn ">
-                      <button class="btn btn-default" type="submit">Go!</button><a href="./all"
+                      <button class="btn btn-default" type="submit">Go!</button><a href="{{ current_url }}"
                                                                                    class="btn btn-default mxlajax"
                                                                                    html-target="ctxObjectList"
                                                                                    id="lnkClear">Clear</a>
@@ -60,7 +68,7 @@
 
             <div class="x_content">
 
-                <div id="ctxObjectList" href="./all">
+                <div id="ctxObjectList" href="{{ current_url }}">
 
                     {% block object_list %}{% endblock %}
 

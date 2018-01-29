@@ -3,6 +3,7 @@ from crispy_forms.layout import Submit, Button
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
+from django.db.models import Model
 from django.forms.models import ModelForm
 #import floppyforms as forms
 #from floppyforms.widgets import PasswordInput
@@ -70,8 +71,4 @@ class XFModelForm(ModelForm):
             super(XFModelForm, self).__init__(*args, **kwargs)
             self.fields[target_field].widget.attrs['readonly'] = True
 
-
-class XFModelList():
-
-    pass
 

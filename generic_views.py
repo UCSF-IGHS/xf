@@ -13,6 +13,8 @@ from django.http import Http404, HttpResponseRedirect, HttpResponse
 # Override get_queryset to benefit from this search_string
 
 from django.views.generic.edit import FormMixin, ModelFormMixin, ProcessFormView
+
+from xf_crud.generic_lists import XFModelList
 from .auth.permission_mixin import *
 from .auth.permission_mixin import PermissionMixin
 from xf_system.views import XFNavigationViewMixin
@@ -106,17 +108,21 @@ class XFAjaxViewMixin():
 
 class XFGenericListView(ListView, XFNavigationViewMixin):
 
-    paginate_by = 3
+    paginate_by = 10
     generic = False
     list_class = None
 
+    def __init__(self, *args, **kwargs):
+        super(XFGenericListView, self).__init__(**kwargs)
+
+        if kwargs['list_class'] is not None:
+            self.list_class = kwargs['list_class'](kwargs['model'])
+        else:
+            self.list_class = XFModelList(kwargs['model'])
+
 
     def get_template_names(self):
-        """
 
-
-        :return:
-        """
         if not self.generic:
             return super(XFGenericListView, self).get_template_names()
         else:
@@ -126,48 +132,54 @@ class XFGenericListView(ListView, XFNavigationViewMixin):
         self.context = context = super(XFGenericListView, self).get_context_data(**kwargs)
         context['primary_key'] = self.model._meta.pk.name
 
-        meta_list_model_to_use = self.list_class.Meta if self.list_class else self.model._meta
-
         if self.generic:
 
-            #print(meta_list_model_to_use.list_field_list)
-            try:
-                context['fields'] = meta_list_model_to_use.list_field_list
-            except:
-                # First pick the fields
-                context['fields'] = []
-                for field in self.model._meta.fields:
-                    if not field.primary_key:
-                        context['fields'].append(field.name)
+            context['fields'] = self.list_class.list_field_list
 
             # Add the columns
             context['columns'] = []
             for field in context['fields']:
                 context['columns'].append(self.model._meta.get_field(field).verbose_name.title())
 
-        try:
-            context['list_title'] = meta_list_model_to_use.list_title
-            context['list_hint'] = meta_list_model_to_use.list_hint
-        except:
-            pass
+            # Add pre-set filters, if any
+            try:
+                # Correct way of doing this – don't use hasattr
+                # https://hynek.me/articles/hasattr/
+                context['preset_filter_list'] = self.list_class.preset_filters
+                context['preset_filter'] = self.kwargs['preset_filter'] if 'preset_filter' in self.kwargs else ""
+            except:
+                pass
+
+            context['list_title'] = self.list_class.list_title
+            context['list_hint'] = self.list_class.list_hint
+
+        context['current_url'] = self.request.get_full_path()
+        if not context['current_url'].endswith("/"):
+            context['current_url'] += '/'
 
         self.set_navigation_context()
         return context
+
 
     def get_queryset(self):
         """
         Get the list of items for this view. This must be an iterable, and may
         be a queryset (in which qs-specific behavior will be enabled).
         """
-        try:
-            if not self.search_string is None:
-                kwargs = {
-                    '{0}__{1}'.format(self.model._meta.search_field, 'icontains'): self.search_string
-                }
-                queryset = self.model._default_manager.filter(**kwargs)
-                return queryset
-        except:
-            return self.model._default_manager.all()
+
+        if self.list_class:
+            return self.list_class.get_queryset(self.search_string, self.model,
+                                                self.kwargs['preset_filter'] if 'preset_filter' in self.kwargs else None)
+        else:
+            try:
+                if not self.search_string is None:
+                    kwargs = {
+                        '{0}__{1}'.format(self.model._meta.search_field, 'icontains'): self.search_string
+                    }
+                    queryset = self.model._default_manager.filter(**kwargs)
+                    return queryset
+            except:
+                return self.model._default_manager.all()
 
 
 
@@ -187,6 +199,8 @@ class XFListView(XFGenericListView, PermissionMixin, XFAjaxViewMixin):
     A list view that requires authentication.
     """
 
+    def __init__(self, *args, **kwargs):
+        super(XFListView, self).__init__(*args, **kwargs)
 
 
     def get(self, request, *args, **kwargs):
@@ -194,6 +208,7 @@ class XFListView(XFGenericListView, PermissionMixin, XFAjaxViewMixin):
         # If no user is logged in - redirect to login page
         if not request.user.is_authenticated():
             return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+
 
         return super(XFListView, self).get(request, *args, **kwargs)
 
