@@ -48,7 +48,7 @@
             var legend_labels = JSON.parse('{{ legend_labels | jsonify | safe }}');
             var data_points = JSON.parse('{{ datapoints | jsonify | safe}}');
             var dataset = [];
-            var colors = ["#26B99A", "#03586A", "#73879C", "#9CC2CB", "#9CA9AE"];
+            var colors = colors_bar_chart;
 
             {% if custom_attr|lookup:'renderer'|length == 0 or custom_attr|lookup:'renderer' == 'default' %}
                 var ctx = $("#{{ widget_id }}");
