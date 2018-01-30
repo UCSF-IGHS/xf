@@ -56,6 +56,7 @@ function bindAjax() {
         var formtarget = $(this).attr('data-target')
         var url = $(this).attr('href') + "?ajax";
 
+
         // This is a hack. The href is used to both pop a modal window, and to find the POST URL for a modal window.
         // For a popup in a popup this doesn't work... so a new attribute hrefpost has been introduced to resolve
         // this.
@@ -66,7 +67,7 @@ function bindAjax() {
         // URL parameter
         $(htmltarget).load(url, function() {
             ajaxFormLoaded(htmltarget, formtarget, url);
-            bindAjax();
+            //bindAjax();
         });
 
     })
