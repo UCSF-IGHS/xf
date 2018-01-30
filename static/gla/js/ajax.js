@@ -131,11 +131,12 @@ function postform(e, htmltarget, formtarget, posttarget) {
 
 function getform(e) {
 
+
     var form = $("#" + e.id);
     var htmlTarget = form.attr('html-target');
     $.ajax({
         type: "GET",
-        url: "./all?ajax",
+        url: window.location.href + "?ajax",
         data: $("#" + e.id).serialize(), // serializes the form's elements.
         success: function(data)
         {
