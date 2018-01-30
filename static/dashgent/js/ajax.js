@@ -135,7 +135,7 @@ function getform(e) {
     var htmlTarget = form.attr('html-target');
     $.ajax({
         type: "GET",
-        url: "./all?ajax",
+        url: "./?ajax",
         data: $("#" + e.id).serialize(), // serializes the form's elements.
         success: function(data)
         {
