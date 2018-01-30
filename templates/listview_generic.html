@@ -1,11 +1,27 @@
 {% extends "xf_base.html" %}
+{% load staticfiles %}
+
+{% block h %}
+
+    {% for js in crud_js_assets %}
+        <script src="{% static js %}"></script>
+    {% endfor %}
+
+    {% for css in crud_css_assets %}
+        <link href="{% static css %}" rel="stylesheet"/>
+    {% endfor %}
+
+
+{% endblock %}
+
+
 
 {% block main %}
 
 
 
     <h1>
-{{ library_js  }}
+
     </h1>
     <hr>
     {% include "content_ajax.html" %}
@@ -103,5 +119,7 @@
             $("#lnkClear").click();
         }
     </script>
+
+
 
 {% endblock %}

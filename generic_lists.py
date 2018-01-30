@@ -1,9 +1,28 @@
 
 
-class XFModelList():
+class XFCrudAssetLoaderMixIn(object):
+
+    def __init__(self):
+        super(XFCrudAssetLoaderMixIn, self).__init__()
+        self.js_assets = []
+        self.css_assets = []
+
+    def add_javascript(self, js_file):
+        self.js_assets.append(js_file)
+
+    def add_stylesheet(self, css_file):
+        self.css_assets.append(css_file)
+
+    def add_assets_to_context(self, context):
+        context['crud_js_assets'] = self.js_assets
+        context['crud_css_assets'] = self.css_assets
+
+
+class XFModelList(XFCrudAssetLoaderMixIn):
 
     def __init__(self, model):
-        self.model = model;
+        super(XFModelList, self).__init__()
+        self.model = model
         self.list_field_list = []
         self.create_default_field_list()
         self.list_title = None
@@ -30,3 +49,5 @@ class XFModelList():
                 return queryset
         except:
             return model._default_manager.all()
+
+
