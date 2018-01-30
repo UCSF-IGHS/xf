@@ -9,6 +9,12 @@
         $(".datepicker").datetimepicker({ format: 'YYYY-MM-DD'});
     });
 
+    if(typeof crud_form_loaded == 'function') {
+        crud_form_loaded('{{ formname }}', '{{ action }}');
+    } else {
+        // do nothing
+    }
+
 </script>
 
     <form role="form" action="{{ form.helper.form_action }}" class="form-horizontal mxlform" method="post" id="frmAjax" style="margin-bottom: 0">

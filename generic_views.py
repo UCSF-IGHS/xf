@@ -223,6 +223,7 @@ class XFListView(XFGenericListView, PermissionMixin, XFAjaxViewMixin):
         context['browse'] = True
         # Set to AJAX list if necessary
         self.set_list_template(context, self.request)
+        self.list_class.add_assets_to_context(context)
         return context
 
 
@@ -248,6 +249,7 @@ class XFDetailView(DetailView, ModelFormMixin, PermissionMixin, XFAjaxViewMixin)
     def get_context_data(self, **kwargs):
         self.context = context = super(XFDetailView, self).get_context_data(**kwargs)
         context['action'] = "Detail"
+        context['formname'] = self.get_form_class().__name__
         self.form_class = self.get_form_class()
         context['form'] = self.get_form(self.form_class)
         #Used because there is no VIEW permission (yet)
@@ -292,6 +294,7 @@ class XFUpdateView(UpdateView, PermissionMixin, XFAjaxViewMixin):
     def get_context_data(self, **kwargs):
         self.context = context = super(XFUpdateView, self).get_context_data(**kwargs)
         context['action'] = "Update"
+        context['formname'] = self.get_form_class().__name__
         self.ensure_set_context_perm("change")
         return context
 
@@ -312,6 +315,7 @@ class XFDeleteView(DeleteView, PermissionMixin, XFAjaxViewMixin):
     def get_context_data(self, **kwargs):
         self.context = context = super(XFDeleteView, self).get_context_data(**kwargs)
         context['action'] = "Delete"
+        context['formname'] = "DeleteForm"
         context['protected_error'] = self.protected_error
         self.ensure_set_context_perm("delete")
         return context
@@ -356,6 +360,7 @@ class XFCreateView(CreateView, PermissionMixin, XFAjaxViewMixin):
     def get_context_data(self, **kwargs):
         self.context = context = super(XFCreateView, self).get_context_data(**kwargs)
         context['action'] = "Create"
+        context['formname'] = self.get_form_class().__name__
         print(self.get_form_class().Meta.model.__name__.lower())
         self.ensure_set_context_perm("add")
         return context
