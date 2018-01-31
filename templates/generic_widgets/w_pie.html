@@ -50,18 +50,8 @@
                 labels: {{ labels|safe }},
                 datasets: [{
                     data: {{ datapoints.0|safe }},
-                    backgroundColor: [
-                        "#455C73", "#9B59B6", "#BDC3C7", "#26B99A", "#3498DB",
-                        "#455C73", "#9B59B6", "#BDC3C7", "#26B99A", "#3498DB",
-                        "#455C73", "#9B89B6", "#BDC3C7", "#26B99A", "#3498DB",
-                        "#455C73", "#9B59B6", "#BDC3C7", "#26B99A", "#3498DB"
-                    ],
-                    hoverBackgroundColor: [
-                        "#34495E", "#B370CF", "#CFD4D8", "#36CAAB", "#49A9EA",
-                        "#34495E", "#B370CF", "#CFD4D8", "#36CAAB", "#49A9EA",
-                        "#34495E", "#B370CF", "#CFD4D8", "#36CAAB", "#49A9EA",
-                        "#34495E", "#B370CF", "#CFD4D8", "#36CAAB", "#49A9EA"
-                    ]
+                    backgroundColor: color_pie_graph_background,
+                    hoverBackgroundColor: color_pie_chart_hover_background
 
                 }]
             }

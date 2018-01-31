@@ -92,7 +92,7 @@ msgstr "Filtro"
 
 #: templates/xf_viz_base.html:85
 msgid "Apply filter"
-msgstr "Aplicar Filtro"
+msgstr "Filtrar"
 
 #: templates/xf_viz_base.html:87
 msgid "Clear filter"
