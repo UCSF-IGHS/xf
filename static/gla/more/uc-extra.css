@@ -276,7 +276,9 @@ div#language_chooser button2 {
 
 
 
-
+.modal-body {
+    max-height: calc(100vh - 300px); overflow-y: auto;
+}
 
 
 

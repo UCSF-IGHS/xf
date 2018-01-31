@@ -47,10 +47,16 @@ function bindAjax() {
         get_query($(this));
     });
 
+    $('#frmDlg').on('hidden.bs.modal', function () {
+        $('#frmDlgHtml').html("Loading...");
+        $('#frmDlgHtml').removeAttr('style');
+    })
+
    // This snippet is executed during the popup of a modal window.
     // It will automatically load a piece of HTML (url href attribute) into the specified target (html-target
     // attribute)
     $("a[data-toggle=modal]").click(function (e) {
+
 
         var htmltarget = $(this).attr('html-target')
         var formtarget = $(this).attr('data-target')
