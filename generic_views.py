@@ -152,6 +152,7 @@ class XFGenericListView(ListView, XFNavigationViewMixin):
 
             context['list_title'] = self.list_class.list_title
             context['list_hint'] = self.list_class.list_hint
+            context['search_hint'] = self.list_class.search_hint
 
         context['current_url'] = self.request.get_full_path()
         if not context['current_url'].endswith("/"):

@@ -27,6 +27,7 @@ class XFModelList(XFCrudAssetLoaderMixIn):
         self.create_default_field_list()
         self.list_title = None
         self.list_hint = None
+        self.search_hint = "Search for.."
         self.default_permissions = ('add', 'change', 'delete', 'view')
         self.search_field = None
         self.preset_filters = {
