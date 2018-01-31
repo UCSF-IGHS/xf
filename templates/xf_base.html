@@ -318,6 +318,9 @@
 <!-- more -->
 <!--<script src="{% static "gla/more/ajax.js" %}"></script>-->
 
+<!-- UC extra js -->
+<script src="{% static "gla/more/colors.js" %}"></script>
+
 {% if custom_theme %}
     {% with 'themes/'|add:custom_theme|add:'/scripts.css' as custom_script_path%}
         <script src="{% static custom_script_path %}"></script>
