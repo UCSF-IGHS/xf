@@ -77,6 +77,10 @@ function bindAjax() {
         });
 
     })
+
+    // Set up the search field to clear after clicking the Clear button
+    $("#lnkClear").click(function(){ $("#txtSearchString").val(""); });
+
 }
 
 function ajaxFormLoaded(htmltarget, formtarget, posttarget) {
@@ -89,6 +93,11 @@ function ajaxFormLoaded(htmltarget, formtarget, posttarget) {
         event.preventDefault();
         postform(event, htmltarget, formtarget, posttarget)
     });
+
+    // Disable the submit button once clicked
+    //alert($("#btnDlgSumbit").text());
+    $("#btnDlgSubmit").click(function(){ $("#btnDlgSubmit").val("Please wait");  });
+
 
     /* TODO: THe date picker doesn't work
     $('.dateinput').datepicker({
@@ -132,6 +141,7 @@ function postform(e, htmltarget, formtarget, posttarget) {
             //var errors = jQuery.parseJSON(data);
             //alert(JSON.stringify(data));
             alert("Could not connect to the server. Your request could not be proccessed.")
+            $("#btnDlgSubmit").val("Try again");
         }
     });
 }
