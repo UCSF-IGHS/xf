@@ -11,11 +11,12 @@
 {% endblock %}
 
 {% block widget_main %}
-    <div id="{{ widget_id }}" style="height: 330px; margin: -30px auto 0 auto"></div>
+    <div id="{{ widget_id }}" style="height: 310px; margin: -25px auto 0 auto;"></div>
     <div style="margin-top: -65px; {% if custom_attr|lookup:"stripped_base" == "yes" %} width: 100%; text-align: center;{% endif %}">
         {% include 'generic_widgets/include_sub_text.html' %}
     </div>
     <script type="text/javascript">
+        var colors = ["#26B99A", "#03586A", "#73879C", "#9CC2CB", "#9CA9AE"];
         var caption = "{{ caption }}";
         var objectList = JSON.parse('{{rows|jsonify|safe}}');
         var data = {};
@@ -31,14 +32,44 @@
             },
             series: [
                 {
-                    startAngle: 225,
-                    endAngle: -45,
+                    {% if custom_attr|lookup:'start_angle' != '' %}
+                        startAngle : parseInt('{{ custom_attr|lookup:'start_angle' }}'),
+                    {% else %}
+                        startAngle: 225,
+                    {% endif %}
+                    {% if custom_attr|lookup:'end_angle' != '' %}
+                        endAngle : parseInt('{{ custom_attr|lookup:'end_angle' }}'),
+                    {% else %}
+                        endAngle: -45,
+                    {% endif %}
                     name: caption,
-                    axisTick:{show:true},
-                    clockwise:true,
+                    center : ['50%', '40%'],
+                    axisTick: {
+                        show:true,
+                        splitNumber : 5
+                    },
+                    axisLine: {
+                        show:true,
+                        lineStyle: {
+                            color : [[0.2, "#26B99A"],[0.4, "#03586A"],[0.8, "#73879C"],[1, '#FF4500']],
+                            width: 30
+                        }
+                    },
+                    clockwise: true,
+                    splitNumber : 10,
                     type: 'gauge',
+                    {% if custom_attr|lookup:'maximum_scale' != '' %}
+                        max: parseInt('{{ custom_attr|lookup:'maximum_scale' }}'),
+                    {% endif %}
+                    {% if custom_attr|lookup:'minimum_scale' != '' %}
+                        min: parseInt('{{ custom_attr|lookup:'minimum_scale' }}'),
+                    {% endif %}
                     detail: {
+                    {% if custom_attr|lookup:'show_percentage' == 'yes' %}
                         formatter:'{value}%'
+                    {% else %}
+                        formatter:'{value}'
+                    {% endif %}
                     },
                     data: [{value: data.value, name: ""}]
                 }
