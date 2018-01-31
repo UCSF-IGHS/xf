@@ -47,14 +47,21 @@ function bindAjax() {
         get_query($(this));
     });
 
+    $('#frmDlg').on('hidden.bs.modal', function () {
+        $('#frmDlgHtml').html("Loading...");
+        $('#frmDlgHtml').removeAttr('style');
+    })
+
    // This snippet is executed during the popup of a modal window.
     // It will automatically load a piece of HTML (url href attribute) into the specified target (html-target
     // attribute)
     $("a[data-toggle=modal]").click(function (e) {
 
+
         var htmltarget = $(this).attr('html-target')
         var formtarget = $(this).attr('data-target')
         var url = $(this).attr('href') + "?ajax";
+
 
         // This is a hack. The href is used to both pop a modal window, and to find the POST URL for a modal window.
         // For a popup in a popup this doesn't work... so a new attribute hrefpost has been introduced to resolve
@@ -66,7 +73,7 @@ function bindAjax() {
         // URL parameter
         $(htmltarget).load(url, function() {
             ajaxFormLoaded(htmltarget, formtarget, url);
-            bindAjax();
+            //bindAjax();
         });
 
     })
