@@ -4,7 +4,7 @@ from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponseForbidden
 
 
-class PermissionMixin(object):
+class XFPermissionMixin(object):
     """
     Provides a basic security model for views.
     This class requirers cleanup.
