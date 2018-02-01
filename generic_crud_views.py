@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.db.models import ProtectedError
 from django.views.generic import DetailView, UpdateView, DeleteView, CreateView
 from django.views.generic.edit import ModelFormMixin
@@ -52,6 +53,10 @@ class XFUpdateView(UpdateView, XFPermissionMixin, XFAjaxViewMixin):
         return UpdateView.get(self, request, **kwargs)
 
     def post(self, request, **kwargs):
+
+        if not self.user_has_model_permission("change"):
+            raise PermissionDenied
+
         XFAjaxViewMixin.post(self, request, **kwargs)
         self.request = request
         return UpdateView.post(self, request, **kwargs)
@@ -91,6 +96,10 @@ class XFDeleteView(DeleteView, XFPermissionMixin, XFAjaxViewMixin):
         return DeleteView.get(self, request, **kwargs)
 
     def post(self, request, **kwargs):
+
+        if not self.user_has_model_permission("delete"):
+            raise PermissionDenied
+
         XFAjaxViewMixin.post(self, request, **kwargs)
         self.request = request
         try:
@@ -110,6 +119,10 @@ class XFCreateView(CreateView, XFPermissionMixin, XFAjaxViewMixin):
         return CreateView.get(self, request, **kwargs)
 
     def post(self, request, **kwargs):
+
+        if not self.user_has_model_permission("add"):
+            raise PermissionDenied
+
         XFAjaxViewMixin.post(self, request, **kwargs)
         return CreateView.post(self, request, **kwargs)
 

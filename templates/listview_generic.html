@@ -48,6 +48,7 @@
             </div>
 
             <div class="nav navbar-right col-md-5">
+                {% if search %}
                 <form class="form-search2 mxlget" method="get" id="frmSearch4" html-target="ctxObjectList" action="{{ current_url }}">
                     <div class="input-group">
                         <input type="text" class="form-control" name="search_string" value="{{ search_string }}" id="txtSearchString"
@@ -59,9 +60,8 @@
                                                                                    id="lnkClear">Clear</a>
                     </span>
                     </div>
-
-
                 </form>
+                {% endif %}
             </div>
 
 
