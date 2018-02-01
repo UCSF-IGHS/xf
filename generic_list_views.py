@@ -1,9 +1,10 @@
 from django.conf import settings
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView, FormView
 
 from xf_crud.ajax_mixins import XFAjaxViewMixin
-from xf_crud.generic_lists import XFModelList
+from xf_crud.model_lists import XFModelList
 from xf_crud.permission_mixin import XFPermissionMixin
 from xf_system.views import XFNavigationViewMixin
 
@@ -101,7 +102,7 @@ class XFGenericListView(ListView, XFNavigationViewMixin):
 
 class XFListView(XFGenericListView, XFPermissionMixin, XFAjaxViewMixin):
     """
-    A list view that requires authentication.
+    A list view that requires authentication. This should be used as a base class.
     """
 
     def __init__(self, *args, **kwargs):
@@ -114,6 +115,8 @@ class XFListView(XFGenericListView, XFPermissionMixin, XFAjaxViewMixin):
         if not request.user.is_authenticated():
             return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
+        if not self.user_has_model_permission("list"):
+            raise PermissionDenied
 
         return super(XFListView, self).get(request, *args, **kwargs)
 
@@ -121,15 +124,25 @@ class XFListView(XFGenericListView, XFPermissionMixin, XFAjaxViewMixin):
         self.context = context = super(XFListView, self).get_context_data(**kwargs)
         context['search_string'] = self.search_string
         context['action'] = "List"
-        self.ensure_group_or_403("Data Browser")
-        self.set_context_perm("add")
-        self.set_context_perm("change")
-        self.set_context_perm("delete")
         context['browse'] = True
         # Set to AJAX list if necessary
+        self.set_list_allowable_operations(context)
         self.set_list_template(context, self.request)
         self.list_class.add_assets_to_context(context)
         return context
+
+    def set_list_allowable_operations(self, context):
+
+        context["add"] = "add" in self.list_class.supported_crud_operations and self.user_has_model_permission(
+            "add")
+        context["search"] = "search" in self.list_class.supported_crud_operations and self.user_has_model_permission(
+            "list")
+        context["change"] = "change" in self.list_class.supported_crud_operations and self.user_has_model_permission(
+            "change")
+        context["view"] = "view" in self.list_class.supported_crud_operations and self.user_has_model_permission(
+            "view")
+        context["delete"] = "delete" in self.list_class.supported_crud_operations and self.user_has_model_permission(
+            "delete")
 
 
 

@@ -16,6 +16,10 @@ class XFPermissionMixin(object):
         """
         return self.request.user.has_perm('%s.%s_%s' % (self.model._meta.app_label, permission, self.model._meta.model_name))
 
+    def user_has_model_permission(self, permission):
+        return self.request.user.has_perm('%s.%s_%s' % (self.model._meta.app_label, permission, self.model._meta.model_name))
+
+
     @staticmethod
     def user_has_model_perm(self, model, permission):
         """
