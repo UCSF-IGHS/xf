@@ -29,7 +29,7 @@ from . import extensions
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from . import models as UCModels
-from xf_crud.auth.permission_mixin import PermissionMixin
+from xf_crud.permission_mixin import XFPermissionMixin
 
 # Create your views here.
 from uc_dashboards.models import NavigationSection, Page, Widget, Perspective
@@ -119,7 +119,7 @@ def load_navigation(sender, navigation_trees, request):
 
                 # Check if user is part of one of the allowed groups to view this page, before adding menu item
                 # to navigation
-                if PermissionMixin.user_in_group(request.user, page.permissions_to_view.all()):
+                if XFPermissionMixin.user_in_group(request.user, page.permissions_to_view.all()):
                     if page.parent_page:
                         add_navigation(navigation_tree, 'Dashboard', page.parent_page.navigation_section.caption, url,
                                        page.parent_page.navigation_section.icon, page.title, page.parent_page.title)
@@ -569,7 +569,7 @@ class WidgetView(TemplateView):
 
 
 # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
-class DashboardPageView(DashboardView, PermissionMixin):
+class DashboardPageView(DashboardView, XFPermissionMixin):
     """
     The base view for any dashboard type page. It checks for security as needed.
     """
