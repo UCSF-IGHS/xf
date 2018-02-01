@@ -1,0 +1,130 @@
+from django.db.models import ProtectedError
+from django.views.generic import DetailView, UpdateView, DeleteView, CreateView
+from django.views.generic.edit import ModelFormMixin
+
+from xf_crud.ajax_mixins import XFAjaxViewMixin
+from xf_crud.permission_mixin import XFPermissionMixin
+
+
+class XFDetailView(DetailView, ModelFormMixin, XFPermissionMixin, XFAjaxViewMixin):
+    template_name = "form_details_generic.html"
+
+    def get_context_data(self, **kwargs):
+        self.context = context = super(XFDetailView, self).get_context_data(**kwargs)
+        context['action'] = "Detail"
+        context['formname'] = self.get_form_class().__name__
+        self.form_class = self.get_form_class()
+        context['form'] = self.get_form(self.form_class)
+        #Used because there is no VIEW permission (yet)
+        self.ensure_group_or_403("Data Browser")
+        context['browse'] = True
+
+        return context
+
+    def get(self, request, **kwargs):
+        XFAjaxViewMixin.get(self, request, **kwargs)
+        return DetailView.get(self, request, **kwargs)
+
+
+class XFUnsafeDetailView(DetailView, ModelFormMixin, XFAjaxViewMixin):
+    template_name = "form_details_generic.html"
+
+    def get_context_data(self, **kwargs):
+        self.context = context = super(XFUnsafeDetailView, self).get_context_data(**kwargs)
+        context['action'] = "Detail"
+        self.form_class = self.get_form_class()
+        context['form'] = self.get_form(self.form_class)
+        #Used because there is no VIEW permission (yet)
+        context['browse'] = True
+
+        return context
+
+    def get(self, request, **kwargs):
+        XFAjaxViewMixin.get(self, request, **kwargs)
+        return DetailView.get(self, request, **kwargs)
+
+
+class XFUpdateView(UpdateView, XFPermissionMixin, XFAjaxViewMixin):
+    template_name = "form_generic.html"
+
+    def get(self, request, **kwargs):
+        XFAjaxViewMixin.get(self, request, **kwargs)
+        return UpdateView.get(self, request, **kwargs)
+
+    def post(self, request, **kwargs):
+        XFAjaxViewMixin.post(self, request, **kwargs)
+        self.request = request
+        return UpdateView.post(self, request, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        self.context = context = super(XFUpdateView, self).get_context_data(**kwargs)
+        context['action'] = "Update"
+        context['formname'] = self.get_form_class().__name__
+        self.ensure_set_context_perm("change")
+        return context
+
+    def form_invalid(self, form):
+        return XFAjaxViewMixin.prepare_form_invalid(self, self.request, form,
+                                                    UpdateView.form_invalid(self, form))
+
+    def form_valid(self, form):
+        return XFAjaxViewMixin.prepare_form_valid(self, self.request, form,
+                                                  UpdateView.form_valid(self, form))
+
+
+class XFDeleteView(DeleteView, XFPermissionMixin, XFAjaxViewMixin):
+    template_name = "form_delete_generic.html"
+    ajax_template_name = "ajax_form_confirm_delete.html"
+    protected_error = False
+
+    def get_context_data(self, **kwargs):
+        self.context = context = super(XFDeleteView, self).get_context_data(**kwargs)
+        context['action'] = "Delete"
+        context['formname'] = "DeleteForm"
+        context['protected_error'] = self.protected_error
+        self.ensure_set_context_perm("delete")
+        return context
+
+
+    def get(self, request, **kwargs):
+        XFAjaxViewMixin.get(self, request, **kwargs)
+        return DeleteView.get(self, request, **kwargs)
+
+    def post(self, request, **kwargs):
+        XFAjaxViewMixin.post(self, request, **kwargs)
+        self.request = request
+        try:
+            return XFAjaxViewMixin.prepare_form_valid(self, self.request, None,
+                                                      DeleteView.post(self, request, **kwargs))
+        except ProtectedError:
+            self.protected_error = True
+            return XFAjaxViewMixin.prepare_form_invalid(self, self.request, None,
+                                                        XFDeleteView.get(self, request, **kwargs))
+
+
+class XFCreateView(CreateView, XFPermissionMixin, XFAjaxViewMixin):
+    template_name = "form_generic.html"
+
+    def get(self, request, **kwargs):
+        XFAjaxViewMixin.get(self, request, **kwargs)
+        return CreateView.get(self, request, **kwargs)
+
+    def post(self, request, **kwargs):
+        XFAjaxViewMixin.post(self, request, **kwargs)
+        return CreateView.post(self, request, **kwargs)
+
+    def form_invalid(self, form):
+        return XFAjaxViewMixin.prepare_form_invalid(self, self.request, form,
+                                                    CreateView.form_invalid(self, form))
+
+    def form_valid(self, form):
+        return XFAjaxViewMixin.prepare_form_valid(self, self.request, form,
+                                                  CreateView.form_valid(self, form))
+
+    def get_context_data(self, **kwargs):
+        self.context = context = super(XFCreateView, self).get_context_data(**kwargs)
+        context['action'] = "Create"
+        context['formname'] = self.get_form_class().__name__
+        print(self.get_form_class().Meta.model.__name__.lower())
+        self.ensure_set_context_perm("add")
+        return context

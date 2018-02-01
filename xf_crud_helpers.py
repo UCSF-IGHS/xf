@@ -2,11 +2,13 @@ from crispy_forms.helper import FormHelper
 from django.forms import ALL_FIELDS
 
 from xf_crud.generic_forms import XFModelForm
+from xf_crud.list_views import XFListView
 from . import generic_forms
 
 __author__ = 'Fitti'
 from django.conf.urls import include, url
-from .generic_views import XFCreateView, XFDetailView, XFDeleteView, XFListView, XFUpdateView
+from xf_crud.crud_views import XFDetailView, XFUpdateView, XFDeleteView, XFCreateView
+
 
 def mmodelform_factory(model, form=XFModelForm, fields=None, exclude=None,
                        formfield_callback=None, widgets=None):

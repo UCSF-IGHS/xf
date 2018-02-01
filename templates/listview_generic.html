@@ -50,8 +50,8 @@
             <div class="nav navbar-right col-md-5">
                 <form class="form-search2 mxlget" method="get" id="frmSearch4" html-target="ctxObjectList" action="{{ current_url }}">
                     <div class="input-group">
-                        <input type="text" class="form-control" name="search_string" value="{{ search_string }}"
-                               placeholder="Search for...">
+                        <input type="text" class="form-control" name="search_string" value="{{ search_string }}" id="txtSearchString"
+                               placeholder="{{ search_hint }}">
                         <span class="input-group-btn ">
                       <button class="btn btn-default" type="submit">Go!</button><a href="{{ current_url }}"
                                                                                    class="btn btn-default mxlajax"
@@ -119,6 +119,9 @@
         function mxlSuccess() {
             $("#lnkClear").click();
         }
+
+
+
     </script>
 
 
