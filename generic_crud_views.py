@@ -4,22 +4,35 @@ from django.views.generic import DetailView, UpdateView, DeleteView, CreateView
 from django.views.generic.edit import ModelFormMixin
 
 from xf_crud.ajax_mixins import XFAjaxViewMixin
+from xf_crud.mixins import XFCrudMixin
+from xf_crud.model_lists import XFCrudAssetLoaderMixIn
 from xf_crud.permission_mixin import XFPermissionMixin
+from xf_system.views import XFNavigationViewMixin
 
 
-class XFDetailView(DetailView, ModelFormMixin, XFPermissionMixin, XFAjaxViewMixin):
-    template_name = "form_details_generic.html"
+class XFDetailView(DetailView, ModelFormMixin, XFPermissionMixin, XFAjaxViewMixin, XFNavigationViewMixin, XFCrudMixin):
+    template_name = "form_generic.html"
 
     def get_context_data(self, **kwargs):
         self.context = context = super(XFDetailView, self).get_context_data(**kwargs)
         context['action'] = "Detail"
         context['formname'] = self.get_form_class().__name__
         self.form_class = self.get_form_class()
-        context['form'] = self.get_form(self.form_class)
+
+        form = self.get_form(self.form_class)
+        for field in form.fields:
+            form.fields[field].disabled = True
+        context['form'] = form
+
         #Used because there is no VIEW permission (yet)
         self.ensure_group_or_403("Data Browser")
-        context['browse'] = True
 
+        context['browse'] = True
+        self.ensure_set_context_perm("view")
+        self.set_navigation_context()
+        self.add_crud_urls_to_context(context)
+        #self.add_assets_to_context(context)
+        form.add_assets_to_context(context)
         return context
 
     def get(self, request, **kwargs):
@@ -27,7 +40,7 @@ class XFDetailView(DetailView, ModelFormMixin, XFPermissionMixin, XFAjaxViewMixi
         return DetailView.get(self, request, **kwargs)
 
 
-class XFUnsafeDetailView(DetailView, ModelFormMixin, XFAjaxViewMixin):
+class XFUnsafeDetailView(DetailView, ModelFormMixin, XFAjaxViewMixin, XFCrudMixin):
     template_name = "form_details_generic.html"
 
     def get_context_data(self, **kwargs):
@@ -37,7 +50,7 @@ class XFUnsafeDetailView(DetailView, ModelFormMixin, XFAjaxViewMixin):
         context['form'] = self.get_form(self.form_class)
         #Used because there is no VIEW permission (yet)
         context['browse'] = True
-
+        self.add_crud_urls_to_context(context)
         return context
 
     def get(self, request, **kwargs):
@@ -45,7 +58,7 @@ class XFUnsafeDetailView(DetailView, ModelFormMixin, XFAjaxViewMixin):
         return DetailView.get(self, request, **kwargs)
 
 
-class XFUpdateView(UpdateView, XFPermissionMixin, XFAjaxViewMixin):
+class XFUpdateView(UpdateView, XFPermissionMixin, XFAjaxViewMixin, XFCrudMixin):
     template_name = "form_generic.html"
 
     def get(self, request, **kwargs):
@@ -66,6 +79,7 @@ class XFUpdateView(UpdateView, XFPermissionMixin, XFAjaxViewMixin):
         context['action'] = "Update"
         context['formname'] = self.get_form_class().__name__
         self.ensure_set_context_perm("change")
+        self.add_crud_urls_to_context(context)
         return context
 
     def form_invalid(self, form):
@@ -77,7 +91,7 @@ class XFUpdateView(UpdateView, XFPermissionMixin, XFAjaxViewMixin):
                                                   UpdateView.form_valid(self, form))
 
 
-class XFDeleteView(DeleteView, XFPermissionMixin, XFAjaxViewMixin):
+class XFDeleteView(DeleteView, XFPermissionMixin, XFAjaxViewMixin, XFCrudMixin):
     template_name = "form_delete_generic.html"
     ajax_template_name = "ajax_form_confirm_delete.html"
     protected_error = False
@@ -88,6 +102,7 @@ class XFDeleteView(DeleteView, XFPermissionMixin, XFAjaxViewMixin):
         context['formname'] = "DeleteForm"
         context['protected_error'] = self.protected_error
         self.ensure_set_context_perm("delete")
+        self.add_crud_urls_to_context(context)
         return context
 
 
@@ -111,8 +126,10 @@ class XFDeleteView(DeleteView, XFPermissionMixin, XFAjaxViewMixin):
                                                         XFDeleteView.get(self, request, **kwargs))
 
 
-class XFCreateView(CreateView, XFPermissionMixin, XFAjaxViewMixin):
+class XFCreateView(CreateView, XFPermissionMixin, XFAjaxViewMixin, XFNavigationViewMixin, XFCrudMixin):
     template_name = "form_generic.html"
+
+
 
     def get(self, request, **kwargs):
         XFAjaxViewMixin.get(self, request, **kwargs)
@@ -140,4 +157,6 @@ class XFCreateView(CreateView, XFPermissionMixin, XFAjaxViewMixin):
         context['formname'] = self.get_form_class().__name__
         print(self.get_form_class().Meta.model.__name__.lower())
         self.ensure_set_context_perm("add")
+        self.set_navigation_context()
+        self.add_crud_urls_to_context(context)
         return context

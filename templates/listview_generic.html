@@ -31,7 +31,8 @@
             <div class="col-md-2">
                 {% if add %}
                     <!--<a href="new" class="btn btn-primary">Create new</a>-->
-                    <a data-toggle="modal" href="new" class="btn btn-primary btn-default" data-target="#frmDlg"
+
+                    <a data-toggle="modal" href="{% url url_name_new %}" class="btn btn-primary btn-default" data-target="#frmDlg"
                        html-target="#frmDlgHtml">Create new</a>
                 {% endif %}
             </div>
@@ -120,9 +121,17 @@
             $("#lnkClear").click();
         }
 
+        var base_url = '{%  url url_name_list %}';
 
+        $SIDEBAR_MENU.find('a[href="/library/book/"]').parent("li").addClass("current-page")
+        $SIDEBAR_MENU.find('a').filter(function () {
+            return this.href == "/library/book/";
+        }).parent('li').addClass('current-page').parents('ul').slideDown(function() {
+            setContentHeight();
+        }).parent().addClass('active');
 
     </script>
+
 
 
 

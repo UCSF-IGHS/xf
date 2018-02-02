@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.views.generic import ListView, FormView
 
 from xf_crud.ajax_mixins import XFAjaxViewMixin
+from xf_crud.mixins import XFCrudMixin
 from xf_crud.model_lists import XFModelList
 from xf_crud.permission_mixin import XFPermissionMixin
 from xf_system.views import XFNavigationViewMixin
@@ -11,7 +12,7 @@ from xf_system.views import XFNavigationViewMixin
 
 
 
-class XFGenericListView(ListView, XFNavigationViewMixin):
+class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
 
     paginate_by = 10
     generic = False
@@ -64,6 +65,7 @@ class XFGenericListView(ListView, XFNavigationViewMixin):
             context['current_url'] += '/'
 
         self.set_navigation_context()
+        self.add_crud_urls_to_context(context)
         return context
 
 
