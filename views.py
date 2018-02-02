@@ -56,4 +56,3 @@ class XFNavigationViewMixin(object):
         self.context["site_icon"] = XFNavigationViewMixin.site_settings.site_icon
 
         print(get_language())
-
