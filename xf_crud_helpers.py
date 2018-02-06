@@ -82,15 +82,17 @@ def crudurl(appname, modelname, model, form_class, list_class=None):
         form_class.Meta.title = modelname.capitalize()
 
     return [
-        url(r'^%s/%s/new' % (appname, modelname), XFCreateView.as_view(model=model, form_class=form_class, success_url="%s/%s/" % (appname, modelname))),
-        url(r'^%s/%s/(?P<pk>[-\w]+)/edit' % (appname, modelname), XFUpdateView.as_view(model=model, form_class=form_class, success_url="%s/%s/" % (appname, modelname))),
-        url(r'^%s/%s/(?P<pk>[-\w]+)/delete' % (appname, modelname), XFDeleteView.as_view(model=model, success_url="%s/%s/" % (appname, modelname))),
+        url(r'^%s/%s/new' % (appname, modelname), XFCreateView.as_view(model=model, form_class=form_class, success_url="%s/%s/" % (appname, modelname), app_name=appname, model_url_part=modelname), name="%s_%s_new" % (appname, modelname)),
+        url(r'^%s/%s/(?P<pk>[-\w]+)/edit' % (appname, modelname), XFUpdateView.as_view(model=model, form_class=form_class, success_url="%s/%s/" % (appname, modelname), app_name=appname, model_url_part=modelname) , name="%s_%s_edit" % (appname, modelname)),
+        url(r'^%s/%s/(?P<pk>[-\w]+)/details' % (appname, modelname),
+            XFDetailView.as_view(model=model, form_class=form_class, success_url="%s/%s/" % (appname, modelname), app_name=appname, model_url_part=modelname), name="%s_%s_details" % (appname, modelname)),
+        url(r'^%s/%s/(?P<pk>[-\w]+)/delete' % (appname, modelname), XFDeleteView.as_view(model=model, success_url="%s/%s/" % (appname, modelname), app_name=appname, model_url_part=modelname), name="%s_%s_delete" % (appname, modelname)),
         url(r'^%s/%s/(?P<preset_filter>[-\w]+)' % (appname, modelname),
             XFListView.as_view(model=model, generic=True, queryset=model.objects.order_by("name"),
-                               list_class=list_class)),
+                               list_class=list_class, app_name=appname, model_url_part=modelname), name="%s_%s_list_filter" % (appname, modelname)),
         url(r'^%s/%s/' % (appname, modelname),
             XFListView.as_view(model=model, generic=True, queryset=model.objects.order_by("name"),
-                               list_class=list_class)),
+                               list_class=list_class, app_name=appname, model_url_part=modelname), name="%s_%s_list" % (appname, modelname)),
 
     ]
 

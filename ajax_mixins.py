@@ -1,6 +1,8 @@
 import json
 
 from django.http import HttpResponse
+from django.shortcuts import redirect
+
 
 def errors_to_json2(errors):
     """
@@ -80,7 +82,7 @@ class XFAjaxViewMixin():
     def prepare_form_valid(self, request, form, response):
 
         if not request.is_ajax() and request.GET.get('ajax56_debug') is None:
-            return response
+            return redirect('./')
         else:
             self.message = self.success_message
             self.success = True

@@ -7,6 +7,8 @@ from django.db.models import Model
 from django.forms.models import ModelForm
 #import floppyforms as forms
 #from floppyforms.widgets import PasswordInput
+from xf_crud.model_lists import XFCrudAssetLoaderMixIn
+
 
 class XFAjaxForm(ModelForm):
 
@@ -43,10 +45,14 @@ class XFAjaxForm(ModelForm):
 
         super(XFAjaxForm, self).__init__(*args, **kwargs)
 
-class XFModelForm(ModelForm):
+class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
 
     def __init__(self, *args, **kwargs):
         super(XFModelForm, self).__init__(*args, **kwargs)
+
+        self.js_assets = []
+        self.css_assets = []
+
         self.helper = FormHelper()
         self.helper.form_method = 'POST'
         self.helper.form_id = ''
