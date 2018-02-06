@@ -83,21 +83,34 @@ function bindAjax() {
 
 }
 
+
+
 function ajaxFormLoaded(htmltarget, formtarget, posttarget) {
     // This function fires when a HTML AJAX FORM is loaded. It binds the form to the submit event,
     // to enable routing to the AJAX processor
 
-    hideMessages();
-    $(".mxlform").submit(function() {
-        // Executed when the form is being submitted
-        event.preventDefault();
-        postform(event, htmltarget, formtarget, posttarget)
-    });
+    // If a validator is available through a form asset, attach to it
+    if (typeof attach_validator == 'function') {
+        attach_validator($(".mxlform"), htmltarget, formtarget, posttarget);
+    }
 
-    // Disable the submit button once clicked
-    //alert($("#btnDlgSumbit").text());
-    $("#btnDlgSubmit").click(function(){ $("#btnDlgSubmit").val("Please wait");  });
+    // Otherwise, we will handle it ourselves
+    else {
 
+        hideMessages();
+        $(".mxlform").submit(function () {
+            // Executed when the form is being submitted
+            //alert(posttarget);
+            event.preventDefault();
+            postform(event, htmltarget, formtarget, posttarget)
+        });
+
+        // Disable the submit button once clicked
+        //alert($("#btnDlgSumbit").text());
+        $("#btnDlgSubmit").click(function () {
+            $("#btnDlgSubmit").val("Please wait");
+        });
+    }
 
     /* TODO: THe date picker doesn't work
     $('.dateinput').datepicker({
@@ -126,7 +139,6 @@ function postform(e, htmltarget, formtarget, posttarget) {
                 ajaxFormLoaded(htmltarget, formtarget, posttarget);
             }
             else {
-                // Password update succeeded
                 $(htmltarget).html("Loading");
                 $(formtarget).modal('hide') // dismiss dialog
                 $('#msg_info').html(data.message);
@@ -273,3 +285,11 @@ function hideMessages() {
     $('#msg_info').hide();
 }
 
+
+
+
+/* Setting a URL */
+function selectURL(url) {
+    $SIDEBAR_MENU.find('a[href="' + url + '"]').closest("ul").closest("li").find("> a").trigger("click");
+    $SIDEBAR_MENU.find('a[href="' + url + '"]').closest("li").addClass("current-page");
+}
