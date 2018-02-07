@@ -3,6 +3,7 @@ from django.forms import ALL_FIELDS
 
 from xf_crud.model_forms import XFModelForm
 from xf_crud.generic_list_views import XFListView
+from xf_crud.model_lists import XFModelList
 from . import model_forms
 
 __author__ = 'Fitti'
@@ -62,38 +63,65 @@ def mmodelform_factory(model, form=XFModelForm, fields=None, exclude=None,
 
     return type(form)(class_name, (form,), form_class_attrs)
 
-def crudurl(appname, modelname, model, form_class, list_class=None):
 
+def crudurl(appname, modelname, model_type, form_class_type, list_class_type=XFModelList):
     """
     Generates a set of CRUL URLs for the given model.
     :param appname: the app for which to generate the URL
     :param modelname: the modelname for which to generate the URL
-    :param model: the actual model for which to generate the URL
-    :param form_class: the form class to use for the URL. May be NULL, in which case it will be generated automatically.
+    :param model_type: the actual model for which to generate the URL
+    :param form_class_type: the form class to use for the URL. May be NULL, in which case it will be generated automatically.
     :return: a set of patterns.
 """
 
-    if form_class is None:
+    if form_class_type is None:
         try:
-            form_class = mmodelform_factory(model, fields=model._meta.form_field_list)
+            form_class_type = mmodelform_factory(model_type, fields=model_type._meta.form_field_list)
         except:
-            form_class = mmodelform_factory(model)
+            form_class_type = mmodelform_factory(model_type)
 
-        form_class.Meta.title = modelname.capitalize()
+        form_class_type.Meta.title = modelname.capitalize()
 
-    return [
-        url(r'^%s/%s/new' % (appname, modelname), XFCreateView.as_view(model=model, form_class=form_class, success_url="%s/%s/" % (appname, modelname), app_name=appname, model_url_part=modelname), name="%s_%s_new" % (appname, modelname)),
-        url(r'^%s/%s/(?P<pk>[-\w]+)/edit' % (appname, modelname), XFUpdateView.as_view(model=model, form_class=form_class, success_url="%s/%s/" % (appname, modelname), app_name=appname, model_url_part=modelname) , name="%s_%s_edit" % (appname, modelname)),
-        url(r'^%s/%s/(?P<pk>[-\w]+)/details' % (appname, modelname),
-            XFDetailView.as_view(model=model, form_class=form_class, success_url="%s/%s/" % (appname, modelname), app_name=appname, model_url_part=modelname), name="%s_%s_details" % (appname, modelname)),
-        url(r'^%s/%s/(?P<pk>[-\w]+)/delete' % (appname, modelname), XFDeleteView.as_view(model=model, success_url="%s/%s/" % (appname, modelname), app_name=appname, model_url_part=modelname), name="%s_%s_delete" % (appname, modelname)),
-        url(r'^%s/%s/(?P<preset_filter>[-\w]+)' % (appname, modelname),
-            XFListView.as_view(model=model, generic=True, queryset=model.objects.order_by("name"),
-                               list_class=list_class, app_name=appname, model_url_part=modelname), name="%s_%s_list_filter" % (appname, modelname)),
-        url(r'^%s/%s/' % (appname, modelname),
-            XFListView.as_view(model=model, generic=True, queryset=model.objects.order_by("name"),
-                               list_class=list_class, app_name=appname, model_url_part=modelname), name="%s_%s_list" % (appname, modelname)),
+    list_class = list_class_type(model_type)
+    print(list_class.supported_crud_operations)
 
-    ]
+    urls = []
+    if 'add' in list_class.supported_crud_operations:
+        urls.append(
+            url(r'^%s/%s/new' % (appname, modelname), XFCreateView.as_view(model=model_type, form_class=form_class_type,
+                                                                           success_url="%s/%s/" % (appname, modelname),
+                                                                           app_name=appname, model_url_part=modelname),
+                name="%s_%s_new" % (appname, modelname)))
 
+    if 'change' in list_class.supported_crud_operations:
+        urls.append(url(r'^%s/%s/(?P<pk>[-\w]+)/edit' % (appname, modelname),
+                        XFUpdateView.as_view(model=model_type, form_class=form_class_type,
+                                             success_url="%s/%s/" % (appname, modelname),
+                                             app_name=appname,
+                                             model_url_part=modelname),
+                        name="%s_%s_edit" % (appname, modelname)))
+
+    if 'view' in list_class.supported_crud_operations:
+        urls.append(url(r'^%s/%s/(?P<pk>[-\w]+)/details' % (appname, modelname),
+                        XFDetailView.as_view(model=model_type, form_class=form_class_type,
+                                             success_url="%s/%s/" % (appname, modelname), app_name=appname,
+                                             model_url_part=modelname), name="%s_%s_details" % (appname, modelname)))
+
+    if 'delete' in list_class.supported_crud_operations:
+        urls.append(url(r'^%s/%s/(?P<pk>[-\w]+)/delete' % (appname, modelname),
+                        XFDeleteView.as_view(model=model_type, success_url="%s/%s/" % (appname, modelname),
+                                             app_name=appname,
+                                             model_url_part=modelname), name="%s_%s_delete" % (appname, modelname)))
+
+    if 'search' in list_class.supported_crud_operations:
+        urls.append(url(r'^%s/%s/(?P<preset_filter>[-\w]+)' % (appname, modelname),
+                        XFListView.as_view(model=model_type, generic=True, queryset=model_type.objects.order_by("name"),
+                                           list_class=list_class_type, app_name=appname, model_url_part=modelname),
+                        name="%s_%s_list_filter" % (appname, modelname)))
+        urls.append(url(r'^%s/%s/' % (appname, modelname),
+                        XFListView.as_view(model=model_type, generic=True, queryset=model_type.objects.order_by("name"),
+                                           list_class=list_class_type, app_name=appname, model_url_part=modelname),
+                        name="%s_%s_list" % (appname, modelname)))
+
+    return urls
 
