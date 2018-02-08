@@ -5,7 +5,6 @@ from django.views.generic.edit import ModelFormMixin
 
 from xf_crud.ajax_mixins import XFAjaxViewMixin
 from xf_crud.mixins import XFCrudMixin
-from xf_crud.model_lists import XFCrudAssetLoaderMixIn
 from xf_crud.permission_mixin import XFPermissionMixin
 from xf_system.views import XFNavigationViewMixin
 

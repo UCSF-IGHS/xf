@@ -113,7 +113,7 @@ def crudurl(appname, modelname, model_type, form_class_type, list_class_type=XFM
                                              app_name=appname,
                                              model_url_part=modelname), name="%s_%s_delete" % (appname, modelname)))
 
-    if 'search' in list_class.supported_crud_operations:
+    if 'list' in list_class.supported_crud_operations:
         urls.append(url(r'^%s/%s/(?P<preset_filter>[-\w]+)' % (appname, modelname),
                         XFListView.as_view(model=model_type, generic=True, queryset=model_type.objects.order_by("name"),
                                            list_class=list_class_type, app_name=appname, model_url_part=modelname),
