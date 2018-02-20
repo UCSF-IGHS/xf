@@ -58,8 +58,8 @@
     <!-- UC extra css -->
     <link href="{% static "gla/more/uc-extra.css" %}" rel="stylesheet">
 
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+    <!-- jQuery Bootstrap Validator-->
+    <link href="{% static "gla/vendors/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css" %}" rel="stylesheet">
 
     <!-- XF custom app based css -->
     {% if custom_theme %}
@@ -314,8 +314,12 @@
 <script src="{% static "gla/vendors/datatables.net-scroller/js/datatables.scroller.min.js" %}"></script>
 <script src="{% static "gla/vendors/select2/dist/js/select2.full.min.js" %}"></script>
 
+
 <!-- bootstrap-datetimepicker -->
 <script src="{% static "gla/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js" %}"></script>
+
+<!-- jQuery Bootstrap Validator-->
+<script src="{% static "gla/vendors/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js" %}"></script>
 
 
 <!-- more -->
