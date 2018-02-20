@@ -57,11 +57,9 @@ function bindAjax() {
     // attribute)
     $("a[data-toggle=modal]").click(function (e) {
 
-
         var htmltarget = $(this).attr('html-target')
         var formtarget = $(this).attr('data-target')
         var url = $(this).attr('href') + "?ajax";
-
 
         // This is a hack. The href is used to both pop a modal window, and to find the POST URL for a modal window.
         // For a popup in a popup this doesn't work... so a new attribute hrefpost has been introduced to resolve
@@ -179,13 +177,26 @@ function gethtml(source) {
 
     var htmlTarget = source.attr('html-target');
     var url = source.attr('href');
-
     // Add ?ajax/&ajax depending on link in the href
     if (url.indexOf("?") == -1)
         url = url + "?ajax";
     else
         url = url + "&ajax";
     $("#" + htmlTarget).load(url, function() {
+        // Always rebind after loading HTML
+        bindAjax();
+    });
+}
+
+
+function LoadHTMLIntoDiv(url, divTarget) {
+
+    // Add ?ajax/&ajax depending on link in the href
+    if (url.indexOf("?") == -1)
+        url = url + "?ajax";
+    else
+        url = url + "&ajax";
+    divTarget.load(url, function() {
         // Always rebind after loading HTML
         bindAjax();
     });
@@ -292,4 +303,14 @@ function hideMessages() {
 function selectURL(url) {
     $SIDEBAR_MENU.find('a[href="' + url + '"]').closest("ul").closest("li").find("> a").trigger("click");
     $SIDEBAR_MENU.find('a[href="' + url + '"]').closest("li").addClass("current-page");
+}
+
+
+
+/* Friendly, new functions */
+
+function RefreshObjectList(url) {
+
+    LoadHTMLIntoDiv(url, $('#ctxObjectList'));
+
 }
