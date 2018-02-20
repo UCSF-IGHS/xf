@@ -46,6 +46,7 @@
 
         $(function () {
             var legend_labels = JSON.parse('{{ legend_labels | jsonify | safe }}');
+            var chart_types = JSON.parse('{{ chart_types | jsonify | safe  }}');
             var data_points = JSON.parse('{{ datapoints | jsonify | safe}}');
             var dataset = [];
             var colors = colors_bar_chart;
@@ -157,6 +158,7 @@
 
                 data_points.forEach(function (point, index) {
                     var data = JSON.parse(data_points[index]);
+                    var type = chart_types[index];
                     {% if custom_attr|lookup:'error_bars' == 'yes' %}
                         if(String(legend_labels[index]).toLowerCase().includes("ci high") || String(legend_labels[index]).toLowerCase().includes("ci low")){
                             var errorPoints = [];
@@ -236,13 +238,13 @@
                         dataset.push(
                             {
                                 name: legend_labels[index],
-                                type: 'bar',
+                                type: type,
                                 {% if custom_attr|lookup:'stacked' == 'yes'%}
                                     stack: true,
                                 {% endif %}
                                 label: {
                                     normal: {
-                                        show: true,
+                                        show: false,
                                         position: 'insideRight'
                                     }
                                 },
@@ -280,7 +282,10 @@
                         },
                         xAxis: {
                             type: 'category',
-                            data: {{ labels|safe }}
+                            data: {{ labels|safe }},
+                            axisLabel: {
+                                rotate: 30,
+                            }
                         },
                     {% elif widget_type == '12' %}
                         xAxis:  {
@@ -291,7 +296,10 @@
                         },
                         yAxis: {
                             type: 'category',
-                            data: {{ labels|safe }}
+                            data: {{ labels|safe }},
+                            axisLabel: {
+                                rotate: 30,
+                            }
                         },
                     {% endif %}
                     series: dataset
