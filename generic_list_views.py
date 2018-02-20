@@ -17,6 +17,7 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
     paginate_by = 10
     generic = False
     list_class = None
+    foreign_key_name = None
 
     def __init__(self, *args, **kwargs):
         super(XFGenericListView, self).__init__(**kwargs)
@@ -25,6 +26,10 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
             self.list_class = kwargs['list_class'](kwargs['model'])
         else:
             self.list_class = XFModelList(kwargs['model'])
+
+        if 'foreign_key_name' in kwargs:
+            self.foreign_key_name = kwargs['foreign_key_name']
+            self.list_class.foreign_key_name = self.foreign_key_name
 
 
     def get_template_names(self):
@@ -63,6 +68,7 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
         context['current_url'] = self.request.get_full_path()
         if not context['current_url'].endswith("/"):
             context['current_url'] += '/'
+        context['list_url'] = context['current_url'][0:context['current_url'].find("?")]
 
         self.set_navigation_context()
         self.add_crud_urls_to_context(context)
@@ -75,9 +81,11 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
         be a queryset (in which qs-specific behavior will be enabled).
         """
 
+
+
         if self.list_class:
             return self.list_class.get_queryset(self.search_string, self.model,
-                                                self.kwargs['preset_filter'] if 'preset_filter' in self.kwargs else None)
+                                                self.kwargs['preset_filter'] if 'preset_filter' in self.kwargs else None, self.kwargs)
         else:
             try:
                 if not self.search_string is None:

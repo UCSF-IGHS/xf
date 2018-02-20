@@ -30,6 +30,7 @@ class XFModelList(XFCrudAssetLoaderMixIn):
         self.create_default_field_list()
         self.list_title = None
         self.list_hint = None
+        self.foreign_key_name = None
         self.search_hint = "Search for.."
         self.supported_crud_operations = ['add', 'change', 'delete', 'view', 'list']
         self.search_field = None
@@ -44,17 +45,24 @@ class XFModelList(XFCrudAssetLoaderMixIn):
             if not field.primary_key:
                 self.list_field_list.append(field.name)
 
-    def get_queryset(self, search_string, model, preset_filter):
+    def get_queryset(self, search_string, model, preset_filter, view_kwargs=None):
+
+        qs = model._default_manager.all()
+
+        try:
+            qs = qs.filter(** {self.foreign_key_name: view_kwargs['related_fk']})
+        except:
+            pass
 
         try:
             if not search_string is None:
                 kwargs = {
                     '{0}__{1}'.format(self.search_field, 'icontains'): search_string
                 }
-                queryset = model._default_manager.filter(**kwargs)
-                return queryset
+                qs_search = qs.filter(**kwargs)
+                return qs_search
         except:
-            return model._default_manager.all()
+            return qs
 
 
 # DO NOT USE

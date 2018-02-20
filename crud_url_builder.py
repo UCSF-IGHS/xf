@@ -1,0 +1,102 @@
+from django.conf.urls import url
+
+from xf_crud.generic_crud_views import XFDetailView, XFUpdateView, XFDeleteView, XFCreateView
+from xf_crud.generic_list_views import XFListView
+from xf_crud.model_forms import XFModelForm
+from xf_crud.model_lists import XFModelList
+
+
+class XFCrudURLBuilder():
+    def __init__(self, url_app_name, url_model_name, model_type):
+        self.url_app_name = url_app_name
+        self.url_model_name = url_model_name
+        self.model_type = model_type
+
+    def get_overview_url(self,
+                         url_operation_name="overview",
+                         view_class_type=XFDetailView,
+                         form_class_type=XFModelForm,
+                         ):
+        return self._generate_form_instance_url(url_operation_name, view_class_type, form_class_type)
+        pass
+
+    def get_details_url(self,
+                        url_operation_name="details",
+                        view_class_type=XFDetailView,
+                        form_class_type=XFModelForm,
+                        ):
+        return self._generate_form_instance_url(url_operation_name, view_class_type, form_class_type)
+
+    def get_edit_url(self,
+                     url_operation_name="edit",
+                     view_class_type=XFUpdateView,
+                     form_class_type=XFModelForm,
+                     ):
+        return self._generate_form_instance_url(url_operation_name, view_class_type, form_class_type)
+
+    def get_delete_url(self,
+                       url_operation_name="delete",
+                       view_class_type=XFDeleteView,
+                       form_class_type=XFModelForm,
+                       ):
+        return self._generate_form_instance_url(url_operation_name, view_class_type, form_class_type)
+
+    def get_new_url(self,
+                    url_operation_name="new",
+                    view_class_type=XFCreateView,
+                    form_class_type=XFModelForm,
+                    ):
+        return url(r'^%s/%s/new' % (self.url_app_name, self.url_model_name),
+                   view_class_type.as_view(model=self.model_type, form_class=form_class_type,
+                                           success_url="%s/%s/" % (self.url_app_name, self.url_model_name),
+                                           app_name=self.url_app_name, model_url_part=self.url_model_name),
+                   name="%s_%s_%s" % (self.url_app_name, self.url_model_name, url_operation_name))
+
+    def get_relational_list_url(self,
+                                url_operation_name="overview",
+                                view_class_type=XFDetailView,
+                                form_class_type=XFModelForm,
+                                ):
+        return self._generate_form_instance_url(url_operation_name, view_class_type, form_class_type)
+
+    def _generate_form_instance_url(self, operation_name, view_class_type, form_class_type):
+        return url(r'^%s/%s/(?P<pk>[-\w]+)/%s' % (self.url_app_name, self.url_model_name, operation_name),
+                   view_class_type.as_view(model=self.model_type, form_class=form_class_type,
+                                           success_url="%s/%s/" % (self.url_app_name, self.url_model_name),
+                                           app_name=self.url_app_name,
+                                           model_url_part=self.url_model_name),
+                   name="%s_%s_%s" % (self.url_app_name, self.url_model_name, operation_name))
+
+    def get_list_url(self, url_operation_name="list",
+                     view_class_type=XFListView,
+                     list_class_type=XFModelList):
+        return url(r'^%s/%s/' % (self.url_app_name, self.url_model_name),
+                   view_class_type.as_view(model=self.model_type, generic=True,
+                                           queryset=self.model_type.objects.order_by("name"),
+                                           list_class=list_class_type, app_name=self.url_app_name,
+                                           model_url_part=self.url_model_name),
+                   name="%s_%s_%s" % (self.url_app_name, self.url_model_name, url_operation_name))
+
+    def get_list_preset_filter_url(self, url_operation_name="list_filter",
+                                   view_class_type=XFListView,
+                                   list_class_type=XFModelList):
+        return url(r'^%s/%s/(?P<preset_filter>[-\w]+)' % (self.url_app_name, self.url_model_name),
+                   view_class_type.as_view(model=self.model_type, generic=True,
+                                           queryset=self.model_type.objects.order_by("name"),
+                                           list_class=list_class_type, app_name=self.url_app_name,
+                                           model_url_part=self.url_model_name),
+                   name="%s_%s_%s" % (self.url_app_name, self.url_model_name, url_operation_name))
+
+    def get_list_related_url(self,
+                             url_operation_name="list_related",
+                             url_related_name="by-default",
+                             foreign_key_name=None,
+                             view_class_type=XFListView,
+                             list_class_type=XFModelList):
+        return url(r'^%s/%s/%s/(?P<related_fk>[-\w]+)' % (self.url_app_name, self.url_model_name, url_related_name),
+                   view_class_type.as_view(model=self.model_type, generic=True,
+                                           queryset=self.model_type.objects.order_by("name"),
+                                           list_class=list_class_type, app_name=self.url_app_name,
+                                           model_url_part=self.url_model_name, foreign_key_name=foreign_key_name),
+                   name="%s_%s_%s" % (self.url_app_name, self.url_model_name, url_operation_name))
+
