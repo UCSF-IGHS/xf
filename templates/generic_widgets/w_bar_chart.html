@@ -158,7 +158,6 @@
 
                 data_points.forEach(function (point, index) {
                     var data = JSON.parse(data_points[index]);
-                    var type = chart_types[index];
                     {% if custom_attr|lookup:'error_bars' == 'yes' %}
                         if(String(legend_labels[index]).toLowerCase().includes("ci high") || String(legend_labels[index]).toLowerCase().includes("ci low")){
                             var errorPoints = [];
@@ -238,7 +237,7 @@
                         dataset.push(
                             {
                                 name: legend_labels[index],
-                                type: type,
+                                type: chart_types[index],
                                 {% if custom_attr|lookup:'stacked' == 'yes'%}
                                     stack: true,
                                 {% endif %}
