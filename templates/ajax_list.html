@@ -16,12 +16,12 @@
         <ul class="pager">
             {% if page_obj.has_previous %}
                 <li>
-                    <a href="?page={{ page_obj.previous_page_number }}&search_string={{ search_string }}" class="mxlajax" html-target="ctxObjectList" >previous</a>
+                    <a href="{{ list_url }}?page={{ page_obj.previous_page_number }}&search_string={{ search_string }}" class="mxlajax" html-target="ctxObjectList" >previous</a>
                 </li>
             {% endif %}
             {% if page_obj.has_next %}
                 <li>
-                    <a href="?page={{ page_obj.next_page_number }}&search_string={{ search_string }}" class="mxlajax" html-target="ctxObjectList" >next</a>
+                    <a href="{{ list_url }}?page={{ page_obj.next_page_number }}&search_string={{ search_string }}" class="mxlajax" html-target="ctxObjectList" >next</a>
                 </li>
             {% endif %}
         </ul>

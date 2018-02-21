@@ -85,7 +85,7 @@
 
             <div class="x_content">
 
-                <div id="ctxObjectList" href="{{ current_url }}">
+                <div id="ctxObjectList" href="{{ list_url }}">
 
                     {% block object_list %}{% endblock %}
 
@@ -94,13 +94,13 @@
                     <ul class="pager">
                         {% if page_obj.has_previous %}
                             <li>
-                                <a href="?page={{ page_obj.previous_page_number }}&search_string={{ search_string }}"
+                                <a href="{{ list_url }}?page={{ page_obj.previous_page_number }}&search_string={{ search_string }}"
                                    class="mxlajax" html-target="ctxObjectList">previous</a>
                             </li>
                         {% endif %}
                         {% if page_obj.has_next %}
                             <li>
-                                <a href="?page={{ page_obj.next_page_number }}&search_string={{ search_string }}"
+                                <a href="{{ list_url }}?page={{ page_obj.next_page_number }}&search_string={{ search_string }}"
                                    class="mxlajax" html-target="ctxObjectList">next</a>
                             </li>
                         {% endif %}
@@ -118,7 +118,9 @@
 
     <script type="text/javascript">
         function mxlSuccess() {
-            $("#lnkClear").click();
+            RefreshObjectList('{{ current_url }}');
+            //$("#lnkClear").click();
+
         }
 
         var base_url = '{%  url url_name_list %}';

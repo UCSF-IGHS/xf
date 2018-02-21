@@ -83,7 +83,6 @@ def crudurl(appname, modelname, model_type, form_class_type, list_class_type=XFM
         form_class_type.Meta.title = modelname.capitalize()
 
     list_class = list_class_type(model_type)
-    print(list_class.supported_crud_operations)
 
     urls = []
     if 'add' in list_class.supported_crud_operations:

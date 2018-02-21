@@ -39,5 +39,3 @@ class XFCrudMixin(object):
     def get_model_name_for_crud_view(self):
         return self.get_form_class().Meta.model.__name__.lower()
 
-    def get_form_name(self):
-        return "bookform"
