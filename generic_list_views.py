@@ -85,7 +85,7 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
 
         if self.list_class:
             return self.list_class.get_queryset(self.search_string, self.model,
-                                                self.kwargs['preset_filter'] if 'preset_filter' in self.kwargs else None, self.kwargs)
+                                                self.kwargs['preset_filter'] if 'preset_filter' in self.kwargs else None)
         else:
             try:
                 if not self.search_string is None:
