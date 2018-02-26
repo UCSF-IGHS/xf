@@ -36,37 +36,118 @@
     </div>
 
     <div style="text-align: center; margin-bottom: 17px">
-        <canvas id="{{ widget_id }}"></canvas>
-        <div class="divider"></div>
-        <p><span class="message">{{ extra_text }}</span>
-        </p>
+        {% if custom_attr|lookup:'renderer'|length == 0 or custom_attr|lookup:'renderer' == 'default' %}
+            <canvas id="{{ widget_id }}"></canvas>
+        {% endif %}
+        {% if custom_attr|lookup:'renderer' == 'echarts' %}
+            <div id="{{ widget_id }}" style="height: {{ custom_attr|lookup:"widget_height" }};"></div>
+        {% endif %}
+        <!--<div class="divider"></div>-->
+        <!--<p><span class="message">{{ extra_text }}</span></p>-->
     </div>
     <script type="text/javascript">
 
         $(function () {
 
-            var ctx = $("#{{ widget_id }}");
-            var data = {
-                labels: {{ labels|safe }},
-                datasets: [{
-                    data: {{ datapoints.0|safe }},
-                    backgroundColor: color_pie_graph_background,
-                    hoverBackgroundColor: color_pie_chart_hover_background
+            {% if custom_attr|lookup:'renderer'|length == 0 or custom_attr|lookup:'renderer' == 'default' %}
+                var ctx = $("#{{ widget_id }}");
+                var data = {
+                    labels: {{ labels|safe }},
+                    datasets: [{
+                        data: {{ datapoints.0|safe }},
+                        backgroundColor: color_pie_graph_background,
+                        hoverBackgroundColor: color_pie_chart_hover_background
 
-                }]
-            }
-            var myPieChart = new Chart(ctx, {
-                type: 'pie',
-                data: data,
-                options: {
-                    responsive: true,
-                    legend: {
-                        display: false
-                    }
+                    }]
                 }
-            });
+                var myPieChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        legend: {
+                            display: false
+                        }
+                    }
+                });
+            {% endif %}
+            {% if custom_attr|lookup:'renderer' == 'echarts' %}
 
+                function genData() {
+                    var legend_labels = String(JSON.parse('{{ labels | safe }}')).split(',');
+                    var data_points = String({{ datapoints.0|safe }}).split(',');
 
+                    var legendData = [];
+                    var seriesData = [];
+                    var selected = {};
+
+                    for (var i = 0; i < data_points.length; i++) {
+                        name = legend_labels[i];
+                        legendData.push(name);
+                        seriesData.push({
+                            name: name,
+                            value: data_points[i]
+                        });
+                        selected[name] = i < data_points.length;
+                    }
+
+                    return {
+                        legendData: legendData,
+                        seriesData: seriesData,
+                        selected: selected
+                    };
+                }
+
+                var echartPie = echarts.init(document.getElementById('{{ widget_id }}'));
+                var data = genData();
+
+                echartPie.setOption({
+                    color: color_pie_graph_background,
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{b}"
+                    },
+                    legend: {
+                        x: 'left',
+                        y: 'bottom',
+                        data: data.legendData
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            magicType: {
+                                show: true,
+                                type: ['pie', 'funnel'],
+                                option: {
+                                    funnel: {
+                                        x: '25%',
+                                        width: '50%',
+                                        funnelAlign: 'left',
+                                        max: 1548
+                                    }
+                                }
+                            },
+                        }
+                    },
+                    series: [{
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['40%', '35%'],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: false
+                                },
+                                labelLine: {
+                                    show: false
+                                }
+                            }
+                        },
+                        data: data.seriesData,
+                    }]
+                });
+
+            {% endif %}
         });
     </script>
 

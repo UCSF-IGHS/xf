@@ -499,6 +499,7 @@ class WidgetView(TemplateView):
                 # wrapped into an array of arrays - with only one element for pie
                 datapoints = []
                 legend_labels = []
+                chart_types = []
                 for column in self.widget.data_point_column.split('\n'):
 
                     # create a dictionary like {'legend_label': 'number of admissions', 'column_name': 'admissions'}
@@ -507,6 +508,10 @@ class WidgetView(TemplateView):
                     # PYTHON3 UPDATE
                     if "legend_label" in data_point_column_description:
                         legend_labels.append(data_point_column_description['legend_label'])
+                    if "chart_type" in data_point_column_description:
+                        chart_types.append(data_point_column_description['chart_type'])
+                    else:
+                        chart_types.append('bar')
                     # single row with data points, for a line chart with 2 lines will have two of them
                     datapoint_row = []
                     for row in rows:
@@ -515,6 +520,7 @@ class WidgetView(TemplateView):
                     datapoints.append(str(datapoint_row).replace("'", ''))
                 context["datapoints"] = datapoints
                 context["legend_labels"] = legend_labels
+                context["chart_types"] = chart_types
 
             # This variable determines whether the "view data" command is available in the widget. Only
             # available for widgets that support it.
