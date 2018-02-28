@@ -122,5 +122,5 @@ def crudurl(appname, modelname, model_type, form_class_type, list_class_type=XFM
                                            list_class=list_class_type, app_name=appname, model_url_part=modelname),
                         name="%s_%s_list" % (appname, modelname)))
 
-    return urls
 
+    return urls

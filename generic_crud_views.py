@@ -1,5 +1,6 @@
 from django.core.exceptions import PermissionDenied
 from django.db.models import ProtectedError
+from django.urls import reverse
 from django.views.generic import DetailView, UpdateView, DeleteView, CreateView
 from django.views.generic.edit import ModelFormMixin
 
@@ -37,6 +38,26 @@ class XFDetailView(DetailView, ModelFormMixin, XFPermissionMixin, XFAjaxViewMixi
     def get(self, request, **kwargs):
         XFAjaxViewMixin.get(self, request, **kwargs)
         return DetailView.get(self, request, **kwargs)
+
+
+class XFMasterChildView(XFDetailView):
+    template_name = "form_master_child.html"
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.related_tabs = []
+
+    def add_related_listview(self, related_list_view):
+        self.related_tabs.append(related_list_view)
+
+    def get_context_data(self, **kwargs):
+        context = super(XFMasterChildView, self).get_context_data(**kwargs)
+        #context['list_url'] = reverse('library_book-instances_list_related', kwargs={'related_fk':self.kwargs['pk']})
+
+        context['related_tabs'] = self.related_tabs
+        return context
+
+
 
 
 class XFUnsafeDetailView(DetailView, ModelFormMixin, XFAjaxViewMixin, XFCrudMixin):
@@ -150,12 +171,20 @@ class XFCreateView(CreateView, XFPermissionMixin, XFAjaxViewMixin, XFNavigationV
         return XFAjaxViewMixin.prepare_form_valid(self, self.request, form,
                                                   CreateView.form_valid(self, form))
 
+    def get_initial(self):
+        return self.get_initial_form_data_from_querystring()
+
     def get_context_data(self, **kwargs):
         self.context = context = super(XFCreateView, self).get_context_data(**kwargs)
         context['action'] = "Create"
         context['formname'] = self.get_form_class().__name__
-        print(self.get_form_class().Meta.model.__name__.lower())
+
+        fields = self.get_form().fields
+        #for field in self.get_form().initial:
+        #    fields[field].disabled = True
+
         self.ensure_set_context_perm("add")
         self.set_navigation_context()
         self.add_crud_urls_to_context(context)
+
         return context

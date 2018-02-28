@@ -1,4 +1,4 @@
-{% extends "xf_base.html" %}
+
 {% load staticfiles %}
 
 {% block h %}
@@ -17,13 +17,8 @@
 
 
 {% block main %}
+<!-- Region B -->
 
-
-
-    <h1>
-
-    </h1>
-    <hr>
     {% include "content_ajax.html" %}
 
     <div class="list-view">
@@ -32,7 +27,7 @@
                 {% if add %}
                     <!--<a href="new" class="btn btn-primary">Create new</a>-->
 
-                    <a data-toggle="modal" href="{% url url_name_new %}?{{ new_initial_data }}" class="btn btn-primary btn-default" data-target="#frmDlg"
+                    <a data-toggle="modal" href="{% url url_name_new %}?ajax&{{ new_initial_data }}" class="btn btn-primary btn-default" data-target="#frmDlg"
                        html-target="#frmDlgHtml">Create new</a>
                 {% endif %}
             </div>
@@ -50,12 +45,12 @@
 
             <div class="nav navbar-right col-md-5">
                 {% if search %}
-                <form class="form-search2 mxlget" method="get" id="frmSearch4" html-target="ctxObjectList_{{ list_url_id }}" action="{{ current_url }}">
+                <form class="form-search2 mxlget" method="get" id="frmSearch4" html-target="ctxObjectList_{{ list_url_id }}" action="{{ list_url }}">
                     <div class="input-group">
                         <input type="text" class="form-control" name="search_string" value="{{ search_string }}" id="txtSearchString"
                                placeholder="{{ search_hint }}">
                         <span class="input-group-btn ">
-                      <button class="btn btn-default" type="submit">Go!</button><a href="{{ current_url }}"
+                      <button class="btn btn-default" type="submit">Go!</button><a href="{{ list_url }}"
                                                                                    class="btn btn-default mxlajax"
                                                                                    html-target="ctxObjectList_{{ list_url_id }}"
                                                                                    id="lnkClear">Clear</a>
@@ -115,10 +110,11 @@
 {% endblock %}
 
 {% block extrajs %}
-
     <script type="text/javascript">
         function mxlSuccess() {
+            //$("#lnkClear").click();
             RefreshObjectListForDiv($("#ctxObjectList_{{ list_url_id }}"));
+
         }
 
         var base_url = '{%  url url_name_list %}';
@@ -132,7 +128,7 @@
 
     </script>
 
-
+<!-- /Region B -->
 
 
 {% endblock %}

@@ -58,7 +58,10 @@ class XFAjaxViewMixin():
         OLD: Sets the form when using a list. A list requires a different approach - it is either
         fully embedded within a template, or just plain.
         """
-        if request.GET.get('ajax') is not None:
+        if request.GET.get('embed') is not None:
+            context['extends'] = 'listview_generic_embedded.html'
+            context['ajax'] = '&embed'
+        elif request.GET.get('ajax') is not None:
             context['extends'] = 'ajax_list.html'
             context['ajax'] = '&ajax'
         else:
