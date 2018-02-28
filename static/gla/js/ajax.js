@@ -59,13 +59,13 @@ function bindAjax() {
 
         var htmltarget = $(this).attr('html-target')
         var formtarget = $(this).attr('data-target')
-        var url = $(this).attr('href') + "?ajax";
+        var url = CreateAJAXURL($(this).attr('href')); // ensures that Django loads the AJAX version of this page
 
         // This is a hack. The href is used to both pop a modal window, and to find the POST URL for a modal window.
         // For a popup in a popup this doesn't work... so a new attribute hrefpost has been introduced to resolve
         // this.
         if ($(this).attr('hrefpost') != null)
-            url = $(this).attr('hrefpost') + "?ajax";
+            url = CreateAJAXURL($(this).attr('hrefpost'));
 
         // Ensure that the new form is bound to the submit event and load the FORM based on the
         // URL parameter
@@ -160,10 +160,11 @@ function getform(e) {
 
 
     var form = $("#" + e.id);
+    var url = CreateAJAXURL(form.attr('action'));
     var htmlTarget = form.attr('html-target');
     $.ajax({
         type: "GET",
-        url: window.location.href + "?ajax",
+        url: url,
         data: $("#" + e.id).serialize(), // serializes the form's elements.
         success: function(data)
         {
@@ -176,12 +177,8 @@ function getform(e) {
 function gethtml(source) {
 
     var htmlTarget = source.attr('html-target');
-    var url = source.attr('href');
-    // Add ?ajax/&ajax depending on link in the href
-    if (url.indexOf("?") == -1)
-        url = url + "?ajax";
-    else
-        url = url + "&ajax";
+    var url = CreateAJAXURL(source.attr('href'));
+
     $("#" + htmlTarget).load(url, function() {
         // Always rebind after loading HTML
         bindAjax();
@@ -192,10 +189,8 @@ function gethtml(source) {
 function LoadHTMLIntoDiv(url, divTarget) {
 
     // Add ?ajax/&ajax depending on link in the href
-    if (url.indexOf("?") == -1)
-        url = url + "?ajax";
-    else
-        url = url + "&ajax";
+    url = CreateAJAXURL(url);
+
     divTarget.load(url, function() {
         // Always rebind after loading HTML
         bindAjax();
@@ -312,5 +307,32 @@ function selectURL(url) {
 function RefreshObjectList(url) {
 
     LoadHTMLIntoDiv(url, $('#ctxObjectList'));
+
+}
+
+function RefreshObjectListForDiv(div) {
+
+    var url = div.attr('href');
+    LoadHTMLIntoDiv(url, div);
+}
+
+function CreateAJAXURL(url){
+
+    if (url.indexOf("?") == -1)
+        url = url + "?ajax";
+    else
+        url = url + "&ajax";
+
+    return url;
+}
+
+function CreateEmbedURL(url) {
+
+    if (url.indexOf("?") == -1)
+        url = url + "?embed";
+    else
+        url = url + "&embed";
+
+    return url;
 
 }
