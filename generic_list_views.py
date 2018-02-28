@@ -8,7 +8,7 @@ from xf_crud.mixins import XFCrudMixin
 from xf_crud.model_lists import XFModelList
 from xf_crud.permission_mixin import XFPermissionMixin
 from xf_system.views import XFNavigationViewMixin
-
+import uuid
 
 
 
@@ -27,6 +27,7 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
         else:
             self.list_class = XFModelList(kwargs['model'])
 
+        # Used for child list views that need to filter for a certain foreign key.
         if 'foreign_key_name' in kwargs:
             self.foreign_key_name = kwargs['foreign_key_name']
             self.list_class.foreign_key_name = self.foreign_key_name
@@ -69,6 +70,10 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
         if not context['current_url'].endswith("/"):
             context['current_url'] += '/'
         context['list_url'] = context['current_url'][0:context['current_url'].find("?")]
+        context['list_url_id'] = context['list_url'].replace("/", "_")
+        if not context['list_url_id'].endswith("_"):
+            context['list_url_id'] += '_'
+
 
         self.set_navigation_context()
         self.add_crud_urls_to_context(context)
@@ -80,8 +85,6 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
         Get the list of items for this view. This must be an iterable, and may
         be a queryset (in which qs-specific behavior will be enabled).
         """
-
-
 
         if self.list_class:
             return self.list_class.get_queryset(self.search_string, self.model,
@@ -117,6 +120,7 @@ class XFListView(XFGenericListView, XFPermissionMixin, XFAjaxViewMixin):
 
     def __init__(self, *args, **kwargs):
         super(XFListView, self).__init__(*args, **kwargs)
+        self.id = str(uuid.uuid4()).replace("-", "_")
 
 
     def get(self, request, *args, **kwargs):
@@ -135,6 +139,7 @@ class XFListView(XFGenericListView, XFPermissionMixin, XFAjaxViewMixin):
         context['search_string'] = self.search_string
         context['action'] = "List"
         context['browse'] = True
+        context['id'] = self.id # Can be used to create unique IDs for JavaScript objects
         # Set to AJAX list if necessary
         self.set_list_allowable_operations(context)
         self.set_list_template(context, self.request)
@@ -154,6 +159,21 @@ class XFListView(XFGenericListView, XFPermissionMixin, XFAjaxViewMixin):
         context["delete"] = "delete" in self.list_class.supported_crud_operations and self.user_has_model_permission(
             "delete")
 
+
+class XFRelatedListView(XFListView):
+
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(self.foreign_key_name)
+        print(self.kwargs)
+        context["new_initial_data"] = "%s=%s" % (self.foreign_key_name, self.kwargs['related_fk'])
+        return context
 
 
 class XFUnsafeListView(XFGenericListView):

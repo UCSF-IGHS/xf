@@ -23,6 +23,13 @@ class XFCrudMixin(object):
     def get_app_name(self):
         return self.app_name
 
+    def get_initial_form_data_from_querystring(self):
+
+        initial_form_data = {}
+        for key in self.request.GET:
+            initial_form_data[key] = self.request.GET.get(key)
+        return initial_form_data
+
     def get_model_name(self):
 
         return self.model_url_part

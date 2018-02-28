@@ -1,4 +1,5 @@
 from django.conf.urls import url
+import uuid
 
 from xf_crud.generic_crud_views import XFCreateView
 
@@ -31,6 +32,7 @@ class XFModelList(XFCrudAssetLoaderMixIn):
         self.list_title = None
         self.list_hint = None
         self.foreign_key_name = None
+        self.list_url = None
         self.search_hint = "Search for.."
         self.supported_crud_operations = ['add', 'change', 'delete', 'view', 'list']
         self.search_field = None
@@ -63,6 +65,15 @@ class XFModelList(XFCrudAssetLoaderMixIn):
                 return qs_search
         except:
             return qs
+
+class XFDivLoader:
+
+    def __init__(self,
+                 caption = None,
+                 url = None):
+        self.id = str(uuid.uuid4()).replace("-", "_")
+        self.url = url
+        self.caption = caption
 
 
 # DO NOT USE
