@@ -500,6 +500,7 @@ class WidgetView(TemplateView):
                 datapoints = []
                 legend_labels = []
                 chart_types = []
+                y_axis = []
                 for column in self.widget.data_point_column.split('\n'):
 
                     # create a dictionary like {'legend_label': 'number of admissions', 'column_name': 'admissions'}
@@ -512,6 +513,10 @@ class WidgetView(TemplateView):
                         chart_types.append(data_point_column_description['chart_type'])
                     else:
                         chart_types.append('bar')
+                    if "y_axis" in data_point_column_description:
+                        y_axis.append(data_point_column_description['y_axis'])
+                    else:
+                        y_axis.append('0')
                     # single row with data points, for a line chart with 2 lines will have two of them
                     datapoint_row = []
                     for row in rows:
@@ -521,6 +526,7 @@ class WidgetView(TemplateView):
                 context["datapoints"] = datapoints
                 context["legend_labels"] = legend_labels
                 context["chart_types"] = chart_types
+                context["y_axis"] = y_axis
 
             # This variable determines whether the "view data" command is available in the widget. Only
             # available for widgets that support it.
