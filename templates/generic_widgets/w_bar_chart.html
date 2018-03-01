@@ -47,6 +47,7 @@
         $(function () {
             var legend_labels = JSON.parse('{{ legend_labels | jsonify | safe }}');
             var chart_types = JSON.parse('{{ chart_types | jsonify | safe  }}');
+            var y_axis = JSON.parse('{{ y_axis | jsonify | safe  }}');
             var data_points = JSON.parse('{{ datapoints | jsonify | safe}}');
             var dataset = [];
             var colors = colors_bar_chart;
@@ -238,6 +239,9 @@
                             {
                                 name: legend_labels[index],
                                 type: chart_types[index],
+                                {% if   custom_attr|lookup:'show_right_yaxis' == 'yes' %}
+                                    yAxisIndex: y_axis[index],
+                                {% endif %}
                                 {% if custom_attr|lookup:'stacked' == 'yes'%}
                                     stack: true,
                                 {% endif %}
@@ -259,7 +263,7 @@
                     tooltip : {
                         trigger: 'axis',
                         axisPointer : {
-                            type : 'shadow'        // type ：'line' | 'shadow'
+                            type : 'cross'        // type ：'line' | 'shadow'
                         }
                     },
                     color: colors,
@@ -273,12 +277,27 @@
                         containLabel: true
                     },
                     {% if widget_type == '6' %}
-                        yAxis:  {
+                        yAxis:  [{
                             type: 'value',
                             {% if   custom_attr|lookup:'maximum_scale' != '' %}
                                 max: parseInt('{{ custom_attr|lookup:'maximum_scale' }}')
                             {% endif %}
                         },
+                        {% if   custom_attr|lookup:'show_right_yaxis' == 'yes' %}
+                            {
+                                type: 'value',
+                                {% if   custom_attr|lookup:'min' != '' %}
+                                    min: parseInt('{{ custom_attr|lookup:'min' }}'),
+                                {% endif %}
+                                {% if   custom_attr|lookup:'max' != '' %}
+                                    max: parseInt('{{ custom_attr|lookup:'max' }}'),
+                                {% endif %}
+                                position: 'right',
+                                axisLabel: {
+                                    formatter: '{value} ' {% if   custom_attr|lookup:'right_yaxis_label' != '' %} + '{{ custom_attr|lookup:'right_yaxis_label' }}' {% endif %}
+                                }
+                           }
+                       {% endif %}],
                         xAxis: {
                             type: 'category',
                             data: {{ labels|safe }},
