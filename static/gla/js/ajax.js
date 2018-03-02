@@ -79,6 +79,14 @@ function bindAjax() {
     // Set up the search field to clear after clicking the Clear button
     $("#lnkClear").click(function(){ $("#txtSearchString").val(""); });
 
+    /* Clickable table rows and cells */
+    /* Cells work better when using drop down buttons in the row */
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+    $(".clickable-cell").click(function() {
+        window.location = $(this).data("href");
+    });
 }
 
 
@@ -336,3 +344,6 @@ function CreateEmbedURL(url) {
     return url;
 
 }
+
+
+
