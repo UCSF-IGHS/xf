@@ -24,12 +24,13 @@
     <div class="list-view">
         <div class="row-fluid">
             <div class="col-md-2">
-                {% if add %}
-                    <!--<a href="new" class="btn btn-primary">Create new</a>-->
+                    {% for action in screen_actions %}
+                                <a class="btn btn-default {% if forloop.counter == 1 %}btn-primary {% endif %} " {% if action.use_ajax %}data-toggle="modal"
+                                    data-target="#frmDlg" html-target="#frmDlgHtml" {% endif %}
+                                       href="{% url action.url_name%}?{{ new_initial_data }}">
+                                    {{ action.action_caption }}</a>
+                    {% endfor %}
 
-                    <a data-toggle="modal" href="{% url url_name_new %}?ajax&{{ new_initial_data }}" class="btn btn-primary btn-default" data-target="#frmDlg"
-                       html-target="#frmDlgHtml">Create new</a>
-                {% endif %}
             </div>
 
 

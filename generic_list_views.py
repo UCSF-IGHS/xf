@@ -51,7 +51,11 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
             # Add the columns
             context['columns'] = []
             for field in context['fields']:
-                context['columns'].append(self.model._meta.get_field(field).verbose_name.title())
+                try:
+                    context['columns'].append(self.model._meta.get_field(field).verbose_name.title())
+                except:
+                    context['columns'].append(field)
+
 
             # Add pre-set filters, if any
             try:
@@ -76,6 +80,8 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
 
 
         self.set_navigation_context()
+        self.add_urls_to_actions_for_list_class(self.list_class, context)
+        # TODO: This needs to be turned into actions here
         self.add_crud_urls_to_context(context)
         return context
 
@@ -88,7 +94,7 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
 
         if self.list_class:
             return self.list_class.get_queryset(self.search_string, self.model,
-                                                self.kwargs['preset_filter'] if 'preset_filter' in self.kwargs else None)
+                                                self.kwargs['preset_filter'] if 'preset_filter' in self.kwargs else None, self.kwargs)
         else:
             try:
                 if not self.search_string is None:
@@ -148,16 +154,36 @@ class XFListView(XFGenericListView, XFPermissionMixin, XFAjaxViewMixin):
 
     def set_list_allowable_operations(self, context):
 
-        context["add"] = "add" in self.list_class.supported_crud_operations and self.user_has_model_permission(
-            "add")
+        # Remove any actions for which the user does not have permissions
+        # The action defines the permission required
+        self.list_class.row_action_list = context['row_action_list'] = \
+            [action for action in self.list_class.row_action_list if
+                 self.user_has_model_permission(action.permission_required)]
+
+        self.list_class.screen_actions = context['screen_actions'] = \
+            [action for action in self.list_class.screen_actions if
+                 self.user_has_model_permission(action.permission_required)]
+
+        self.list_class.screen_action_list = context['screen_action_list'] = \
+            [action for action in self.list_class.screen_action_list if
+                 self.user_has_model_permission(action.permission_required)]
+
+        if self.list_class.row_default_action:
+            if not self.user_has_model_permission(self.list_class.row_default_action.permission_required):
+                self.list_class.row_default_action = context['row_default_action'] = None
+
+        # Obsolete with the new action model
         context["search"] = "search" in self.list_class.supported_crud_operations and self.user_has_model_permission(
             "list")
-        context["change"] = "change" in self.list_class.supported_crud_operations and self.user_has_model_permission(
-            "change")
-        context["view"] = "view" in self.list_class.supported_crud_operations and self.user_has_model_permission(
-            "view")
-        context["delete"] = "delete" in self.list_class.supported_crud_operations and self.user_has_model_permission(
-            "delete")
+
+        # context["add"] = "add" in self.list_class.supported_crud_operations and self.user_has_model_permission(
+        #     "add")
+        # context["change"] = "change" in self.list_class.supported_crud_operations and self.user_has_model_permission(
+        #     "change")
+        # context["view"] = "view" in self.list_class.supported_crud_operations and self.user_has_model_permission(
+        #     "view")
+        # context["delete"] = "delete" in self.list_class.supported_crud_operations and self.user_has_model_permission(
+        #     "delete")
 
 
 class XFRelatedListView(XFListView):
