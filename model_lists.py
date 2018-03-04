@@ -2,7 +2,7 @@ from django.conf.urls import url
 import uuid
 
 from xf_crud.generic_crud_views import XFCreateView
-from xf_crud.xf_classes import XFUIAction, XFActionType
+from xf_crud.xf_classes import XFUIAction, ACTION_ROW_INSTANCE, ACTION_NEW_INSTANCE
 
 
 class XFCrudAssetLoaderMixIn(object):
@@ -54,13 +54,13 @@ class XFModelList(XFCrudAssetLoaderMixIn):
 
     def initialise_action_lists(self):
         self.screen_actions.append(
-            XFUIAction('new', 'Create new', 'add')
+            XFUIAction('new', 'Create new', 'add', action_type=ACTION_NEW_INSTANCE)
         )
 
         self.row_action_list.extend(
-            (XFUIAction('edit', 'Edit', 'change'),
-             XFUIAction('delete', 'Delete', 'delete'),
-             XFUIAction('details', 'View details', 'view', use_ajax=False))
+            (XFUIAction('edit', 'Edit', 'change', action_type=ACTION_ROW_INSTANCE),
+             XFUIAction('delete', 'Delete', 'delete', action_type=ACTION_ROW_INSTANCE),
+             XFUIAction('details', 'View details', 'view', action_type=ACTION_ROW_INSTANCE, use_ajax=False))
         )
 
     def get_entity_action(self, action_name):

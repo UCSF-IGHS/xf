@@ -1,0 +1,36 @@
+{% load getattribute %}
+
+
+{% if action.action_type == 2 %}
+    <a  {% if action.use_ajax %}
+                data-toggle="modal"
+                data-target="#frmDlg"
+                html-target="#frmDlgHtml"
+            {% endif %}
+            {% if action.next_url %}
+               data-next-url="{{ action.next_url }}"
+            {% endif %}
+                href="{% url action.url_name object|getattribute:primary_key %}"
+                class="{{ css_class }}"
+                >
+        {{ action.action_caption }}
+
+    </a>
+{% endif %}
+
+{% if action.action_type == 4 %}
+    <a  {% if action.use_ajax %}
+                data-toggle="modal"
+                data-target="#frmDlg"
+                html-target="#frmDlgHtml"
+            {% endif %}
+            {% if action.next_url %}
+               data-next-url="{{ action.next_url }}"
+            {% endif %}
+                href="{% url action.url_name %}?{{ action.initial_data }}{{  object|getattribute:primary_key  }}"
+                class="{{ css_class }}"
+                >
+        {{ action.action_caption }}
+
+    </a>
+{% endif %}

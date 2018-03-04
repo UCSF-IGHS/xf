@@ -89,6 +89,6 @@ class XFAjaxViewMixin():
         else:
             self.message = self.success_message
             self.success = True
-            return_value = {'success': self.success, 'message': self.message}
+            return_value = {'success': self.success, 'message': self.message, 'pk': self.object.id, 'object': self.object.__str__()}
             #print return_value
             return HttpResponse(json.dumps(return_value), content_type='application/json', )

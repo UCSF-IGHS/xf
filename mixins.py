@@ -1,4 +1,5 @@
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+
 
 #from xf_crud.xf_classes import XFUIBuilder
 
@@ -27,12 +28,20 @@ class XFCrudMixin(object):
 
         for action in list_class.row_action_list:
             action.url_name = self._process_url_name_with_app_and_model_name(action.url_name)
+            if action.next_url is not None:
+                action.next_url = reverse(action.next_url, args=(0,))
+
 
         for action in list_class.screen_actions:
             action.url_name = self._process_url_name_with_app_and_model_name(action.url_name)
+            if action.next_url is not None:
+                action.next_url = reverse(action.next_url, args=(0,))
 
         for action in list_class.screen_action_list:
             action.url_name = self._process_url_name_with_app_and_model_name(action.url_name)
+            if action.next_url is not None:
+                action.next_url = reverse(action.next_url, args=(0,))
+
 
         if list_class.row_default_action is not None:
             list_class.row_default_action.url_name = \

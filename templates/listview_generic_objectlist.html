@@ -41,11 +41,9 @@
                         </a>
                     <ul class="dropdown-menu small">
                     {% for action in row_action_list %}
-
-                                <li><a {% if action.use_ajax %}data-toggle="modal"
-                                    data-target="#frmDlg" html-target="#frmDlgHtml" {% endif %}
-                                       href="{% url action.url_name object|getattribute:primary_key %}">
-                                    {{ action.action_caption }}</a></li>
+                        <li>
+                        {% include 'renderer_snippets/xf_action_item_renderer.html' with action=action css_class="css_class"%}
+                        </li>
                     {% endfor %}
                     </ul>
                 </div>

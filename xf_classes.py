@@ -2,15 +2,16 @@ from enum import Enum
 #from xf_crud.crud_url_builder import XFCrudURLBuilder
 
 
-class XFActionType(Enum):
-    """
-    Represents the type of action, which can be either on a new entity, an entity instance, or a list of entities.
-    For example, details, edit, delete are entity instance actions. New is a new entity instance action. Search is
-    based on a list of entities. This value determines whether an action requires a primary key or not.
-    """
-    SINGLE_ENTITY_NEW = 1,
-    SINGLE_ENTITY_PK = 2,
-    LIST_ENTITIES = 3
+"""
+Represents the type of action, which can be either on a new entity, an entity instance, or a list of entities.
+For example, details, edit, delete are entity instance actions. New is a new entity instance action. Search is
+based on a list of entities. This value determines whether an action requires a primary key or not.
+"""
+ACTION_NEW_INSTANCE = 1
+ACTION_ROW_INSTANCE = 2
+ACTION_LIST_ENTITIES = 3
+ACTION_RELATED_INSTANCE = 4
+
 
 
 class XFUIBuilder:
@@ -59,7 +60,8 @@ class XFUIAction:
                  action_caption, # Test of the action
                  permission_required,
                  url_name = None, # Leave None to create %s_%s_action_name
-                 use_ajax = True
+                 use_ajax = True,
+                 action_type = ACTION_ROW_INSTANCE
                  ):
         self.use_ajax = use_ajax
         self.permission_required = permission_required
@@ -69,5 +71,10 @@ class XFUIAction:
             self.url_name = "%s_%s_" + action_name
         else:
             self.url_name = url_name
-        #self.url_name = url_name #"%s_%s_%s" % (self.ui_builder.url_app_name, self.ui_builder.url_model_name, self.action_name)
-        self.default_action = False
+
+        # Will be called after an action is completed, if set. Should be a URL name
+        self.next_url = None
+
+        # Can be used to pre-populate an action with data.
+        self.initial_data = None
+        self.action_type = action_type
