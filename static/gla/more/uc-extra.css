@@ -30,6 +30,10 @@ td.clickable-cell { cursor: pointer; }
     width:auto
 }
 
+table a.btn-link {
+    color: #337ab7
+}
+
 .divfullheight {
     height: 100%;
 }
