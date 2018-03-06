@@ -22,6 +22,9 @@ class XFCrudAssetLoaderMixIn(object):
         context['crud_js_assets'] = self.js_assets
         context['crud_css_assets'] = self.css_assets
 
+        #for field in self.initial:
+        #    self.fields[field].disabled = True
+
 
 class XFModelList(XFCrudAssetLoaderMixIn):
 

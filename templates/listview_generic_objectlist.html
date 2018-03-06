@@ -1,6 +1,6 @@
 {% extends extends %}
 {% load getattribute %}
-
+{% load xf_filters %}
 
 <!--
     This is a generic object list. It will be based on the model.
@@ -24,12 +24,16 @@
         {% for object in object_list %}
             <tr>
                 {% for field in fields %}
-                    <td {% if row_default_action %}class="clickable-cell" data-href="{% url row_default_action.url_name object|getattribute:primary_key %}"{% endif %}>
-                    {% if forloop.counter == 12 and row_default_action != None %}
-                        <a href="{% url row_default_action.url_name object|getattribute:primary_key %}">{{ object|getattribute:field }}</a>
-                    {% else %}
-                    {{ object|getattribute:field }}
-                    {% endif %}
+                    <td>
+                        {% with forloop.counter as column_index %}
+                            {% with row_action_list|column_action:column_index as column_action%}
+                                {% if column_action != None %}
+                                    {% include 'renderer_snippets/xf_action_item_renderer.html' with action=column_action css_class="btn-link" caption=object|getattribute:field %}
+                                {% else %}
+                                    {{ object|getattribute:field }}
+                                {% endif %}
+                            {% endwith %}
+                        {% endwith %}
                     </td>
                 {% endfor %}
                 {% if row_action_list|length > 0 %}
@@ -41,9 +45,11 @@
                         </a>
                     <ul class="dropdown-menu small">
                     {% for action in row_action_list %}
-                        <li>
-                        {% include 'renderer_snippets/xf_action_item_renderer.html' with action=action css_class="css_class"%}
-                        </li>
+                        {% if action.column_index == None %}
+                            <li>
+                            {% include 'renderer_snippets/xf_action_item_renderer.html' with action=action css_class="btn-link" caption=action.action_caption %}
+                            </li>
+                        {% endif %}
                     {% endfor %}
                     </ul>
                 </div>

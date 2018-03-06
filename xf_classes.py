@@ -10,7 +10,9 @@ based on a list of entities. This value determines whether an action requires a 
 ACTION_NEW_INSTANCE = 1
 ACTION_ROW_INSTANCE = 2
 ACTION_LIST_ENTITIES = 3
-ACTION_RELATED_INSTANCE = 4
+ACTION_PREINITIALISED_RELATED_INSTANCE = 4
+ACTION_RELATED_INSTANCE = 5
+
 
 
 
@@ -61,7 +63,8 @@ class XFUIAction:
                  permission_required,
                  url_name = None, # Leave None to create %s_%s_action_name
                  use_ajax = True,
-                 action_type = ACTION_ROW_INSTANCE
+                 action_type = ACTION_ROW_INSTANCE,
+                 column_index = None
                  ):
         self.use_ajax = use_ajax
         self.permission_required = permission_required
@@ -78,3 +81,6 @@ class XFUIAction:
         # Can be used to pre-populate an action with data.
         self.initial_data = None
         self.action_type = action_type
+
+        # To attach this action to a column index, set its number
+        self.column_index = column_index

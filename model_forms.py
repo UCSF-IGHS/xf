@@ -64,6 +64,12 @@ class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
         self.helper.help_text_inline = True  # means that I want <span> elements
 
 
+    def disable_initial_fields(self):
+        for field in self.initial:
+            if field in self.fields:
+                self.fields[field].disabled = True
+
+
     def create_locater(self, target_field, api_call_url, api_call, api_return_field, existing_value, *args, **kwargs):
 
         self.fields[target_field].widget.attrs['class'] = "mxl"
@@ -75,6 +81,6 @@ class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
         if instance and instance.id:
             kwargs['initial'][target_field] = existing_value
             super(XFModelForm, self).__init__(*args, **kwargs)
-            self.fields[target_field].widget.attrs['readonly'] = True
+            self.fields[target_field].disabled = True
 
 
