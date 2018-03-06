@@ -23,9 +23,15 @@ table.table-scrollable tr {
 table.table-scrollable th, table.table-scrollable td {
 
 }
+tr.clickable-row { cursor: pointer; }
+td.clickable-cell { cursor: pointer; }
 
 .top_nav .navbar-right {
     width:auto
+}
+
+table a.btn-link {
+    color: #337ab7
 }
 
 .divfullheight {

@@ -66,13 +66,35 @@ def column_name_for_key(columns, key):
     return findforkey(columns, key)['column_name']
     pass
 
+#def object_for_attribute_value(objects, attribute_name, attribute_value):
+
+@register.filter(name='column_action')
+def action_for_column_index(value, arg):
+    for action in value:
+        if action.column_index == arg:
+            return action
+
+    return None
+
+register.filter('boo', action_for_column_index)
+
+@register.filter(name='cut')
+def cut(value, arg):
+    return value.replace(arg, '')
+
+
+@register.filter(name='cut3')
+def cut3(value, arg):
+    return value.replace(arg, '')
+
+
 
 #=======================================================================================================================
 # GetAttribute
 
 
 numeric_test = re.compile("^\d+$")
-register = template.Library()
+
 
 def getattribute(value, arg):
 	"""Gets an attribute of an object dynamically from a string name"""
@@ -161,3 +183,19 @@ def trans(context, text, language_code):
 
 
 
+@register.simple_tag(name='update_variable')
+def update_variable(value):
+    return value
+
+def update_variable2(value):
+    data = value
+    return data
+
+register.filter('update_variable2', update_variable2)
+
+@register.assignment_tag
+def alias(obj):
+    """
+    Alias Tag
+    """
+    return obj

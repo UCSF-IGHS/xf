@@ -70,7 +70,7 @@ function bindAjax() {
         // Ensure that the new form is bound to the submit event and load the FORM based on the
         // URL parameter
         $(htmltarget).load(url, function() {
-            ajaxFormLoaded(htmltarget, formtarget, url);
+            ajaxFormLoaded(htmltarget, formtarget, url, e);
             //bindAjax();
         });
 
@@ -79,11 +79,19 @@ function bindAjax() {
     // Set up the search field to clear after clicking the Clear button
     $("#lnkClear").click(function(){ $("#txtSearchString").val(""); });
 
+    /* Clickable table rows and cells */
+    /* Cells work better when using drop down buttons in the row */
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+    $(".clickable-cell").click(function() {
+        window.location = $(this).data("href");
+    });
 }
 
 
 
-function ajaxFormLoaded(htmltarget, formtarget, posttarget) {
+function ajaxFormLoaded(htmltarget, formtarget, posttarget, sourceElement) {
     // This function fires when a HTML AJAX FORM is loaded. It binds the form to the submit event,
     // to enable routing to the AJAX processor
 
@@ -100,7 +108,7 @@ function ajaxFormLoaded(htmltarget, formtarget, posttarget) {
             // Executed when the form is being submitted
             //alert(posttarget);
             event.preventDefault();
-            postform(event, htmltarget, formtarget, posttarget)
+            postform(event, htmltarget, formtarget, posttarget, sourceElement)
         });
 
         // Disable the submit button once clicked
@@ -117,7 +125,7 @@ function ajaxFormLoaded(htmltarget, formtarget, posttarget) {
     */
 }
 
-function postform(e, htmltarget, formtarget, posttarget) {
+function postform(e, htmltarget, formtarget, posttarget, sourceElement) {
     var serializedData = $('#frmAjax').serialize();
 
     $.ajax({
@@ -134,17 +142,26 @@ function postform(e, htmltarget, formtarget, posttarget) {
 
             if (!data.success) {
                 $(htmltarget).html(data.html);
-                ajaxFormLoaded(htmltarget, formtarget, posttarget);
+                ajaxFormLoaded(htmltarget, formtarget, posttarget, sourceElement);
             }
             else {
                 $(htmltarget).html("Loading");
                 $(formtarget).modal('hide') // dismiss dialog
+                // alert(data.pk);
+
                 $('#msg_info').html(data.message);
                 $('#msg_info').show();
                 if(typeof window.mxlSuccess == 'function') {
                     // function exists, so we can now call it
                     mxlSuccess();
                 }
+
+                // If the XFAction has a next_url, we should find it, add the recently modified or created
+                // object ID, and load that page.
+                var nextUrl = $(sourceElement.target).attr('data-next-url');
+                if (nextUrl)
+                    window.location = nextUrl.replace("0", data.pk);
+
             }
         },
         error:function(data) {
@@ -336,3 +353,6 @@ function CreateEmbedURL(url) {
     return url;
 
 }
+
+
+
