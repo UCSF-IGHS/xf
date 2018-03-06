@@ -2,7 +2,7 @@ from django.test import TestCase
 #from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.conf import settings
-import extensions
+
 
 #import os
 
@@ -52,7 +52,7 @@ class TestPerspectiveView(TestCase):
         self.assertEqual(len(perspectives), len(self.admin_user.perspectives))
         #print len(self.admin_user.group_perspectives)
 
-        print "load_perspectives OK"
+        print("load_perspectives OK")
 
         return
 
@@ -69,6 +69,6 @@ class TestPerspectiveView(TestCase):
         self.assertIsNone(national_user.load_perspective(district_perspective, False))
         self.assertIsNotNone(national_user.load_perspective(national_perspective, False))
 
-        print "load_perspective OK"
+        print("load_perspective OK")
         return
 
