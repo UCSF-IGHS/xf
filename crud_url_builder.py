@@ -8,6 +8,9 @@ from xf_crud.xf_crud_helpers import mmodelform_factory
 
 
 class XFException(Exception):
+    """
+    An exception that is raised by the XF Framework
+    """
     pass
 
 

@@ -1,6 +1,6 @@
 {% extends extends %}
 {% load getattribute %}
-
+{% load xf_filters %}
 
 <!--
     This is a generic object list. It will be based on the model.
@@ -9,58 +9,52 @@
 {% block object_list %}
 <!-- Region A -->
 
-    <table class="table table-hovered">
+    <table class="table table-hover">
         <thead>
         <tr>
             {% for column in columns %}
                 <th>{{ column }}</th>
             {% endfor %}
+            {% if row_action_list|length > 0 %}
             <th>Actions</th>
+            {% endif %}
         </tr>
         </thead>
         <tbody>
         {% for object in object_list %}
             <tr>
                 {% for field in fields %}
-                    <td>{{ object|getattribute:field }} </td>
+                    <td>
+                        {% with forloop.counter as column_index %}
+                            {% with row_action_list|column_action:column_index as column_action%}
+                                {% if column_action != None %}
+                                    {% include 'renderer_snippets/xf_action_item_renderer.html' with action=column_action css_class="btn-link" caption=object|getattribute:field %}
+                                {% else %}
+                                    {{ object|getattribute:field }}
+                                {% endif %}
+                            {% endwith %}
+                        {% endwith %}
+                    </td>
                 {% endfor %}
+                {% if row_action_list|length > 0 %}
                 <td>
-                    {% if false %}
-                        <a data-toggle="modal" href="{{ object|getattribute:primary_key }}/edit" class="btn btn-mini"
-                           data-target="#frmDlg" html-target="#frmDlgHtml"><i class="icon-pencil"></i></a>
-                    {% endif %}
-                    {% if false %}
-                        <a data-toggle="modal" href="{{ object|getattribute:primary_key }}/delete" class="btn btn-mini"
-                           data-target="#frmDlg" html-target="#frmDlgHtml"><i class="icon-remove"></i></a>
-                    {% endif %}
-                    <div class="btn-group">
+                <div class="btn-group">
                         <a class="btn btn-mini btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
                             Actions
                             <span class="caret"></span>
                         </a>
-                        <ul class="dropdown-menu small">
-                            {% if view %}
-                                <li><a href="{% url url_name_details object|getattribute:primary_key %}"><i class="icon-remove"></i>
-                                    Details</a></li>
-                            {% endif %}
-
-                            {% if change %}
-                                <li><a data-toggle="modal" href="{% url url_name_edit object|getattribute:primary_key %}"
-                                       data-target="#frmDlg" html-target="#frmDlgHtml"><i class="icon-pencil"></i> Edit</a>
-                                </li>
-                            {% endif %}
-                            {% if delete %}
-                                <li><a data-toggle="modal" href="{% url url_name_delete object|getattribute:primary_key %}"
-                                       data-target="#frmDlg" html-target="#frmDlgHtml"><i class="icon-remove"></i>
-                                    Delete</a></li>
-                            {% endif %}
-                            {% if edit or delete %}
-                                {# <li class="divider"></li>  #}
-                            {% endif %}
-
-                        </ul>
-                    </div>
+                    <ul class="dropdown-menu small">
+                    {% for action in row_action_list %}
+                        {% if action.column_index == None %}
+                            <li>
+                            {% include 'renderer_snippets/xf_action_item_renderer.html' with action=action css_class="btn-link" caption=action.action_caption %}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                </div>
                 </td>
+                {% endif %}
             </tr>
         {% endfor %}
         </tbody>

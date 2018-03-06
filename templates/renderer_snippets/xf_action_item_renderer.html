@@ -1,0 +1,68 @@
+{% load getattribute %}
+
+
+
+{% if action.action_type == 2 %}
+    {# Row instance #}
+    <a  {% if action.use_ajax %}
+        data-toggle="modal"
+        data-target="#frmDlg"
+        html-target="#frmDlgHtml"
+    {% endif %}
+            {% if action.next_url %}
+        data-next-url="{{ action.next_url }}"
+            {% endif %}
+        href="{% url action.url_name object|getattribute:primary_key %}"
+        class="{{ css_class }}"
+    >
+        {{ caption }}
+
+    </a>
+{% endif %}
+
+{% if action.action_type == 4 %}
+    {# Pre initialised instance #}
+    <a  {% if action.use_ajax %}
+        data-toggle="modal"
+        data-target="#frmDlg"
+        html-target="#frmDlgHtml"
+    {% endif %}
+            {% if action.next_url %}
+        data-next-url="{{ action.next_url }}"
+            {% endif %}
+        href="{% url action.url_name %}?{{ action.initial_data }}{{ object|getattribute:primary_key  }}"
+        class="{{ css_class }}"
+    >
+        {{ caption }}
+
+    </a>
+{% endif %}
+
+{% if action.action_type == 5 %}
+    {# Related instance #}
+    {% with object|getattribute:field as related_object%}
+        {% if related_object %}
+            <a  {% if action.use_ajax %}
+                data-toggle="modal"
+                data-target="#frmDlg"
+                html-target="#frmDlgHtml"
+            {% endif %}
+                    {% if action.next_url %}
+                data-next-url="{{ action.next_url }}"
+                    {% endif %}
+
+                    {{ related_object|getattribute:primary_key }}
+
+                href="{% url action.url_name related_object|getattribute:primary_key %}"
+
+                class="{{ css_class }}"
+            >
+                {{ caption }}
+
+            </a>
+        {% else %}
+            {{ caption }}
+        {% endif %}
+    {% endwith %}
+
+{% endif %}

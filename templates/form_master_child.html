@@ -61,14 +61,11 @@
                 </div>
                 <div class="x_content">
                     <div>{{ form.Meta.instruction }}</div>
-                    <br>
                     <form id="frmNonAjax" method="post" class="form-horizontal form-label-left" novalidate="">
                         {% csrf_token %}
                         <div class="form-group">
                             {% crispy form %}
-                            <div class="ln_solid"></div>
                         </div>
-
                     </form>
                 </div>
             </div>

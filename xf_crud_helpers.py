@@ -64,7 +64,7 @@ def mmodelform_factory(model, form=XFModelForm, fields=None, exclude=None,
     return type(form)(class_name, (form,), form_class_attrs)
 
 
-def crudurl(appname, modelname, model_type, form_class_type, list_class_type=XFModelList):
+def crudurl(appname: object, modelname: object, model_type: object, form_class_type: object, list_class_type: object = XFModelList) -> object:
     """
     Generates a set of CRUL URLs for the given model.
     :param appname: the app for which to generate the URL
