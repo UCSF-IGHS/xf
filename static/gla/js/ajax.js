@@ -114,7 +114,11 @@ function ajaxFormLoaded(htmltarget, formtarget, posttarget, sourceElement) {
         // Disable the submit button once clicked
         //alert($("#btnDlgSumbit").text());
         $("#btnDlgSubmit").click(function () {
-            $("#btnDlgSubmit").val("Please wait");
+            if (document.getElementById("frmAjax").checkValidity()){
+                $("#btnDlgSubmit").val("Please wait");
+            }else{
+                $("#btnDlgSubmit").val("Try again");
+            }
         });
     }
 
