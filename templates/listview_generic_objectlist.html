@@ -26,7 +26,7 @@
                 {% for field in fields %}
                     <td>
                         {% with forloop.counter as column_index %}
-                            {% with row_action_list|column_action:column_index as column_action%}
+                            {% with row_action_list|column_action:column_index as column_action %}
                                 {% if column_action != None %}
                                     {% include 'renderer_snippets/xf_action_item_renderer.html' with action=column_action css_class="btn-link" caption=object|getattribute:field %}
                                 {% else %}
