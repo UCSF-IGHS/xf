@@ -1,0 +1,24 @@
+{% include "django/forms/widgets/input.html" %}
+BC
+
+{{ widget.attrs.id }}
+
+
+<script type="text/javascript">
+    $(function () {
+
+
+        var $input = $(".typeahead");
+        $input.typeahead({
+            source: [
+                {id: "someId1", name: "Display name 1"},
+                {id: "someId2", name: "Display name 2"},
+                {id: "someId3", name: "America"}
+            ],
+            autoSelect: true
+        });
+
+
+    });
+
+</script>

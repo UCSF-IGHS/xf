@@ -15,6 +15,10 @@ class XFDetailView(DetailView, ModelFormMixin, XFPermissionMixin, XFAjaxViewMixi
 
     def get_context_data(self, **kwargs):
         self.context = context = super(XFDetailView, self).get_context_data(**kwargs)
+
+        if not self.user_has_model_permission("view"):
+            raise PermissionDenied
+
         context['action'] = "Detail"
         context['formname'] = self.get_form_class().__name__
         self.form_class = self.get_form_class()
@@ -24,11 +28,8 @@ class XFDetailView(DetailView, ModelFormMixin, XFPermissionMixin, XFAjaxViewMixi
             form.fields[field].disabled = True
         context['form'] = form
 
-        #Used because there is no VIEW permission (yet)
-        self.ensure_group_or_403("Data Browser")
-
         context['browse'] = True
-        self.ensure_set_context_perm("view")
+
         self.set_navigation_context()
         self.add_crud_urls_to_context(context)
         #self.add_assets_to_context(context)
