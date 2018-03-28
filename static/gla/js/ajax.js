@@ -108,16 +108,40 @@ function ajaxFormLoaded(htmltarget, formtarget, posttarget, sourceElement) {
             // Executed when the form is being submitted
             //alert(posttarget);
             event.preventDefault();
-            postform(event, htmltarget, formtarget, posttarget, sourceElement)
+            postform(event, htmltarget, formtarget, posttarget, sourceElement);
         });
 
         // Disable the submit button once clicked
         //alert($("#btnDlgSumbit").text());
         $("#btnDlgSubmit").click(function () {
-            if (document.getElementById("frmAjax").checkValidity()){
+            var form = document.getElementById("frmAjax");
+            if (form.checkValidity()){
                 $("#btnDlgSubmit").val("Please wait");
+                $("#btnDlgSubmit").enabled = false;
             }else{
                 $("#btnDlgSubmit").val("Try again");
+                var panels = $("#frmAjax").find(".panel-collapse");
+                panels.each(function (indeX, nodE) {
+                    var has_errors = 0;
+                    $("#" + nodE.id).find(":invalid").each(function (index, node) {
+                        has_errors ++;
+                    });
+                    if(has_errors > 0){
+                        panels.each(function (index, node) {
+                            var expanded = $("#" + node.id).is(":visible");
+                            if (indeX === index){
+                                if (expanded === false){
+                                    $("#" + node.id).collapse("toggle");
+                                }
+                            }else{
+                                if (expanded === true){
+                                    $("#" + node.id).collapse("toggle");
+                                }
+                            }
+                        });
+                        return false;
+                    }
+                });
             }
         });
     }
