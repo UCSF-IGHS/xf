@@ -1,0 +1,356 @@
+{% load staticfiles %}
+{% load admin_urls %}
+{% load dashgent_filters %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+
+
+    <!-- jQuery -->
+    <script src="{% static "gla/vendors/jquery/dist/jquery.min.js" %}"></script>
+
+
+    <!-- Internal uh AJAX Library -->
+    <script src="{% static "gla/js/ajax.js" %}"></script>
+
+
+    <!-- Bootstrap -->
+    <link href="{% static "gla/vendors/bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet">
+    <!-- Data Tables -->
+    <link href="{% static "gla/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" %}" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="{% static "gla/vendors/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="{% static "gla/vendors/nprogress/nprogress.css" %}" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="{% static "gla/vendors/iCheck/skins/flat/green.css" %}" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="{% static "gla/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" %}"
+          rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="{% static "gla/vendors/jqvmap/dist/jqvmap.min.css" %}" rel="stylesheet"/>
+
+    <!-- ECharts -->
+    <script src="{% static "gla/vendors/echarts/echarts-all-3.js" %}"></script>
+    <script src="{% static "gla/vendors/echarts/map/js/world.js" %}"></script>
+
+    <!-- Select2 -->
+    <link href="{% static "gla/vendors/select2/dist/css/select2.min.css" %}" rel="stylesheet">
+    <link href="{% static "gla/vendors/bootstrap-multiselect/dist/css/bootstrap-multiselect.css" %}" rel="stylesheet">
+    <script src="{% static "gla/vendors/bootstrap-multiselect/dist/js/bootstrap-multiselect.js" %}"></script>
+
+
+    <!-- Custom Theme Style -->
+    <link href="{% static "gla/build/css/custom.min.css" %}" rel="stylesheet">
+
+    <!-- UC extra css -->
+    <link href="{% static "gla/more/uc-extra.css" %}" rel="stylesheet">
+
+    <!-- jQuery Bootstrap Validator-->
+    <link href="{% static "gla/vendors/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css" %}" rel="stylesheet">
+
+    <!-- XF custom app based css -->
+    {% if custom_theme %}
+        {% with 'themes/'|add:custom_theme|add:'/styles.css' as custom_css_path%}
+             <link href="{% static custom_css_path %}" rel="stylesheet">
+        {% endwith %}
+    {% endif %}
+
+    {% block h %}{% endblock %}
+</head>
+
+<body class="nav-md footer_fixed">
+{% csrf_token %}
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="index.html" class="site_title"><i class="fa {{ site_icon }}"></i>
+                        <span>{{ site_title }}</span></a>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <!-- menu profile quick info -->
+                <div class="profile clearfix">
+                    <!--<div class="profile_pic">
+                        <img src="{% static "gla/images/img.jpg" %}" alt="..." class="img-circle profile_img">
+                    </div>-->
+                    <!--<div class="profile_info">
+                        {% if user.is_authenticated %}
+                            <span>Welcome,</span>
+                            <h2>{{ user.get_full_name|default:user.username }}</h2>
+                        {% endif %}
+                        {% if not user.is_authenticated %}<span>&nbsp;</span><h2>Not logged in</h2>
+                        {% endif %}
+                    </div>-->
+                </div>
+                <!-- /menu profile quick info -->
+
+                <br/>
+
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+
+                    {% for app, navigation_tree in navigation_trees.items %}
+
+                        {% for navigation_header in navigation_tree %}
+
+                            {# Navigation Headers – the first tier #}
+                            <div class="menu_section">
+                                <h3>{{ navigation_header.name }}</h3>
+                                {% for navigation_section in navigation_header.navigation_sections %}
+                                    <ul class="nav side-menu">
+
+                                        {# Navigation Sections – the second tier #}
+                                        {# This includes the icon #}
+                                        <li><a><i
+                                                class="fa {{ navigation_section.icon }}"></i> {{ navigation_section.name }}<span
+                                                class="fa fa-chevron-down"></span></a>
+
+                                            {# Navigation URLs #}
+                                            <ul class="nav child_menu">
+                                                {% for navigation_link in navigation_section.navigation_links %}
+
+                                                    {# For URLs that don't have children #}
+                                                    {% if navigation_link.sub_navigation_links|length == 0 %}
+                                                        <li>
+                                                            <a href="{{ navigation_link.url }}">{{ navigation_link.caption }}</a>
+                                                        </li>
+                                                    {% endif %}
+
+                                                    {# For URLs that have children #}
+                                                    {% if navigation_link.sub_navigation_links|length > 0 %}
+                                                        <li><a>{{ navigation_link.caption }}
+                                                            <span class="fa fa-chevron-down"></span></a>
+                                                            <ul class="nav sub_menu">
+                                                                {% for sub_navigation_link in navigation_link.sub_navigation_links %}
+                                                                    <li>
+                                                                        <a href="{{ sub_navigation_link.url }}">{{ sub_navigation_link.caption }}</a>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+
+                </div>
+                <!-- /sidebar menu -->
+
+                <!-- /menu footer buttons -->
+
+                <div id="language_chooser" class="sidebar-footer hidden-small">
+
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as languages %}
+                    {% for language in languages %}
+
+                        <form action="{% url 'set_language' %}" method="post" style="display:inline-block">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ redirect_to }}"/>
+                            <input name="language" type="hidden" value="{{ language.0 }}"/>
+                            <button class="btn btn-round  {% if language.0 == LANGUAGE_CODE %} btn-success {% endif %} {% if language.0 != LANGUAGE_CODE %} btn-dark {% endif %}" type="submit"
+                                    style="display: inline-block">{{ language.0 }}</button>
+                        </form>
+
+                    {% endfor %}
+
+
+                </div>
+                <!-- /menu footer buttons -->
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <nav>
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+                    <div class="nav navbar-nav navbar-title">
+                        <h2> {{ list_title }} {% block main_title %}{% endblock %}</h2>
+                    </div>
+
+                    <ul class="nav navbar-nav navbar-right">
+
+
+                       {% block navbar %}{% endblock %}
+
+                    </ul>
+                </nav>
+            </div>
+            <div style="background-color: #5b90bf; padding: 0; display: block;clear: both; ">
+
+            </div>
+            {% block filterbar %}{% endblock %}
+        </div>
+
+
+        <div class="modal fade bs-example-modal-md" id="{{ page_id }}-modal-about" tabindex="-1" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">More information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            {{ page.title }}
+                        </div>
+                        <div>
+                            Template: {{ page.template }}<br/>
+                            {{ page.template.template_source }} {% if page.template.template_source != 2 %} -
+                            {{ page.template.template_path }} {% endif %}
+                        </div>
+                        <p/>
+                        <p>{{ page.code }}</p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            {% block main %}{% endblock %}
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+            <div class="pull-right">
+                &copy; some institution  |  Design by Gentellella by <a href="https://colorlib.com">Colorlib</a> | Powered by XF Framework from the <a href="http://globalhealthsciences.ucsf.edu">University of California, San Francisco</a> <img src="https://identity.ucsf.edu/sites/identity.ucsf.edu/files/wysiwyg/logo_expression_1.jpg" style="height: 16px">.
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+    </div>
+</div>
+
+<!-- Bootstrap -->
+<script src="{% static "gla/vendors/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+<!-- FastClick -->
+<script src="{% static "gla/vendors/fastclick/lib/fastclick.js" %}"></script>
+<!-- NProgress -->
+<script src="{% static "gla/vendors/nprogress/nprogress.js" %}"></script>
+<!-- Chart.js -->
+<script src="{% static "gla/vendors/Chart.js/dist/Chart.min.js" %}"></script>
+<!-- gauge.js -->
+<script src="{% static "gla/vendors/gauge.js/dist/gauge.min.js" %}"></script>
+<!-- bootstrap-progressbar -->
+<script src="{% static "gla/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js" %}"></script>
+<!-- iCheck -->
+<script src="{% static "gla/vendors/iCheck/icheck.min.js" %}"></script>
+<!-- Skycons -->
+<script src="{% static "gla/vendors/skycons/skycons.js" %}"></script>
+<!-- EasyPieChart-->
+<script src="{% static "gla/vendors/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js" %}"></script>
+<!-- Flot -->
+<script src="{% static "gla/vendors/Flot/jquery.flot.js" %}"></script>
+<script src="{% static "gla/vendors/Flot/jquery.flot.pie.js" %}"></script>
+<script src="{% static "gla/vendors/Flot/jquery.flot.time.js" %}"></script>
+<script src="{% static "gla/vendors/Flot/jquery.flot.stack.js" %}"></script>
+<script src="{% static "gla/vendors/Flot/jquery.flot.resize.js" %}"></script>
+<!-- Flot plugins -->
+<script src="{% static "gla/js/flot/jquery.flot.orderBars.js" %}"></script>
+<script src="{% static "gla/js/flot/date.js" %}"></script>
+<script src="{% static "gla/js/flot/jquery.flot.spline.js" %}"></script>
+<script src="{% static "gla/js/flot/curvedLines.js" %}"></script>
+<!-- JQVMap -->
+<script src="{% static "gla/vendors/jqvmap/dist/jquery.vmap.js" %}"></script>
+<script src="{% static "gla/vendors/jqvmap/dist/maps/jquery.vmap.custom.js" %}"></script>
+<script src="{% static "gla/vendors/jqvmap/dist/maps/jquery.vmap.world.js" %}"></script>
+<script src="{% static "gla/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js" %}"></script>
+<script src="{% static "gla/js/maps/xf_map_mz.js" %}"></script>
+
+<!-- bootstrap-daterangepicker -->
+<script src="{% static "gla/js/moment/moment.min.js" %}"></script>
+<script src="{% static "gla/js/datepicker/daterangepicker.js" %}"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="{% static "gla/build/js/custom.min.js" %}"></script>
+
+<!-- Data Tables -->
+<script src="{% static "gla/vendors/datatables.net/js/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-buttons/js/dataTables.buttons.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-buttons/js/buttons.flash.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-buttons/js/buttons.html5.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-buttons/js/buttons.print.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-responsive/js/dataTables.responsive.min.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js" %}"></script>
+<script src="{% static "gla/vendors/datatables.net-scroller/js/datatables.scroller.min.js" %}"></script>
+<script src="{% static "gla/vendors/select2/dist/js/select2.full.min.js" %}"></script>
+
+
+<!-- bootstrap-datetimepicker -->
+<script src="{% static "gla/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js" %}"></script>
+
+<!-- jQuery Bootstrap Validator-->
+<script src="{% static "gla/vendors/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js" %}"></script>
+
+
+<!-- more -->
+<!--<script src="{% static "gla/more/ajax.js" %}"></script>-->
+
+<!-- UC extra js -->
+<script src="{% static "gla/more/colors.js" %}"></script>
+
+{% if custom_theme %}
+    {% with 'themes/'|add:custom_theme|add:'/scripts.css' as custom_script_path%}
+        <script src="{% static custom_script_path %}"></script>
+    {% endwith %}
+{% endif %}
+{% block j %}{% endblock %}
+
+
+<script type="text/javascript">
+    $(function () {
+
+        //bindAjax(); // uhih - defined in ajax.js
+        setTimeout(bindAjax, 0);
+
+        {% block starterjs %}
+        {% endblock %}
+
+    });
+
+
+</script>
+{% block extrajs %}{% endblock %}
+
+
+</body>
+</html>

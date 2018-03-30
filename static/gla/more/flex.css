@@ -1,0 +1,56 @@
+.row {
+  display: flex;
+  /* equal height of the children */
+  flex-wrap: wrap
+}
+
+.col {
+
+  /* additionally, equal width */
+  padding: 1em;
+  border: solid;
+
+}
+
+.inner {}
+
+.wide {
+  flex: 1 1 20%;
+  border: solid 1px blue
+}
+/*
+.a, .b {
+
+}
+
+.c,.d {
+  flex: 1 1 40%;
+}
+*/
+.d {
+  display2: none;
+  background-color: yellow;
+}
+
+
+@media (max-width: 992px) {
+  .wide {
+    flex: 1 1 20%;
+    border: solid 1px red
+  }
+}
+
+@media (max-width: 768px) {
+  .wide {
+    flex: 1 1 40%;
+    border: solid 1px yellow
+  }
+}
+
+@media (max-width: 480px) {
+  .wide {
+    flex: 1 1 100%;
+    border: solid 1px green
+  }
+}
+
