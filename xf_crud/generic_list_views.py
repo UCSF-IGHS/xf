@@ -3,11 +3,11 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView, FormView
 
-from xf_crud.ajax_mixins import XFAjaxViewMixin
-from xf_crud.mixins import XFCrudMixin
-from xf_crud.model_lists import XFModelList
-from xf_crud.permission_mixin import XFPermissionMixin
-from xf_system.views import XFNavigationViewMixin
+from xf.xf_crud.ajax_mixins import XFAjaxViewMixin
+from xf.xf_crud.mixins import XFCrudMixin
+from xf.xf_crud.model_lists import XFModelList
+from xf.xf_crud.permission_mixin import XFPermissionMixin
+from xf.xf_system.views import XFNavigationViewMixin
 import uuid
 
 

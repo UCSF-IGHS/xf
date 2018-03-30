@@ -4,10 +4,10 @@ from django.urls import reverse
 from django.views.generic import DetailView, UpdateView, DeleteView, CreateView
 from django.views.generic.edit import ModelFormMixin
 
-from xf_crud.ajax_mixins import XFAjaxViewMixin
-from xf_crud.mixins import XFCrudMixin
-from xf_crud.permission_mixin import XFPermissionMixin
-from xf_system.views import XFNavigationViewMixin
+from xf.xf_crud.ajax_mixins import XFAjaxViewMixin
+from xf.xf_crud.mixins import XFCrudMixin
+from xf.xf_crud.permission_mixin import XFPermissionMixin
+from xf.xf_system.views import XFNavigationViewMixin
 
 
 class XFDetailView(DetailView, ModelFormMixin, XFPermissionMixin, XFAjaxViewMixin, XFNavigationViewMixin, XFCrudMixin):

@@ -1,8 +1,8 @@
 from django.conf.urls import url
 import uuid
 
-from xf_crud.generic_crud_views import XFCreateView
-from xf_crud.xf_classes import XFUIAction, ACTION_ROW_INSTANCE, ACTION_NEW_INSTANCE
+from xf.xf_crud.generic_crud_views import XFCreateView
+from xf.xf_crud.xf_classes import XFUIAction, ACTION_ROW_INSTANCE, ACTION_NEW_INSTANCE
 
 
 class XFCrudAssetLoaderMixIn(object):

@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy, reverse
 
 
-#from xf_crud.xf_classes import XFUIBuilder
+#from xf.xf_crud.xf_classes import XFUIBuilder
 
 
 class XFCrudMixin(object):

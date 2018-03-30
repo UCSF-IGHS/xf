@@ -7,7 +7,7 @@ from django.conf import settings
 #import os
 
 #os.environ['DJANGO_SETTINGS_MODULE'] = 'mainsite.settings.dev'
-from uc_dashboards.models import Perspective
+from xf.uc_dashboards.models import Perspective
 
 
 class TestPerspectiveView(TestCase):

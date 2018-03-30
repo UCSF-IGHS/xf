@@ -7,7 +7,7 @@ from django.db.models import Model
 from django.forms.models import ModelForm
 #import floppyforms as forms
 #from floppyforms.widgets import PasswordInput
-from xf_crud.model_lists import XFCrudAssetLoaderMixIn
+from xf.xf_crud.model_lists import XFCrudAssetLoaderMixIn
 
 
 class XFAjaxForm(ModelForm):

@@ -1,6 +1,6 @@
 from django.db import models
 
-from xf_system.mixins import XFTranslationHelper
+from xf.xf_system.mixins import XFTranslationHelper
 
 
 class XFSiteSettings(models.Model, XFTranslationHelper):

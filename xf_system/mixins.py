@@ -1,6 +1,6 @@
 import ast
 
-from xf_system.views import XFNavigationViewMixin
+from xf.xf_system.views import XFNavigationViewMixin
 
 
 class XFTranslationHelper:

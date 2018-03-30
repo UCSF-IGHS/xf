@@ -1,5 +1,5 @@
 from enum import Enum
-#from xf_crud.crud_url_builder import XFCrudURLBuilder
+#from xf.xf_crud.crud_url_builder import XFCrudURLBuilder
 
 
 """

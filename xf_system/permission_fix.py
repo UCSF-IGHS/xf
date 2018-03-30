@@ -4,7 +4,7 @@ from django.contrib.auth.models import Permission
 
 # TO RUN THIS SCRIPT, OPEN A PYTHON CONSOLE FROM WITHIN PYCHARM
 # THEN TYPE:
-# from xf_system.permission_fix import add_view_permissions
+# from xf.xf_system.permission_fix import add_view_permissions
 # add_view_permissions(None)
 # add_list_permissions(None)
 

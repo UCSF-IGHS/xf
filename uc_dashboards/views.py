@@ -29,14 +29,14 @@ from . import extensions
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from . import models as UCModels
-from xf_crud.permission_mixin import XFPermissionMixin
+from xf.xf_crud.permission_mixin import XFPermissionMixin
 
 # Create your views here.
-from uc_dashboards.models import NavigationSection, Page, Widget, Perspective
+from xf.uc_dashboards.models import NavigationSection, Page, Widget, Perspective
 
 # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
-from xf_system.views import XFNavigationViewMixin
-from xf_system.xf_navigation import add_navigation
+from xf.xf_system.views import XFNavigationViewMixin
+from xf.xf_system.xf_navigation import add_navigation
 
 
 def get_current_perspective(request):

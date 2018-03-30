@@ -1,10 +1,10 @@
 from django.conf.urls import url
 
-from xf_crud.generic_crud_views import XFDetailView, XFUpdateView, XFDeleteView, XFCreateView
-from xf_crud.generic_list_views import XFListView, XFRelatedListView
-from xf_crud.model_forms import XFModelForm
-from xf_crud.model_lists import XFModelList
-from xf_crud.xf_crud_helpers import mmodelform_factory
+from xf.xf_crud.generic_crud_views import XFDetailView, XFUpdateView, XFDeleteView, XFCreateView
+from xf.xf_crud.generic_list_views import XFListView, XFRelatedListView
+from xf.xf_crud.model_forms import XFModelForm
+from xf.xf_crud.model_lists import XFModelList
+from xf.xf_crud.xf_crud_helpers import mmodelform_factory
 
 
 class XFException(Exception):
