@@ -1,0 +1,174 @@
+{% extends "t_xpanel_control_base.html" %}
+{% load dashgent_filters %}
+
+
+{% block caption %}
+    {{ caption }}
+{% endblock %}
+
+
+{% block spanner %}
+     {% include "generic_widgets/include_more_menu.html" %}
+{% endblock %}
+
+
+{% block widget_main %}
+
+    {% include 'generic_widgets/include_sub_text.html' %}
+    <div class="modal fade bs-example-modal-lg" id="{{ widget_id }}-modal" tabindex="-1" role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Data for {{ caption }}</h4>
+                </div>
+                <div class="modal-body">
+                    {% include 'generic_widgets/include_table_list.html' %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+   <div id="{{  widget_id }}" style=" height: {{custom_attr|lookup:'widget_height'}}"></div>
+
+    <script type="text/javascript">
+
+        var objectList = JSON.parse('{{rows|jsonify|safe}}');
+        var data = {};
+
+       {% if custom_attr|lookup:'renderer' == 'default' %}
+
+            objectList.forEach(function (obj) {
+                data[obj.code]=obj.value;
+            });
+
+            jQuery(document).ready(function () {
+                jQuery("#{{  widget_id }}").vectorMap({
+                  map: '{{custom_attr|lookup:'map_name'}}',
+                  backgroundColor: 'transparent',
+                  color: '#ffffff',
+                  hoverOpacity: 0.7,
+                  selectedColor: '#666666',
+                  enableZoom: true,
+                  showTooltip: true,
+                  scaleColors: ['#E6F2F0', '#149B7E'],
+                  values: data,
+                  borderWidth: 4,
+                  normalizeFunction: 'polynomial',
+                  onLabelShow: function (event, label, code) {
+
+                      label.append(': '+data[code]+'%');
+                  },
+
+                });
+          });
+
+       {% endif %}
+       {% if custom_attr|lookup:'renderer' == 'echarts' %}
+
+         $(function ()
+         {
+           var dataset = [];
+           var dom = document.getElementById("{{ widget_id }}");
+           var myChart = echarts.init(dom);
+           myChart.showLoading();
+
+           var map_name = "{{custom_attr|lookup:'map_name'}}";
+
+           objectList.forEach(function (obj) {
+            dataset.push(
+                    {
+                      name: obj.code,
+                      value: obj.value,
+                    }
+                );
+            });
+
+           var minValue = Math.min.apply(null, objectList.map(function(item) {
+                return item.value;}));
+           var maxValue = Math.max.apply(null, objectList.map(function(item) {
+                return item.value;}));
+
+           myChart.hideLoading();
+
+           option = {
+                title : {
+                    text: '',
+                    subtext: '',
+                    sublink: '',
+                    left: 'right'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    showDelay: 0,
+                    transitionDuration: 0.2,
+                    formatter : function (params) {
+                        var value = (params.value + '').split('.');
+                        value = value[0].replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g, '$1,');
+                        return params.seriesName + '<br/>' + params.name + ' : ' + value + "{{custom_attr|lookup:'unit_value'}}";
+                    }
+                },
+                visualMap: {
+                    left: 'right',
+                    min: minValue,
+                    max: maxValue,
+                    color: ['#03586A','#149B7E','#E6F2F0'],
+                    text:['High','Low'],
+                    calculable : true
+                },
+                toolbox: {
+                    show : true,
+                    left: 'left',
+                    top: 'top',
+                    feature : {
+                        mark : {show: true},
+                        dataView : {show: false, readOnly: false},
+                        restore : {show: false},
+                        saveAsImage : {show: false}
+                    }
+                },
+                series : [
+                    {
+                        name: "{{custom_attr|lookup:'hover_label'}}",
+                        type: 'map',
+                        roam: true,
+                        map: map_name,
+                        itemStyle:{
+                            emphasis:{label:{show:true}}
+                        },
+
+                        scaleLimit:{
+                           min:1,
+                           max:1
+                        },
+
+                        label: {
+                          normal: {
+                              show: "{{custom_attr|lookup:'show_label'}}"
+                          },
+                        },
+
+                        mapLocation: {
+                            width: "{{custom_attr|lookup:'map_size'}}"
+                        },
+
+                        data:dataset
+                    }
+                ]
+           };
+
+           myChart.setOption(option);
+
+        });
+       {% endif %}
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% load dashgent_filters %}
+
+<div style="text-align: center; margin-bottom: 17px">
+    {% with data_columns|columnnameforkey:'proportion' as proportion_column %}
+        <span id="{{ widget_id }}" class="chart" data-percent="{{ row|lookup:proportion_column }}">
+                                                  <span class="percent">{{ row|lookup:proportion_column }}</span>
+                              </span>
+    {% endwith %}
+    <p>{{ numdem_caption }}</p>
+    <div class="divider"></div>
+    {% with data_columns|columnnameforkey:'description' as description_column %}
+    <p><span class="message">{{ row|lookup:description_column }}</span>
+    {% endwith %}
+    </p>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#{{ widget_id }}').easyPieChart({
+            easing: 'easeOutElastic',
+            delay: 3000,
+            barColor: '#26B99A',
+            trackColor: '#fff',
+            scaleColor: false,
+            lineWidth: 20,
+            trackWidth: 16,
+            lineCap: 'butt',
+            onStep: function (from, to, percent) {
+                $(this.el).find('.percent').text(Math.round(percent));
+            }
+        });
+    });
+</script>

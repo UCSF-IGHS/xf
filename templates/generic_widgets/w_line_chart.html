@@ -1,0 +1,105 @@
+{% extends "t_xpanel_control_base.html" %}
+{% load dashgent_filters %}
+
+{% block caption %}
+    {{ caption }}
+    <!--<button type="button" class="btn btn-default btn-xs" style="align: right" data-toggle="modal" data-target="#{{ widget_id }}-modal">View data</button>-->
+{% endblock %}
+
+{% block spanner %}
+    {% include "generic_widgets/include_more_menu.html" %}
+{% endblock %}
+
+{% block widget_main %}
+
+    {% include 'generic_widgets/include_sub_text.html' %}
+    <div class="modal fade bs-example-modal-md" id="{{ widget_id }}-modal" tabindex="-1" role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Data for {{ caption }}</h4>
+                </div>
+                <div class="modal-body">
+                    {% include 'generic_widgets/include_table_list.html' %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <canvas id="{{ widget_id }}"></canvas>
+    <!--<canvas id="" width="300" height="150"></canvas>-->
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            var ctx = $("#{{ widget_id }}");
+            var dataset = [];
+            var legend_labels = JSON.parse('{{ legend_labels | jsonify | safe }}');
+            var data_points = JSON.parse('{{ datapoints | jsonify | safe}}');
+            var begin_at_zero = "{{custom_attr|lookup:'begin_at_zero'}}" == 'yes' ? true : false;
+            var is_line_graph = "{{ custom_attr|lookup:'is_line_graph' }}" == 'yes' ? true : false;
+            var colors = is_line_graph == true ? ["rgba(38, 185, 154, 1)", "rgba(3, 88, 106, 1)", "rgba(115, 135, 156, 1)", "rgba(156, 194, 203, 1)", "rgba(156, 169, 174, 1)", "rgba(12, 99, 81, 1)"] : ["rgba(38, 185, 154, 0.4)", "rgba(3, 88, 106, 0.4)", "rgba(115, 135, 156, 0.4)", "rgba(156, 194, 203, 0.4)", "rgba(156, 169, 174, 0.4)", "rgba(12, 99, 81, 0.4)"];
+            data_points.forEach(function (point, index) {
+                if(is_line_graph){
+                    dataset.push(
+                        {
+                            label: legend_labels[index],
+                            backgroundColor: "Transparent",
+                            borderColor: colors[index],
+                            pointBorderWidth: 1,
+                            data: JSON.parse(data_points[index])
+                        }
+                    );
+                }else{
+                    dataset.push(
+                        {
+                            label: legend_labels[index],
+                            backgroundColor: colors[index],
+                            borderColor: colors[index],
+                            pointBorderColor: colors[index],
+                            pointBackgroundColor: colors[index],
+                            pointHoverBackgroundColor: "#fff",
+                            pointHoverBorderColor: "rgba(220,220,220,1)",
+                            pointBorderWidth: 1,
+                            data: JSON.parse(data_points[index])
+                        }
+                    );
+                }
+            });
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: {{ labels|safe }},
+                    datasets: dataset.slice()
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:begin_at_zero,
+
+                                {% if   custom_attr|lookup:'maximum_scale' != '' %}
+                                    max: parseInt('{{ custom_attr|lookup:'maximum_scale' }}')
+                                {% endif %}
+                            }
+                        }],
+                    }
+                }
+            });
+        });
+    </script>
+
+    <!-- Data Rows go here -->
+
+
+{% endblock %}

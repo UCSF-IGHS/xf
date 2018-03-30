@@ -1,0 +1,51 @@
+{% extends extends_template %}
+{% load dashgent_filters %}
+{% load i18n %}
+
+
+{% comment %}
+This template is a container for an XPanel. It is designed to be hosted within ajax_container when outputed on a dashboard,
+or within container_tester when debugging/testing this widget as a standalone.
+{% endcomment %}
+
+
+
+{% block ajax_main  %}
+{%  if x_panel_style != "no_title" %}
+    <div class=" {% if custom_attr|lookup:'stripped_base' == 'yes'%}x_title_no_line{% endif %}
+                 {% if custom_attr|lookup:'stripped_base' != 'yes'%}x_title{% endif %}">
+
+        <h2>{% block caption %}{% endblock %}</h2>
+
+
+        <div class="clearfix">{% block spanner %}{% endblock %}</div>
+    </div>
+    {% endif %}
+   {% if request.user.is_superuser and x_panel_style == "no_title" %}
+   <div style="position: absolute; right: 20px;z-index: 100">
+    <ul class="nav navbar-right panel_toolbox">
+
+        {# Spanner dropdown. Only available to admins #}
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+               aria-expanded="false"><i
+                    class="fa fa-wrench"></i></a>
+            <ul class="dropdown-menu" role="menu">
+
+                    {% if change_url %}
+                        <li><a href="{{ change_url }}" target="_blank">{% trans "Edit widget" %}</a></li>
+                    {% endif %}
+
+                {% if widget.slug %}
+                <li><a href="{% url 'widgets' widget.slug %}{{ filter_query_string }}" target="_blank">{%  trans "View as stand-alone" %}</a></li>
+                {% endif %}
+            </ul>
+        </li>
+    </ul>
+    </div>
+    {% endif %}
+    <div class="x_content"  >
+        {% block widget_main %}{% endblock %}
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}

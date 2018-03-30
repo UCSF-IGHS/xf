@@ -1,0 +1,103 @@
+{% extends "t_xpanel_control_base.html" %}
+{% load dashgent_filters %}
+
+{% block caption %}
+    {{ caption }}
+{% endblock %}
+
+{% block spanner %}
+    {% include "generic_widgets/include_more_menu.html" %}
+{% endblock %}
+
+
+{% block widget_main %}
+
+    {% include 'generic_widgets/include_sub_text.html' %}
+    <div class="modal fade bs-example-modal-lg" id="{{ widget_id }}-modal" tabindex="-1" role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Data for {{ caption }}</h4>
+                </div>
+                <div class="modal-body">
+                    {% include 'generic_widgets/include_table_list.html' %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="{{ widget_id }}" style="height: {{ custom_attr|lookup:"widget_height" }};"></div>
+
+    <script type="text/javascript">
+
+        var dom = document.getElementById("{{ widget_id }}");
+        var dataset = [];
+        var legend_labels = JSON.parse('{{ legend_labels | jsonify | safe }}');
+
+        var data_points = JSON.parse('{{ datapoints | jsonify | safe}}');
+
+        data_points.forEach(function (point, index) {
+            if(index < (data_points.length - 1)) {
+                dataset.push(
+                    {
+                        name: legend_labels[index + 1],
+                        type: 'bar',
+                        stack: 'Count',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'insideRight'
+                            }
+                        },
+                        data: JSON.parse(data_points[index + 1])
+                    }
+                );
+            }
+        });
+
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+        app.title = '{{ caption }}';
+
+        option = {
+            tooltip : {
+                trigger: 'axis',
+                axisPointer : {
+                    type : 'shadow'        // type ：'line' | 'shadow'
+                }
+            },
+            color: ["rgba(38, 185, 154, 0.5)", "rgba(3, 88, 106, 0.5)", "rgba(115, 135, 156, 0.5)", "rgba(156, 194, 203, 0.5)", "rgba(156, 169, 174, 0.5)", "rgba(12, 99, 81, 0.5)"],
+            legend: {
+                data: legend_labels
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis:  {
+                type: 'value'
+            },
+            yAxis: {
+                type: 'category',
+                data: data_points[0].replace('[', '').replace(']', '').split(',')
+            },
+            series: dataset
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+
+    </script>
+
+{% endblock %}

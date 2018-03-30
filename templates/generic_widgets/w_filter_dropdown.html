@@ -1,0 +1,59 @@
+{% extends "t_filter_control_base.html" %}
+{% load dashgent_filters %}
+
+
+
+{% block widget_main %}
+    <select id="{{ widget.code }}" name="{{ widget.code }}"
+            class="{% if multiselect == 'yes' %}multiselect-ui hidden{% else %}select2_single{%  endif %} form-control"
+             {% if multiselect == 'yes' %}multiple="multiple"{% endif %}>
+
+        {% with data_columns|columnnameforkey:'id' as id_column %}
+            {% with data_columns|columnnameforkey:'name' as name_column %}
+                {% if not multiselect or multiselect == 'no' %}<option></option>{% endif %}
+                {% for row in rows %}
+                    {% if multiselect == 'no' %}
+                        <option value="{{ row|lookup:id_column }}" {% if request.GET|lookup:widget.code == row|lookup:id_column %} selected {% endif %}  >{{ row|lookup:name_column }}</option>
+                    {% else %}
+                        <option value="{{ row|lookup:id_column }}" {% if row|lookup:id_column in request.GET|lookup_list:widget.code %} selected {% endif %}  >{{ row|lookup:name_column }}</option>
+                    {% endif %}
+                {% endfor %}
+            {% endwith %}
+        {% endwith %}
+    </select>
+
+
+<!-- Select2 -->
+<script>
+
+    function stripTags(string) {
+        var decoded_string = $("<div/>").html(string).text();
+        return $("<div/>").html(decoded_string).text();
+    }
+
+    $(document).ready(function () {
+
+        {% if multiselect == 'yes' %}
+            $('#{{ widget.code }}').multiselect({
+                includeSelectAllOption: true,
+                enableCaseInsensitiveFiltering: true,
+                buttonWidth: {% if widget_size %}'{{ widget_size }}'{% else %}'100%'{% endif %},
+                {% if widget_height %}maxHeight: '{{ widget_height }}',{% endif %}
+                {% if filtering == 'yes' %}enableFiltering: true,{% endif %}
+                {% if link_button == 'yes' %}buttonClass: 'btn btn-link',{% endif %}
+                {% if drop_right == 'yes' %}dropRight: true,{% endif %}
+                nonSelectedText: stripTags("{{ widget.text }}"),
+            });
+        {% else %}
+                $("#{{ widget.code }}").select2({
+                    placeholder: stripTags("{{ widget.text }}"),
+                    allowClear: true,
+                });
+        {% endif %}
+
+    });
+</script>
+<!-- /Select2 -->
+
+
+{% endblock %}

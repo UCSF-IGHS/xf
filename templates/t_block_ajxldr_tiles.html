@@ -1,0 +1,14 @@
+{% comment %}
+Creates an "tile panel". This is also the main host for an AJAX control.
+{% endcomment %}
+
+
+{% load dashgent_filters %}
+<div class="row tile_count uh-dashgent-widget uh-ajax-autoload"
+{% if widget_slug %}widget-url="{% url 'widgets' current_perspective.slug widget_slug %}{{ filter_query_string }}"{% endif %} {% if not widget_slug %}widget-url="{{ id|rev}}{{ filter_query_string }}" {% endif %}   >
+<div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+    {% include "dashboard_controls/dc_card.html" with caption="Loading..." number="&nbsp;" updown_number="&nbsp;" updown_caption="&nbsp;" icon="&nbsp;" updown="&nbsp;"%}
+</div>
+
+</div>
+

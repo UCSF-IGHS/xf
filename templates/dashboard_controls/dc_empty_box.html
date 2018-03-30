@@ -1,0 +1,13 @@
+{% load dashgent_filters %}
+<div class="x_panel tile fixed_height_320">
+    <div class="x_title">
+        <h2>{{ caption }}</h2>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content uh-dashgent-widget uh-ajax-autoload" id="{{ id }}" widget-url="{{ id|rev }}">
+        INNER
+    </div>
+    <div class="clearfix"></div>
+</div>
+

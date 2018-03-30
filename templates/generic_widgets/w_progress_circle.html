@@ -1,0 +1,17 @@
+{% extends "t_xpanel_control_base.html" %}
+{% load dashgent_filters %}
+
+{% block caption %}
+    {{ caption }}
+{% endblock %}
+
+{% block spanner %}
+    {% include "generic_widgets/include_more_menu.html" %}
+{% endblock %}
+
+{% block widget_main %}
+    {% for row in rows %}
+    {% include 'generic_widgets/include_progress_circle.html' with row=row %}
+    {% endfor %}
+
+{% endblock %}

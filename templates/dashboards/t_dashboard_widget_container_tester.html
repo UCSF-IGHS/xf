@@ -1,0 +1,22 @@
+{% extends "xf_base.html" %}
+{% load dashgent_filters %}
+
+{% comment %}
+This template is a container to test stand-alone widgets. Use this to debug and design a widget without requiering
+a full dashboard running.
+{% endcomment %}
+
+{% block main %}
+
+    <div class="row">
+        <div class="{{ 12|cw }}">
+            <div class="x_panel tile fixed_height_390" style="overflow:scroll; height: 100%">
+                {% block ajax_main %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

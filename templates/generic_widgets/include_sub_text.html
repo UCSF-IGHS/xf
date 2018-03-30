@@ -1,0 +1,8 @@
+{% load i18n %}
+
+<h2 class="small">{{ widget.sub_text }}
+{% if widget.user_description %}
+    <a href="#" data-toggle="modal" role="button"
+       data-target="#{{ widget_id }}-modal-about">{%  trans "Read more" %}</a>
+</h2>
+{% endif %}

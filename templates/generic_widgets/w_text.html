@@ -1,0 +1,19 @@
+{% extends "t_xpanel_control_base.html" %}
+{% load dashgent_filters %}
+
+{% block caption %}
+    {{ widget.title }}
+{% endblock %}
+
+{% block spanner %}
+    {% include "generic_widgets/include_more_menu.html" %}
+
+{% endblock %}
+
+{% block widget_main %}
+
+
+    {{ widget.text|safe }}
+
+
+{% endblock %}

@@ -1,0 +1,103 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-11-20 21:46+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: templates/generic_widgets/include_more_menu.html:16
+#: templates/t_xpanel_control_base.html:36
+msgid "Edit widget"
+msgstr "Editar widget"
+
+#: templates/generic_widgets/include_more_menu.html:19
+#: templates/t_xpanel_control_base.html:40
+msgid "View as stand-alone"
+msgstr "Ver como autônomo"
+
+#: templates/generic_widgets/include_more_menu.html:31
+msgid "Data"
+msgstr "Dados"
+
+#: templates/generic_widgets/include_more_menu.html:35
+msgid "View data"
+msgstr "Ver dados"
+
+#: templates/generic_widgets/include_more_menu.html:39
+msgid "View details"
+msgstr "Ver detalhes"
+
+#: templates/generic_widgets/include_more_menu.html:52
+msgid "More info"
+msgstr "Mais infor."
+
+#: templates/generic_widgets/include_more_menu.html:58
+msgid "Enlarge"
+msgstr "Ampliar"
+
+#: templates/generic_widgets/include_more_menu.html:79
+msgid "More information"
+msgstr "Mais informaçōes"
+
+#: templates/generic_widgets/include_more_menu.html:90
+#: templates/xf_viz_base.html:127
+msgid "Close"
+msgstr "Fechar"
+
+#: templates/generic_widgets/include_sub_text.html:6
+msgid "Read more"
+msgstr "Ler mais"
+
+#: templates/t_block_ajxldr_xpanel.html:12
+msgid "Loading"
+msgstr "Processando"
+
+#: templates/t_block_ajxldr_xpanel.html:17
+msgid "Loading..."
+msgstr "Processando..."
+
+#: templates/xf_viz_base.html:38
+msgid "Edit this page"
+msgstr "Editar esta página"
+
+#: templates/xf_viz_base.html:40
+msgid "Edit this page's template"
+msgstr "Editar o template desta página"
+
+#: templates/xf_viz_base.html:42
+msgid "Edit this perspective"
+msgstr "Editar esta prespectiva"
+
+#: templates/xf_viz_base.html:45 templates/xf_viz_base.html:73
+#: templates/xf_viz_base.html:114
+msgid "About this page"
+msgstr "Sobre esta página"
+
+#: templates/xf_viz_base.html:82
+msgid "Filter:"
+msgstr "Filtro"
+
+#: templates/xf_viz_base.html:85
+msgid "Apply filter"
+msgstr "Filtrar"
+
+#: templates/xf_viz_base.html:87
+msgid "Clear filter"
+msgstr "Limpar Filtro"
+
+#: templates/xf_viz_base.html:122
+msgid "Data sources"
+msgstr "Fontes de dados"

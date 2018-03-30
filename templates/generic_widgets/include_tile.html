@@ -1,0 +1,29 @@
+{% load dashgent_filters %}
+
+{%  if custom_attr|lookup:'style' == "modern"%}
+
+
+
+<div class="{{ tile_width|cw }}" style="flex:4; display: flex; width: 100%">
+    <div class="tile-stats" style="flex:4">
+        <div class="icon"><i class="fa {{ row|lookup:'icon' }}"></i></div>
+        <div class="count">{{ row|lookup:'count' }}</div>
+        <a href="#" data-toggle="modal" role="button"
+           data-target="#{{ widget_id }}-modal-about"><h3>{{ row|lookup:'caption' }}</h3></a>
+        <p>{{ row|lookup:'sub_caption' }}</p>
+    </div>
+</div>
+
+{% else %}
+
+
+{# Default tiles #}
+
+<div class="{{ cw|cw }} tile_stats_count">
+    <span class="count_top"><i class="fa row|lookup:'icon'"></i> {{ row|lookup:'caption' }}</span>
+    <div class="count {{ row|lookup:'count' }}">{{ row|lookup:'count' }}</div>
+    <!--<span class="count_bottom"><i class="{{ updown_colour|default:"green" }}"><i class="fa {{ updown }}"></i>{{ updown_number }} </i> {{ updown_caption }}</span>-->
+
+</div>
+
+{% endif %}

@@ -1,0 +1,21 @@
+{% load i18n %}
+
+{% comment %}
+Creates an "x panel". This is also the main host for an AJAX control.
+{% endcomment %}
+
+{% load dashgent_filters %}
+
+<div class="x_panel tile {{ height|default:"fixed_height_320" }} uh-dashgent-widget uh-ajax-autoload" style="overflow2:scroll" id="{{ id }}"
+     {% if widget_slug %}widget-url="{% url 'widgets' current_perspective.slug widget_slug %}{{ filter_query_string }}"{% endif %} {% if not widget_slug %}widget-url="{{ id|rev}}{{ filter_query_string }}" {% endif %}>
+    <div class="x_title">
+        <h2>{% trans "Loading" %}</h2>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content loading-indicator">
+        {% trans "Loading..." %}
+    </div>
+    <div class="clearfix"></div>
+</div>
+

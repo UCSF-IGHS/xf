@@ -1,0 +1,78 @@
+{% load dashgent_filters %}
+
+
+{% if renderer == None or renderer == "default" %}
+
+
+   <table class="table table-hover table-scrollable table200" id="{{ widget_id }}_table">
+        <thead>
+        <tr>
+            {% for data_column in data_columns %}
+                <th style="width:{{ data_column|lookup:'table_column_width' }}">{{ data_column|lookup:'table_column_caption' }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in rows %}
+            <tr>
+            {% for data_column in data_columns %}
+                <td style="width:{{ data_column|lookup:'table_column_width' }}">
+
+                    {% with data_column|lookup:'column_name' as column_name %}
+                        {{ row|lookup:column_name }}
+                    {% endwith %}
+                </td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            {% if custom_attr|lookup:'dynamic' == 'yes'%}
+            var {{ widget_id }} =
+            $('#{{ widget_id }}_table').DataTable({
+                "paging": false,
+                "searching": false,
+                "info": false
+                {% if custom_attr|lookup:'allow_downloads' == 'yes'%}
+                ,dom: 'Bfrtip',
+                buttons: [
+                    {extend: 'copy', className: 'btn-xs'},
+                    {extend: 'csv', className: 'btn-xs'},
+                    {extend: 'pdf', className: 'btn-xs'},
+                    {extend: 'print', className: 'btn-xs'}
+
+                ]
+                {% endif %}
+            });
+
+            {% if custom_attr|lookup:'allow_downloads' == 'yes'%}
+            function moveExportButton(source, target, text) {
+                var button = $('#{{ widget_id}}_table_wrapper ' + source);
+                button.appendTo($('#{{ widget_id }}' + target));
+                button.removeClass('btn')
+                button.removeClass('btn-xs')
+                button.removeClass('btn-default')
+                button.text(text);
+
+            }
+
+            moveExportButton('.buttons-csv', '_export_csv', 'Download as CSV')
+            moveExportButton('.buttons-pdf', '_export_pdf', 'Download as PDF')
+            moveExportButton('.buttons-print', '_export_print', 'Print')
+            moveExportButton('.buttons-copy', '_export_copy', 'Copy to clipboard')
+            console.log($('#{{ widget_id}}_table_wrapper .dt-buttons'));
+            $('#{{ widget_id}}_table_wrapper .dt-buttons').hide();
+            {% endif %}
+
+            {% endif %}
+        });
+    </script>
+
+
+{% endif %}

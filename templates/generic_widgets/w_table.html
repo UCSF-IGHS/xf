@@ -1,0 +1,24 @@
+{% extends "t_xpanel_control_base.html" %}
+{% load dashgent_filters %}
+
+{% block caption %}
+    {{ caption }}
+{% endblock %}
+
+{% block spanner %}
+    {% include "generic_widgets/include_more_menu.html" %}
+{% endblock %}
+
+{% block widget_main %}
+    {% include 'generic_widgets/include_sub_text.html' %}
+
+    <!--{{ allow_downloads }}
+    {{ custom_attr|lookup:'allow_downloads' }}-->
+
+
+    {% include 'generic_widgets/include_table_list.html' %}
+
+
+
+{% endblock %}
+
