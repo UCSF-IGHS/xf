@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations
-import uc_dashboards.models
+import xf.uc_dashboards.models
 
 
 class Migration(migrations.Migration):
@@ -16,21 +16,21 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='page',
             name='text',
-            field=uc_dashboards.models.HTMLField(blank=True),
+            field=xf.uc_dashboards.models.HTMLField(blank=True),
         ),
         migrations.AlterField(
             model_name='page',
             name='text_en_uk',
-            field=uc_dashboards.models.HTMLField(blank=True, null=True),
+            field=xf.uc_dashboards.models.HTMLField(blank=True, null=True),
         ),
         migrations.AlterField(
             model_name='page',
             name='text_nl_nl',
-            field=uc_dashboards.models.HTMLField(blank=True, null=True),
+            field=xf.uc_dashboards.models.HTMLField(blank=True, null=True),
         ),
         migrations.AlterField(
             model_name='page',
             name='text_pt_pt',
-            field=uc_dashboards.models.HTMLField(blank=True, null=True),
+            field=xf.uc_dashboards.models.HTMLField(blank=True, null=True),
         ),
     ]

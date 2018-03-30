@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations
-import uc_dashboards.models
+import xf.uc_dashboards.models
 
 
 class Migration(migrations.Migration):
@@ -16,6 +16,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='widget',
             name='user_description',
-            field=uc_dashboards.models.HTMLField(blank=True, help_text='A description that helps the user understand what this widget shows. It will be shown in a pop-up window. '),
+            field=xf.uc_dashboards.models.HTMLField(blank=True, help_text='A description that helps the user understand what this widget shows. It will be shown in a pop-up window. '),
         ),
     ]

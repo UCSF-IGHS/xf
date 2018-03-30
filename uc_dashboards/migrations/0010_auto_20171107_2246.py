@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 import django.db.models.deletion
-import uc_dashboards.models
+import xf.uc_dashboards.models
 
 
 class Migration(migrations.Migration):
@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='page',
             name='data_sources',
-            field=uc_dashboards.models.HTMLField(blank=True, help_text='Specify the data sources for this page, if applicable.', null=True),
+            field=xf.uc_dashboards.models.HTMLField(blank=True, help_text='Specify the data sources for this page, if applicable.', null=True),
         ),
         migrations.AddField(
             model_name='page',

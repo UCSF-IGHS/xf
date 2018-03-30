@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class DashgentConfig(AppConfig):
-    name = 'uc_dashboards'
+    name = 'xf.uc_dashboards'

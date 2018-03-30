@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-import uc_dashboards.models
+import xf.uc_dashboards.models
 
 
 class Migration(migrations.Migration):
@@ -16,37 +16,37 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='page',
             name='about',
-            field=uc_dashboards.models.HTMLField(blank=True, help_text='Allows you to specify "about" information for this page, e.g. methods.', null=True),
+            field=xf.uc_dashboards.models.HTMLField(blank=True, help_text='Allows you to specify "about" information for this page, e.g. methods.', null=True),
         ),
         migrations.AddField(
             model_name='page',
             name='about_en',
-            field=uc_dashboards.models.HTMLField(blank=True, help_text='Allows you to specify "about" information for this page, e.g. methods.', null=True),
+            field=xf.uc_dashboards.models.HTMLField(blank=True, help_text='Allows you to specify "about" information for this page, e.g. methods.', null=True),
         ),
         migrations.AddField(
             model_name='page',
             name='about_nl',
-            field=uc_dashboards.models.HTMLField(blank=True, help_text='Allows you to specify "about" information for this page, e.g. methods.', null=True),
+            field=xf.uc_dashboards.models.HTMLField(blank=True, help_text='Allows you to specify "about" information for this page, e.g. methods.', null=True),
         ),
         migrations.AddField(
             model_name='page',
             name='about_pt',
-            field=uc_dashboards.models.HTMLField(blank=True, help_text='Allows you to specify "about" information for this page, e.g. methods.', null=True),
+            field=xf.uc_dashboards.models.HTMLField(blank=True, help_text='Allows you to specify "about" information for this page, e.g. methods.', null=True),
         ),
         migrations.AddField(
             model_name='page',
             name='data_sources_en',
-            field=uc_dashboards.models.HTMLField(blank=True, help_text='Specify the data sources for this page, if applicable.', null=True),
+            field=xf.uc_dashboards.models.HTMLField(blank=True, help_text='Specify the data sources for this page, if applicable.', null=True),
         ),
         migrations.AddField(
             model_name='page',
             name='data_sources_nl',
-            field=uc_dashboards.models.HTMLField(blank=True, help_text='Specify the data sources for this page, if applicable.', null=True),
+            field=xf.uc_dashboards.models.HTMLField(blank=True, help_text='Specify the data sources for this page, if applicable.', null=True),
         ),
         migrations.AddField(
             model_name='page',
             name='data_sources_pt',
-            field=uc_dashboards.models.HTMLField(blank=True, help_text='Specify the data sources for this page, if applicable.', null=True),
+            field=xf.uc_dashboards.models.HTMLField(blank=True, help_text='Specify the data sources for this page, if applicable.', null=True),
         ),
         migrations.AddField(
             model_name='pagestatus',

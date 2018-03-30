@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-import uc_dashboards.models
+import xf.uc_dashboards.models
 
 
 class Migration(migrations.Migration):
@@ -106,16 +106,16 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='widget',
             name='text_en',
-            field=uc_dashboards.models.HTMLField(blank=True, help_text='If this is a text widget, the text will be displayed in the widget. Useful for static widgets.', null=True),
+            field=xf.uc_dashboards.models.HTMLField(blank=True, help_text='If this is a text widget, the text will be displayed in the widget. Useful for static widgets.', null=True),
         ),
         migrations.AddField(
             model_name='widget',
             name='text_nl',
-            field=uc_dashboards.models.HTMLField(blank=True, help_text='If this is a text widget, the text will be displayed in the widget. Useful for static widgets.', null=True),
+            field=xf.uc_dashboards.models.HTMLField(blank=True, help_text='If this is a text widget, the text will be displayed in the widget. Useful for static widgets.', null=True),
         ),
         migrations.AddField(
             model_name='widget',
             name='text_pt',
-            field=uc_dashboards.models.HTMLField(blank=True, help_text='If this is a text widget, the text will be displayed in the widget. Useful for static widgets.', null=True),
+            field=xf.uc_dashboards.models.HTMLField(blank=True, help_text='If this is a text widget, the text will be displayed in the widget. Useful for static widgets.', null=True),
         ),
     ]
