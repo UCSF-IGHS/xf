@@ -1,0 +1,59 @@
+{% extends request.is_ajax|yesno:"base_ajax.html,base.html" %}
+
+
+{% block body_main %}
+
+    <script>
+        $(document).ready(function(){
+
+            //alert("JS Loaded");
+            // Date picker
+            //$(".datePicker").datepicker({ dateFormat: 'dd/mm/yy'}); NOT COMPATIBLE WITH BOOTSTRAP
+
+            // Buttons
+            //$( "input:submit").button();
+            //$( ".form a").button();
+
+        });
+
+    </script>
+
+    {{ test }}
+
+    {% if form.Meta.title %}
+        <h1>{{ form.Meta.title }}</h1>
+    {% else %}
+        <h1>This item will be deleted. Continue?</h1>
+    {% endif %}
+
+    {% if protected_error %}
+        Delete failed. This item is currently in use in the database. It cannot be deleted.
+    {% else %}
+
+    <div class="form">
+
+        {% if form.Meta.instruction %}
+            <p>{{ form.Meta.instruction }}</p>
+        {% endif %}
+        {% if form_message %}
+            {{ form_message }}
+        {% endif %}
+        <form action="" class="uniForm form-horizontal" method="post" >
+            {% csrf_token %}
+            {{ object }}
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">{{ action }}</button>
+                {% if action != 'Create' %}
+                    <a class="btn" href="../all">Cancel</a>
+                {%  else %}
+                    <a class="btn" href="./all">Cancel</a>
+                {%  endif %}
+            </div>
+        </form>
+
+    </div>
+
+    {% endif %}
+
+{% endblock %}

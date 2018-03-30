@@ -1,0 +1,58 @@
+{% load crispy_forms_tags %}
+
+
+
+{% block content_main %}
+
+    <script>
+        $(document).ready(function () {
+
+            // Date picker
+            $(".datepicker").datetimepicker({format: 'YYYY-MM-DD'});
+        });
+
+        if (typeof crud_form_loaded == 'function') {
+            crud_form_loaded('{{ formname }}', '{{ action }}');
+        } else {
+            // do nothing
+        }
+
+        var base_url_ajax = '{%  url url_name_list %}';
+
+    </script>
+
+    <form role="form" action="{{ form.helper.form_action }}" class="form-horizontal mxlform xf-ajax-form" method="post" id="frmAjax"
+          style="margin-bottom: 0">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">{{ form.Meta.title }}</h4>
+                </div>
+                <div class="modal-body">
+                    {% crispy form %}
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="{{ action }}" id="btnDlgSubmit">
+                    <!--<a href="#" data-dismiss2="modal" class="btn btn-primary" id="axSubmit">Change password</a>-->
+                    <a href="#" data-dismiss="modal" class="btn btn-default" id="btnDlgCancel">Cancel</a>
+                    <!--<a href="#" class="btn" id="fire">Fire</a>-->
+                    {% if action != 'Create' %}
+                        <!--<a data-toggle="modal" href="#myModal" hrefpost="{{ object.id }}/delete" class="btn">Delete</a>-->
+                    {% endif %}
+                </div>
+            </div>
+            div>
+
+        </div>
+
+    </form>
+
+
+
+
+{% endblock %}
+

@@ -1,0 +1,139 @@
+{% extends request.is_ajax|yesno:"base_ajax.html,xf_base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load xf_filters %}
+{% load dashgent_filters %}
+
+{% block title %}
+    {{ page_title }}
+    MASTER CHILD TEST
+{% endblock %}
+
+
+{% block h %}
+
+    {% for js in crud_js_assets %}
+        <script src="{% static js %}"></script>
+    {% endfor %}
+
+    {% for css in crud_css_assets %}
+        <link href="{% static css %}" rel="stylesheet"/>
+    {% endfor %}
+
+
+{% endblock %}
+
+{% block main %}
+
+    {% include "content_ajax.html" %}
+
+    <script>
+        $(document).ready(function () {
+
+            window.setTimeout(function () {
+                selectURL('{% url url_name_list  %}')
+            }, 1);
+
+            {% for related_tab in related_tabs %}
+                RefreshObjectListForDiv($("#tab_{{ related_tab.id }}"));
+            {% endfor %}
+
+        });
+
+    </script>
+
+    <div class="row">
+        <div class="{{ 1|cw }}">
+
+        </div>
+
+        <div class="{{ 10 |cw }}">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>{{ form.Meta.title }}
+                    </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div>{{ form.Meta.instruction }}</div>
+                    <form id="frmNonAjax" method="post" class="form-horizontal form-label-left" novalidate="">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {% crispy form %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="{{ 1|cw }}">
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="{{ 1|cw }}">
+
+        </div>
+
+        <div class="{{ 10 |cw }}">
+            <div class="x_panel">
+                <div class="x_content">
+
+                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                        <ul id="relatedTabs" class="nav nav-tabs bar_tabs" role="tablist">
+                            {% for related_tab in related_tabs %}
+
+                                {% if forloop.counter == 1 %}
+                                    <li role="presentation" class="active"><a href="#{{ related_tab.id }}"
+                                                                              id="home-tabb" role="tab"
+                                                                              data-toggle="tab" aria-controls="home"
+                                                                              aria-expanded="true">{{ related_tab.caption }}</a>
+                                    </li>
+                                {% else %}
+                                    <li role="presentation" class=""><a href="#{{ related_tab.id }}" role="tab"
+                                                                        id="profile-tabb" data-toggle="tab"
+                                                                        aria-controls="profile"
+                                                                        aria-expanded="false">{{ related_tab.caption }}</a>
+                                    </li>
+                                {% endif %}
+
+                            {% endfor %}
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                            {% for related_tab in related_tabs %}
+                                {% if forloop.counter == 1 %}
+                                    <div role="tabpanel" class="tab-pane fade active in" id="{{ related_tab.id }}"
+                                         aria-labelledby="home-tab">
+                                        <div id="tab_{{ related_tab.id }}" href="{{ related_tab.url }}">
+                                            Loading
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div role="tabpanel" class="tab-pane fade" id="{{ related_tab.id }}"
+                                         aria-labelledby="profile-tab">
+                                        <div id="tab_{{ related_tab.id }}" href="{{ related_tab.url }}">
+                                            Loading
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+
+
+                            {% endfor %}
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

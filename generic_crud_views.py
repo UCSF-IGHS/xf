@@ -1,0 +1,191 @@
+from django.core.exceptions import PermissionDenied
+from django.db.models import ProtectedError
+from django.urls import reverse
+from django.views.generic import DetailView, UpdateView, DeleteView, CreateView
+from django.views.generic.edit import ModelFormMixin
+
+from xf_crud.ajax_mixins import XFAjaxViewMixin
+from xf_crud.mixins import XFCrudMixin
+from xf_crud.permission_mixin import XFPermissionMixin
+from xf_system.views import XFNavigationViewMixin
+
+
+class XFDetailView(DetailView, ModelFormMixin, XFPermissionMixin, XFAjaxViewMixin, XFNavigationViewMixin, XFCrudMixin):
+    template_name = "form_generic.html"
+
+    def get_context_data(self, **kwargs):
+        self.context = context = super(XFDetailView, self).get_context_data(**kwargs)
+
+        if not self.user_has_model_permission("view"):
+            raise PermissionDenied
+
+        context['action'] = "Detail"
+        context['formname'] = self.get_form_class().__name__
+        self.form_class = self.get_form_class()
+
+        form = self.get_form(self.form_class)
+        for field in form.fields:
+            form.fields[field].disabled = True
+        context['form'] = form
+
+        context['browse'] = True
+
+        self.set_navigation_context()
+        self.add_crud_urls_to_context(context)
+        #self.add_assets_to_context(context)
+        form.add_assets_to_context(context)
+        return context
+
+    def get(self, request, **kwargs):
+        XFAjaxViewMixin.get(self, request, **kwargs)
+        return DetailView.get(self, request, **kwargs)
+
+
+class XFMasterChildView(XFDetailView):
+    template_name = "form_master_child.html"
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.related_tabs = []
+
+    def add_related_listview(self, related_list_view):
+        self.related_tabs.append(related_list_view)
+
+    def get_context_data(self, **kwargs):
+        context = super(XFMasterChildView, self).get_context_data(**kwargs)
+        #context['list_url'] = reverse('library_book-instances_list_related', kwargs={'related_fk':self.kwargs['pk']})
+
+        context['related_tabs'] = self.related_tabs
+        return context
+
+
+
+
+class XFUnsafeDetailView(DetailView, ModelFormMixin, XFAjaxViewMixin, XFCrudMixin):
+    template_name = "form_details_generic.html"
+
+    def get_context_data(self, **kwargs):
+        self.context = context = super(XFUnsafeDetailView, self).get_context_data(**kwargs)
+        context['action'] = "Detail"
+        self.form_class = self.get_form_class()
+        context['form'] = self.get_form(self.form_class)
+        #Used because there is no VIEW permission (yet)
+        context['browse'] = True
+        self.add_crud_urls_to_context(context)
+        return context
+
+    def get(self, request, **kwargs):
+        XFAjaxViewMixin.get(self, request, **kwargs)
+        return DetailView.get(self, request, **kwargs)
+
+
+class XFUpdateView(UpdateView, XFPermissionMixin, XFAjaxViewMixin, XFCrudMixin):
+    template_name = "form_generic.html"
+
+    def get(self, request, **kwargs):
+        XFAjaxViewMixin.get(self, request, **kwargs)
+        return UpdateView.get(self, request, **kwargs)
+
+    def post(self, request, **kwargs):
+
+        if not self.user_has_model_permission("change"):
+            raise PermissionDenied
+
+        XFAjaxViewMixin.post(self, request, **kwargs)
+        self.request = request
+        return UpdateView.post(self, request, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        self.context = context = super(XFUpdateView, self).get_context_data(**kwargs)
+        context['action'] = "Update"
+        context['formname'] = self.get_form_class().__name__
+        self.ensure_set_context_perm("change")
+        self.add_crud_urls_to_context(context)
+        return context
+
+    def form_invalid(self, form):
+        return XFAjaxViewMixin.prepare_form_invalid(self, self.request, form,
+                                                    UpdateView.form_invalid(self, form))
+
+    def form_valid(self, form):
+        return XFAjaxViewMixin.prepare_form_valid(self, self.request, form,
+                                                  UpdateView.form_valid(self, form))
+
+
+class XFDeleteView(DeleteView, XFPermissionMixin, XFAjaxViewMixin, XFCrudMixin):
+    template_name = "form_delete_generic.html"
+    ajax_template_name = "ajax_form_confirm_delete.html"
+    protected_error = False
+
+    def get_context_data(self, **kwargs):
+        self.context = context = super(XFDeleteView, self).get_context_data(**kwargs)
+        context['action'] = "Delete"
+        context['formname'] = "DeleteForm"
+        context['protected_error'] = self.protected_error
+        self.ensure_set_context_perm("delete")
+        self.add_crud_urls_to_context(context)
+        return context
+
+
+    def get(self, request, **kwargs):
+        XFAjaxViewMixin.get(self, request, **kwargs)
+        return DeleteView.get(self, request, **kwargs)
+
+    def post(self, request, **kwargs):
+
+        if not self.user_has_model_permission("delete"):
+            raise PermissionDenied
+
+        XFAjaxViewMixin.post(self, request, **kwargs)
+        self.request = request
+        try:
+            return XFAjaxViewMixin.prepare_form_valid(self, self.request, None,
+                                                      DeleteView.post(self, request, **kwargs))
+        except ProtectedError:
+            self.protected_error = True
+            return XFAjaxViewMixin.prepare_form_invalid(self, self.request, None,
+                                                        XFDeleteView.get(self, request, **kwargs))
+
+
+class XFCreateView(CreateView, XFPermissionMixin, XFAjaxViewMixin, XFNavigationViewMixin, XFCrudMixin):
+    template_name = "form_generic.html"
+
+
+
+    def get(self, request, **kwargs):
+        XFAjaxViewMixin.get(self, request, **kwargs)
+        return CreateView.get(self, request, **kwargs)
+
+    def post(self, request, **kwargs):
+
+        if not self.user_has_model_permission("add"):
+            raise PermissionDenied
+
+        XFAjaxViewMixin.post(self, request, **kwargs)
+        return CreateView.post(self, request, **kwargs)
+
+    def form_invalid(self, form):
+        return XFAjaxViewMixin.prepare_form_invalid(self, self.request, form,
+                                                    CreateView.form_invalid(self, form))
+
+    def form_valid(self, form):
+        return XFAjaxViewMixin.prepare_form_valid(self, self.request, form,
+                                                  CreateView.form_valid(self, form))
+
+    def get_initial(self):
+        return self.get_initial_form_data_from_querystring()
+
+    def get_context_data(self, **kwargs):
+        self.context = context = super(XFCreateView, self).get_context_data(**kwargs)
+        context['action'] = "Create"
+        context['formname'] = self.get_form_class().__name__
+
+        fields = self.get_form().fields
+        #for field in self.get_form().initial:
+        #    fields[field].disabled = True
+
+        self.ensure_set_context_perm("add")
+        self.set_navigation_context()
+        self.add_crud_urls_to_context(context)
+
+        return context
