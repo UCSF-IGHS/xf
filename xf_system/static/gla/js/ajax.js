@@ -168,6 +168,7 @@ function postform(e, htmltarget, formtarget, posttarget, sourceElement) {
             //var errors = jQuery.parseJSON(data);
             //var errors = data;
 
+            // Not successful – reload the window and display any problems
             if (!data.success) {
                 $(htmltarget).html(data.html);
                 ajaxFormLoaded(htmltarget, formtarget, posttarget, sourceElement);
@@ -177,8 +178,16 @@ function postform(e, htmltarget, formtarget, posttarget, sourceElement) {
                 $(formtarget).modal('hide') // dismiss dialog
                 // alert(data.pk);
 
-                $('#msg_info').html(data.message);
-                $('#msg_info').show();
+                //$('#msg_info').html(data.message);
+                //$('#msg_info').show();
+
+                new PNotify({
+                      title: 'Done',
+                      text: data.message,
+                      type: 'success',
+                      styling: 'bootstrap3'
+                  });
+
                 if(typeof window.mxlSuccess == 'function') {
                     // function exists, so we can now call it
                     mxlSuccess();
