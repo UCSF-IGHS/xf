@@ -82,6 +82,7 @@ class XFUnsafeDetailView(DetailView, ModelFormMixin, XFAjaxViewMixin, XFCrudMixi
 class XFUpdateView(UpdateView, XFPermissionMixin, XFAjaxViewMixin, XFCrudMixin):
     template_name = "form_generic.html"
 
+
     def get(self, request, **kwargs):
         XFAjaxViewMixin.get(self, request, **kwargs)
         return UpdateView.get(self, request, **kwargs)
@@ -91,6 +92,7 @@ class XFUpdateView(UpdateView, XFPermissionMixin, XFAjaxViewMixin, XFCrudMixin):
         if not self.user_has_model_permission("change"):
             raise PermissionDenied
 
+        self.success_message = "%s has been updated" % (self.get_object())
         XFAjaxViewMixin.post(self, request, **kwargs)
         self.request = request
         return UpdateView.post(self, request, **kwargs)
@@ -108,8 +110,11 @@ class XFUpdateView(UpdateView, XFPermissionMixin, XFAjaxViewMixin, XFCrudMixin):
                                                     UpdateView.form_invalid(self, form))
 
     def form_valid(self, form):
-        return XFAjaxViewMixin.prepare_form_valid(self, self.request, form,
-                                                  UpdateView.form_valid(self, form))
+
+        form_valid_output = UpdateView.form_valid(self, form)
+        self.success_message = "%s has been updated" % (self.object)
+
+        return XFAjaxViewMixin.prepare_form_valid(self, self.request, form, form_valid_output)
 
 
 class XFDeleteView(DeleteView, XFPermissionMixin, XFAjaxViewMixin, XFCrudMixin):
@@ -136,6 +141,7 @@ class XFDeleteView(DeleteView, XFPermissionMixin, XFAjaxViewMixin, XFCrudMixin):
         if not self.user_has_model_permission("delete"):
             raise PermissionDenied
 
+        self.success_message = "%s has been deleted" % (self.get_object())
         XFAjaxViewMixin.post(self, request, **kwargs)
         self.request = request
         try:
@@ -169,8 +175,10 @@ class XFCreateView(CreateView, XFPermissionMixin, XFAjaxViewMixin, XFNavigationV
                                                     CreateView.form_invalid(self, form))
 
     def form_valid(self, form):
+        form_valid_output = CreateView.form_valid(self, form)
+        self.success_message = "%s has been created" % (self.object)
         return XFAjaxViewMixin.prepare_form_valid(self, self.request, form,
-                                                  CreateView.form_valid(self, form))
+                                                  form_valid_output)
 
     def get_initial(self):
         return self.get_initial_form_data_from_querystring()

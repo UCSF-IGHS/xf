@@ -63,6 +63,12 @@
     <!-- jQuery Bootstrap Validator-->
     <link href="{% static "gla/vendors/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css" %}" rel="stylesheet">
 
+    <!-- PNotify -->
+    <link href="{% static "gla/vendors/pnotify/dist/pnotify.css" %}" rel="stylesheet">
+    <link href="{% static "gla/vendors/pnotify/dist/pnotify.buttons.css" %}" rel="stylesheet">
+    <link href="{% static "gla/vendors/pnotify/dist/pnotify.nonblock.css" %}" rel="stylesheet">
+
+
     <!-- XF custom app based css -->
     {% if custom_theme %}
         {% with 'themes/'|add:custom_theme|add:'/styles.css' as custom_css_path%}
@@ -322,6 +328,12 @@
 
 <!-- jQuery Bootstrap Validator-->
 <script src="{% static "gla/vendors/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js" %}"></script>
+
+<!-- PNotify -->
+    <!-- PNotify -->
+<script src="{% static "gla/vendors/pnotify/dist/pnotify.js" %}"></script>
+<script src="{% static "gla/vendors/pnotify/dist/pnotify.buttons.js" %}"></script>
+<script src="{% static "gla/vendors/pnotify/dist/pnotify.nonblock.js" %}"></script>
 
 
 <!-- more -->
