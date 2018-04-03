@@ -1,0 +1,73 @@
+{% extends "xf_base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load xf_filters %}
+{% load dashgent_filters %}
+
+{% block title %}
+    {{ page_title }}
+{% endblock %}
+
+{% block h %}
+
+    {% for js in crud_js_assets %}
+        <script src="{% static js %}"></script>
+    {% endfor %}
+
+    {% for css in crud_css_assets %}
+        <link href="{% static css %}" rel="stylesheet"/>
+    {% endfor %}
+
+
+{% endblock %}
+
+{% block main %}
+
+
+    <script>
+        $(document).ready(function () {
+
+            window.setTimeout(function () {
+                selectURL('{% url url_name_list  %}')
+            }, 1);
+        });
+
+    </script>
+
+    <div class="row">
+        <div class="{{ 1|cw }}">
+
+        </div>
+
+        <div class="{{ 9|cw }}">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>{% block form_title %}{% endblock %}</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <form id="frmNonAjax" method="post" class="form-horizontal form-label-left" novalidate="">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {% block form_body %}{% endblock %}
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                    {% block form_footer %}{% endblock %}
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="{{ 1|cw }}">
+
+        </div>
+
+    </div>
+
+
+{% endblock %}

@@ -1,7 +1,8 @@
 import json
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
+from django.urls import reverse
 
 
 def errors_to_json2(errors):
@@ -29,7 +30,6 @@ class XFAjaxViewMixin():
         self.data = None
         self.success = None
         self.resp = None
-        pass;
 
     def get(self, request, **kwargs):
         """
@@ -92,3 +92,29 @@ class XFAjaxViewMixin():
             return_value = {'success': self.success, 'message': self.message, 'pk': self.object.id, 'object': self.object.__str__()}
             #print return_value
             return HttpResponse(json.dumps(return_value), content_type='application/json', )
+
+    def xf_is_ajax(self):
+
+        return self.request.GET.get('ajax') is not None or self.request.is_ajax()
+
+    def prepare_ajax_post_response(self, **kwargs):
+
+        if self.xf_is_ajax():
+
+            self.message = self.success_message
+            if self.success:
+                payload = {'success': self.success, 'message': self.message}
+                return HttpResponse(json.dumps(payload), content_type='application/json', )
+            else:
+                self.resp = self.render_to_response(self.get_context_data(**kwargs)).rendered_content
+                payload = {'success': self.success, 'message': self.message, 'html': self.resp}
+                return HttpResponse(json.dumps(payload), content_type='application/json', )
+
+        else:
+            if self.success:
+                context = self.get_context_data(**kwargs)
+                return HttpResponseRedirect(context['next_url'])
+            else:
+                # Do something here that renders the error message
+                return self.render_to_response(self.get_context_data(**kwargs))
+
