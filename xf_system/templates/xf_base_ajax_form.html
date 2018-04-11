@@ -1,0 +1,40 @@
+{% load i18n %}
+
+<!--
+   This template serves as a 'base form' in XF for AJAX forms. All forms should extend this template.
+
+   There are four sections:
+   - Title
+   - Form Header
+   - Form Body (fields)
+   - Form Footer (buttons)
+-->
+
+
+<form role="form" action="{{ form.helper.form_action }}" class="form-horizontal mxlform xf-ajax-form" method="post"
+      id="frmAjax"
+      style="margin-bottom: 0">
+    {% csrf_token %}
+
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            {% csrf_token %}
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">{% block form_title %}{% endblock %}</h4>
+            </div>
+            <div class="modal-body">
+                {% block form_body %}{% endblock %}
+            </div>
+            <div class="modal-footer">
+                {% block form_footer %}{% endblock %}
+            </div>
+        </div>
+
+    </div>
+</form>
+
+
+
