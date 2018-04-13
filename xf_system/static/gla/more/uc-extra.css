@@ -288,12 +288,14 @@ div#language_chooser button2 {
 
 
 .form-static {
+
 }
 
 .form-static .form-control {
     border: 0px;
     padding: 3px 6px;
     box-shadow: none;
+    height: 20px;
 }
 
 .form-static .form-group {

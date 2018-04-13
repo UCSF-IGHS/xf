@@ -4,10 +4,11 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db.models import Model
-from django.forms.models import ModelForm
+from django.forms.models import ModelForm, ModelChoiceField
 #import floppyforms as forms
 #from floppyforms.widgets import PasswordInput
 from xf.xf_crud.model_lists import XFCrudAssetLoaderMixIn
+from xf.xf_crud.widgets import StaticTextWidget, StaticSelectWidget
 
 
 class XFAjaxForm(ModelForm):
@@ -48,6 +49,13 @@ class XFAjaxForm(ModelForm):
 class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
 
     def __init__(self, *args, **kwargs):
+
+        self.request = kwargs.pop('request')
+        if self.request is not None:
+            self.user = self.request.user
+        else:
+            self.user = None
+
         super(XFModelForm, self).__init__(*args, **kwargs)
 
         self.js_assets = []
@@ -62,12 +70,27 @@ class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
         self.helper.form_action = ''  # redirect in the view
         self.helper.form_tag = False
         self.helper.help_text_inline = True  # means that I want <span> elements
+        self.url_name = self.request.resolver_match.url_name # Can be used to derive the URL name, which can help you determine the action
 
 
     def disable_initial_fields(self):
         for field in self.initial:
             if field in self.fields:
                 self.fields[field].disabled = True
+
+    def make_readonly(self):
+
+        self.helper.form_class += ' form-static'
+        self.helper.label_class = 'col-lg-5 col-sm-5 col-xs-5'
+        self.helper.field_class = 'col-lg-7 col-sm-7 col-xs-7'
+
+        for field in self.fields:
+            if isinstance(self.fields[field], ModelChoiceField):
+                self.fields[field].widget = StaticSelectWidget(choices=self.fields[field].choices)
+            else:
+                self.fields[field].widget = StaticTextWidget()
+
+        pass
 
 
     def create_locater(self, target_field, api_call_url, api_call, api_return_field, existing_value, *args, **kwargs):

@@ -39,12 +39,17 @@
                     {% crispy form %}
                 </div>
                 <div class="modal-footer">
-                    <input type="submit" class="btn btn-primary" value="{{ action }}" id="btnDlgSubmit">
-                    <!--<a href="#" data-dismiss2="modal" class="btn btn-primary" id="axSubmit">Change password</a>-->
-                    <a href="#" data-dismiss="modal" class="btn btn-default" id="btnDlgCancel">Cancel</a>
-                    <!--<a href="#" class="btn" id="fire">Fire</a>-->
-                    {% if action != 'Create' %}
-                        <!--<a data-toggle="modal" href="#myModal" hrefpost="{{ object.id }}/delete" class="btn">Delete</a>-->
+                    {% if action == 'Detail' %}
+                        <a href="#" data-dismiss="modal" class="btn btn-default btn-primary" id="btnDlgCancel">Close</a>
+
+                    {% else %}
+                        <input type="submit" class="btn btn-primary" value="{{ action }}" id="btnDlgSubmit">
+                        <!--<a href="#" data-dismiss2="modal" class="btn btn-primary" id="axSubmit">Change password</a>-->
+                        <a href="#" data-dismiss="modal" class="btn btn-default" id="btnDlgCancel">Cancel</a>
+                        <!--<a href="#" class="btn" id="fire">Fire</a>-->
+                        {% if action != 'Create' %}
+                            <!--<a data-toggle="modal" href="#myModal" hrefpost="{{ object.id }}/delete" class="btn">Delete</a>-->
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>
