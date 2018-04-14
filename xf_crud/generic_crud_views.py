@@ -21,24 +21,26 @@ class XFDetailView(DetailView, ModelFormMixin, XFPermissionMixin, XFAjaxViewMixi
 
         context['action'] = "Detail"
         context['formname'] = self.get_form_class().__name__
-        self.form_class = self.get_form_class()
 
-        form = self.get_form(self.form_class)
-        for field in form.fields:
-            form.fields[field].disabled = True
-        context['form'] = form
-
+        self.prepare_form_class()
+        self.form.make_readonly()
+        context['form'] = self.form
         context['browse'] = True
 
         self.set_navigation_context()
         self.add_crud_urls_to_context(context)
-        #self.add_assets_to_context(context)
-        form.add_assets_to_context(context)
+        self.form.add_assets_to_context(context)
         return context
 
     def get(self, request, **kwargs):
         XFAjaxViewMixin.get(self, request, **kwargs)
         return DetailView.get(self, request, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
 
 
 class XFMasterChildView(XFDetailView):
@@ -58,7 +60,10 @@ class XFMasterChildView(XFDetailView):
         context['related_tabs'] = self.related_tabs
         return context
 
-
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
 
 class XFUnsafeDetailView(DetailView, ModelFormMixin, XFAjaxViewMixin, XFCrudMixin):
@@ -77,6 +82,12 @@ class XFUnsafeDetailView(DetailView, ModelFormMixin, XFAjaxViewMixin, XFCrudMixi
     def get(self, request, **kwargs):
         XFAjaxViewMixin.get(self, request, **kwargs)
         return DetailView.get(self, request, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
 
 
 class XFUpdateView(UpdateView, XFPermissionMixin, XFAjaxViewMixin, XFCrudMixin):
@@ -101,6 +112,7 @@ class XFUpdateView(UpdateView, XFPermissionMixin, XFAjaxViewMixin, XFCrudMixin):
         self.context = context = super(XFUpdateView, self).get_context_data(**kwargs)
         context['action'] = "Update"
         context['formname'] = self.get_form_class().__name__
+        self.prepare_form_class()
         self.ensure_set_context_perm("change")
         self.add_crud_urls_to_context(context)
         return context
@@ -116,6 +128,12 @@ class XFUpdateView(UpdateView, XFPermissionMixin, XFAjaxViewMixin, XFCrudMixin):
 
         return XFAjaxViewMixin.prepare_form_valid(self, self.request, form, form_valid_output)
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
+
 
 class XFDeleteView(DeleteView, XFPermissionMixin, XFAjaxViewMixin, XFCrudMixin):
     template_name = "form_delete_generic.html"
@@ -127,6 +145,7 @@ class XFDeleteView(DeleteView, XFPermissionMixin, XFAjaxViewMixin, XFCrudMixin):
         context['action'] = "Delete"
         context['formname'] = "DeleteForm"
         context['protected_error'] = self.protected_error
+        self.prepare_form_class()
         self.ensure_set_context_perm("delete")
         self.add_crud_urls_to_context(context)
         return context
@@ -135,6 +154,11 @@ class XFDeleteView(DeleteView, XFPermissionMixin, XFAjaxViewMixin, XFCrudMixin):
     def get(self, request, **kwargs):
         XFAjaxViewMixin.get(self, request, **kwargs)
         return DeleteView.get(self, request, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
     def post(self, request, **kwargs):
 
@@ -183,15 +207,17 @@ class XFCreateView(CreateView, XFPermissionMixin, XFAjaxViewMixin, XFNavigationV
     def get_initial(self):
         return self.get_initial_form_data_from_querystring()
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
     def get_context_data(self, **kwargs):
         self.context = context = super(XFCreateView, self).get_context_data(**kwargs)
         context['action'] = "Create"
         context['formname'] = self.get_form_class().__name__
 
-        fields = self.get_form().fields
-        #for field in self.get_form().initial:
-        #    fields[field].disabled = True
-
+        self.prepare_form_class()
         self.ensure_set_context_perm("add")
         self.set_navigation_context()
         self.add_crud_urls_to_context(context)
