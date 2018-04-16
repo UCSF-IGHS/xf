@@ -475,7 +475,8 @@ class WidgetView(TemplateView):
                 rows = self.result_set_to_dict(rows, column_names)
                 context["rows"] = rows;
                 context["data_columns"] = self.data_columns
-                context["tile_width"] = int(12 / len(rows))
+                if len(rows) > 0:
+                    context["tile_width"] = int(12 / len(rows))
 
             # Data points
             if self.widget.widget_type == Widget.PIE or \
