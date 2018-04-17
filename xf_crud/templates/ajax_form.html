@@ -21,8 +21,10 @@
 
     </script>
 
-    <form role="form" action="{{ form.helper.form_action }}" class="form-horizontal mxlform xf-ajax-form" method="post" id="frmAjax"
+    <form role="form" action="{{ form.helper.form_action }}" class="form-horizontal mxlform xf-ajax-form {{ form.helper.form_class}}" method="post" id="frmAjax"
           style="margin-bottom: 0">
+
+
 
         <div class="modal-dialog">
             <div class="modal-content">
@@ -33,15 +35,21 @@
                     <h4 class="modal-title">{{ form.Meta.title }}</h4>
                 </div>
                 <div class="modal-body">
+
                     {% crispy form %}
                 </div>
                 <div class="modal-footer">
-                    <input type="submit" class="btn btn-primary" value="{{ action }}" id="btnDlgSubmit">
-                    <!--<a href="#" data-dismiss2="modal" class="btn btn-primary" id="axSubmit">Change password</a>-->
-                    <a href="#" data-dismiss="modal" class="btn btn-default" id="btnDlgCancel">Cancel</a>
-                    <!--<a href="#" class="btn" id="fire">Fire</a>-->
-                    {% if action != 'Create' %}
-                        <!--<a data-toggle="modal" href="#myModal" hrefpost="{{ object.id }}/delete" class="btn">Delete</a>-->
+                    {% if action == 'Detail' %}
+                        <a href="#" data-dismiss="modal" class="btn btn-default btn-primary" id="btnDlgCancel">Close</a>
+
+                    {% else %}
+                        <input type="submit" class="btn btn-primary" value="{{ action }}" id="btnDlgSubmit">
+                        <!--<a href="#" data-dismiss2="modal" class="btn btn-primary" id="axSubmit">Change password</a>-->
+                        <a href="#" data-dismiss="modal" class="btn btn-default" id="btnDlgCancel">Cancel</a>
+                        <!--<a href="#" class="btn" id="fire">Fire</a>-->
+                        {% if action != 'Create' %}
+                            <!--<a data-toggle="modal" href="#myModal" hrefpost="{{ object.id }}/delete" class="btn">Delete</a>-->
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>

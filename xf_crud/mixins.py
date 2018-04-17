@@ -52,11 +52,21 @@ class XFCrudMixin(object):
         context['screen_action_list'] = list_class.screen_action_list
         context['row_default_action'] = list_class.row_default_action
 
+    def prepare_form_class(self):
+
+        self.form_class = self.get_form_class()
+        self.form = self.get_form(self.form_class)
+
+        pass
+
+
     def _process_url_name_with_app_and_model_name(self, url):
         try:
             return url % (self.app_name, self.model_url_part)
         except:
             return url
+
+
 
 
     def get_app_name(self):
