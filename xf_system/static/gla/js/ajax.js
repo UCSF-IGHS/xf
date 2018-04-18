@@ -90,7 +90,7 @@ function bindAjax() {
     });
 
 
-    /* MandatoryTextInput Widget –bind to the checkboxes */
+    /* MissingTextInput Widget –bind to the checkboxes */
     $(".xf-unknown-checkbox").change( function(){
         UnknownCheckBoxChange($(this));
     });

@@ -1,13 +1,13 @@
 <input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %}
        value="{{ widget.value|stringformat:'s' }}"{% endif %}
         {% if widget.value == None %}
-        {% if widget.blank_should_be_checked %} disabled {% endif %}
+        {% if widget.blank_checked_initially %} disabled {% endif %}
         {% endif %}
         {% include "django/forms/widgets/attrs.html" %} />
 <div class="checkbox">
     <label>
         <input type="checkbox" class="flat xf-unknown-checkbox"
-               {% if widget.value == None and widget.blank_should_be_checked %}
+               {% if widget.value == None and widget.blank_checked_initially %}
                checked
                {% endif %}
                name="{{ widget.name }}_blank" id="id_{{ widget.name }}_blank"

@@ -8,7 +8,7 @@ from django.forms.models import ModelForm, ModelChoiceField
 #import floppyforms as forms
 #from floppyforms.widgets import PasswordInput
 from xf.xf_crud.model_lists import XFCrudAssetLoaderMixIn
-from xf.xf_crud.widgets import StaticTextWidget, StaticSelectWidget, MandatoryTextInput
+from xf.xf_crud.widgets import StaticTextWidget, StaticSelectWidget, MissingTextInput
 
 
 class XFAjaxForm(ModelForm):
@@ -111,25 +111,35 @@ class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
         cleaned_data = super().clean()
 
         for field in self.fields:
-            if type(self.fields[field].widget) is MandatoryTextInput:
-                self.validate_required_field(cleaned_data, field)
+            if type(self.fields[field].widget) is MissingTextInput:
+                self._validate_required_field(cleaned_data, field)
 
         return cleaned_data
 
 
-    def validate_required_field(self, cleaned_data, field_name, message="This field is required"):
+    def _validate_required_field(self, cleaned_data, field_name, message="This field is required"):
+        """
+        This method is specifically being used to support the "missing" textboxes
+        :param cleaned_data:
+        :param field_name:
+        :param message:
+        """
         if field_name in cleaned_data and cleaned_data[field_name] is None:
             blank_checkbox_name = field_name + "_blank"
             if not blank_checkbox_name in self.request.POST:
                 self._errors[field_name] = self.error_class([message])
-                self.fields[field_name].widget.blank_should_be_checked = False
+                self.fields[field_name].widget.blank_checked_initially = False
                 del cleaned_data[field_name]
             elif blank_checkbox_name in self.request.POST:
-                self.fields[field_name].widget.blank_should_be_checked = True
+                self.fields[field_name].widget.blank_checked_initially = True
 
 
 
-    def get_blank_checkbox_should_be_checked(self):
+    def is_new_entity(self):
+        """
+        Returns a value that determines if this is a new entity or not, in other words Create or Update/Details
+        :return: True if a new entity, false otherwise
+        """
 
         if self.instance.pk is None:
             return False

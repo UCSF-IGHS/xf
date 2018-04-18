@@ -22,6 +22,7 @@ class StaticTextWidget(widgets.TextInput):
     def __init__(self, attrs=None):
         super().__init__(attrs)
 
+
 class StaticSelectWidget(widgets.Select):
     template_name = 'widgets/static_select.html'
     option_template_name = 'widgets/static_select_option.html'
@@ -29,21 +30,21 @@ class StaticSelectWidget(widgets.Select):
     pass
 
 
-class MandatoryTextInput(widgets.TextInput):
+class MissingTextInput(widgets.TextInput):
 
-    template_name = "widgets/mandatory_text_input.html"
-    blank_should_be_checked = False
+    template_name = "widgets/missing_text_input.html"
+    blank_checked_initially = False
     blank_text = "Missing"
 
-    def __init__(self, attrs=None, blank_should_be_checked=False, blank_text="Missing"):
+    def __init__(self, attrs=None, is_new_entity=False, blank_text="Missing"):
 
-        self.blank_should_be_checked = blank_should_be_checked;
+        self.blank_checked_initially = is_new_entity
         self.blank_text = blank_text
         super().__init__(attrs)
 
     def render(self, name, value, attrs=None, renderer=None):
         context = self.get_context(name, value, attrs)
-        context["widget"]["blank_should_be_checked"] = self.blank_should_be_checked
+        context["widget"]["blank_checked_initially"] = self.blank_checked_initially
         context["widget"]["blank_text"] = self.blank_text
         return self._render(self.template_name, context, renderer)
 
