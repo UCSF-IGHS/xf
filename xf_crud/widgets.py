@@ -1,4 +1,7 @@
 from django.forms import widgets
+from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
+
 
 class TypeAheadWidget(widgets.TextInput):
 
@@ -29,9 +32,18 @@ class StaticSelectWidget(widgets.Select):
 class MandatoryTextInput(widgets.TextInput):
 
     template_name = "widgets/mandatory_text_input.html"
+    blank_should_be_checked = False
+    blank_text = "Missing"
 
-    def __init__(self, attrs=None):
-        self.action = None
+    def __init__(self, attrs=None, blank_should_be_checked=False, blank_text="Missing"):
+
+        self.blank_should_be_checked = blank_should_be_checked;
+        self.blank_text = blank_text
         super().__init__(attrs)
 
+    def render(self, name, value, attrs=None, renderer=None):
+        context = self.get_context(name, value, attrs)
+        context["widget"]["blank_should_be_checked"] = self.blank_should_be_checked
+        context["widget"]["blank_text"] = self.blank_text
+        return self._render(self.template_name, context, renderer)
 

@@ -8,7 +8,7 @@ from django.forms.models import ModelForm, ModelChoiceField
 #import floppyforms as forms
 #from floppyforms.widgets import PasswordInput
 from xf.xf_crud.model_lists import XFCrudAssetLoaderMixIn
-from xf.xf_crud.widgets import StaticTextWidget, StaticSelectWidget
+from xf.xf_crud.widgets import StaticTextWidget, StaticSelectWidget, MandatoryTextInput
 
 
 class XFAjaxForm(ModelForm):
@@ -122,5 +122,18 @@ class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
             blank_checkbox_name = field_name + "_blank"
             if not blank_checkbox_name in self.request.POST:
                 self._errors[field_name] = self.error_class([message])
+                self.fields[field_name].widget.blank_should_be_checked = False
                 del cleaned_data[field_name]
+            elif blank_checkbox_name in self.request.POST:
+                self.fields[field_name].widget.blank_should_be_checked = True
+
+
+
+    def get_blank_checkbox_should_be_checked(self):
+
+        if self.instance.pk is None:
+            return False
+
+        return True
+
 
