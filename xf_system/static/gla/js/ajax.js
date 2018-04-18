@@ -55,6 +55,7 @@ function bindAjax() {
    // This snippet is executed during the popup of a modal window.
     // It will automatically load a piece of HTML (url href attribute) into the specified target (html-target
     // attribute)
+    $("a[data-toggle=modal]").unbind("click"); // removes previous click to prevent multiple loading
     $("a[data-toggle=modal]").click(function (e) {
 
         var htmltarget = $(this).attr('html-target')
@@ -71,7 +72,7 @@ function bindAjax() {
         // URL parameter
         $(htmltarget).load(url, function() {
             ajaxFormLoaded(htmltarget, formtarget, url, e);
-            //bindAjax();
+            bindAjax();
         });
 
     })
@@ -87,6 +88,13 @@ function bindAjax() {
     $(".clickable-cell").click(function() {
         window.location = $(this).data("href");
     });
+
+
+    /* MandatoryTextInput Widget –bind to the checkboxes */
+    $(".xf-unknown-checkbox").change( function(){
+        UnknownCheckBoxChange($(this));
+    });
+
 }
 
 
@@ -172,6 +180,7 @@ function postform(e, htmltarget, formtarget, posttarget, sourceElement) {
             if (!data.success) {
                 $(htmltarget).html(data.html);
                 ajaxFormLoaded(htmltarget, formtarget, posttarget, sourceElement);
+                bindAjax();
             }
             else {
                 $(htmltarget).html("Loading");
@@ -392,4 +401,20 @@ function CreateEmbedURL(url) {
 }
 
 
+// Checks whether a validation blah
+function UnknownCheckBoxChange(checkbox) {
+
+    var inputField = $("#" + $(checkbox).attr('xf_blank_control'));
+    if( $(checkbox).is(':checked') ) {
+        //alert(inputField);
+        inputField.val("")
+        //inputField.prop('required',false);
+        inputField.prop('disabled',true);
+    }
+    else {
+        inputField.val("")
+        //inputField.prop('required',true);
+        inputField.prop('disabled',false);
+    }
+}
 

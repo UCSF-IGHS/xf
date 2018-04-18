@@ -106,4 +106,21 @@ class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
             super(XFModelForm, self).__init__(*args, **kwargs)
             self.fields[target_field].disabled = True
 
+    def clean(self):
+
+        cleaned_data = super().clean()
+
+        for field in self.fields:
+            if type(self.fields[field].widget) is MandatoryTextInput:
+                self.validate_required_field(cleaned_data, field)
+
+        return cleaned_data
+
+
+    def validate_required_field(self, cleaned_data, field_name, message="This field is required"):
+        if field_name in cleaned_data and cleaned_data[field_name] is None:
+            blank_checkbox_name = field_name + "_blank"
+            if not blank_checkbox_name in self.request.POST:
+                self._errors[field_name] = self.error_class([message])
+                del cleaned_data[field_name]
 

@@ -26,4 +26,12 @@ class StaticSelectWidget(widgets.Select):
     pass
 
 
+class MandatoryTextInput(widgets.TextInput):
+
+    template_name = "widgets/mandatory_text_input.html"
+
+    def __init__(self, attrs=None):
+        self.action = None
+        super().__init__(attrs)
+
 
