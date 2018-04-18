@@ -145,7 +145,6 @@ class XFDeleteView(DeleteView, XFPermissionMixin, XFAjaxViewMixin, XFCrudMixin):
         context['action'] = "Delete"
         context['formname'] = "DeleteForm"
         context['protected_error'] = self.protected_error
-        self.prepare_form_class()
         self.ensure_set_context_perm("delete")
         self.add_crud_urls_to_context(context)
         return context
