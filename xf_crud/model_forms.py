@@ -147,3 +147,10 @@ class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
         return True
 
 
+    def prepare_form_for_save(self, instance):
+        """
+        This method can be used to make changes to your model before saving. Use self.instance to make the changes,
+        on the instance.
+        :return:
+        """
+        pass
