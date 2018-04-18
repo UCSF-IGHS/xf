@@ -124,6 +124,9 @@ class XFUpdateView(UpdateView, XFPermissionMixin, XFAjaxViewMixin, XFCrudMixin):
 
     def form_valid(self, form):
         form.prepare_form_for_save(form.instance)
+        if hasattr(form.instance, "prepare_for_save"):
+            form.instance.prepare_for_save(self.request, self.request.user if self.request.user else None)
+
         form_valid_output = UpdateView.form_valid(self, form)
         self.success_message = "%s has been updated" % (self.object)
 
@@ -200,6 +203,8 @@ class XFCreateView(CreateView, XFPermissionMixin, XFAjaxViewMixin, XFNavigationV
 
     def form_valid(self, form):
         form.prepare_form_for_save(form.instance)
+        if hasattr(form.instance, "prepare_for_save"):
+            form.instance.prepare_for_save(self.request, self.request.user if self.request.user else None)
         form_valid_output = CreateView.form_valid(self, form)
         self.success_message = "%s has been created" % (self.object)
         return XFAjaxViewMixin.prepare_form_valid(self, self.request, form,
