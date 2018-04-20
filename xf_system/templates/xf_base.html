@@ -202,7 +202,47 @@
 
                     <ul class="nav navbar-nav navbar-right">
 
+<li>
+        <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+           aria-expanded="false" >
+            <!--<img src="{% static "gla/images/img.jpg" %}" alt="">-->
+            {% if user.is_authenticated %}{{ user.get_full_name|default:user.username }}{% endif %}
+            {% if not user.is_authenticated %}Log in{% endif %}
+            <span class=" fa fa-angle-down"></span>
+        </a>
+        <ul class="dropdown-menu dropdown-usermenu pull-right">
+            {% if not user.is_authenticated %}
+                <li><a href="{% url 'login' %}"><i
+                        class="fa fa-sign-out pull-right"></i> Log in</a></li>
+            {% endif %}
+            {% if user.is_authenticated %}
 
+                <li><a href="{% url 'logout' %}"><i
+                        class="fa fa-sign-out pull-right"></i> Log out</a></li>
+            {% endif %}
+            {% block user_menu_extenion %}
+            {% endblock %}
+        </ul>
+    </li>
+
+<!-- Perspective menu -->
+    {% if current_perspective %}
+     <li class="">
+            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+               aria-expanded="false">{{ current_perspective.name }} <span
+                    class=" fa fa-angle-down"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-usermenu pull-right">
+                {% for perspective in perspectives %}
+                    <li {% if perspective.id == current_perspective.id %}
+                    class="selected" {% endif %}><a href="{% url "load_perspective" perspective.slug %}" class="selected">
+                        {% if perspective.id == current_perspective.id %}
+                            <i class="fa fa-check pull-right"></i>{% endif %}{{ perspective.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endif %}
                        {% block navbar %}{% endblock %}
 
                     </ul>
