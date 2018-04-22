@@ -1,5 +1,23 @@
 [
   {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$36000$1UTNqD9dbP4V$X0aM7UMgtAgv86a2bEw2io3up0SVQVQ/JOD3LzeTWik=",
+      "last_login": "2018-04-20T17:52:28.008Z",
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2018-03-07T14:47:43.004Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
     "model": "uc_dashboards.tag",
     "pk": 2,
     "fields": {
@@ -251,9 +269,9 @@
   },
   {
     "model": "uc_dashboards.userprofile",
-    "pk": 2,
+    "pk": 1,
     "fields": {
-      "user": 2,
+      "user": 1,
       "preset_filters": "",
       "default_perspective": null,
       "comment": "",
