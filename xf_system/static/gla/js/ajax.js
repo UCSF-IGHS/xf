@@ -112,9 +112,8 @@ function ajaxFormLoaded(htmltarget, formtarget, posttarget, sourceElement) {
     else {
 
         hideMessages();
-        $(".mxlform").submit(function () {
+        $(".mxlform").submit(function (event) {
             // Executed when the form is being submitted
-            //alert(posttarget);
             event.preventDefault();
             postform(event, htmltarget, formtarget, posttarget, sourceElement);
         });
