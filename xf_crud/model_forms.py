@@ -4,11 +4,12 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db.models import Model
+from django.forms import DateInput
 from django.forms.models import ModelForm, ModelChoiceField
 #import floppyforms as forms
 #from floppyforms.widgets import PasswordInput
 from xf.xf_crud.model_lists import XFCrudAssetLoaderMixIn
-from xf.xf_crud.widgets import StaticTextWidget, StaticSelectWidget, MissingTextInput
+from xf.xf_crud.widgets import StaticTextWidget, StaticSelectWidget, MissingTextInput, XFDatePickerInput
 
 
 class XFAjaxForm(ModelForm):
@@ -60,6 +61,7 @@ class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
 
         self.js_assets = []
         self.css_assets = []
+        self.make_xf_dateinputs()
 
         self.helper = FormHelper()
         self.helper.form_method = 'POST'
@@ -91,6 +93,12 @@ class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
                 self.fields[field].widget = StaticTextWidget()
 
         pass
+
+    def make_xf_dateinputs(self):
+        for field in self.fields:
+            if isinstance(self.fields[field].widget, DateInput):
+                self.fields[field].widget = XFDatePickerInput()
+
 
 
     def create_locater(self, target_field, api_call_url, api_call, api_return_field, existing_value, *args, **kwargs):
