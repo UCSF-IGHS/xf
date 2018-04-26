@@ -60,6 +60,7 @@ class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
 
         self.js_assets = []
         self.css_assets = []
+        self.make_xf_dateinputs()
 
         self.helper = FormHelper()
         self.helper.form_method = 'POST'
@@ -91,6 +92,12 @@ class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
                 self.fields[field].widget = StaticTextWidget()
 
         pass
+
+    def make_xf_dateinputs(self):
+        for field in self.fields:
+            if isinstance(self.fields[field], DateInputField):
+                self.fields[field].widget = XFDateInput()
+
 
 
     def create_locater(self, target_field, api_call_url, api_call, api_return_field, existing_value, *args, **kwargs):
