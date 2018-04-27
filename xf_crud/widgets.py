@@ -36,10 +36,12 @@ class MissingTextInput(widgets.TextInput):
     blank_checked_initially = False
     blank_text = "Missing"
 
-    def __init__(self, attrs=None, is_new_entity=False, blank_text="Missing"):
+    def __init__(self, attrs=None, is_new_entity=False, blank_text="Missing", is_date_picker=False):
 
         self.blank_checked_initially = is_new_entity
         self.blank_text = blank_text
+        if is_date_picker:
+            attrs = {'class': 'date-field datepicker'}
         super().__init__(attrs)
 
     def render(self, name, value, attrs=None, renderer=None):
