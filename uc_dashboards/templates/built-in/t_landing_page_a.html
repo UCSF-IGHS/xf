@@ -38,7 +38,7 @@
                                 <div class="jubmbotron">
                                     <form id="demo-form2" data-parsley-validate=""
                                           class="form-horizontal form-label-left"
-                                          novalidate="" name="LoginForm" action="" method="post">
+                                          novalidate="" name="LoginForm" method="post" action="/accounts/login/">
                                         {% csrf_token %}
                                         {% if next %}
                                             <input type="hidden" name="next" value="/"/>

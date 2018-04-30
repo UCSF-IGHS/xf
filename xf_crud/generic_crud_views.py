@@ -6,6 +6,7 @@ from django.views.generic.edit import ModelFormMixin
 
 from xf.xf_crud.ajax_mixins import XFAjaxViewMixin
 from xf.xf_crud.mixins import XFCrudMixin
+
 from xf.xf_crud.permission_mixin import XFPermissionMixin
 from xf.xf_system.views import XFNavigationViewMixin
 
@@ -122,6 +123,9 @@ class XFUpdateView(UpdateView, XFPermissionMixin, XFAjaxViewMixin, XFCrudMixin):
                                                     UpdateView.form_invalid(self, form))
 
     def form_valid(self, form):
+        form.prepare_form_for_save(form.instance)
+        if hasattr(form.instance, "prepare_for_save"):
+            form.instance.prepare_for_save(self.request, self.request.user if self.request.user else None)
 
         form_valid_output = UpdateView.form_valid(self, form)
         self.success_message = "%s has been updated" % (self.object)
@@ -145,7 +149,6 @@ class XFDeleteView(DeleteView, XFPermissionMixin, XFAjaxViewMixin, XFCrudMixin):
         context['action'] = "Delete"
         context['formname'] = "DeleteForm"
         context['protected_error'] = self.protected_error
-        self.prepare_form_class()
         self.ensure_set_context_perm("delete")
         self.add_crud_urls_to_context(context)
         return context
@@ -199,6 +202,9 @@ class XFCreateView(CreateView, XFPermissionMixin, XFAjaxViewMixin, XFNavigationV
                                                     CreateView.form_invalid(self, form))
 
     def form_valid(self, form):
+        form.prepare_form_for_save(form.instance)
+        if hasattr(form.instance, "prepare_for_save"):
+            form.instance.prepare_for_save(self.request, self.request.user if self.request.user else None)
         form_valid_output = CreateView.form_valid(self, form)
         self.success_message = "%s has been created" % (self.object)
         return XFAjaxViewMixin.prepare_form_valid(self, self.request, form,

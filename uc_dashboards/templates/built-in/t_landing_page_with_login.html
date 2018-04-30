@@ -1,0 +1,144 @@
+{% extends "xf_viz_base.html" %}
+{% load dashgent_filters %}
+
+{% block main_title %}
+    {{ page.main_title }}
+{% endblock %}
+
+{% block title %}
+    {{ page.title }}
+{% endblock %}
+
+
+{% block main %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>{{ page.main_title }}</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        {{ page.text | safe }}
+                    </div>
+
+
+                    <!-- start project-detail sidebar -->
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+
+                        <section class="panel">
+                            {% if not user.is_authenticated %}
+                                <div class="x_title">
+                                    <h2>Login here</h2>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="panel-body">
+
+                                    <div class="jubmbotron">
+                                        <form id="demo-form2" data-parsley-validate=""
+                                              class="form-horizontal form-label-left"
+                                              novalidate="" name="LoginForm" method="post" action="/accounts/login/">
+                                            {% csrf_token %}
+                                            {% if next %}
+                                                <input type="hidden" name="next" value="/"/>
+                                            {% endif %}
+                                            <p>If you have a login and password for this site, enter it below.</p>
+                                            {% if login_incorrect %}
+                                                <p>The username and/or password is not correct.</p>
+                                            {% endif %}
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-sm-4 col-xs-12" for="username">User
+                                                    name<span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                    <input type="text" id="username" name="username" required="required"
+                                                           class="form-control col-md-7 col-xs-12">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-sm-4 col-xs-12"
+                                                       for="password">Password<span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                    <input type="password" name="password" id="password"
+                                                           required="required"
+                                                           class="form-control col-md-7 col-xs-12">
+                                                </div>
+                                            </div>
+                                            <div class="ln_solid"></div>
+                                            <div class="form-group">
+                                                <div class="col-md-10 col-sm-4 col-xs-12 col-md-offset-4">
+                                                    <button type="submit" class="btn btn-success btn-sm">Log in</button>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+
+                                </div>
+                            {% endif %}
+                        </section>
+
+                    </div>
+                    <!-- end project-detail sidebar -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="{{ 1|cw }}">
+        </div>
+        <div class="{{ 7|cw }} ">
+            <div class="x_panel">
+
+                <div class="x_content page">
+                    <div class="row">
+                        <div class="{{ 12|cw }}">
+                            <article>
+                                {{ page.text | safe }}
+
+                            </article>
+                        </div>
+                        <!-- /Welcome panerl-->
+
+                        <!-- LOGIN MAIL -->
+                        <div class="col-sm-4 mail_view">
+                            {% if user.is_authenticated %}
+
+                            {% endif %}
+
+
+                        </div>
+                        <!-- /LOGIN MAIL -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="{{ 4|cw }}">
+            {% if widget_block_a %}
+                <div class="{{ 12|cw }}">
+                    {% include "t_block_ajxldr_xpanel.html" with widget_slug=widget_block_a height=" " %}
+                </div>
+            {% endif %}
+            {% if widget_block_b %}
+                <div class="{{ 12|cw }}">
+                    {% include "t_block_ajxldr_xpanel.html" with widget_slug=widget_block_b height=" " %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
