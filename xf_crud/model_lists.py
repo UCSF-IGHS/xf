@@ -44,6 +44,8 @@ class XFModelList(XFCrudAssetLoaderMixIn):
             'all': 'All',
         }
         self.action_list = {}
+        self.user = None
+        self.request = None
 
         #Action lists represents the actions that we can do in a list. We have 3 types:
         # Those that apply to a particular record – i.e. a row so Edit, Details, Delete
@@ -77,6 +79,9 @@ class XFModelList(XFCrudAssetLoaderMixIn):
         for field in self.model._meta.fields:
             if not field.primary_key:
                 self.list_field_list.append(field.name)
+
+    def initialised(self):
+        pass
 
     def get_queryset(self, search_string, model, preset_filter, view_kwargs=None):
 
