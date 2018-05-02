@@ -124,8 +124,9 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
         if self.request is not None:
             self.list_class.user = self.request.user
             self.list_class.request = self.request
+            self.list_class.kwargs = kwargs
 
-        self.list_class.initialised()
+        self.list_class.prepare_actions()
 
         return super(XFGenericListView, self).get(request, *args, **kwargs)
 
