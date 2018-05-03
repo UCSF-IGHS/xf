@@ -358,8 +358,12 @@ function hideMessages() {
 
 /* Setting a URL */
 function selectURL(url) {
-    $SIDEBAR_MENU.find('a[href="' + url + '"]').closest("ul").closest("li").find("> a").trigger("click");
-    $SIDEBAR_MENU.find('a[href="' + url + '"]').closest("li").addClass("current-page");
+    var no_current_page = $SIDEBAR_MENU.find('.current-page');
+
+    if (no_current_page.length == 0) {
+        $SIDEBAR_MENU.find('a[href="' + url + '"]').closest("ul").closest("li").find("> a").trigger("click");
+        $SIDEBAR_MENU.find('a[href="' + url + '"]').closest("li").addClass("current-page");
+    }
 }
 
 

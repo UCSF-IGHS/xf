@@ -26,11 +26,12 @@ def getattribute(value, arg):
 
 register.filter('getattribute', getattribute)
 
-def get_can_do_action(value, arg):
+def get_can_do_action(value, action):
 
-    action_name = "can_do_" + arg
-    if hasattr(value, str(action_name)):
-        return getattr(value, action_name)
+    can_do_action_method_name = "can_do_" + action.action_name
+    can_do_action_method = getattr(value, can_do_action_method_name, None)
+    if can_do_action_method:
+        return can_do_action_method(action.action_name, action.user)
 
     return True
 

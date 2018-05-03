@@ -60,13 +60,13 @@ class XFModelList(XFCrudAssetLoaderMixIn):
 
     def initialise_action_lists(self):
         self.screen_actions.append(
-            XFUIAction('new', 'Create new', 'add', action_type=ACTION_NEW_INSTANCE)
+            XFUIAction('new', 'Create new', 'add', action_type=ACTION_NEW_INSTANCE, user=self.user)
         )
 
         self.row_action_list.extend(
-            (XFUIAction('edit', 'Edit', 'change', action_type=ACTION_ROW_INSTANCE),
-             XFUIAction('delete', 'Delete', 'delete', action_type=ACTION_ROW_INSTANCE),
-             XFUIAction('details', 'View details', 'view', action_type=ACTION_ROW_INSTANCE, use_ajax=True))
+            (XFUIAction('edit', 'Edit', 'change', action_type=ACTION_ROW_INSTANCE, user=self.user),
+             XFUIAction('delete', 'Delete', 'delete', action_type=ACTION_ROW_INSTANCE, user=self.user),
+             XFUIAction('details', 'View details', 'view', action_type=ACTION_ROW_INSTANCE, use_ajax=True, user=self.user))
         )
 
     def get_entity_action(self, action_name):
