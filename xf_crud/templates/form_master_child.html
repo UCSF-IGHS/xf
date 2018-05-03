@@ -6,7 +6,7 @@
 
 {% block title %}
     {{ page_title }}
-    MASTER CHILD TEST
+
 {% endblock %}
 
 
@@ -61,7 +61,7 @@
                 </div>
                 <div class="x_content">
                     <div>{{ form.Meta.instruction }}</div>
-                    <form id="frmNonAjax" method="post" class="form-horizontal form-label-left" novalidate="">
+                    <form id="frmNonAjax" method="post" class="form-horizontal form-label-left {{ form.helper.form_class}}" novalidate="">
                         {% csrf_token %}
                         <div class="form-group">
                             {% crispy form %}

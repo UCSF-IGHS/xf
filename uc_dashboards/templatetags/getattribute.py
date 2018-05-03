@@ -10,16 +10,30 @@ from django.conf import settings
 numeric_test = re.compile("^\d+$")
 register = template.Library()
 
-def getattribute(value, arg):
-	"""Gets an attribute of an object dynamically from a string name"""
 
-	if hasattr(value, str(arg)):
-		return getattr(value, arg)
-	elif hasattr(value, 'has_key') and value.has_key(arg):
-		return value[arg]
-	elif numeric_test.match(str(arg)) and len(value) > int(arg):
-		return value[int(arg)]
-	else:
-		return settings.TEMPLATE_STRING_IF_INVALID
+def getattribute(value, arg):
+    """Gets an attribute of an object dynamically from a string name"""
+
+    if hasattr(value, str(arg)):
+        return getattr(value, arg)
+    elif hasattr(value, 'has_key') and value.has_key(arg):
+        return value[arg]
+    elif numeric_test.match(str(arg)) and len(value) > int(arg):
+        return value[int(arg)]
+    else:
+        return settings.TEMPLATE_STRING_IF_INVALID
+
 
 register.filter('getattribute', getattribute)
+
+def get_can_do_action(value, action):
+
+    can_do_action_method_name = "can_do_" + action.action_name
+    can_do_action_method = getattr(value, can_do_action_method_name, None)
+    if can_do_action_method:
+        return can_do_action_method(action.action_name, action.user)
+
+    return True
+
+
+register.filter('candoaction', get_can_do_action)

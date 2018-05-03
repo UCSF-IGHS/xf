@@ -40,6 +40,8 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
         else:
             return "listview_generic_objectlist.html"
 
+
+
     def get_context_data(self, **kwargs):
         self.context = context = super(XFGenericListView, self).get_context_data(**kwargs)
         context['primary_key'] = self.model._meta.pk.name
@@ -83,6 +85,7 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
         self.add_urls_to_actions_for_list_class(self.list_class, context)
         # TODO: This needs to be turned into actions here
         self.add_crud_urls_to_context(context)
+
         return context
 
 
@@ -116,6 +119,15 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
         self.search_string = request.GET.get('search_string', '')
         #self.search_string = ""
         self.request = request
+
+        # Add user
+        if self.request is not None:
+            self.list_class.user = self.request.user
+            self.list_class.request = self.request
+            self.list_class.kwargs = kwargs
+
+        self.list_class.prepare_actions()
+
         return super(XFGenericListView, self).get(request, *args, **kwargs)
 
 

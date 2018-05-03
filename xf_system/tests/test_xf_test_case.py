@@ -1,0 +1,57 @@
+from django.test import TestCase
+
+from xf.xf_system.testing.xf_test_case import XFTestCase
+from xf.xf_system.tests.test_models import TestModelWithInts
+
+
+class ValidateEFTextCase(TestCase):
+    """
+    The test case to demonstrate that our XFTestCase actually works well
+    So, testing our tester!
+
+    DON'T FOCUS ON THIS FILE, IT IS A UNIT TEST TO TEST THE ASSERT METHODS OF XFTESTCASE
+    """
+
+    def test_assert_model__not_clean(self):
+
+        test_case = XFTestCase()
+        test_data = {'int_c' : 6, 'int_d' : 5}
+        test_case.assertModelNotClean(TestModelWithInts, test_data, {'int_c'})
+
+        test_data = {'int_c' : 6, 'int_d' : 6}
+        test_case.assertModelNotClean(TestModelWithInts, test_data, {'int_c', 'int_d'})
+        test_case.assertModelNotClean(TestModelWithInts, test_data, None)
+
+
+    def test_assert_model_clean(self):
+
+        test_case = XFTestCase()
+
+        # Test should pass, and we're not looking for b, so we need to pass the fields we're interested in
+        test_data = {'int_c' : 6, 'int_d' : 7}
+        test_case.assertModelClean(TestModelWithInts, test_data, test_data.keys())
+
+        # But if we don't give the keys, the test should fail because b is mandatory, and we didn't provide it
+        try:
+            test_case.assertModelClean(TestModelWithInts, test_data, test_data.keys())
+            self.assertRaises(None, AssertionError)
+        except:
+            pass
+
+
+        # Test should pass, and we're not looking for b
+        test_data = {'int_b' : -2}
+        test_case.assertModelClean(TestModelWithInts, test_data)
+
+        # This test should pass, even though b is None, because we're only looking for 'int_a'
+        test_data = {'int_a' : 5}
+        test_case.assertModelClean(TestModelWithInts, test_data, 'int_a')
+
+        # This test should fail, because b is missing
+        test_data = {'int_a' : 5}
+        try:
+            test_case.assertModelClean(TestModelWithInts, test_data)
+            self.assertRaises(None, AssertionError)
+        except:
+            pass
+

@@ -1,0 +1,8 @@
+{% if as_value == True %}
+    {% for name, value in widget.attrs.items %}{% if value is not False %}value="{{ widget.index }}"{% endif %}{% endfor %}
+{% else %}
+    {% for name, value in widget.attrs.items %}{% if value is not False %}{{ widget.label }}{% endif %}{% endfor %}
+
+{% endif %}
+
+

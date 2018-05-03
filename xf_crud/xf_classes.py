@@ -16,41 +16,6 @@ ACTION_RELATED_INSTANCE = 5
 
 
 
-class XFUIBuilder:
-    """
-    Class is not currently used, and will be deprecated
-    """
-    def __init__(self,
-                 url_app_name,
-                 model_type,
-                 form_class_type,
-                 list_class_type,
-                 url_model_name=None
-                 ):
-        self.url_model_name = url_model_name if url_model_name else model_type.__name__.lower()
-        self.list_class_type = list_class_type
-        self.form_class_type = form_class_type
-        self.model_type = model_type
-        self.url_app_name = url_app_name
-        #self.url_builder = XFCrudURLBuilder(url_app_name=self.url_app_name, url_model_name=self.url_model_name,
-        #                                    model_type=self.model_type)
-
-    def generate_action(self,
-                        action_type,
-                        action_name,
-                        action_caption):
-
-        action = XFUIAction(self, action_type, action_name, action_caption)
-        return action
-
-    def generate_url(self, action_name):
-        #if action_name == 'add':
-        #    return self.url_builder.get_new_url(form_class_type=self.form_class_type)
-        #elif action_name == 'change':
-        #    return self.url_builder.get_edit_url(form_class_type=self.form_class_type)
-        pass
-
-
 
 class XFUIAction:
     """
@@ -64,7 +29,8 @@ class XFUIAction:
                  url_name = None, # Leave None to create %s_%s_action_name
                  use_ajax = True,
                  action_type = ACTION_ROW_INSTANCE,
-                 column_index = None
+                 column_index = None,
+                 user = None
                  ):
         self.use_ajax = use_ajax
         self.permission_required = permission_required
@@ -84,3 +50,6 @@ class XFUIAction:
 
         # To attach this action to a column index, set its number
         self.column_index = column_index
+
+        # In case the user is needed
+        self.user = user

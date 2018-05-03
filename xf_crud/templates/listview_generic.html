@@ -125,15 +125,25 @@
 
         var base_url = '{%  url url_name_list %}';
 
-        $SIDEBAR_MENU.find('a[href="/library/book/"]').parent("li").addClass("current-page")
+        $SIDEBAR_MENU.find('a[href="' + base_url + '/library/book/"]').parent("li").addClass("current-page")
         $SIDEBAR_MENU.find('a').filter(function () {
-            return this.href == "/library/book/";
+            return this.href == base_url;
         }).parent('li').addClass('current-page').parents('ul').slideDown(function() {
             setContentHeight();
         }).parent().addClass('active');
 
     </script>
 
+        <script>
+        $(document).ready(function () {
+
+            window.setTimeout(function () {
+                selectURL('{% url url_name_list  %}')
+            }, 1);
+
+        });
+
+    </script>
 
 
 
