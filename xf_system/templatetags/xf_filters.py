@@ -96,6 +96,7 @@ def cut3(value, arg):
 numeric_test = re.compile("^\d+$")
 
 
+@register.filter(name='xf_getattr')
 def getattribute(value, arg):
 	"""Gets an attribute of an object dynamically from a string name"""
 
