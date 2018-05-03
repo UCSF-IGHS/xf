@@ -29,7 +29,8 @@ class XFUIAction:
                  url_name = None, # Leave None to create %s_%s_action_name
                  use_ajax = True,
                  action_type = ACTION_ROW_INSTANCE,
-                 column_index = None
+                 column_index = None,
+                 user = None
                  ):
         self.use_ajax = use_ajax
         self.permission_required = permission_required
@@ -49,3 +50,6 @@ class XFUIAction:
 
         # To attach this action to a column index, set its number
         self.column_index = column_index
+
+        # In case the user is needed
+        self.user = user
