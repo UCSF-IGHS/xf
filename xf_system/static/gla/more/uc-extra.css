@@ -30,6 +30,16 @@ td.clickable-cell { cursor: pointer; }
     width:auto
 }
 
+.navbar-right a.btn {
+    margin-right: 15px;
+}
+.navbar-right a.dropdown-toggle {
+    margin-right: 0px;
+}
+a.dropdown-toggle span {
+    color: white;
+}
+
 table a.btn-link {
     color: #337ab7
 }
@@ -304,4 +314,18 @@ div#language_chooser button2 {
 
 .form-static .control-label {
     padding-top:4px;
+}
+
+@font-face {
+  font-family: "San Francisco";
+  font-weight: 400;
+  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff");
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif, "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+}
+
+.action-column {
+    margin-right: 0;
 }
