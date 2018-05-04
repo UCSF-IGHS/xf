@@ -16,7 +16,7 @@
         data-next-url="{{ action.next_url }}"
             {% endif %}
         href="{% url action.url_name object|getattribute:primary_key %}"
-        class="{{ css_class }} {% if action.default_action %} btn-success{% endif %}"
+        class="{{ css_class }}"
     >
         {{ caption }}
 

@@ -1,3 +1,5 @@
+from abc import abstractmethod
+
 from django.core.exceptions import PermissionDenied
 from django.db.models import ProtectedError
 from django.urls import reverse
@@ -50,21 +52,37 @@ class XFMasterChildView(XFDetailView):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.related_tabs = []
+        self.action_list = []
+        self.action_buttons = []
 
     def add_related_listview(self, related_list_view):
         self.related_tabs.append(related_list_view)
+
+    def add_action_button(self, action):
+        self.action_buttons.append(action)
+
+    def add_action_list_item(self, action):
+        self.action_list.append(action)
 
     def get_context_data(self, **kwargs):
         context = super(XFMasterChildView, self).get_context_data(**kwargs)
         #context['list_url'] = reverse('library_book-instances_list_related', kwargs={'related_fk':self.kwargs['pk']})
 
+        self.add_actions()
         context['related_tabs'] = self.related_tabs
+        context['action_buttons'] = self.action_buttons
+        context['action_list'] = self.action_list
+        context['primary_key'] = self.model._meta.pk.name
         return context
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
+
+    @abstractmethod
+    def add_actions(self):
+        pass
 
 
 class XFUnsafeDetailView(DetailView, ModelFormMixin, XFAjaxViewMixin, XFCrudMixin):
