@@ -82,7 +82,14 @@ class XFModelList(XFCrudAssetLoaderMixIn):
                 self.list_field_list.append(field.name)
 
     def prepare_actions(self):
-        pass
+
+        for action in self.row_action_list:
+            action.user = self.user
+
+        for action in self.screen_actions:
+            action.user = self.user
+
+
 
     def get_queryset(self, search_string, model, preset_filter, view_kwargs=None):
 
