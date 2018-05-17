@@ -39,7 +39,7 @@ class ValidateEFTextCase(TestCase):
             pass
 
 
-        # Test should pass, and we're not looking for b
+        # Test should pass, and we're looking for b
         test_data = {'int_b' : -2}
         test_case.assertModelClean(TestModelWithInts, test_data)
 

@@ -1,12 +1,21 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
+from xf.xf_crud.models import XFCodeTable
+
+
+class SomeCodes(XFCodeTable):
+    pass
+
+    class Meta:
+        managed = False
 
 class TestModelWithInts(models.Model):
     int_a = models.IntegerField(blank=True, null=True)
     int_b = models.IntegerField(blank=True, null=True)
     int_c = models.IntegerField(blank=True, null=True)
     int_d = models.IntegerField(blank=True, null=True)
+    some_codes = models.ForeignKey(SomeCodes, blank=False, null=False)
 
     def clean(self):
 
@@ -33,6 +42,8 @@ class TestModelWithInts(models.Model):
 
         if validation_errors:
             raise ValidationError(validation_errors)
+
+        super().clean()
 
     class Meta:
         managed = False
