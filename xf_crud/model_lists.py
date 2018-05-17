@@ -44,6 +44,9 @@ class XFModelList(XFCrudAssetLoaderMixIn):
             'all': 'All',
         }
         self.action_list = {}
+        self.user = None
+        self.request = None
+        self.kwargs = None
 
         #Action lists represents the actions that we can do in a list. We have 3 types:
         # Those that apply to a particular record – i.e. a row so Edit, Details, Delete
@@ -57,13 +60,13 @@ class XFModelList(XFCrudAssetLoaderMixIn):
 
     def initialise_action_lists(self):
         self.screen_actions.append(
-            XFUIAction('new', 'Create new', 'add', action_type=ACTION_NEW_INSTANCE)
+            XFUIAction('new', 'Create new', 'add', action_type=ACTION_NEW_INSTANCE, user=self.user)
         )
 
         self.row_action_list.extend(
-            (XFUIAction('edit', 'Edit', 'change', action_type=ACTION_ROW_INSTANCE),
-             XFUIAction('delete', 'Delete', 'delete', action_type=ACTION_ROW_INSTANCE),
-             XFUIAction('details', 'View details', 'view', action_type=ACTION_ROW_INSTANCE, use_ajax=True))
+            (XFUIAction('edit', 'Edit', 'change', action_type=ACTION_ROW_INSTANCE, user=self.user),
+             XFUIAction('delete', 'Delete', 'delete', action_type=ACTION_ROW_INSTANCE, user=self.user),
+             XFUIAction('details', 'View details', 'view', action_type=ACTION_ROW_INSTANCE, use_ajax=True, user=self.user))
         )
 
     def get_entity_action(self, action_name):
@@ -77,6 +80,16 @@ class XFModelList(XFCrudAssetLoaderMixIn):
         for field in self.model._meta.fields:
             if not field.primary_key:
                 self.list_field_list.append(field.name)
+
+    def prepare_actions(self):
+
+        for action in self.row_action_list:
+            action.user = self.user
+
+        for action in self.screen_actions:
+            action.user = self.user
+
+
 
     def get_queryset(self, search_string, model, preset_filter, view_kwargs=None):
 

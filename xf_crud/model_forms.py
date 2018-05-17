@@ -77,6 +77,12 @@ class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
         self.helper.help_text_inline = True  # means that I want <span> elements
         if self.request:
             self.url_name = self.request.resolver_match.url_name # Can be used to derive the URL name, which can help you determine the action
+            
+        self.is_new = self.url_name.endswith('_new')
+        self.is_edit = self.url_name.endswith('_edit')
+        self.is_details = self.url_name.endswith('_details')
+        self.is_overview = self.url_name.endswith('_overview')
+
 
 
     def disable_initial_fields(self):
@@ -166,3 +172,5 @@ class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
         :return:
         """
         pass
+
+
