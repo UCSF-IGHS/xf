@@ -48,4 +48,4 @@ class ValidateTestModelWithInts(XFTestCase):
         
     def test_int_e(self):
         self.assertFieldRequired(TestModelWithInts, 'int_e', 'should not accept None')
-        self.assertFieldRequired(TestModelWithInts, 'int_d', 'should accept None')
+        #self.assertFieldRequired(TestModelWithInts, 'int_d', 'should accept None')
