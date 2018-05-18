@@ -24,8 +24,9 @@ class ValidateTestModelWithInts(XFTestCase):
         test_data = {'int_c' : 6, 'int_d' : 5}
         self.assertModelNotClean(TestModelWithInts, test_data, {'int_c'})
 
+        # Specify {} that you don't care about any specific fields, it should just not be valid
         test_data = {'int_c' : 4, 'int_d' : 5}
-        self.assertModelNotClean(TestModelWithInts, test_data)
+        self.assertModelNotClean(TestModelWithInts, test_data, {})
 
         test_data = {'int_c' : 6, 'int_d' : 6}
         self.assertModelNotClean(TestModelWithInts, test_data, {'int_c', 'int_d'})
@@ -44,3 +45,7 @@ class ValidateTestModelWithInts(XFTestCase):
         self.assertFieldNotClean(TestModelWithInts, 'int_b', 0)
         self.assertFieldNotClean(TestModelWithInts, 'int_b', None)
         self.assertFieldClean(TestModelWithInts, 'int_b', -1)
+        
+    def test_int_e(self):
+        self.assertFieldRequired(TestModelWithInts, 'int_e', 'should not accept None')
+        #self.assertFieldRequired(TestModelWithInts, 'int_d', 'should accept None')

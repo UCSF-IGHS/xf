@@ -15,6 +15,7 @@ class TestModelWithInts(models.Model):
     int_b = models.IntegerField(blank=True, null=True)
     int_c = models.IntegerField(blank=True, null=True)
     int_d = models.IntegerField(blank=True, null=True)
+    int_e = models.IntegerField(blank=False, null=False)
     some_codes = models.ForeignKey(SomeCodes, blank=False, null=False)
 
     def clean(self):

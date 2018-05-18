@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 
 from xf.xf_system.testing.xf_test_case import XFTestCase
@@ -12,7 +13,13 @@ class ValidateEFTextCase(TestCase):
     DON'T FOCUS ON THIS FILE, IT IS A UNIT TEST TO TEST THE ASSERT METHODS OF XFTESTCASE
     """
 
-    def test_assert_model__not_clean(self):
+    def setUp(self):
+        self.test_case = XFTestCase()
+
+    def tearDown(self):
+        del self.test_case
+
+    def test_assert_model_not_clean(self):
 
         test_case = XFTestCase()
         test_data = {'int_c' : 6, 'int_d' : 5}
@@ -54,4 +61,37 @@ class ValidateEFTextCase(TestCase):
             self.assertRaises(None, AssertionError)
         except:
             pass
+
+    def test_assert_field_clean(self):
+
+        # Scenario 1: Dirty Data – Should raise exception
+        # Explanation:
+        # We are providing dirty data
+        # We expect assertFieldClean to fail, and it will raise an AssertionError
+        # We capture that error, because that is the correct behaviour
+        with self.assertRaises(AssertionError):
+            self.test_case.assertFieldClean(TestModelWithInts, 'int_b', 2, '2 should be below 0')
+            self.test_case.assertFieldClean(TestModelWithInts, 'int_b', 0, '0 should be below 0')
+
+        # Scenario 2: Clean Data – Should not raise an exception
+        try:
+            self.test_case.assertFieldClean(TestModelWithInts, 'int_b', -2, 'should accept -2')
+            self.test_case.assertFieldClean(TestModelWithInts, 'int_b', -1, 'should accept -1')
+        except:
+            self.fail("AssertFieldClean incorrectly raises a validation error on valid data")
+
+    def test_assert_field_not_clean(self):
+
+        self.test_case.assertFieldNotClean(TestModelWithInts, 'int_b', 2, '2 should be below 0')
+
+        # Scenario 1: Dirty data – Should not raise exception
+        try:
+            self.test_case.assertFieldNotClean(TestModelWithInts, 'int_b', 2, '2 should be below 0')
+        except:
+            self.fail("AssertFieldNotClean incorrectly raises an exception on invalid data")
+
+        # Scenario 2: Clean data – Should raise an exception, because it would expect a ValidationError
+        # and because the data is clean, it won't be given
+        with self.assertRaises(AssertionError):
+            self.test_case.assertFieldNotClean(TestModelWithInts, 'int_b', -1, '2 should be below 0')
 
