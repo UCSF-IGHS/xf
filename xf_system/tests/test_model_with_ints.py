@@ -46,6 +46,14 @@ class ValidateTestModelWithInts(XFTestCase):
         self.assertFieldNotClean(TestModelWithInts, 'int_b', None)
         self.assertFieldClean(TestModelWithInts, 'int_b', -1)
         
-    def test_int_e(self):
+    def test_int_e_as_required_field(self):
         self.assertFieldRequired(TestModelWithInts, 'int_e', 'should not accept None')
         #self.assertFieldRequired(TestModelWithInts, 'int_d', 'should accept None')
+
+    def test_int_d_as_non_required_field(self):
+        self.assertFieldOptionial(TestModelWithInts, 'int_d', 'should accept None')
+        #self.assertFieldOptionial(TestModelWithInts, 'int_e', 'should accept None')
+
+    def test_int_f_as_optional_required(self):
+
+        self.assertOptionalFieldRequired(TestModelWithInts, 'int_f', {'int_e':6}, 'f is required when e = 6')
