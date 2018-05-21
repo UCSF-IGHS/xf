@@ -1,5 +1,5 @@
 from xf.xf_system.testing.xf_test_case import XFTestCase
-from xf.xf_system.tests.test_models import TestModelWithInts
+from xf.xf_system.tests.test_models import TestModelWithInts, SomeCode
 
 
 class ValidateTestModelWithInts(XFTestCase):
@@ -9,10 +9,6 @@ class ValidateTestModelWithInts(XFTestCase):
         # Test should pass, and we're not looking for b, so we need to pass the fields we're interested in
         test_data = {'int_c' : 6, 'int_d' : 7}
         self.assertModelClean(TestModelWithInts, test_data, test_data.keys())
-
-        # Test should pass, and we're not looking for b
-        test_data = {'int_b' : -2}
-        self.assertModelClean(TestModelWithInts, test_data)
 
         # This test should pass, even though b is None, because we're only looking for 'int_a'
         test_data = {'int_a' : 5}
@@ -25,7 +21,7 @@ class ValidateTestModelWithInts(XFTestCase):
         self.assertModelNotClean(TestModelWithInts, test_data, {'int_c'})
 
         # Specify {} that you don't care about any specific fields, it should just not be valid
-        test_data = {'int_c' : 4, 'int_d' : 5}
+        test_data = {'int_c' : 4, 'int_d' : 5, }
         self.assertModelNotClean(TestModelWithInts, test_data, {})
 
         test_data = {'int_c' : 6, 'int_d' : 6}
