@@ -12,11 +12,11 @@ class XFTestCase(TestCase):
         expected_clean_field = {field_name}
         self.assertModelNotClean(class_type, {field_name : value}, expected_clean_field, message=field_message)
 
-    def assertModelClean(self, class_type, model_values, expected_clean_fields = None, message = None):
+    def assertModelClean(self, model_class_type, model_values, expected_clean_fields = None, message = None):
         '''
         Asserts that a model is clean. You need to specify which fields you expect to be clean. This method
         will succeed as long as those fields are clean, even if other fields don't validate.
-        :param class_type: The model to assert
+        :param model_class_type: The model to assert
         :param model_values: A dictionary setting the fields and values to be tested
         :param expected_clean_fields: The fields that are expected to be clean
         :param message: Any message to display if the test fails.
@@ -28,7 +28,7 @@ class XFTestCase(TestCase):
         # If field_a does throw an error, then we have a problem
         # So, it is basically a list of fields that we expect to be clean
 
-        model = class_type()
+        model = model_class_type()
         for (field_name, value) in model_values.items():
             setattr(model, field_name, value)
 
@@ -44,17 +44,17 @@ class XFTestCase(TestCase):
                         self.fail(message if message is not None else
                                   "Clean raised ValidationError unexpectedly for %s" % (key))
 
-    def assertModelNotClean(self, class_type, model_values, expected_field_errors = None, message = None):
+    def assertModelNotClean(self, model_class_type, model_values, expected_field_errors = None, message = None):
         '''
         Asserts that a model is not clean.
-        :param class_type: The model to assert
+        :param model_class_type: The model to assert
         :param model_values: A dictionary setting the fields and values to be tested
         :param expected_field_errors: The fields that are expected to be not clean
         :param message: Any message to display if the test fails
         :return:
         '''
 
-        model = class_type()
+        model = model_class_type()
         for (field_name, value) in model_values.items():
             setattr(model, field_name, value)
 
@@ -80,10 +80,46 @@ class XFTestCase(TestCase):
         model = model_class_type()
         setattr(model, field_name, None)
 
-        # Expect a ValidtionError
+        # Expect a ValidationError
         with self.assertRaises(ValidationError, msg = message) as ex:
             model.full_clean()
 
         # Make sure we have a ValidationError for our specific field
         self.assertIn(field_name, ex.exception.message_dict, message)
 
+    def assertFieldOptionial(self, model_class_type, field_name, message=None):
+        '''
+
+        :param model_class_type:
+        :param field_name:
+        :param message:
+        :return:
+        '''
+
+        model = model_class_type()
+        setattr(model, field_name, None)
+
+        try:
+            model.full_clean()
+        except ValidationError as ex:
+            for key in ex.message_dict:
+                if key == field_name:
+                    self.fail(message if message is not None else
+                              "Field %s does accept None" % (key))
+
+
+    def assertOptionalFieldRequired(self, model_class_type, field_name,
+                                         field_condition_for_not_optional, message=None):
+
+        self.assertFieldOptionial(model_class_type, field_name, message)
+
+        model = model_class_type()
+        for (condition_field_name, value) in field_condition_for_not_optional.items():
+            setattr(model, condition_field_name, value)
+
+        # Expect a ValidationError
+        with self.assertRaises(ValidationError, msg = message) as ex:
+            model.full_clean()
+
+        # Make sure we have a ValidationError for our specific field
+        self.assertIn(field_name, ex.exception.message_dict, message)

@@ -95,3 +95,7 @@ class ValidateEFTextCase(TestCase):
         with self.assertRaises(AssertionError):
             self.test_case.assertFieldNotClean(TestModelWithInts, 'int_b', -1, '2 should be below 0')
 
+    def test_assert_field_not_required(self):
+
+        # Scenario: A field that is not required should not throw an exception when model.save is called
+        pass
