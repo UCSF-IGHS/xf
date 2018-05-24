@@ -46,10 +46,6 @@ class ValidateEFTextCase(TestCase):
             pass
 
 
-        # Test should pass, and we're looking for b
-        test_data = {'int_b' : -2}
-        test_case.assertModelClean(TestModelWithInts, test_data)
-
         # This test should pass, even though b is None, because we're only looking for 'int_a'
         test_data = {'int_a' : 5}
         test_case.assertModelClean(TestModelWithInts, test_data, 'int_a')
