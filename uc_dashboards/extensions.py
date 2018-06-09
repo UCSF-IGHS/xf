@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 
-from xf.uc_dashboards.models import Perspective
+from xf.uc_dashboards.models.perspective import Perspective
 
 
 def null():

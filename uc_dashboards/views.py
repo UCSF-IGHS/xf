@@ -25,6 +25,12 @@ from django import template
 import ast
 from django.db.models import Q
 from django.http import HttpResponse
+
+import xf.uc_dashboards.models.perspective
+import xf.uc_dashboards.models.template
+from xf.uc_dashboards.models.navigation_section import NavigationSection
+from xf.uc_dashboards.models.page import Page
+from xf.uc_dashboards.models.perspective import Perspective
 from . import extensions
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -32,7 +38,6 @@ from . import models as UCModels
 from xf.xf_crud.permission_mixin import XFPermissionMixin
 
 # Create your views here.
-from xf.uc_dashboards.models import NavigationSection, Page, Widget, Perspective
 
 # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
 from xf.xf_system.views import XFNavigationViewMixin
@@ -192,14 +197,14 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
         # PYTHON3 UPDATE
 
         if "perspective_slug" in self.kwargs:
-            perspective = get_object_or_404(UCModels.Perspective, slug=self.kwargs["perspective_slug"])
+            perspective = get_object_or_404(xf.uc_dashboards.models.perspective.Perspective, slug=self.kwargs["perspective_slug"])
             perspective = self.request.user.load_perspective(perspective, True)
             if perspective:
                 self.perspective = perspective
                 self.request.session["perspective_id"] = self.perspective.id
 
         elif "perspective_id" in self.request.session:
-            self.perspective = Perspective.objects.get(pk=self.request.session["perspective_id"])
+            self.perspective = xf.Perspective.objects.get(pk=self.request.session["perspective_id"])
 
         if self.perspective:
             self.pages = self.perspective.pages.all()
@@ -380,7 +385,7 @@ class WidgetView(TemplateView):
         if self.widget:
 
             if "perspective_slug" in self.kwargs:
-                perspective = get_object_or_404(UCModels.Perspective, slug=self.kwargs["perspective_slug"])
+                perspective = get_object_or_404(xf.uc_dashboards.models.perspective.Perspective, slug=self.kwargs["perspective_slug"])
                 perspective = self.request.user.load_perspective(perspective, True)
                 if perspective:
                     self.perspective = perspective
@@ -568,7 +573,7 @@ class WidgetView(TemplateView):
         :return:
         """
         if self.widget:
-            if int(self.widget.template.template_source) == int(UCModels.Template.DATABASE):
+            if int(self.widget.template.template_source) == int(xf.uc_dashboards.models.template.Template.DATABASE):
                 template = Template(self.widget.template.template_text)
                 template2 = self.get_template2(template_name="dashboards/t_ibbs_overview.html")
                 template2.template = template
@@ -671,7 +676,7 @@ class DashboardPageView(DashboardView, XFPermissionMixin):
         :param response_kwargs:
         :return:
         """
-        if int(self.page.template.template_source) == int(UCModels.Template.DATABASE):
+        if int(self.page.template.template_source) == int(xf.uc_dashboards.models.template.Template.DATABASE):
             template = Template(self.page.template.template_text)
 
             template2 = self.get_template2(template_name="dashboards/t_ibbs_overview.html")
@@ -701,7 +706,7 @@ class StartView(DashboardPageView):
                         url = reverse("load_perspective", args=[user.profile.default_perspective.slug])
 
                         # Load the user's default perspective
-                        perspective = get_object_or_404(UCModels.Perspective, id=user.profile.default_perspective.id)
+                        perspective = get_object_or_404(xf.uc_dashboards.models.perspective.Perspective, id=user.profile.default_perspective.id)
                         perspective = request.user.load_perspective(perspective, True)
                         if perspective:
                             request.session["perspective_id"] = perspective.id
@@ -728,7 +733,7 @@ class StartView(DashboardPageView):
 
 # Don't like these non-class based views, but they work, for now
 def load_perspective(request, perspective_id):
-    perspective = get_object_or_404(UCModels.Perspective, id=perspective_id)
+    perspective = get_object_or_404(xf.uc_dashboards.models.perspective.Perspective, id=perspective_id)
     perspective = request.user.load_perspective(perspective, True)
     if perspective:
         request.session["perspective_id"] = perspective.id
@@ -736,7 +741,7 @@ def load_perspective(request, perspective_id):
     pass
 
 def load_perspective(request, slug):
-    perspective = get_object_or_404(UCModels.Perspective, slug=slug)
+    perspective = get_object_or_404(xf.uc_dashboards.models.perspective.Perspective, slug=slug)
     perspective = request.user.load_perspective(perspective, True)
     if perspective:
         request.session["perspective_id"] = perspective.id
