@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 from django.http import HttpResponse
+from . import extensions
 
 import xf.uc_dashboards.models.perspective
 import xf.uc_dashboards.models.template
