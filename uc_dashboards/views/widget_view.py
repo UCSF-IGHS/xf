@@ -12,6 +12,7 @@ from django.views.generic import TemplateView
 
 import xf.uc_dashboards
 from xf.uc_dashboards.models.perspective import Perspective
+from xf.uc_dashboards.models.widget import Widget
 
 
 class WidgetView(TemplateView):
