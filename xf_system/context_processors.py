@@ -1,4 +1,4 @@
-from xf.uc_dashboards.models import Perspective
+from xf.uc_dashboards.models.perspective import Perspective
 
 
 def include_user_menu(request):

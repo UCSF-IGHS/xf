@@ -1,5 +1,7 @@
 from modeltranslation.translator import register, translator, TranslationOptions
-from .models import Widget, Page, NavigationSection, PageSection, PageStatus, Perspective
+
+from xf.uc_dashboards.models import Widget, Page, NavigationSection, PageSection, PageStatus
+from xf.uc_dashboards.models.perspective import Perspective
 
 
 @register(Widget)
