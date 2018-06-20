@@ -101,7 +101,7 @@ class XFTestCase(TestCase):
         # Make sure we have a ValidationError for our specific field
         self.assertIn(field_name, ex.exception.message_dict, message)
 
-    def assertFieldOptionial(self, model_class_type, field_name, message=None):
+    def assertFieldOptional(self, model_class_type, field_name, message=None):
         '''
 
         :param model_class_type:
@@ -121,11 +121,21 @@ class XFTestCase(TestCase):
                     self.fail(message if message is not None else
                               "Field %s does accept None" % (key))
 
+    def assertFieldOptionial(self, model_class_type, field_name, message=None):
+        '''
+
+        :param model_class_type:
+        :param field_name:
+        :param message:
+        :return:
+        '''
+
+        self.assertFieldOptional(model_class_type, field_name, message)
 
     def assertOptionalFieldRequired(self, model_class_type, field_name,
                                          field_condition_for_not_optional, message=None):
 
-        self.assertFieldOptionial(model_class_type, field_name, message)
+        self.assertFieldOptional(model_class_type, field_name, message)
 
         model = model_class_type()
         for (condition_field_name, value) in field_condition_for_not_optional.items():
