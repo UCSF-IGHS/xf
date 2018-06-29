@@ -16,7 +16,7 @@
                 <th>{{ column }}</th>
             {% endfor %}
             {% if row_action_list|length > 0 %}
-            <th>Actions</th>
+            <th class="action-column"></th>
             {% endif %}
         </tr>
         </thead>
@@ -37,8 +37,8 @@
                     </td>
                 {% endfor %}
                 {% if row_action_list|length > 0 %}
-                <td>
-                <div class="btn-group">
+                <td class="action-column">
+                <div class="btn-group action-column pull-right">
                         <a class="btn btn-mini btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
                             Actions
                             <span class="caret"></span>

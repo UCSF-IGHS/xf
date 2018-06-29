@@ -30,7 +30,9 @@ class XFUIAction:
                  use_ajax = True,
                  action_type = ACTION_ROW_INSTANCE,
                  column_index = None,
-                 user = None
+                 user = None,
+                 next_url = None,
+                 default_action = False
                  ):
         self.use_ajax = use_ajax
         self.permission_required = permission_required
@@ -42,7 +44,7 @@ class XFUIAction:
             self.url_name = url_name
 
         # Will be called after an action is completed, if set. Should be a URL name
-        self.next_url = None
+        self.next_url = next_url
 
         # Can be used to pre-populate an action with data.
         self.initial_data = None
@@ -53,3 +55,6 @@ class XFUIAction:
 
         # In case the user is needed
         self.user = user
+
+        # When shown as a button, makes the button btn-primary
+        self.default_action = default_action

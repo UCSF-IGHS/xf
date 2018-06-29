@@ -1,13 +1,18 @@
+
 import modeltranslation
 from django.contrib import admin
 from django import forms
+from django.contrib.auth.models import User, Group
 from django.forms import TextInput, Textarea
 from django.db import models
 from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from modeltranslation.admin import TranslationAdmin
 
-from .models import *
+from xf.uc_dashboards.models import HTMLField, GroupProfile, UserProfile, NavigationSection, Page, Template, PageType, \
+    PageStatus, PageSection, Widget, Tag
+from xf.uc_dashboards.models.perspective import Perspective
+
 
 
 class NavigationSectionAdmin(TranslationAdmin):
