@@ -1,0 +1,33 @@
+from __future__ import unicode_literals
+
+from django.contrib.auth.models import User, Group
+
+from xf.uc_dashboards.models.group_profile import GroupProfile
+from xf.uc_dashboards.models.navigation_section import NavigationSection
+from xf.uc_dashboards.models.page import Page
+from xf.uc_dashboards.models.page_section import PageSection
+from xf.uc_dashboards.models.page_status import PageStatus
+from xf.uc_dashboards.models.page_type import PageType
+from xf.uc_dashboards.models.perspective import Perspective
+from xf.uc_dashboards.models.tag import Tag
+from xf.uc_dashboards.models.template import Template
+
+#@receiver(post_save, sender=User)
+#def save_user_profile(sender, instance, **kwargs):
+#    instance.profile.save()
+
+
+# Create your models here.
+
+### Navigation models
+
+
+### Content models
+
+
+### Extensions of the user and groups model
+
+
+
+
+
