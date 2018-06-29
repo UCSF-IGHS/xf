@@ -16,7 +16,17 @@
         {% include 'generic_widgets/include_sub_text.html' %}
     </div>
     <script type="text/javascript">
-        var colors = ["#26B99A", "#03586A", "#73879C", "#9CC2CB", "#9CA9AE"];
+        var rawData = '{{ custom_attr|lookup:'color_bands' }}';
+        var parser = new DOMParser();
+        var dom = parser.parseFromString(rawData, 'text/html');
+        var jsonData = dom.body.textContent;
+        var jsonList = JSON.parse(jsonData);
+        var colorBands = [];
+        for(var key in jsonList){
+            var jsonColorBand = jsonList[key];
+            colorBands[key] = [jsonColorBand["percentage"], jsonColorBand["color"]];
+        }
+
         var caption = "{{ caption }}";
         var objectList = JSON.parse('{{rows|jsonify|safe}}');
         var data = {};
@@ -51,7 +61,7 @@
                     axisLine: {
                         show:true,
                         lineStyle: {
-                            color : [[0.2, "#26B99A"],[0.4, "#03586A"],[0.8, "#73879C"],[1, '#FF4500']],
+                            color : colorBands,
                             width: 30
                         }
                     },
