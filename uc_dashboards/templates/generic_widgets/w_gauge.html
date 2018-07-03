@@ -17,6 +17,9 @@
     </div>
     <script type="text/javascript">
         var rawData = '{{ custom_attr|lookup:'color_bands' }}';
+        if(rawData.length == 0){
+            rawData = '[{"percentage":0.2,"color":"#26B99A"},{"percentage":0.6,"color":"#FFD433"},{"percentage":1,"color":"#FF4500"}]';
+        }
         var parser = new DOMParser();
         var dom = parser.parseFromString(rawData, 'text/html');
         var jsonData = dom.body.textContent;
