@@ -3,6 +3,7 @@ import uuid
 
 from xf.xf_crud.generic_crud_views import XFCreateView
 from xf.xf_crud.xf_classes import XFUIAction, ACTION_ROW_INSTANCE, ACTION_NEW_INSTANCE
+from xf.xf_system.utilities.deprecated_decorator import xf_deprecated
 
 
 class XFCrudAssetLoaderMixIn(object):
@@ -52,28 +53,76 @@ class XFModelList(XFCrudAssetLoaderMixIn):
         # Those that apply to a particular record – i.e. a row so Edit, Details, Delete
         # Those that don't apply to a record, but to a class – i.e. New
         # Search
-        self.row_action_list = []
+        self._row_action_list = []
         self.row_default_action = None
-        self.screen_actions = []
+        self._screen_actions = []
         self.screen_action_list = []
         self.initialise_action_lists()
 
+
+
+    # Compatibility properties due to bad naming conventions —— apologies from Fitti
+
+    # NEW NAMES:
+    # instance_actions
+    # class_actions
+    # get_action should resolve either one, based on
+
+    @property
+    def instance_action_list(self):
+        return self._row_action_list
+
+    @instance_action_list.setter
+    def instance_action_list(self, value):
+        self._row_action_list = value
+
+    @property
+    def class_action_list(self):
+        return self._screen_actions
+
+    @class_action_list.setter
+    def class_action_list(self, value):
+        self._screen_actions = value
+
+
+    @property
+    @xf_deprecated("Use class_action_list instead")
+    def screen_actions(self):
+        return self._screen_actions
+
+    @screen_actions.setter
+    @xf_deprecated("Use class_action_list instead")
+    def screen_actions(self, value):
+        self._screen_actions = value
+
+    @property
+    @xf_deprecated("Use instance_action_list instead")
+    def row_action_list(self):
+        return self._row_action_list
+
+    @row_action_list.setter
+    @xf_deprecated("Use instance_action_list instead")
+    def row_action_list(self, value):
+        self._row_action_list = value
+
+
+
     def initialise_action_lists(self):
-        self.screen_actions.append(
+        self.class_action_list.append(
             XFUIAction('new', 'Create new', 'add', action_type=ACTION_NEW_INSTANCE, user=self.user)
         )
 
-        self.row_action_list.extend(
+        self.instance_action_list.extend(
             (XFUIAction('edit', 'Edit', 'change', action_type=ACTION_ROW_INSTANCE, user=self.user),
              XFUIAction('delete', 'Delete', 'delete', action_type=ACTION_ROW_INSTANCE, user=self.user),
              XFUIAction('details', 'View details', 'view', action_type=ACTION_ROW_INSTANCE, use_ajax=True, user=self.user))
         )
 
     def get_entity_action(self, action_name):
-        return next((s for s in self.row_action_list if s.action_name == action_name), None)
+        return next((s for s in self.instance_action_list if s.action_name == action_name), None)
 
     def get_action(self, action_name):
-        return next((s for s in self.screen_actions if s.action_name == action_name), None)
+        return next((s for s in self.class_action_list if s.action_name == action_name), None)
 
 
     def create_default_field_list(self):
@@ -116,7 +165,8 @@ class XFDivLoader:
     def __init__(self,
                  caption = None,
                  url = None):
-        self.id = str(uuid.uuid4()).replace("-", "_")
+        auto_generated_div_id_for_use_in_template = str(uuid.uuid4()).replace("-", "_")
+        self.id = auto_generated_div_id_for_use_in_template
         self.url = url
         self.caption = caption
 
