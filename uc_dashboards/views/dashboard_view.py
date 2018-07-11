@@ -85,7 +85,7 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
                 self.request.session["perspective_id"] = self.perspective.id
 
         elif "perspective_id" in self.request.session:
-            self.perspective = xf.Perspective.objects.get(pk=self.request.session["perspective_id"])
+            self.perspective = xf.uc_dashboards.models.perspective.Perspective.objects.get(pk=self.request.session["perspective_id"])
 
         if self.perspective:
             self.pages = self.perspective.pages.all()
