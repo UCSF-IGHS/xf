@@ -15,6 +15,8 @@ from xf.xf_system.models import XFSiteSettings
 from xf.xf_system.views import XFNavigationViewMixin
 from xf.xf_system.xf_navigation import add_navigation
 
+from . import extensions
+
 
 # Create your views here.
 
