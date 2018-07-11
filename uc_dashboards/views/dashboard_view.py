@@ -151,6 +151,6 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
                         if self.perspective.code in filters:
                             self.preset_filters = filters[self.perspective.code]
 
-            elif self.anonymous_perspective:
-                self.request.user.load_perspectives()
+        elif self.anonymous_perspective:
+            self.request.user.load_perspectives()
         pass
