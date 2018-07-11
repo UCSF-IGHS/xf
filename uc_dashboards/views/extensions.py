@@ -1,6 +1,7 @@
-from django.contrib.auth.models import User
-from xf.uc_dashboards.models.perspective import Perspective
+from django.contrib.auth.models import User, AnonymousUser
 
+from xf.uc_dashboards.models import Perspective, XFVizSiteSettings
+from xf.xf_system.models import XFSiteSettings
 
 
 def user_load_perspectives(self):
@@ -17,12 +18,20 @@ def user_load_perspectives(self):
             self.perspectives.append(perspective)
 
     # Only load the group perspectives for the groups that the user belongs to
-    elif self.profile:
+    elif self.is_authenticated and self.profile:
         for group in self.groups.all():
             for perspective in group.profile.perspectives.all():
                 self.perspectives.append(perspective)
 
-    if self.profile:
+                # Users not logged in should have the anonymous perspective if it exists
+    elif self.is_anonymous:
+        settings = XFSiteSettings.objects.first()
+        if settings:
+            xf_viz_settings = XFVizSiteSettings.objects.filter(settings=settings).first()
+            if xf_viz_settings:
+                self.perspectives.append(xf_viz_settings.anonymous_perspective)
+
+    if self.is_authenticated and self.profile:
         if self.profile.default_perspective:
             if not self.profile.default_perspective in self.perspectives:
                 self.perspectives.append(self.profile.default_perspective)
@@ -57,3 +66,5 @@ def user_load_perspective(self, perspective, useCache):
 # Add a method to the User class that is implemented by the method above
 User.load_perspectives = user_load_perspectives
 User.load_perspective = user_load_perspective
+AnonymousUser.load_perspectives = user_load_perspectives
+AnonymousUser.load_perspective = user_load_perspective

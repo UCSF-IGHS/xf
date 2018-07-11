@@ -9,3 +9,5 @@ from .tag import Tag
 from .template import Template
 from .user_profile import UserProfile
 from .widget import Widget
+from .perspective import Perspective
+from .xf_viz_site_settings import XFVizSiteSettings

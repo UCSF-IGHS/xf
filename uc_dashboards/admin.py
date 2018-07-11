@@ -12,7 +12,8 @@ from modeltranslation.admin import TranslationAdmin
 from xf.uc_dashboards.models import HTMLField, GroupProfile, UserProfile, NavigationSection, Page, Template, PageType, \
     PageStatus, PageSection, Widget, Tag
 from xf.uc_dashboards.models.perspective import Perspective
-
+from xf.uc_dashboards.models.xf_viz_site_settings import XFVizSiteSettings
+from xf.xf_system.models import XFSiteSettings
 
 
 class NavigationSectionAdmin(TranslationAdmin):
@@ -121,6 +122,20 @@ class UserAdmin(BaseUserAdmin):
     inlines = (UserProfileInline, )
     list_filter = ('profile__tags', )
 
+# Define a new XF SIte settings admin
+class XFSiteSettingsAdmin(admin.ModelAdmin):
+    model = XFSiteSettings
+
+
+class XFVizSiteSettingsInline(admin.StackedInline):
+    model = XFVizSiteSettings
+    can_delete = False
+    verbose_name_plural = 'dashboard settings'
+
+
+# Define a new User admin
+class XFVizSiteSettingsAdmin(XFSiteSettingsAdmin):
+    inlines = (XFVizSiteSettingsInline, )
 
 # Register your models here.
 admin.site.register(NavigationSection, NavigationSectionAdmin)
@@ -138,3 +153,5 @@ admin.site.unregister(Group)
 admin.site.register(Group, GroupAdmin)
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+admin.site.unregister(XFSiteSettings)
+admin.site.register(XFSiteSettings, XFVizSiteSettingsAdmin)

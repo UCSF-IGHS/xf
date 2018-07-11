@@ -7,6 +7,7 @@ from django.views.generic import TemplateView
 
 import xf.uc_dashboards
 from xf.uc_dashboards.models import NavigationSection
+from xf.uc_dashboards.models.xf_viz_site_settings import XFVizSiteSettings
 from xf.xf_system.views import XFNavigationViewMixin
 
 
@@ -50,10 +51,20 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
         self.preset_filters = ""
         self.perspective = None
         self.perspectives = None
+        self.anonymous_perspective = None
         self.pages = None
         self.navigation_sections = {}
-        print ("load perspectives")
+        print("load perspectives")
         print(self.kwargs)
+
+        # Add the anonymous perspective, if it is defined
+
+        if XFNavigationViewMixin.site_settings:
+            xf_viz_settings = XFVizSiteSettings.objects.filter(settings=XFNavigationViewMixin.site_settings).first()
+            if xf_viz_settings:
+                self.anonymous_perspective = xf_viz_settings.anonymous_perspective
+                if not self.request.user.is_authenticated():
+                    self.perspective = self.anonymous_perspective
 
         # Load the current perspective
 
@@ -66,7 +77,8 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
         # PYTHON3 UPDATE
 
         if "perspective_slug" in self.kwargs:
-            perspective = get_object_or_404(xf.uc_dashboards.models.perspective.Perspective, slug=self.kwargs["perspective_slug"])
+            perspective = get_object_or_404(xf.uc_dashboards.models.perspective.Perspective,
+                                            slug=self.kwargs["perspective_slug"])
             perspective = self.request.user.load_perspective(perspective, True)
             if perspective:
                 self.perspective = perspective
@@ -139,4 +151,6 @@ class DashboardView(TemplateView, XFNavigationViewMixin):
                         if self.perspective.code in filters:
                             self.preset_filters = filters[self.perspective.code]
 
+            elif self.anonymous_perspective:
+                self.request.user.load_perspectives()
         pass

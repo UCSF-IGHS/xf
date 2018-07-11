@@ -1,21 +1,22 @@
 # import MySQLdb
+from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
-from django.conf import settings
-from django.http import HttpResponse
-from . import extensions
 
 import xf.uc_dashboards.models.perspective
 import xf.uc_dashboards.models.template
 from xf.uc_dashboards.models.perspective import Perspective
+from xf.uc_dashboards.models.xf_viz_site_settings import XFVizSiteSettings
 from xf.xf_crud.permission_mixin import XFPermissionMixin
-
-# Create your views here.
-
 # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+from xf.xf_system.models import XFSiteSettings
 from xf.xf_system.views import XFNavigationViewMixin
 from xf.xf_system.xf_navigation import add_navigation
+
+
+# Create your views here.
 
 
 def get_current_perspective(request):
@@ -42,7 +43,12 @@ def get_current_perspective(request):
         if hasattr(user, "profile"):
             if hasattr(user.profile, "default_perspective") and user.profile.default_perspective is not None:
                 return user.profile.default_perspective
-
+        else:
+            settings = XFSiteSettings.objects.first()
+            if settings:
+                xf_viz_settings = XFVizSiteSettings.objects.filter(settings=settings).first()
+                if xf_viz_settings:
+                    return xf_viz_settings.anonymous_perspective
     return None
 
 
@@ -74,8 +80,8 @@ def load_navigation(sender, navigation_trees, request):
 
             print("******* Calling load_navigation with pperspective")
 
-            pages = current_perspective.pages\
-                .select_related('section', 'navigation_section', 'parent_page', 'template', 'page_type')\
+            pages = current_perspective.pages \
+                .select_related('section', 'navigation_section', 'parent_page', 'template', 'page_type') \
                 .order_by('navigation_section__index', 'index')
 
             for page in pages:
@@ -135,6 +141,7 @@ def load_perspective(request, perspective_id):
     return home_page(request)
     pass
 
+
 def load_perspective(request, slug):
     perspective = get_object_or_404(xf.uc_dashboards.models.perspective.Perspective, slug=slug)
     perspective = request.user.load_perspective(perspective, True)
@@ -142,6 +149,7 @@ def load_perspective(request, slug):
         request.session["perspective_id"] = perspective.id
     return home_page(request)
     pass
+
 
 def clear_perspective(request):
     request.session["perspective_id"] = None
@@ -160,10 +168,11 @@ def home_page(request):
     # PYTHON3 UPDATE
     if "perspective_id" in request.session:
         perspective = Perspective.objects.get(pk=request.session["perspective_id"])
-        url = reverse("dashboards", args=[perspective.default_page.section.title, perspective.slug, perspective.default_page.slug])
+        url = reverse("dashboards",
+                      args=[perspective.default_page.section.title, perspective.slug, perspective.default_page.slug])
         # perspective.default_page
         return HttpResponseRedirect(url)
 
     # No perspecive - load default homepage
     return HttpResponseRedirect(settings.HOME_PAGE)
-    #return HttpResponseRedirect("/")
+    # return HttpResponseRedirect("/")
