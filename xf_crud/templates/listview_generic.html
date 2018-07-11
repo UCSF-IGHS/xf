@@ -30,7 +30,6 @@
         <div class="row-fluid">
             <div class="col-md-2">
                     {% for action in screen_actions %}
-
                                 <a class="btn btn-default {% if forloop.counter == 1 %} btn-primary  {% endif %} " {% if action.use_ajax %}data-toggle="modal"
                                     data-target="#frmDlg" html-target="#frmDlgHtml" {% endif %}
                                    {% if action.next_url %}data-next-url="{{ action.next_url }}" {% endif %}

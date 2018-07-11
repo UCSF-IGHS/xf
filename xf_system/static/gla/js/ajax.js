@@ -199,6 +199,13 @@ function postform(e, htmltarget, formtarget, posttarget, sourceElement) {
                 if(typeof window.mxlSuccess == 'function') {
                     // function exists, so we can now call it
                     mxlSuccess();
+
+                    // Refresh the object list for the link that triggered this action
+                    object_list = $(sourceElement.target).attr('object_list');
+                    if (object_list)
+                        if ($(object_list).length > 0)
+                            RefreshObjectListForDiv($(object_list));
+
                 }
 
                 // If the XFAction has a next_url, we should find it, add the recently modified or created
