@@ -15,8 +15,6 @@ from xf.xf_system.models import XFSiteSettings
 from xf.xf_system.views import XFNavigationViewMixin
 from xf.xf_system.xf_navigation import add_navigation
 
-from . import extensions
-
 
 # Create your views here.
 
@@ -106,7 +104,7 @@ def load_navigation(sender, navigation_trees, request):
 
                 # Check if user is part of one of the allowed groups to view this page, before adding menu item
                 # to navigation
-                if XFPermissionMixin.user_in_group(request.user, page.permissions_to_view.all()):
+                if is_user_allowed_to_page(request.user, page):
                     if page.parent_page:
                         add_navigation(navigation_tree, 'Dashboard', page.parent_page.navigation_section.caption, url,
                                        page.parent_page.navigation_section.icon, page.title, page.parent_page.title)
@@ -117,6 +115,10 @@ def load_navigation(sender, navigation_trees, request):
 
     return
 
+
+def is_user_allowed_to_page(user, page):
+    return XFPermissionMixin.user_in_group(user, page.permissions_to_view.all()) \
+           or (not user.is_authenticated and page.allow_anonymous)
 
 # This statement adds a callback function to the XFNavigationMixin - when the navigation menus need to be loaded,
 # this callback will be called.
