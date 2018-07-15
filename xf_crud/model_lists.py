@@ -3,6 +3,8 @@ import uuid
 
 from xf.xf_crud.generic_crud_views import XFCreateView
 from xf.xf_crud.xf_classes import XFUIAction, ACTION_ROW_INSTANCE, ACTION_NEW_INSTANCE
+from xf.xf_services import XFModelPermissionBase
+from xf.xf_services.xf_security_service import XFSecurityService
 from xf.xf_system.utilities.deprecated_decorator import xf_deprecated
 
 
@@ -53,20 +55,11 @@ class XFModelList(XFCrudAssetLoaderMixIn):
         # Those that apply to a particular record – i.e. a row so Edit, Details, Delete
         # Those that don't apply to a record, but to a class – i.e. New
         # Search
-        self.row_action_list = []
+        self._row_action_list = []
         self.row_default_action = None
-        self.screen_actions = []
+        self._screen_actions = []
         self.screen_action_list = []
-        self.initialise_action_lists()
 
-
-
-    # Compatibility properties due to bad naming conventions —— apologies from Fitti
-
-    # NEW NAMES:
-    # instance_actions
-    # class_actions
-    # get_action should resolve either one, based on
 
     @property
     def instance_action_list(self):
@@ -127,8 +120,13 @@ class XFModelList(XFCrudAssetLoaderMixIn):
             self.instance_action_list.append(action)
 
     def action_is_allowed(self, action: XFUIAction):
+
+        security_method_object = self.model
+        if XFSecurityService.security_service is not None:
+            security_method_object = XFSecurityService.security_service.get_model_access_permissions(self.model)
+
         action_method_name = 'can_do_' + action.action_name
-        can_do_function = getattr(self.model, action_method_name, None)
+        can_do_function = getattr(security_method_object, action_method_name, None)
         action_allowed = True
         if can_do_function is not None:
             action_allowed = can_do_function(action, self.user, model_list=self)
@@ -148,6 +146,8 @@ class XFModelList(XFCrudAssetLoaderMixIn):
                 self.list_field_list.append(field.name)
 
     def prepare_actions(self):
+
+        self.initialise_action_lists()
 
         for action in self.row_action_list:
             action.user = self.user
