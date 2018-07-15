@@ -18,13 +18,13 @@ def user_load_perspectives(self):
             self.perspectives.append(perspective)
 
     # Only load the group perspectives for the groups that the user belongs to
-    elif self.is_authenticated and self.profile:
+    elif self.is_authenticated and self.profile is not None:
         for group in self.groups.all():
             for perspective in group.profile.perspectives.all():
                 self.perspectives.append(perspective)
 
                 # Users not logged in should have the anonymous perspective if it exists
-    elif self.is_anonymous:
+    elif self.is_anonymous is not None:
         settings = XFSiteSettings.objects.first()
         if settings:
             xf_viz_settings = XFVizSiteSettings.objects.filter(settings=settings).first()
