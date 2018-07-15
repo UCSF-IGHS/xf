@@ -53,9 +53,9 @@ class XFModelList(XFCrudAssetLoaderMixIn):
         # Those that apply to a particular record – i.e. a row so Edit, Details, Delete
         # Those that don't apply to a record, but to a class – i.e. New
         # Search
-        self._row_action_list = []
+        self.row_action_list = []
         self.row_default_action = None
-        self._screen_actions = []
+        self.screen_actions = []
         self.screen_action_list = []
         self.initialise_action_lists()
 
@@ -108,15 +108,32 @@ class XFModelList(XFCrudAssetLoaderMixIn):
 
 
     def initialise_action_lists(self):
-        self.class_action_list.append(
-            XFUIAction('new', 'Create new', 'add', action_type=ACTION_NEW_INSTANCE, user=self.user)
-        )
 
-        self.instance_action_list.extend(
-            (XFUIAction('edit', 'Edit', 'change', action_type=ACTION_ROW_INSTANCE, user=self.user),
-             XFUIAction('delete', 'Delete', 'delete', action_type=ACTION_ROW_INSTANCE, user=self.user),
-             XFUIAction('details', 'View details', 'view', action_type=ACTION_ROW_INSTANCE, use_ajax=True, user=self.user))
-        )
+        self.try_add_screen_action(XFUIAction('new', 'Create new', 'add', action_type=ACTION_NEW_INSTANCE, user=self.user))
+        self.try_add_row_action(XFUIAction('edit', 'Edit', 'change', action_type=ACTION_ROW_INSTANCE, user=self.user))
+        self.try_add_row_action(XFUIAction('delete', 'Delete', 'delete', action_type=ACTION_ROW_INSTANCE, user=self.user))
+        self.try_add_row_action(XFUIAction('details', 'View details', 'view', action_type=ACTION_ROW_INSTANCE, use_ajax=True, user=self.user))
+
+
+    def try_add_screen_action(self, action: XFUIAction):
+
+        if self.action_is_allowed(action):
+            self.class_action_list.append(action)
+
+
+    def try_add_row_action(self, action: XFUIAction):
+
+        if self.action_is_allowed(action):
+            self.instance_action_list.append(action)
+
+    def action_is_allowed(self, action: XFUIAction):
+        action_method_name = 'can_do_' + action.action_name
+        can_do_function = getattr(self.model, action_method_name, None)
+        action_allowed = True
+        if can_do_function is not None:
+            action_allowed = can_do_function(action, self.user, model_list=self)
+
+        return action_allowed
 
     def get_entity_action(self, action_name):
         return next((s for s in self.instance_action_list if s.action_name == action_name), None)
