@@ -1,53 +1,47 @@
+import inspect
 
 from xf.xf_services.xf_business_rules_checks import XFBusinessRulesChecks
 
 
 class XFModelPermissionBase:
-    model = None
     security_service: XFBusinessRulesChecks = XFBusinessRulesChecks()
 
-    @classmethod
-    def can_do_new(cls, action, user, **kwargs):
-        model_list = kwargs['model_list']
-        cls.security_service.ensure_user_has_model_permission(model_list.model, user, 'add')
+    def __init__(self, model=None, user=None, *args, **kwargs) -> None:
+        self.user = user
+        self.model = model if inspect.isclass(model) else type(model)
+        self.model_list = kwargs.get('model_list', None)
+        self.model_instance = model if not inspect.isclass(model) else None
+        super().__init__()
+
+    def can_do_new(self):
+        self.security_service.ensure_user_has_model_permission(self.model, self.user, 'add')
         return True
 
-
-    @classmethod
-    def can_do_edit(cls, action, user, **kwargs):
-        model_list = kwargs['model_list']
-        cls.security_service.ensure_user_has_model_permission(model_list.model, user, 'change')
+    def can_do_edit(self):
+        self.security_service.ensure_user_has_model_permission(self.model, self.user, 'change')
         return True
 
-    @classmethod
-    def can_do_edit_instance(cls, action, user, model_instance, **kwargs):
-        cls.security_service.ensure_user_has_model_permission(type(model_instance), user, 'change')
+    def can_do_edit_instance(self):
+        self.security_service.ensure_user_has_model_permission(self.model, self.user, 'change')
         return True
 
-    @classmethod
-    def can_do_delete(cls, action, user, **kwargs):
-        model_list = kwargs['model_list']
-        cls.security_service.ensure_user_has_model_permission(model_list.model, user, 'delete')
+    def can_do_delete(self):
+        self.security_service.ensure_user_has_model_permission(self.model, self.user, 'delete')
         return True
 
-    @classmethod
-    def can_do_delete_instance(cls, action, user, model_instance, **kwargs):
-        cls.security_service.ensure_user_has_model_permission(type(model_instance), user, 'delete')
+    def can_do_delete_instance(self):
+        self.security_service.ensure_user_has_model_permission(self.model, self.user, 'delete')
         return True
 
-    @classmethod
-    def can_do_details(cls, action, user, **kwargs):
-        model_list = kwargs['model_list']
-        cls.security_service.ensure_user_has_model_permission(model_list.model, user, 'view')
+    def can_do_details(self):
+        self.security_service.ensure_user_has_model_permission(self.model, self.user, 'view')
         return True
 
-    @classmethod
-    def can_do_details_instance(cls, action, user, model_instance, **kwargs):
-        cls.security_service.ensure_user_has_model_permission(type(model_instance), user, 'view')
+    def can_do_details_instance(self):
+        self.security_service.ensure_user_has_model_permission(self.model, self.user, 'view')
         return True
 
-    @classmethod
-    def can_do_list(cls, action, user, **kwargs):
-        model_list = kwargs['model_list']
-        cls.security_service.ensure_user_has_model_permission(model_list.model, user, 'list')
+    def can_do_list(self):
+        self.security_service.ensure_user_has_model_permission(self.model, self.user, 'list')
         return True
+

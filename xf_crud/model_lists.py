@@ -122,14 +122,19 @@ class XFModelList(XFCrudAssetLoaderMixIn):
     def action_is_allowed(self, action: XFUIAction):
 
         security_method_object = self.model
-        if XFSecurityService.security_service is not None:
-            security_method_object = XFSecurityService.security_service.get_model_access_permissions(self.model)
-
-        action_method_name = 'can_do_' + action.action_name
-        can_do_function = getattr(security_method_object, action_method_name, None)
         action_allowed = True
-        if can_do_function is not None:
-            action_allowed = can_do_function(action, self.user, model_list=self)
+        if XFSecurityService.security_service is not None:
+            model_permission = XFSecurityService.security_service.get_model_access_permissions(
+                model=self.model, user=self.user, model_list=self)
+            action_method_name = 'can_do_' + action.action_name
+            can_do_method = getattr(model_permission, action_method_name, None)
+            action_allowed = can_do_method()
+
+        else:
+            action_method_name = 'can_do_' + action.action_name
+            can_do_function = getattr(security_method_object, action_method_name, None)
+            if can_do_function is not None:
+                action_allowed = can_do_function(action, self.user, model_list=self)
 
         return action_allowed
 
