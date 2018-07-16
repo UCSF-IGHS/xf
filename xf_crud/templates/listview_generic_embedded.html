@@ -27,7 +27,7 @@
                     {% for action in screen_actions %}
                                 <a class="btn btn-default {% if forloop.counter == 1 %}btn-primary {% endif %} " {% if action.use_ajax %}data-toggle="modal"
                                     data-target="#frmDlg" html-target="#frmDlgHtml" {% endif %}
-                                       href="{% url action.url_name%}?{{ new_initial_data }}">
+                                       href="{% url action.url_name%}?{{ new_initial_data }}" object_list="#ctxObjectList_{{ list_url_id }}">
                                     {{ action.action_caption }}</a>
                     {% endfor %}
 

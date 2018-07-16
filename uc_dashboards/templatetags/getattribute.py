@@ -1,3 +1,4 @@
+
 __author__ = 'Fitti'
 
 # app/templatetags/getattribute.py
@@ -27,13 +28,25 @@ def getattribute(value, arg):
 register.filter('getattribute', getattribute)
 
 def get_can_do_action(value, action):
+    from xf.xf_services.xf_security_service import XFSecurityService
 
-    can_do_action_method_name = "can_do_" + action.action_name
-    can_do_action_method = getattr(value, can_do_action_method_name, None)
-    if can_do_action_method:
-        return can_do_action_method(action.action_name, action.user)
+    if XFSecurityService.security_service is not None:
+        model_permission = XFSecurityService.security_service.get_model_access_permissions(
+            model=value, user=action.user)
+        action_method_name = 'can_do_' + action.action_name + "_instance"
+        can_do_method = getattr(model_permission, action_method_name, None)
+        if can_do_method is not None:
+            return can_do_method()
+        else:
+            return True
 
-    return True
+    else:
+        can_do_action_method_name = "can_do_" + action.action_name
+        can_do_action_method = getattr(value, can_do_action_method_name, None)
+        if can_do_action_method is not None:
+            return can_do_action_method(action.action_name, action.user)
+
+        return True
 
 
 register.filter('candoaction', get_can_do_action)
