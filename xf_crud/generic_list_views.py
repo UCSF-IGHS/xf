@@ -166,6 +166,8 @@ class XFListView(XFGenericListView, XFPermissionMixin, XFAjaxViewMixin):
 
     def set_list_allowable_operations(self, context):
 
+        ## TO DO XF3: UPDATE WITH NEW SECURITY SYSTEM ----->>>>> MUCH BETTER!!!
+
         # Remove any actions for which the user does not have permissions
         # The action defines the permission required
         self.list_class.row_action_list = context['row_action_list'] = \
