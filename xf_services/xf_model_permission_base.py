@@ -76,3 +76,6 @@ class XFModelPermissionBase:
 
         return True
 
+    def get_field_list(self, fields, action):
+
+        return fields

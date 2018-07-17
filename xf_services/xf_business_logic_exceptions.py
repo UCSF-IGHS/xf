@@ -16,3 +16,6 @@ class XFInvalidModelStateException(XFBusinessLogicExceptionBase):
 
 class XFPermissionDeniedException(XFBusinessLogicExceptionBase):
     pass
+
+class XFSaveException(XFBusinessLogicExceptionBase):
+    pass
