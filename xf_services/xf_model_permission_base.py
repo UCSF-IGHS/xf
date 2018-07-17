@@ -26,6 +26,8 @@ class XFModelPermissionBase:
         except:
             return False
 
+        return True
+
     def can_do_add_to(self):
         try:
             self.security_service.ensure_user_has_model_permission(self.model, self.user, 'add')
