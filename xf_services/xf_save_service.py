@@ -1,6 +1,9 @@
 from django.contrib.auth.models import User
 from django.http import HttpRequest
 
+from xf.xf_services.xf_business_logic_exceptions import XFSaveException
+from xf.xf_services.xf_security_service import XFSecurityService
+
 
 class XFSaveService():
 
@@ -17,4 +20,18 @@ class XFSaveService():
                 break
 
         return request.user if request is not None else None
+
+    @staticmethod
+    def apply_model_access_permissions(instance):
+        is_existing_object = instance.pk is not None
+        if is_existing_object:
+            old_instance = type(instance).objects.get(pk=instance.id)
+            access_permissions = XFSecurityService.security_service.get_model_access_permissions(old_instance, XFSaveService.get_user())
+            if not access_permissions.can_do_edit_instance():
+                raise XFSaveException("Object not eligible to be saved")
+        else:
+            access_permissions = XFSecurityService.security_service.get_model_access_permissions(instance, XFSaveService.get_user())
+            if not access_permissions.can_do_new():
+                raise XFSaveException("Object not eligible to be created")
+
 
