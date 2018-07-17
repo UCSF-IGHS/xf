@@ -38,6 +38,7 @@ class XFModelList(XFCrudAssetLoaderMixIn):
         self.create_default_field_list()
         self.list_title = None
         self.list_hint = None
+        self.paginate_by = 10
         self.foreign_key_name = None
         self.list_url = None
         self.search_hint = "Search for.."
