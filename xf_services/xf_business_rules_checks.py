@@ -32,5 +32,6 @@ class XFBusinessRulesChecks:
     @classmethod
     def ensure_user_has_model_permission(cls, model: ModelBase, user: User, permission):
 
-        if not user.has_perm("%s_%s" % (permission, model.__name__.lower())):
-            raise XFPermissionDeniedException(("User does not have %s permission" % permission))
+        if user is not None:
+            if not user.has_perm("%s_%s" % (permission, model.__name__.lower())):
+                raise XFPermissionDeniedException(("User does not have %s permission" % permission))

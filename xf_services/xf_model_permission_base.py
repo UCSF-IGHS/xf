@@ -11,9 +11,22 @@ class XFModelPermissionBase:
         self.model = model if inspect.isclass(model) else type(model)
         self.model_list = kwargs.get('model_list', None)
         self.model_instance = model if not inspect.isclass(model) else None
+
+        # Support for master-child relationships
+        if self.model_list is not None:
+            self.foreign_key_name = self.model_list.foreign_key_name
+            self.foreign_key_value = self.model_list.kwargs['related_fk'] if 'related_fk' in self.model_list.kwargs else None
+
         super().__init__()
 
     def can_do_new(self):
+
+        try:
+            self.security_service.ensure_user_has_model_permission(self.model, self.user, 'add')
+        except:
+            return False
+
+    def can_do_add_to(self):
         try:
             self.security_service.ensure_user_has_model_permission(self.model, self.user, 'add')
         except:
