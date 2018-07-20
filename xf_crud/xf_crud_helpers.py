@@ -4,6 +4,7 @@ from django.forms import ALL_FIELDS
 from xf.xf_crud.model_forms import XFModelForm
 from xf.xf_crud.generic_list_views import XFListView
 from xf.xf_crud.model_lists import XFModelList
+from xf.xf_system.utilities.deprecated_decorator import xf_deprecated
 from . import model_forms
 
 __author__ = 'Fitti'
@@ -63,7 +64,7 @@ def mmodelform_factory(model, form=XFModelForm, fields=None, exclude=None,
 
     return type(form)(class_name, (form,), form_class_attrs)
 
-
+#@xf_deprecated("Please use url builder instead of crudurl")
 def crudurl(appname: object, modelname: object, model_type: object, form_class_type: object, list_class_type: object = XFModelList) -> object:
     """
     Generates a set of CRUL URLs for the given model.

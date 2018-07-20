@@ -194,7 +194,7 @@ def update_variable2(value):
 
 register.filter('update_variable2', update_variable2)
 
-@register.assignment_tag
+@register.simple_tag()
 def alias(obj):
     """
     Alias Tag
