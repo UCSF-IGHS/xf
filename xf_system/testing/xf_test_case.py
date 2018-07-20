@@ -1,5 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
+from xf_system.utilities.deprecated_decorator import xf_deprecated
+
 
 class XFTestCase(TestCase):
 
@@ -121,6 +123,7 @@ class XFTestCase(TestCase):
                     self.fail(message if message is not None else
                               "Field %s does accept None" % (key))
 
+    @xf_deprecated("Use assertFieldOptional instead")
     def assertFieldOptionial(self, model_class_type, field_name, message=None):
         '''
 
