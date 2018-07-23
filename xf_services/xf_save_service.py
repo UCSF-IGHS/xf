@@ -27,11 +27,11 @@ class XFSaveService():
         if is_existing_object:
             old_instance = type(instance).objects.get(pk=instance.id)
             access_permissions = XFSecurityService.security_service.get_model_access_permissions(old_instance, XFSaveService.get_user())
-            if not access_permissions.can_do_edit_instance():
+            if not access_permissions.can_perform_edit_instance():
                 raise XFSaveException("Object not eligible to be saved")
         else:
             access_permissions = XFSecurityService.security_service.get_model_access_permissions(instance, XFSaveService.get_user())
-            if not access_permissions.can_do_new():
+            if not access_permissions.can_perform_new():
                 raise XFSaveException("Object not eligible to be created")
 
 
