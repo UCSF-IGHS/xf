@@ -38,6 +38,7 @@ class XFModelList(XFCrudAssetLoaderMixIn):
         self.create_default_field_list()
         self.list_title = None
         self.list_hint = None
+        self.paginate_by = 10
         self.foreign_key_name = None
         self.list_url = None
         self.search_hint = "Search for.."
@@ -102,7 +103,13 @@ class XFModelList(XFCrudAssetLoaderMixIn):
 
     def initialise_action_lists(self):
 
-        self.try_add_screen_action(XFUIAction('new', 'Create new', 'add', action_type=ACTION_NEW_INSTANCE, user=self.user))
+        list_is_a_child_list = self.foreign_key_name is not None
+        if not list_is_a_child_list:
+            self.try_add_screen_action(XFUIAction('new', 'Create new', 'add', action_type=ACTION_NEW_INSTANCE, user=self.user))
+        else:
+            self.try_add_screen_action(
+                XFUIAction('add_to', 'Add new', 'add', action_type=ACTION_NEW_INSTANCE, user=self.user))
+
         self.try_add_row_action(XFUIAction('edit', 'Edit', 'change', action_type=ACTION_ROW_INSTANCE, user=self.user))
         self.try_add_row_action(XFUIAction('delete', 'Delete', 'delete', action_type=ACTION_ROW_INSTANCE, user=self.user))
         self.try_add_row_action(XFUIAction('details', 'View details', 'view', action_type=ACTION_ROW_INSTANCE, use_ajax=True, user=self.user))
@@ -126,9 +133,10 @@ class XFModelList(XFCrudAssetLoaderMixIn):
         if XFSecurityService.security_service is not None:
             model_permission = XFSecurityService.security_service.get_model_access_permissions(
                 model=self.model, user=self.user, model_list=self)
-            action_method_name = 'can_do_' + action.action_name
-            can_do_method = getattr(model_permission, action_method_name, None)
-            action_allowed = can_do_method()
+            action_method_name = 'can_perform_' + action.action_name
+            can_perform_method = getattr(model_permission, action_method_name, None)
+            if can_perform_method is not None:
+                action_allowed = can_perform_method()
 
         else:
             action_method_name = 'can_do_' + action.action_name

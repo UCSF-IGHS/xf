@@ -69,6 +69,18 @@ class XFCrudURLBuilder:
                                            app_name=self.url_app_name, model_url_part=self.url_model_name),
                    name="%s_%s_%s" % (self.url_app_name, self.url_model_name, url_operation_name))
 
+    def get_new_add_to(self,
+                    url_operation_name="add_to",
+                    view_class_type=XFCreateView,
+                    form_class_type=XFModelForm,
+                    ):
+        return url(r'^%s/%s/new' % (self.url_app_name, self.url_model_name),
+                   view_class_type.as_view(model=self.model_type, form_class=form_class_type,
+                                           success_url="%s/%s/" % (self.url_app_name, self.url_model_name),
+                                           app_name=self.url_app_name, model_url_part=self.url_model_name),
+                   name="%s_%s_%s" % (self.url_app_name, self.url_model_name, url_operation_name))
+
+
     def get_relational_list_url(self,
                                 url_operation_name="overview",
                                 view_class_type=XFDetailView,

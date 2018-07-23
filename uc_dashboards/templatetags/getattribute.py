@@ -33,10 +33,10 @@ def get_can_do_action(value, action):
     if XFSecurityService.security_service is not None:
         model_permission = XFSecurityService.security_service.get_model_access_permissions(
             model=value, user=action.user)
-        action_method_name = 'can_do_' + action.action_name + "_instance"
-        can_do_method = getattr(model_permission, action_method_name, None)
-        if can_do_method is not None:
-            return can_do_method()
+        action_method_name = 'can_perform_' + action.action_name + "_instance"
+        can_perform_method = getattr(model_permission, action_method_name, None)
+        if can_perform_method is not None:
+            return can_perform_method()
         else:
             return True
 

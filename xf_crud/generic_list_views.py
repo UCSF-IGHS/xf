@@ -32,6 +32,9 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
             self.foreign_key_name = kwargs['foreign_key_name']
             self.list_class.foreign_key_name = self.foreign_key_name
 
+        if self.list_class is not None:
+            self.paginate_by = self.list_class.paginate_by
+
 
     def get_template_names(self):
 
