@@ -133,10 +133,10 @@ class XFModelList(XFCrudAssetLoaderMixIn):
         if XFSecurityService.security_service is not None:
             model_permission = XFSecurityService.security_service.get_model_access_permissions(
                 model=self.model, user=self.user, model_list=self)
-            action_method_name = 'can_do_' + action.action_name
-            can_do_method = getattr(model_permission, action_method_name, None)
-            if can_do_method is not None:
-                action_allowed = can_do_method()
+            action_method_name = 'can_perform_' + action.action_name
+            can_perform_method = getattr(model_permission, action_method_name, None)
+            if can_perform_method is not None:
+                action_allowed = can_perform_method()
 
         else:
             action_method_name = 'can_do_' + action.action_name
