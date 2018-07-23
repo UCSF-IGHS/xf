@@ -210,9 +210,10 @@ function postform(e, htmltarget, formtarget, posttarget, sourceElement) {
 
                 // If the XFAction has a next_url, we should find it, add the recently modified or created
                 // object ID, and load that page.
+                // The 0 is used for scenarios where pk is not known in advance, so the 0 will be replaced by the pk
                 var nextUrl = $(sourceElement.target).attr('data-next-url');
                 if (nextUrl)
-                    window.location = nextUrl.replace("0", data.pk);
+                    window.location = nextUrl.replace("/0/", "/" + data.pk + "/");
 
             }
         },
