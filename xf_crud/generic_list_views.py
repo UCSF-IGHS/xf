@@ -55,11 +55,14 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
 
             # Add the columns
             context['columns'] = []
-            for field in context['fields']:
-                try:
-                    context['columns'].append(self.model._meta.get_field(field).verbose_name.title())
-                except:
-                    context['columns'].append(field)
+            if self.list_class.custom_column_names is not None:
+                context['columns'] = self.list_class.custom_column_names
+            else:
+                for field in context['fields']:
+                    try:
+                        context['columns'].append(self.model._meta.get_field(field).verbose_name.title())
+                    except:
+                        context['columns'].append(field)
 
 
             # Add pre-set filters, if any
