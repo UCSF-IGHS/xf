@@ -44,6 +44,7 @@ class XFModelList(XFCrudAssetLoaderMixIn):
         self.search_hint = "Search for.."
         self.supported_crud_operations = ['add', 'change', 'delete', 'view', 'list']
         self.search_field = None
+        self.custom_column_names = None
         self.preset_filters = {
             'all': 'All',
         }
