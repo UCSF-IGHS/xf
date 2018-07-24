@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from xf_system.utilities.deprecated_decorator import xf_deprecated
+from xf.xf_system.utilities.deprecated_decorator import xf_deprecated
 
 
 class XFTestCase(TestCase):
