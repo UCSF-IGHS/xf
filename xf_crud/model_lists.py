@@ -142,7 +142,7 @@ class XFModelList(XFCrudAssetLoaderMixIn):
             action_method_name = 'can_do_' + action.action_name
             can_do_function = getattr(security_method_object, action_method_name, None)
             if can_do_function is not None:
-                action_allowed = can_do_function(action, self.user, model_list=self)
+                action_allowed = can_do_function(security_method_object, action, self.user)
 
         return action_allowed
 
