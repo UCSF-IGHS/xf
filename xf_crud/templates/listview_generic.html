@@ -41,12 +41,12 @@
 
             <div class="col-md-5">
             {% if preset_filter_list|length > 1 and preset_filter_list|length < 4 %}
-            <div class="btn-group">
-                {% for preset_filter_name, preset_filter_caption in preset_filter_list.items %}
-                    <a href="./{{ preset_filter_name }}" class="btn btn-info {% if preset_filter_name == preset_filter %} active {% endif %}" type="button">{{ preset_filter_caption  }}</a>
-                {% endfor %}
-            {% else %}
-
+                <div class="btn-group">
+                    {% for preset_filter_name, preset_filter_caption in preset_filter_list.items %}
+                        <a href="./{{ preset_filter_name }}" class="btn btn-info {% if preset_filter_name == preset_filter %} active {% endif %}" type="button">{{ preset_filter_caption  }}</a>
+                    {% endfor %}
+                </div>
+            {% elif preset_filter_list|length > 3 %}
                 <div class="btn-group">
 
                   {% if preset_filter|length == 0 %}
@@ -60,7 +60,6 @@
                           {% endfor %}
                       </button>
                   {% endif %}
-
                   <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
@@ -71,10 +70,8 @@
                       {% endfor %}
                   </ul>
                 </div>
-
-
             {% endif %}
-            </div>
+
             </div>
 
             <div class="nav navbar-right col-md-5">
