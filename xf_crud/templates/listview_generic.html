@@ -90,22 +90,24 @@
 
                     {% block object_list %}{% endblock %}
 
-                    <span class="current">Page {{ page_obj.number }} of {{ paginator.num_pages }}.</span>
+                    {% if paginator.num_pages %}
+                        <span class="current">Page {{ page_obj.number }} of {{ paginator.num_pages }}.</span>
 
-                    <ul class="pager">
-                        {% if page_obj.has_previous %}
-                            <li>
-                                <a href="{{ list_url }}?page={{ page_obj.previous_page_number }}&search_string={{ search_string }}"
-                                   class="mxlajax" html-target="ctxObjectList_{{ list_url_id }}">previous</a>
-                            </li>
-                        {% endif %}
-                        {% if page_obj.has_next %}
-                            <li>
-                                <a href="{{ list_url }}?page={{ page_obj.next_page_number }}&search_string={{ search_string }}"
-                                   class="mxlajax" html-target="ctxObjectList_{{ list_url_id }}">next</a>
-                            </li>
-                        {% endif %}
-                    </ul>
+                        <ul class="pager">
+                            {% if page_obj.has_previous %}
+                                <li>
+                                    <a href="{{ list_url }}?page={{ page_obj.previous_page_number }}&search_string={{ search_string }}"
+                                       class="mxlajax" html-target="ctxObjectList_{{ list_url_id }}">previous</a>
+                                </li>
+                            {% endif %}
+                            {% if page_obj.has_next %}
+                                <li>
+                                    <a href="{{ list_url }}?page={{ page_obj.next_page_number }}&search_string={{ search_string }}"
+                                       class="mxlajax" html-target="ctxObjectList_{{ list_url_id }}">next</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    {% endif %}
                 </div>
             </div>
         </div>
