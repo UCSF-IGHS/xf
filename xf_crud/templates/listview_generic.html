@@ -40,13 +40,38 @@
 
 
             <div class="col-md-5">
-            {% if preset_filter_list|length > 1 %}
-            <div class="btn-group">
-                {% for preset_filter_name, preset_filter_caption in preset_filter_list.items %}
-                    <a href="./{{ preset_filter_name }}" class="btn btn-info {% if preset_filter_name == preset_filter %} active {% endif %}" type="button">{{ preset_filter_caption  }}</a>
-                {% endfor %}
+            {% if preset_filter_list|length > 1 and preset_filter_list|length < 4 %}
+                <div class="btn-group">
+                    {% for preset_filter_name, preset_filter_caption in preset_filter_list.items %}
+                        <a href="./{{ preset_filter_name }}" class="btn btn-info {% if preset_filter_name == preset_filter %} active {% endif %}" type="button">{{ preset_filter_caption  }}</a>
+                    {% endfor %}
+                </div>
+            {% elif preset_filter_list|length > 3 %}
+                <div class="btn-group">
+
+                  {% if preset_filter|length == 0 %}
+                      <button type="button" class="btn btn-info">Filter</button>
+                  {% else %}
+                      <button type="button" class="btn btn-info">
+                          {% for preset_filter_name, preset_filter_caption in preset_filter_list.items %}
+                              {% if preset_filter_name == preset_filter %}
+                                  {{ preset_filter_caption }}
+                              {% endif %}
+                          {% endfor %}
+                      </button>
+                  {% endif %}
+                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                      {% for preset_filter_name, preset_filter_caption in preset_filter_list.items %}
+                        <li><a href="./{{ preset_filter_name }}">{{ preset_filter_caption  }}</a></li>
+                      {% endfor %}
+                  </ul>
+                </div>
             {% endif %}
-            </div>
+
             </div>
 
             <div class="nav navbar-right col-md-5">
