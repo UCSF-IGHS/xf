@@ -176,6 +176,10 @@ class XFListView(XFGenericListView, XFPermissionMixin, XFAjaxViewMixin):
 
         # Remove any actions for which the user does not have permissions
         # The action defines the permission required
+        self.list_class.row_link_action_list = context['row_link_action_list'] = \
+            [action for action in self.list_class.row_link_action_list if
+                self.user_has_model_permission(action.permission_required)]
+
         self.list_class.row_action_list = context['row_action_list'] = \
             [action for action in self.list_class.row_action_list if
                  self.user_has_model_permission(action.permission_required)]
