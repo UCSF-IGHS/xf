@@ -57,11 +57,20 @@ class XFModelList(XFCrudAssetLoaderMixIn):
         # Those that apply to a particular record – i.e. a row so Edit, Details, Delete
         # Those that don't apply to a record, but to a class – i.e. New
         # Search
+        self._row_link_action_list = []
+        self.row_link_default_action = None
         self._row_action_list = []
         self.row_default_action = None
         self._screen_actions = []
         self.screen_action_list = []
 
+    @property
+    def row_link_action_list(self):
+        return self._row_link_action_list
+
+    @row_link_action_list.setter
+    def row_link_action_list(self, value):
+        self._row_link_action_list = value
 
     @property
     def instance_action_list(self):
