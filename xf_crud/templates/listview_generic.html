@@ -28,18 +28,24 @@
 
     <div class="list-view">
         <div class="row-fluid">
-            <div class="col-md-2">
-                    {% for action in screen_actions %}
-                                <a class="btn btn-default {% if forloop.counter == 1 %} btn-primary  {% endif %} " {% if action.use_ajax %}data-toggle="modal"
-                                    data-target="#frmDlg" html-target="#frmDlgHtml" {% endif %}
-                                   {% if action.next_url %}data-next-url="{{ action.next_url }}" {% endif %}
-                                       href="{% url action.url_name%}?{{ new_initial_data }}">
-                                    {{ action.action_caption }}</a>
-                    {% endfor %}
-            </div>
+            {% if screen_actions|length > 0 %}
+                <div class="col-md-2">
+                        {% for action in screen_actions %}
 
+                                    <a class="btn btn-default {% if forloop.counter == 1 %} btn-primary  {% endif %} " {% if action.use_ajax %}data-toggle="modal"
+                                        data-target="#frmDlg" html-target="#frmDlgHtml" {% endif %}
+                                       {% if action.next_url %}data-next-url="{{ action.next_url }}" {% endif %}
+                                           href="{% url action.url_name%}?{{ new_initial_data }}">
+                                        {{ action.action_caption }}</a>
+                        {% endfor %}
+                </div>
+            {% endif %}
 
-            <div class="col-md-5">
+            {% if screen_actions|length > 0 %}
+                <div class="col-md-5">
+            {% else %}
+                <div class="col-md-7">
+            {% endif %}
             {% if preset_filter_list|length > 1 and preset_filter_list|length < 4 %}
                 <div class="btn-group">
                     {% for preset_filter_name, preset_filter_caption in preset_filter_list.items %}
@@ -115,24 +121,22 @@
 
                     {% block object_list %}{% endblock %}
 
-                    {% if paginator.num_pages > 0  %}
-                        <span class="current">Page {{ page_obj.number }} of {{ paginator.num_pages }}.</span>
+                    <span class="current">Page {{ page_obj.number }} of {{ paginator.num_pages }}.</span>
 
-                        <ul class="pager">
-                            {% if page_obj.has_previous %}
-                                <li>
-                                    <a href="{{ list_url }}?page={{ page_obj.previous_page_number }}&search_string={{ search_string }}"
-                                       class="mxlajax" html-target="ctxObjectList_{{ list_url_id }}">previous</a>
-                                </li>
-                            {% endif %}
-                            {% if page_obj.has_next %}
-                                <li>
-                                    <a href="{{ list_url }}?page={{ page_obj.next_page_number }}&search_string={{ search_string }}"
-                                       class="mxlajax" html-target="ctxObjectList_{{ list_url_id }}">next</a>
-                                </li>
-                            {% endif %}
-                        </ul>
-                    {% endif %}
+                    <ul class="pager">
+                        {% if page_obj.has_previous %}
+                            <li>
+                                <a href="{{ list_url }}?page={{ page_obj.previous_page_number }}&search_string={{ search_string }}"
+                                   class="mxlajax" html-target="ctxObjectList_{{ list_url_id }}">previous</a>
+                            </li>
+                        {% endif %}
+                        {% if page_obj.has_next %}
+                            <li>
+                                <a href="{{ list_url }}?page={{ page_obj.next_page_number }}&search_string={{ search_string }}"
+                                   class="mxlajax" html-target="ctxObjectList_{{ list_url_id }}">next</a>
+                            </li>
+                        {% endif %}
+                    </ul>
                 </div>
             </div>
         </div>
