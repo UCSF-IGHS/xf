@@ -6,6 +6,12 @@ from xf.uc_dashboards.models.perspective import Perspective
 from xf.uc_dashboards.models.tag import Tag
 from django.db.models.signals import post_save, post_init
 
+
+class GroupProfileManager(models.Manager):
+    def get_by_natural_key(self, group):
+        return self.get(group=group)
+
+
 class GroupProfile(models.Model):
     '''
     A group profile extends the normal Django group with extra fields. A 1:1 relationship exists here, and a
@@ -32,7 +38,7 @@ class GroupProfile(models.Model):
     )
 
     def save(self, *args, **kwargs):
-    #See https://stackoverflow.com/questions/6117373/django-userprofile-m2m-field-in-admin-error/6117457#6117457
+        # See https://stackoverflow.com/questions/6117373/django-userprofile-m2m-field-in-admin-error/6117457#6117457
 
         print("user profile saved")
         if not self.pk:
@@ -44,11 +50,18 @@ class GroupProfile(models.Model):
 
         super(GroupProfile, self).save(*args, **kwargs)
 
+    class Meta:
+        unique_together = (('group',),)
+
+    def natural_key(self):
+        return (self.group,)
+
 
 @receiver(post_save, sender=Group)
 def create_group_profile(sender, instance, created, **kwargs):
     if created:
         GroupProfile.objects.create(group=instance)
+
 
 @receiver(post_save, sender=Group)
 def save_group_profile(sender, instance, **kwargs):

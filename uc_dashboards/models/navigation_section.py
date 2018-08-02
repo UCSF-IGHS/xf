@@ -1,10 +1,18 @@
+import uuid
+
 from django.core.exceptions import ValidationError
 from django.db import models
 
 from xf.uc_dashboards.models.tag import Tag
 
 
+class NavigationSectionManager(models.Manager):
+    def get_by_natural_key(self, code):
+        return self.get(code=code)
+
+
 class NavigationSection(models.Model):
+    objects = NavigationSectionManager()
     caption = models.CharField(max_length=50)
     index = models.IntegerField(default=0)
     parent_section = models.ForeignKey(
@@ -13,8 +21,12 @@ class NavigationSection(models.Model):
     icon = models.CharField(
         max_length=50,
         blank=True)
-    index = models.IntegerField(default=0)
     tags = models.ManyToManyField(Tag, related_name='navigation_sections', blank=True)
+    code = models.CharField(max_length=50,
+                            default=uuid.uuid4,
+                            help_text='User-defined code for this template',
+                            null=False,
+                            blank=False)
 
     def clean(self):
         if self.parent_section:
@@ -23,3 +35,6 @@ class NavigationSection(models.Model):
 
     def __str__(self):
         return self.caption
+
+    class Meta:
+        unique_together = ('code',)

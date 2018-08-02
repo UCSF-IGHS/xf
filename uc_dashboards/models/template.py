@@ -1,9 +1,18 @@
+import uuid
+
 from django.db import models
 
 from xf.uc_dashboards.models.tag import Tag
 
 
+class TemplateManager(models.Manager):
+    def get_by_natural_key(self, code):
+        return self.get(code=code)
+
+
 class Template(models.Model):
+    objects = TemplateManager()
+
     PAGE = '1'
     DASHBOARD = '2'
     WIDGET = '3'
@@ -25,6 +34,12 @@ class Template(models.Model):
     )
 
     name = models.CharField(max_length=50)
+    code = models.CharField(max_length=50,
+                            help_text='User-defined code for this template',
+                            blank=False,
+                            null=False
+                            )
+
     template_type = models.CharField(
         max_length=2,
         choices=TEMPLATE_TYPE_CHOICES,
@@ -47,6 +62,8 @@ class Template(models.Model):
         default=False,
         help_text='Specifies whether this is a built-in template, which should not be modified')
 
+    class Meta:
+        unique_together = ('code',)
 
     def __str__(self):
         return self.name

@@ -6,7 +6,15 @@ from xf.uc_dashboards.models.tag import Tag
 from xf.uc_dashboards.models.template import Template
 
 
+class WidgetManager(models.Manager):
+
+    def get_by_natural_key(self, slug):
+        return self.get(slug=slug)
+
+
 class Widget(models.Model):
+    objects = WidgetManager()
+
     PIE = '1'
     TABLE = '2'
     TILES = '3'
@@ -47,6 +55,7 @@ class Widget(models.Model):
     slug = models.SlugField(
         max_length=150,
         help_text='This field identifies part of the URL that makes it friendly')
+
     permissions_to_view = models.ManyToManyField(
         Group, blank=True,
         help_text='Specifies the groups that may view this widget')
@@ -106,12 +115,12 @@ class Widget(models.Model):
     view_details_url = models.CharField(
         max_length=255,
         blank=True,
-        help_text = 'A URL specifiying a details link. This could be another dashboard, or a JasperReport. '
+        help_text='A URL specifiying a details link. This could be another dashboard, or a JasperReport. '
     )
     code = models.CharField(
         max_length=255,
         blank=True,
-        help_text = 'A code that can be used to identify this widget. The code will be displayed in the "About this widget" box.'
+        help_text='A code that can be used to identify this widget. The code will be displayed in the "About this widget" box.'
     )
     user_description = HTMLField(
         blank=True,
@@ -122,3 +131,6 @@ class Widget(models.Model):
         related_name='widgets',
         blank=True
     )
+
+    class Meta:
+        unique_together = ('slug',)

@@ -4,7 +4,14 @@ from xf.uc_dashboards.models.page import Page
 from xf.uc_dashboards.models.tag import Tag
 
 
+class PerspectiveManager(models.Manager):
+
+    def get_by_natural_key(self, code):
+        return self.get(code=code)
+
+
 class Perspective(models.Model):
+    objects = PerspectiveManager()
     name = models.CharField(
         max_length=255,
         help_text='The name of this perspective.')
@@ -28,6 +35,9 @@ class Perspective(models.Model):
         blank=True,
         help_text='Any comment.')
     tags = models.ManyToManyField(Tag, related_name='perspectives', blank=True)
+
+    class Meta:
+        unique_together = ('code',)
 
     def __str__(self):
         return self.name

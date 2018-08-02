@@ -9,8 +9,13 @@ from xf.uc_dashboards.models.page_type import PageType
 from xf.uc_dashboards.models.tag import Tag
 from xf.uc_dashboards.models.template import Template
 
+class PageManager(models.Manager):
+
+    def get_by_natural_key(self, slug):
+        return self.get(slug=slug)
 
 class Page(models.Model):
+    objects = PageManager()
     title = models.CharField(
         max_length=150,
         help_text='Title of the page. Also appears in the navigation bar.')
@@ -22,7 +27,8 @@ class Page(models.Model):
 
     slug = models.SlugField(
         max_length=150,
-        help_text='This field identifies part of the URL that makes it friendly')
+        help_text='This field identifies part of the URL that makes it friendly'
+    )
     permissions_to_view = models.ManyToManyField(
         Group, blank=True,
         help_text='Specifies the groups that may view this page')
@@ -52,7 +58,7 @@ class Page(models.Model):
 
     show_filter_bar = models.BooleanField(blank=True, help_text='Check this field if you want to display the filter bar. Otherwise it will be hidden.')
     index = models.IntegerField(blank=True, default=0, help_text='Pages with a lower index will be added to the navigation tree before those with a higher index. This is used to sort the navigation tree.')
-    tags = models.ManyToManyField(Tag, related_name='pages', blank=True)
+    tags = models.ManyToManyField(Tag, related_name='pages', blank=True, null=True)
     page_status = models.ForeignKey(
         PageStatus, blank=True, null=True,
         related_name='page_status',
@@ -72,7 +78,8 @@ class Page(models.Model):
         help_text='Any custom attributes, which may be forwarded to the template. Must be a Python dictionary format.'
     )
 
-
+    class Meta:
+        unique_together=('slug',)
 
     def __str__(self):
         return self.title
