@@ -19,7 +19,7 @@ class PageType(models.Model):
                             )
 
     class Meta:
-            unique_together = ('code',)
+        unique_together = (('code',),)
 
     def __str__(self):
         return self.name

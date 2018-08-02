@@ -63,7 +63,7 @@ class Template(models.Model):
         help_text='Specifies whether this is a built-in template, which should not be modified')
 
     class Meta:
-        unique_together = ('code',)
+        unique_together = (('code',),)
 
     def __str__(self):
         return self.name

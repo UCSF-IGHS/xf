@@ -37,4 +37,4 @@ class NavigationSection(models.Model):
         return self.caption
 
     class Meta:
-        unique_together = ('code',)
+        unique_together = (('code',),)

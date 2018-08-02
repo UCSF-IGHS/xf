@@ -37,7 +37,7 @@ class Perspective(models.Model):
     tags = models.ManyToManyField(Tag, related_name='perspectives', blank=True)
 
     class Meta:
-        unique_together = ('code',)
+        unique_together = (('code',),)
 
     def __str__(self):
         return self.name

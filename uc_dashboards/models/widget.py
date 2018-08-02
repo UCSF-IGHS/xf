@@ -133,4 +133,4 @@ class Widget(models.Model):
     )
 
     class Meta:
-        unique_together = ('slug',)
+        unique_together = (('slug',),)

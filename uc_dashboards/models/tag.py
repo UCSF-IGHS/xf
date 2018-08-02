@@ -11,7 +11,7 @@ class Tag(models.Model):
     text = models.CharField(max_length=255, blank=False, null=False)
 
     class Meta:
-        unique_together=('text',)
+        unique_together = (('text',),)
 
     def __str__(self):
         return self.text

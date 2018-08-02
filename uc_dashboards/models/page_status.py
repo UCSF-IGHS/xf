@@ -8,6 +8,7 @@ class PageStatusManager(models.Manager):
     def get_by_natural_key(self, code):
         return self.get(code=code)
 
+
 class PageStatus(models.Model):
     objects = PageStatusManager()
     code = models.CharField(
@@ -20,8 +21,8 @@ class PageStatus(models.Model):
         max_length=150,
         help_text='Name of the status.')
 
-
     class Meta:
-        unique_together = ('code',)
+        unique_together = (('code',),)
+
     def __str__(self):
         return self.name
