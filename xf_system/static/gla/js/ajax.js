@@ -199,13 +199,21 @@ function postform(e, htmltarget, formtarget, posttarget, sourceElement) {
                 if(typeof window.mxlSuccess == 'function') {
                     // function exists, so we can now call it
                     mxlSuccess();
+
+                    // Refresh the object list for the link that triggered this action
+                    object_list = $(sourceElement.target).attr('object_list');
+                    if (object_list)
+                        if ($(object_list).length > 0)
+                            RefreshObjectListForDiv($(object_list));
+
                 }
 
                 // If the XFAction has a next_url, we should find it, add the recently modified or created
                 // object ID, and load that page.
+                // The 0 is used for scenarios where pk is not known in advance, so the 0 will be replaced by the pk
                 var nextUrl = $(sourceElement.target).attr('data-next-url');
                 if (nextUrl)
-                    window.location = nextUrl.replace("0", data.pk);
+                    window.location = nextUrl.replace("/0/", "/" + data.pk + "/");
 
             }
         },

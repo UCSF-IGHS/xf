@@ -32,6 +32,9 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
             self.foreign_key_name = kwargs['foreign_key_name']
             self.list_class.foreign_key_name = self.foreign_key_name
 
+        if self.list_class is not None:
+            self.paginate_by = self.list_class.paginate_by
+
 
     def get_template_names(self):
 
@@ -52,11 +55,14 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
 
             # Add the columns
             context['columns'] = []
-            for field in context['fields']:
-                try:
-                    context['columns'].append(self.model._meta.get_field(field).verbose_name.title())
-                except:
-                    context['columns'].append(field)
+            if self.list_class.custom_column_names is not None:
+                context['columns'] = self.list_class.custom_column_names
+            else:
+                for field in context['fields']:
+                    try:
+                        context['columns'].append(self.model._meta.get_field(field).verbose_name.title())
+                    except:
+                        context['columns'].append(field)
 
 
             # Add pre-set filters, if any
@@ -166,8 +172,14 @@ class XFListView(XFGenericListView, XFPermissionMixin, XFAjaxViewMixin):
 
     def set_list_allowable_operations(self, context):
 
+        ## TO DO XF3: UPDATE WITH NEW SECURITY SYSTEM ----->>>>> MUCH BETTER!!!
+
         # Remove any actions for which the user does not have permissions
         # The action defines the permission required
+        self.list_class.row_link_action_list = context['row_link_action_list'] = \
+            [action for action in self.list_class.row_link_action_list if
+                self.user_has_model_permission(action.permission_required)]
+
         self.list_class.row_action_list = context['row_action_list'] = \
             [action for action in self.list_class.row_action_list if
                  self.user_has_model_permission(action.permission_required)]

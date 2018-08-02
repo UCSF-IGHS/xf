@@ -295,7 +295,7 @@
         <!-- footer content -->
         <footer>
             <div class="pull-right">
-                &copy; some institution  |  Design by Gentellella by <a href="https://colorlib.com">Colorlib</a> | Powered by XF Framework from the <a href="http://globalhealthsciences.ucsf.edu">University of California, San Francisco</a> <img src="https://identity.ucsf.edu/sites/identity.ucsf.edu/files/wysiwyg/logo_expression_1.jpg" style="height: 16px">.
+                 &copy; {% if footer_details and footer_details|length > 0 %} <a href="{{ footer_details|lookup:'institution_web_site' }}" target="_blank"> {{ footer_details|lookup:'institution_name' }}</a> | {% endif %} Design by Gentellella by <a href="https://colorlib.com" target="_blank">Colorlib</a> | Powered by XF Framework from the <a href="http://globalhealthsciences.ucsf.edu" target="_blank">University of California, San Francisco</a> <img src="{% static "gla/images/ucsf_logo.jpg" %}" style="height: 24px">
             </div>
             <div class="clearfix"></div>
         </footer>
