@@ -25,6 +25,10 @@ class XFCrudMixin(object):
         pass
 
     def add_urls_to_actions_for_list_class(self, list_class, context):
+        for action in list_class.row_link_action_list:
+            action.url_name = self._process_url_name_with_app_and_model_name(action.url_name)
+            if action.next_url is not None:
+                action.next_url = reverse(action.next_url, args=(0,))
 
         for action in list_class.row_action_list:
             action.url_name = self._process_url_name_with_app_and_model_name(action.url_name)
@@ -47,6 +51,7 @@ class XFCrudMixin(object):
             list_class.row_default_action.url_name = \
                 self._process_url_name_with_app_and_model_name(list_class.row_default_action.url_name)
 
+        context['row_link_action_list'] = list_class.row_link_action_list
         context['row_action_list'] = list_class.row_action_list
         context['screen_actions'] = list_class.screen_actions
         context['screen_action_list'] = list_class.screen_action_list
