@@ -20,10 +20,16 @@ def create_user_profile_on_post_init(sender, instance, **kwargs):
         instance.profile = UserProfile()
 
 
+class UserProfileManager(models.Manager):
+    def get_by_natural_key(self, user):
+        return self.get(user=user)
+
+
 class UserProfile(models.Model):
     '''
     Extends the standard user profile
     '''
+    objects = UserProfileManager()
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     tags = models.ManyToManyField(
         Tag,
@@ -36,8 +42,8 @@ class UserProfile(models.Model):
     )
     default_perspective = models.ForeignKey(
         Perspective,
-        null= True,
-        blank = True,
+        null=True,
+        blank=True,
         help_text='The default perspective for this user. May be null if the user only has one perspective from their groups. If the perspective is not part of a group, the default perspective will be added.')
     comment = models.TextField(
         blank=True,
@@ -45,7 +51,7 @@ class UserProfile(models.Model):
     )
 
     def save(self, *args, **kwargs):
-    #See https://stackoverflow.com/questions/6117373/django-userprofile-m2m-field-in-admin-error/6117457#6117457
+        # See https://stackoverflow.com/questions/6117373/django-userprofile-m2m-field-in-admin-error/6117457#6117457
 
         print("user profile saved")
         if not self.pk:
@@ -56,3 +62,9 @@ class UserProfile(models.Model):
                 pass
 
         super(UserProfile, self).save(*args, **kwargs)
+
+    class Meta:
+        unique_together = (('user',),)
+
+    def natural_key(self):
+        return (self.user,)
