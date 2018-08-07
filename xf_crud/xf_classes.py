@@ -32,12 +32,14 @@ class XFUIAction:
                  column_index = None,
                  user = None,
                  next_url = None,
-                 default_action = False
+                 default_action = False,
+                 related_field = None
                  ):
         self.use_ajax = use_ajax
         self.permission_required = permission_required
         self.action_caption = action_caption
         self.action_name = action_name
+        self.related_field = related_field
         if url_name is None:
             self.url_name = "%s_%s_" + action_name
         else:
