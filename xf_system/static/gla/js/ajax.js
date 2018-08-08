@@ -152,6 +152,7 @@ function ajaxFormLoaded(htmltarget, formtarget, posttarget, sourceElement) {
                         return false;
                     }
                 });
+                return false;
             }
         });
     }
