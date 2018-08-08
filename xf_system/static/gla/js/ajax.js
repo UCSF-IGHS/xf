@@ -129,7 +129,7 @@ function ajaxFormLoaded(htmltarget, formtarget, posttarget, sourceElement) {
             var form = document.getElementById("frmAjax");
             if (!form.checkValidity()){
                 $("#btnDlgSubmit").val("Try again");
-                $("#btnDlgSubmit").removeClass("disabled");
+                $("#btnDlgSubmit").removeAttr("disabled");
                 var panels = $("#frmAjax").find(".panel-collapse");
                 panels.each(function (indeX, nodE) {
                     var has_errors = 0;
@@ -226,18 +226,16 @@ function postform(e, htmltarget, formtarget, posttarget, sourceElement) {
             //alert(JSON.stringify(data));
             alert("Could not connect to the server. Your request could not be proccessed.")
             $("#btnDlgSubmit").val("Try again");
-            $("#btnDlgSubmit").removeClass("disabled");
+            $("#btnDlgSubmit").removeAttr("disabled");
         },
         complete: function() {
             $("#btnDlgSubmit").val("Done");
-            $("#btnDlgSubmit").removeClass("disabled");
+            $("#btnDlgSubmit").removeAttr("disabled");
         }
     });
 }
 
 function getform(e) {
-
-
     var form = $("#" + e.id);
     var url = CreateAJAXURL(form.attr('action'));
     var htmlTarget = form.attr('html-target');
