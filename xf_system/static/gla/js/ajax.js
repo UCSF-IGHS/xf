@@ -115,18 +115,21 @@ function ajaxFormLoaded(htmltarget, formtarget, posttarget, sourceElement) {
         $(".mxlform").submit(function (event) {
             // Executed when the form is being submitted
             event.preventDefault();
+
             postform(event, htmltarget, formtarget, posttarget, sourceElement);
+
+            $("#btnDlgSubmit", this)
+                  .val("Please wait")
+                  .attr('disabled', 'disabled');
+            return true;
         });
 
         // Disable the submit button once clicked
-        //alert($("#btnDlgSumbit").text());
         $("#btnDlgSubmit").click(function () {
             var form = document.getElementById("frmAjax");
-            if (form.checkValidity()){
-                $("#btnDlgSubmit").val("Please wait");
-                $("#btnDlgSubmit").enabled = false;
-            }else{
+            if (!form.checkValidity()){
                 $("#btnDlgSubmit").val("Try again");
+                $("#btnDlgSubmit").removeAttr("disabled");
                 var panels = $("#frmAjax").find(".panel-collapse");
                 panels.each(function (indeX, nodE) {
                     var has_errors = 0;
@@ -149,6 +152,7 @@ function ajaxFormLoaded(htmltarget, formtarget, posttarget, sourceElement) {
                         return false;
                     }
                 });
+                return false;
             }
         });
     }
@@ -222,13 +226,16 @@ function postform(e, htmltarget, formtarget, posttarget, sourceElement) {
             //alert(JSON.stringify(data));
             alert("Could not connect to the server. Your request could not be proccessed.")
             $("#btnDlgSubmit").val("Try again");
+            $("#btnDlgSubmit").removeAttr("disabled");
+        },
+        complete: function() {
+            $("#btnDlgSubmit").val("Done");
+            $("#btnDlgSubmit").removeAttr("disabled");
         }
     });
 }
 
 function getform(e) {
-
-
     var form = $("#" + e.id);
     var url = CreateAJAXURL(form.attr('action'));
     var htmlTarget = form.attr('html-target');
