@@ -221,15 +221,30 @@ function postform(e, htmltarget, formtarget, posttarget, sourceElement) {
 
             }
         },
-        error:function(data) {
-            //var errors = jQuery.parseJSON(data);
-            //alert(JSON.stringify(data));
-            alert("Could not connect to the server. Your request could not be proccessed.")
+        error:function(jqXHR, exception) {
             $("#btnDlgSubmit").val("Try again");
             $("#btnDlgSubmit").removeAttr("disabled");
+
+            var msg = '';
+            if (jqXHR.status === 0) {
+                msg = 'Could not connect. Verify network connection.';
+            } else if (jqXHR.status == 404) {
+                msg = 'Requested page not found. [404]';
+            } else if (jqXHR.status == 500) {
+                msg = 'Internal server error [500].';
+            } else if (exception === 'parsererror') {
+                msg = 'Requested JSON parse failed.';
+            } else if (exception === 'timeout') {
+                msg = 'Request timed out.';
+            } else if (exception === 'abort') {
+                msg = 'Ajax request aborted.';
+            } else {
+                msg = 'Uncaught error has occured.';
+            }
+            alert(msg);
         },
         complete: function() {
-            $("#btnDlgSubmit").val("Done");
+            $("#btnDlgSubmit").val("Try again");
             $("#btnDlgSubmit").removeAttr("disabled");
         }
     });
