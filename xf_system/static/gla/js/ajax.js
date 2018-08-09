@@ -221,15 +221,30 @@ function postform(e, htmltarget, formtarget, posttarget, sourceElement) {
 
             }
         },
-        error:function(data) {
-            //var errors = jQuery.parseJSON(data);
-            //alert(JSON.stringify(data));
-            alert("Could not connect to the server. Your request could not be proccessed.")
+        error:function(jqXHR, exception) {
             $("#btnDlgSubmit").val("Try again");
             $("#btnDlgSubmit").removeAttr("disabled");
+
+            var msg = '';
+            if (jqXHR.status === 0) {
+                msg = 'We are sorry, we could not connect to the server. Please check your internet connection.';
+            } else if (jqXHR.status == 404) {
+                msg = 'We are sorry, your request could not be completed.';
+            } else if (jqXHR.status == 500) {
+                msg = 'We are sorry, something went wrong on the server, and we could not connect to it.';
+            } else if (exception === 'parsererror') {
+                msg = 'We are sorry, the server sent something that we could not understand.';
+            } else if (exception === 'timeout') {
+                msg = 'We are sorry, your request has timed out, try again.';
+            } else if (exception === 'abort') {
+                msg = 'We are sorry, your request has been aborted, try again.';
+            } else {
+                msg = 'We are sorry, an unknown error has occurred.';
+            }
+            alert(msg);
         },
         complete: function() {
-            $("#btnDlgSubmit").val("Done");
+            $("#btnDlgSubmit").val("Try again");
             $("#btnDlgSubmit").removeAttr("disabled");
         }
     });
