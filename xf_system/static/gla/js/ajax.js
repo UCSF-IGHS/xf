@@ -227,19 +227,19 @@ function postform(e, htmltarget, formtarget, posttarget, sourceElement) {
 
             var msg = '';
             if (jqXHR.status === 0) {
-                msg = 'Could not connect. Verify network connection.';
+                msg = 'We are sorry, we could not connect to the server. Please check your internet connection.';
             } else if (jqXHR.status == 404) {
-                msg = 'Requested page not found. [404]';
+                msg = 'We are sorry, your request could not be completed.';
             } else if (jqXHR.status == 500) {
-                msg = 'Internal server error [500].';
+                msg = 'We are sorry, something went wrong on the server, and we could not connect to it.';
             } else if (exception === 'parsererror') {
-                msg = 'Requested JSON parse failed.';
+                msg = 'We are sorry, the server sent something that we could not understand.';
             } else if (exception === 'timeout') {
-                msg = 'Request timed out.';
+                msg = 'We are sorry, your request has timed out, try again.';
             } else if (exception === 'abort') {
-                msg = 'Ajax request aborted.';
+                msg = 'We are sorry, your request has been aborted, try again.';
             } else {
-                msg = 'Uncaught error has occured.';
+                msg = 'We are sorry, an unknown error has occurred.';
             }
             alert(msg);
         },
