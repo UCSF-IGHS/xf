@@ -36,8 +36,8 @@ td.clickable-cell { cursor: pointer; }
 .navbar-right a.dropdown-toggle {
     margin-right: 0px;
 }
-a.dropdown-toggle span {
-    color: white;
+a.dropdown-toggle span.caret {
+    color: #ffffff;
 }
 
 table a.btn-link {

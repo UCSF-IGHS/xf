@@ -1,11 +1,9 @@
-from django.conf import settings
-from django.http import HttpResponseRedirect, response
-from django.utils import translation
+import ast
+
 from django.utils.translation import get_language
 
 
 class XFNavigationViewMixin(object):
-
     site_settings = None
 
     """
@@ -36,7 +34,7 @@ class XFNavigationViewMixin(object):
         """
 
         # Create a navigation_tree list in the context if it doesn't exist already
-        #if not self.context.has_key("navigation_trees"):
+        # if not self.context.has_key("navigation_trees"):
         # PYTHON3 UPDATE
         if not "navigation_trees" in self.context:
             self.context["navigation_trees"] = {}
@@ -49,6 +47,9 @@ class XFNavigationViewMixin(object):
 
         self.context["site_title"] = XFNavigationViewMixin.site_settings.site_title
         self.context["custom_theme"] = XFNavigationViewMixin.site_settings.custom_theme
+        if XFNavigationViewMixin.site_settings.footer_details is not None:
+            self.context["footer_details"] = ast.literal_eval(
+                "{" + XFNavigationViewMixin.site_settings.footer_details + "}")
         if hasattr(self, "lc"):
             self.context["site_title"] = XFNavigationViewMixin.site_settings.translate("site_title", self.lc)
         else:
