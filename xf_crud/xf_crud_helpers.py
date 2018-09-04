@@ -92,6 +92,12 @@ def crudurl(appname: object, modelname: object, model_type: object, form_class_t
                                                                            success_url="%s/%s/" % (appname, modelname),
                                                                            app_name=appname, model_url_part=modelname),
                 name="%s_%s_new" % (appname, modelname)))
+        urls.append(
+            url(r'^%s/%s/add_to' % (appname, modelname), XFCreateView.as_view(model=model_type, form_class=form_class_type,
+                                                                           success_url="%s/%s/" % (appname, modelname),
+                                                                           app_name=appname, model_url_part=modelname),
+                name="%s_%s_add_to" % (appname, modelname))
+        )
 
     if 'change' in list_class.supported_crud_operations:
         urls.append(url(r'^%s/%s/(?P<pk>[-\w]+)/edit' % (appname, modelname),

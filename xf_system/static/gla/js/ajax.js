@@ -115,18 +115,21 @@ function ajaxFormLoaded(htmltarget, formtarget, posttarget, sourceElement) {
         $(".mxlform").submit(function (event) {
             // Executed when the form is being submitted
             event.preventDefault();
+
             postform(event, htmltarget, formtarget, posttarget, sourceElement);
+
+            $("#btnDlgSubmit", this)
+                  .val("Please wait")
+                  .attr('disabled', 'disabled');
+            return true;
         });
 
         // Disable the submit button once clicked
-        //alert($("#btnDlgSumbit").text());
         $("#btnDlgSubmit").click(function () {
             var form = document.getElementById("frmAjax");
-            if (form.checkValidity()){
-                $("#btnDlgSubmit").val("Please wait");
-                $("#btnDlgSubmit").enabled = false;
-            }else{
+            if (!form.checkValidity()){
                 $("#btnDlgSubmit").val("Try again");
+                $("#btnDlgSubmit").removeAttr("disabled");
                 var panels = $("#frmAjax").find(".panel-collapse");
                 panels.each(function (indeX, nodE) {
                     var has_errors = 0;
@@ -199,28 +202,54 @@ function postform(e, htmltarget, formtarget, posttarget, sourceElement) {
                 if(typeof window.mxlSuccess == 'function') {
                     // function exists, so we can now call it
                     mxlSuccess();
+
+                    // Refresh the object list for the link that triggered this action
+                    object_list = $(sourceElement.target).attr('object_list');
+                    if (object_list)
+                        if ($(object_list).length > 0)
+                            RefreshObjectListForDiv($(object_list));
+
                 }
 
                 // If the XFAction has a next_url, we should find it, add the recently modified or created
                 // object ID, and load that page.
+                // The 0 is used for scenarios where pk is not known in advance, so the 0 will be replaced by the pk
                 var nextUrl = $(sourceElement.target).attr('data-next-url');
                 if (nextUrl)
-                    window.location = nextUrl.replace("0", data.pk);
+                    window.location = nextUrl.replace("/0/", "/" + data.pk + "/");
 
             }
         },
-        error:function(data) {
-            //var errors = jQuery.parseJSON(data);
-            //alert(JSON.stringify(data));
-            alert("Could not connect to the server. Your request could not be proccessed.")
+        error:function(jqXHR, exception) {
             $("#btnDlgSubmit").val("Try again");
+            $("#btnDlgSubmit").removeAttr("disabled");
+
+            var msg = '';
+            if (jqXHR.status === 0) {
+                msg = 'We are sorry, we could not connect to the server. Please check your internet connection.';
+            } else if (jqXHR.status == 404) {
+                msg = 'We are sorry, your request could not be completed.';
+            } else if (jqXHR.status == 500) {
+                msg = 'We are sorry, something went wrong on the server, and we could not connect to it.';
+            } else if (exception === 'parsererror') {
+                msg = 'We are sorry, the server sent something that we could not understand.';
+            } else if (exception === 'timeout') {
+                msg = 'We are sorry, your request has timed out, try again.';
+            } else if (exception === 'abort') {
+                msg = 'We are sorry, your request has been aborted, try again.';
+            } else {
+                msg = 'We are sorry, an unknown error has occurred.';
+            }
+            alert(msg);
+        },
+        complete: function() {
+            $("#btnDlgSubmit").val("Try again");
+            $("#btnDlgSubmit").removeAttr("disabled");
         }
     });
 }
 
 function getform(e) {
-
-
     var form = $("#" + e.id);
     var url = CreateAJAXURL(form.attr('action'));
     var htmlTarget = form.attr('html-target');
