@@ -37,7 +37,6 @@ class XFUIAction:
                  default_action = False,
                  related_field = None,
                  url = None,
-                 default_action = False
                  ):
         self.use_ajax = use_ajax
         self.permission_required = permission_required
