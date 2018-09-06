@@ -75,3 +75,46 @@
     {% endwith %}
 
 {% endif %}
+
+{% if action.action_type == 6 %}
+    {# Link #}
+
+    {% if object|candoaction:action == True%}
+
+    <a  {% if action.use_ajax %}
+        data-toggle="modal"
+        data-target="#frmDlg"
+        html-target="#frmDlgHtml"
+        object_list="#ctxObjectList_{{ list_url_id }}"
+    {% endif %}
+            {% if action.next_url %}
+        data-next-url="{{ action.next_url }}"
+            {% endif %}
+        href="{{ action.url }}"
+        class="{{ css_class }} {% if action.default_action %} btn-success{% endif %}"
+    >
+        {{ caption }}
+
+    </a>
+
+    {% endif %}
+{% endif %}
+
+{% if action.action_type == 7 %}
+    {# Link in new window #}
+
+    {% if object|candoaction:action == True%}
+
+    <a
+            {% if action.next_url %}
+        data-next-url="{{ action.next_url }}"
+            {% endif %}
+        href="{{ action.url }}" target="_blank"
+        class="{{ css_class }} {% if action.default_action %} btn-success{% endif %}"
+    >
+        {{ caption }}
+
+    </a>
+
+    {% endif %}
+{% endif %}
