@@ -61,15 +61,16 @@
                         </li>
 
                     </ul>
-                    <div class="nav navbar-right panel_toolbox">
+
+                    <div class="nav pull-right panel_toolbox">
 
                         {% for action in action_buttons %}
-                            {% include 'renderer_snippets/xf_action_item_renderer.html' with action=action css_class="btn btn-default btn-small" caption=action.action_caption %}
+                            {% include 'renderer_snippets/xf_action_item_renderer.html' with action=action css_class="btn btn-default btn-sm" caption=action.action_caption %}
                         {% endfor %}
 
                         {% if action_list|length > 0 %}
-                        <div class="btn-group  navbar-right">
-                            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                        <div class="btn-group  pull-right">
+                            <a class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" href="#">
                                 Actions
                                 <span class="caret"></span>
                             </a>
@@ -83,6 +84,15 @@
                         </div>
                         {% endif %}
                     </div>
+                    <!--
+                    <div class="btn-group  btn-group-sm pull-left" style="margin-left: 60px;">
+                        <button class="btn btn-dark" type="button">Demographics</button>
+                        <button class="btn btn-dark" type="button">Registration</button>
+                        <button class="btn btn-dark" type="button">Medical</button>
+                        <button class="btn btn-dark" type="button">Contacts</button>
+                        <button class="btn btn-dark" type="button">Social</button>
+                    </div>
+                    -->
 
                     <div class="clearfix"></div>
                 </div>

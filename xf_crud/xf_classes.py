@@ -12,6 +12,8 @@ ACTION_ROW_INSTANCE = 2
 ACTION_LIST_ENTITIES = 3
 ACTION_PREINITIALISED_RELATED_INSTANCE = 4
 ACTION_RELATED_INSTANCE = 5
+ACTION_OPEN_LINK = 6
+ACTION_OPEN_LINK_NEW_WINDOW = 7
 
 
 
@@ -33,13 +35,15 @@ class XFUIAction:
                  user = None,
                  next_url = None,
                  default_action = False,
-                 related_field = None
+                 related_field = None,
+                 url = None,
                  ):
         self.use_ajax = use_ajax
         self.permission_required = permission_required
         self.action_caption = action_caption
         self.action_name = action_name
         self.related_field = related_field
+        self.url = url
         if url_name is None:
             self.url_name = "%s_%s_" + action_name
         else:
