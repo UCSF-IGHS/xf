@@ -26,34 +26,40 @@
                 {% for field in fields %}
                     <td>
                         {% with forloop.counter as column_index %}
-                            {% with row_action_list|column_action:column_index as column_action %}
-                                {% if column_action != None %}
-                                    {% include 'renderer_snippets/xf_action_item_renderer.html' with action=column_action css_class="btn-link" caption=object|getattribute:field %}
-                                {% else %}
-                                    {{ object|getattribute:field }}
-                                {% endif %}
+                            {% with row_action_list|column_action:column_index as row_column_action %}
+                               {% with row_link_action_list|column_action:column_index as row_link_column_action %}
+                                    {% if row_column_action != None %}
+                                        {% include 'renderer_snippets/xf_action_item_renderer.html' with action=row_column_action css_class="btn-link" caption=object|getattribute:field %}
+                                    {% else %}
+                                        {% if row_link_column_action != None %}
+                                            {% include 'renderer_snippets/xf_action_item_renderer.html' with action=row_link_column_action css_class="btn-link" caption=object|getattribute:field %}
+                                        {% else %}
+                                            {{ object|getattribute:field }}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endwith %}
                             {% endwith %}
                         {% endwith %}
                     </td>
                 {% endfor %}
                 {% if row_action_list|length > 0 %}
-                <td class="action-column">
-                <div class="btn-group action-column pull-right">
-                        <a class="btn btn-mini btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-                            Actions
-                            <span class="caret"></span>
-                        </a>
-                    <ul class="dropdown-menu small">
-                    {% for action in row_action_list %}
-                        {% if action.column_index == None %}
-                            <li>
-                            {% include 'renderer_snippets/xf_action_item_renderer.html' with action=action css_class="btn-link" caption=action.action_caption %}
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                    </ul>
-                </div>
-                </td>
+                    <td class="action-column">
+                        <div class="btn-group action-column pull-right">
+                                <a class="btn btn-mini btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                                    Actions
+                                    <span class="caret"></span>
+                                </a>
+                            <ul class="dropdown-menu small">
+                            {% for action in row_action_list %}
+                                {% if action.column_index == None %}
+                                    <li>
+                                    {% include 'renderer_snippets/xf_action_item_renderer.html' with action=action css_class="btn-link" caption=action.action_caption %}
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </td>
                 {% endif %}
             </tr>
         {% endfor %}

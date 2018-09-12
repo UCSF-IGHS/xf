@@ -1,7 +1,6 @@
 [
   {
     "model": "auth.user",
-    "pk": 1,
     "fields": {
       "password": "pbkdf2_sha256$36000$1UTNqD9dbP4V$X0aM7UMgtAgv86a2bEw2io3up0SVQVQ/JOD3LzeTWik=",
       "last_login": "2018-04-20T17:52:28.008Z",
@@ -19,263 +18,298 @@
   },
   {
     "model": "uc_dashboards.tag",
-    "pk": 2,
     "fields": {
-      "text": "built-in"
+        "text": "built-in"
     }
-  },
-  {
+},
+{
     "model": "uc_dashboards.navigationsection",
-    "pk": 1,
     "fields": {
-      "caption": "Welcome",
-      "caption_en_gb": "Welcome",
-      "caption_pt": null,
-      "caption_nl": null,
-      "parent_section": null,
-      "icon": "",
-      "index": 0,
-      "tags": []
+        "caption": "Welcome",
+        "caption_en_gb": "Welcome",
+        "caption_pt": null,
+        "caption_nl": null,
+        "index": 0,
+        "parent_section": null,
+        "icon": "",
+        "code": "navigation-section-1",
+        "tags": []
     }
-  },
-  {
+},
+{
     "model": "uc_dashboards.navigationsection",
-    "pk": 2,
     "fields": {
-      "caption": "default-child",
-      "caption_en_gb": "default-child",
-      "caption_pt": null,
-      "caption_nl": null,
-      "parent_section": 1,
-      "icon": "",
-      "index": 0,
-      "tags": []
+        "caption": "default-child",
+        "caption_en_gb": "default-child",
+        "caption_pt": null,
+        "caption_nl": null,
+        "index": 0,
+        "parent_section": [
+            "navigation-section-1"
+        ],
+        "icon": "",
+        "code": "navigation-section-2",
+        "tags": []
     }
-  },
-  {
-    "model": "uc_dashboards.template",
-    "pk": 1,
-    "fields": {
-      "name": "Basic Page Template",
-      "template_type": "1",
-      "template_source": "1",
-      "template_path": "built-in/t_basic_page.html",
-      "template_text": "",
-      "built_in": true,
-      "tags": [
-        2
-      ]
-    }
-  },
-  {
-    "model": "uc_dashboards.template",
-    "pk": 2,
-    "fields": {
-      "name": "Landing Page with Login",
-      "template_type": "1",
-      "template_source": "1",
-      "template_path": "built-in/t_landing_page_with_login.html",
-      "template_text": "",
-      "built_in": true,
-      "tags": [
-        2
-      ]
-    }
-  },
-  {
-    "model": "uc_dashboards.template",
-    "pk": 3,
-    "fields": {
-      "name": "Sample dashboard",
-      "template_type": "2",
-      "template_source": "1",
-      "template_path": "dashboards/t_dashboard_overview.html",
-      "template_text": "",
-      "built_in": true,
-      "tags": [
-        2
-      ]
-    }
-  },
-  {
+},
+{
     "model": "uc_dashboards.pagesection",
-    "pk": 1,
     "fields": {
-      "title": "page-section",
-      "title_en_gb": "page-section",
-      "title_pt": null,
-      "title_nl": null
+        "title": "page-section",
+        "title_en_gb": "page-section",
+        "title_pt": null,
+        "title_nl": null,
+        "code": "page-section-1"
     }
-  },
-  {
+},
+{
+    "model": "uc_dashboards.template",
+    "fields": {
+        "name": "Basic Page Template",
+        "code": "template-1",
+        "template_type": "1",
+        "template_source": "1",
+        "template_path": "built-in/t_basic_page.html",
+        "template_text": "",
+        "built_in": true,
+        "tags": [
+            [
+                "built-in"
+            ]
+        ]
+    }
+},
+{
+    "model": "uc_dashboards.template",
+    "fields": {
+        "name": "Landing Page with Login",
+        "code": "template-2",
+        "template_type": "1",
+        "template_source": "1",
+        "template_path": "built-in/t_landing_page_with_login.html",
+        "template_text": "",
+        "built_in": true,
+        "tags": [
+            [
+                "built-in"
+            ]
+        ]
+    }
+},
+{
+    "model": "uc_dashboards.template",
+    "fields": {
+        "name": "Sample dashboard",
+        "code": "template-3",
+        "template_type": "2",
+        "template_source": "1",
+        "template_path": "dashboards/t_dashboard_overview.html",
+        "template_text": "",
+        "built_in": true,
+        "tags": [
+            [
+                "built-in"
+            ]
+        ]
+    }
+},
+{
     "model": "uc_dashboards.pagetype",
-    "pk": 1,
     "fields": {
-      "name": "Dashboard",
-      "url_section": "dashboards"
+        "name": "Dashboard",
+        "url_section": "dashboards",
+        "code": "pagetype-1"
     }
-  },
-  {
+},
+{
     "model": "uc_dashboards.pagetype",
-    "pk": 2,
     "fields": {
-      "name": "Basic page",
-      "url_section": "pages"
+        "name": "Basic page",
+        "url_section": "pages",
+        "code": "pagetype-2"
     }
-  },
-  {
+},
+{
     "model": "uc_dashboards.page",
-    "pk": 1,
     "fields": {
-      "title": "Home Page",
-      "title_en_gb": "Home Page",
-      "title_pt": null,
-      "title_nl": null,
-      "main_title": "Home Page",
-      "main_title_en_gb": "Home Page",
-      "main_title_pt": null,
-      "main_title_nl": null,
-      "text": "<h1>Welcome</h1>\r\n\r\n<p>If you are seeing this, you have successfully set up XF Viz.</p>\r\n\r\n<p>This is a default home page.</p>\r\n\r\n<p>It uses a basic page template.</p>",
-      "text_en_gb": "<h1>Welcome</h1>\r\n\r\n<p>If you are seeing this, you have successfully set up XF Viz.</p>\r\n\r\n<p>This is a default home page.</p>\r\n\r\n<p>It uses a basic page template.</p>",
-      "text_pt": "",
-      "text_nl": "",
-      "slug": "home",
-      "allow_anonymous": false,
-      "section": 1,
-      "navigation_section": 1,
-      "parent_page": null,
-      "page_id": null,
-      "template": 1,
-      "page_type": 1,
-      "show_filter_bar": false,
-      "index": 0,
-      "page_status": null,
-      "data_sources": null,
-      "data_sources_en_gb": null,
-      "data_sources_pt": null,
-      "data_sources_nl": null,
-      "about": null,
-      "about_en_gb": null,
-      "about_pt": null,
-      "about_nl": null,
-      "widgets": "",
-      "custom_attributes": "",
-      "permissions_to_view": [],
-      "tags": []
+        "title": "Home Page",
+        "title_en_gb": "Home Page",
+        "title_pt": null,
+        "title_nl": null,
+        "main_title": "Home Page",
+        "main_title_en_gb": "Home Page",
+        "main_title_pt": null,
+        "main_title_nl": null,
+        "text": "<h1>Welcome</h1>\r\n\r\n<p>If you are seeing this, you have successfully set up XF Viz.</p>\r\n\r\n<p>This is a default home page.</p>\r\n\r\n<p>It uses a basic page template.</p>",
+        "text_en_gb": "<h1>Welcome</h1>\r\n\r\n<p>If you are seeing this, you have successfully set up XF Viz.</p>\r\n\r\n<p>This is a default home page.</p>\r\n\r\n<p>It uses a basic page template.</p>",
+        "text_pt": "",
+        "text_nl": "",
+        "slug": "home",
+        "allow_anonymous": false,
+        "section": [
+            "page-section-1"
+        ],
+        "navigation_section": [
+            "navigation-section-1"
+        ],
+        "parent_page": null,
+        "page_id": null,
+        "template": [
+            "template-1"
+        ],
+        "page_type": [
+            "pagetype-1"
+        ],
+        "show_filter_bar": false,
+        "index": 0,
+        "page_status": null,
+        "data_sources": null,
+        "data_sources_en_gb": null,
+        "data_sources_pt": null,
+        "data_sources_nl": null,
+        "about": null,
+        "about_en_gb": null,
+        "about_pt": null,
+        "about_nl": null,
+        "widgets": "",
+        "custom_attributes": "",
+        "permissions_to_view": [],
+        "tags": []
     }
-  },
-  {
+},
+{
     "model": "uc_dashboards.page",
-    "pk": 2,
     "fields": {
-      "title": "Login",
-      "title_en_gb": "Login",
-      "title_pt": null,
-      "title_nl": null,
-      "main_title": "Login here",
-      "main_title_en_gb": "Login here",
-      "main_title_pt": null,
-      "main_title_nl": null,
-      "text": "<h2>Welcome to XF</h2>\r\n\r\n<p>This is the default page that will be shown to users who have not yet logged on to this site.</p>\r\n\r\n<p>The URL for this page is set in <code>LOGIN_URL</code> in settings.</p>\r\n\r\n<p>If users browse here while logged on, the log on window on the right will not be shown.</p>",
-      "text_en_gb": "<h2>Welcome to XF</h2>\r\n\r\n<p>This is the default page that will be shown to users who have not yet logged on to this site.</p>\r\n\r\n<p>The URL for this page is set in <code>LOGIN_URL</code> in settings.</p>\r\n\r\n<p>If users browse here while logged on, the log on window on the right will not be shown.</p>",
-      "text_pt": "",
-      "text_nl": "",
-      "slug": "login",
-      "allow_anonymous": true,
-      "section": 1,
-      "navigation_section": null,
-      "parent_page": null,
-      "page_id": null,
-      "template": 2,
-      "page_type": 1,
-      "show_filter_bar": false,
-      "index": 0,
-      "page_status": null,
-      "data_sources": null,
-      "data_sources_en_gb": null,
-      "data_sources_pt": null,
-      "data_sources_nl": null,
-      "about": null,
-      "about_en_gb": null,
-      "about_pt": null,
-      "about_nl": null,
-      "widgets": "",
-      "custom_attributes": "",
-      "permissions_to_view": [],
-      "tags": [
-        2
-      ]
+        "title": "Login",
+        "title_en_gb": "Login",
+        "title_pt": null,
+        "title_nl": null,
+        "main_title": "Login here",
+        "main_title_en_gb": "Login here",
+        "main_title_pt": null,
+        "main_title_nl": null,
+        "text": "<h2>Welcome to XF</h2>\r\n\r\n<p>This is the default page that will be shown to users who have not yet logged on to this site.</p>\r\n\r\n<p>The URL for this page is set in <code>LOGIN_URL</code> in settings.</p>\r\n\r\n<p>If users browse here while logged on, the log on window on the right will not be shown.</p>",
+        "text_en_gb": "<h2>Welcome to XF</h2>\r\n\r\n<p>This is the default page that will be shown to users who have not yet logged on to this site.</p>\r\n\r\n<p>The URL for this page is set in <code>LOGIN_URL</code> in settings.</p>\r\n\r\n<p>If users browse here while logged on, the log on window on the right will not be shown.</p>",
+        "text_pt": "",
+        "text_nl": "",
+        "slug": "login",
+        "allow_anonymous": true,
+        "section": [
+            "page-section-1"
+        ],
+        "navigation_section": null,
+        "parent_page": null,
+        "page_id": null,
+        "template": [
+            "template-2"
+        ],
+        "page_type": [
+            "pagetype-1"
+        ],
+        "show_filter_bar": false,
+        "index": 0,
+        "page_status": null,
+        "data_sources": null,
+        "data_sources_en_gb": null,
+        "data_sources_pt": null,
+        "data_sources_nl": null,
+        "about": null,
+        "about_en_gb": null,
+        "about_pt": null,
+        "about_nl": null,
+        "widgets": "",
+        "custom_attributes": "",
+        "permissions_to_view": [],
+        "tags": [
+            [
+                "built-in"
+            ]
+        ]
     }
-  },
-  {
+},
+{
     "model": "uc_dashboards.page",
-    "pk": 3,
     "fields": {
-      "title": "Sample dashboard",
-      "title_en_gb": "Sample dashboard",
-      "title_pt": null,
-      "title_nl": null,
-      "main_title": "This is a sample dashboard",
-      "main_title_en_gb": "This is a sample dashboard",
-      "main_title_pt": null,
-      "main_title_nl": null,
-      "text": "",
-      "text_en_gb": "",
-      "text_pt": "",
-      "text_nl": "",
-      "slug": "sample-dashboard",
-      "allow_anonymous": false,
-      "section": 1,
-      "navigation_section": 1,
-      "parent_page": null,
-      "page_id": null,
-      "template": 3,
-      "page_type": 1,
-      "show_filter_bar": false,
-      "index": 0,
-      "page_status": null,
-      "data_sources": null,
-      "data_sources_en_gb": null,
-      "data_sources_pt": null,
-      "data_sources_nl": null,
-      "about": null,
-      "about_en_gb": null,
-      "about_pt": null,
-      "about_nl": null,
-      "widgets": "",
-      "custom_attributes": "",
-      "permissions_to_view": [],
-      "tags": []
+        "title": "Sample dashboard",
+        "title_en_gb": "Sample dashboard",
+        "title_pt": null,
+        "title_nl": null,
+        "main_title": "This is a sample dashboard",
+        "main_title_en_gb": "This is a sample dashboard",
+        "main_title_pt": null,
+        "main_title_nl": null,
+        "text": "",
+        "text_en_gb": "",
+        "text_pt": "",
+        "text_nl": "",
+        "slug": "sample-dashboard",
+        "allow_anonymous": false,
+        "section": [
+            "page-section-1"
+        ],
+        "navigation_section": [
+            "navigation-section-1"
+        ],
+        "parent_page": null,
+        "page_id": null,
+        "template": [
+            "template-3"
+        ],
+        "page_type": [
+            "pagetype-1"
+        ],
+        "show_filter_bar": false,
+        "index": 0,
+        "page_status": null,
+        "data_sources": null,
+        "data_sources_en_gb": null,
+        "data_sources_pt": null,
+        "data_sources_nl": null,
+        "about": null,
+        "about_en_gb": null,
+        "about_pt": null,
+        "about_nl": null,
+        "widgets": "",
+        "custom_attributes": "",
+        "permissions_to_view": [],
+        "tags": []
     }
-  },
-  {
+},
+{
     "model": "uc_dashboards.perspective",
-    "pk": 1,
     "fields": {
-      "name": "Default perspective",
-      "name_en_gb": "Default perspective",
-      "name_pt": null,
-      "name_nl": null,
-      "code": "default-perspective",
-      "slug": "default-perspective",
-      "default_page": 1,
-      "comment": "",
-      "pages": [
-        1,
-        3
-      ],
-      "tags": []
+        "name": "Default perspective",
+        "name_en_gb": "Default perspective",
+        "name_pt": null,
+        "name_nl": null,
+        "code": "default-perspective",
+        "slug": "default-perspective",
+        "default_page": [
+            "home"
+        ],
+        "comment": "",
+        "pages": [
+            [
+                "home"
+            ],
+            [
+                "sample-dashboard"
+            ]
+        ],
+        "tags": []
     }
-  },
-  {
+},
+{
     "model": "uc_dashboards.userprofile",
-    "pk": 1,
     "fields": {
-      "user": 1,
-      "preset_filters": "",
-      "default_perspective": null,
-      "comment": "",
-      "tags": []
+        "user": [
+            "admin"
+        ],
+        "preset_filters": "",
+        "default_perspective": null,
+        "comment": "",
+        "tags": []
     }
-  }
+}
 ]
+

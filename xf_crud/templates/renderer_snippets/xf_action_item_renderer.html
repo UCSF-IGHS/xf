@@ -11,6 +11,7 @@
         data-toggle="modal"
         data-target="#frmDlg"
         html-target="#frmDlgHtml"
+        object_list="#ctxObjectList_{{ list_url_id }}"
     {% endif %}
             {% if action.next_url %}
         data-next-url="{{ action.next_url }}"
@@ -31,6 +32,7 @@
         data-toggle="modal"
         data-target="#frmDlg"
         html-target="#frmDlgHtml"
+        object_list="#ctxObjectList_{{ list_url_id }}"
     {% endif %}
             {% if action.next_url %}
         data-next-url="{{ action.next_url }}"
@@ -46,12 +48,13 @@
 
 {% if action.action_type == 5 %}
     {# Related instance #}
-    {% with object|getattribute:field as related_object %}
+     {% with object|getattribute:action.related_field as related_object %}
         {% if related_object %}
             <a  {% if action.use_ajax %}
                 data-toggle="modal"
                 data-target="#frmDlg"
                 html-target="#frmDlgHtml"
+                object_list="#ctxObjectList_{{ list_url_id }}"
             {% endif %}
                     {% if action.next_url %}
                 data-next-url="{{ action.next_url }}"
