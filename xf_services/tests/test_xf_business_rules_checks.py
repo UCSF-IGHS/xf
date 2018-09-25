@@ -92,7 +92,7 @@ class XFBusinessRulesChecksTests(XFServicesTestCase):
             XFBusinessRulesChecks.ensure_model_is_in_states(model, invalid_model_states,
                                                            'Should throw invalid model state exception if model is not in provided states')
 
-    def test_ensure_user_has_model_permission_check_raises_xf_permission_denied_exception_if_user_lucks_permission(self):
+    def test_ensure_user_has_model_permission_check_raises_xf_permission_denied_exception_if_user_lacks_permission(self):
 
         test_data = self._generate_model_state_test_data()
 
@@ -108,8 +108,8 @@ class XFBusinessRulesChecksTests(XFServicesTestCase):
         test_data = self._generate_model_state_test_data()
         user = test_data['user']
         model = test_data['model_class']
-        model_permission = test_data['model_delete_permission']
-        self._assign_permission(user, model_permission)
+        permission = test_data['model_delete_permission'].codename
+        user.assign_model_permission(permission, model)
 
         try:
             XFBusinessRulesChecks.ensure_user_has_model_permission(model, user, 'delete')
