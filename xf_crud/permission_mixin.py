@@ -69,7 +69,7 @@ class XFPermissionMixin(object):
             self.model = self.Meta.model
         else:
             self.model = self.get_form_class().Meta.model
-        if not self.request.user.has_perm("%s_%s" % (permission, self.model.__name__.lower())):
+        if not self.request.user.has_perm("%s.%s_%s" % (self.model._meta.app_label, permission, self.model.__name__.lower())):
             return False
         self.context[permission] = True
         return True
@@ -104,7 +104,7 @@ class XFPermissionMixin(object):
         """
         Ensures a user has a certain permission for a certain model.
         """
-        if not self.request.user.has_perm("%s_%s" % (permission, model_name.lower())):
+        if not self.request.user.has_perm("%s.%s_%s" % (self.model._meta.app_label, permission, model_name.lower())):
             raise PermissionDenied
 
     @staticmethod

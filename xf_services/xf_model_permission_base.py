@@ -31,12 +31,7 @@ class XFModelPermissionBase:
 
 
     def can_perform_add_to(self):
-        try:
-            self.security_service.ensure_user_has_model_permission(self.model, self.user, 'add')
-        except:
-            return False
-
-        return True
+        return self.can_perform_new()
 
     def can_perform_edit(self):
         try:
@@ -46,12 +41,7 @@ class XFModelPermissionBase:
         return True
 
     def can_perform_edit_instance(self):
-        try:
-            self.security_service.ensure_user_has_model_permission(self.model, self.user, 'change')
-        except:
-            return False
-
-        return True
+        return self.can_perform_edit()
 
     def can_perform_delete(self):
         try:
@@ -62,12 +52,7 @@ class XFModelPermissionBase:
         return True
 
     def can_perform_delete_instance(self):
-        try:
-            self.security_service.ensure_user_has_model_permission(self.model, self.user, 'delete')
-        except:
-            return False
-
-        return True
+        return self.can_perform_delete()
 
     def can_perform_details(self):
         try:
@@ -78,12 +63,7 @@ class XFModelPermissionBase:
         return True
 
     def can_perform_details_instance(self):
-        try:
-            self.security_service.ensure_user_has_model_permission(self.model, self.user, 'view')
-        except:
-            return False
-
-        return True
+        return self.can_perform_details()
 
     def can_perform_list(self):
         try:
