@@ -399,7 +399,8 @@
         {% endblock %}
 
     });
-
+    <!-- make select2 search box focusable in modal window -->
+    $.fn.modal.Constructor.prototype.enforceFocus = function() {};
 
 </script>
 {% block extrajs %}{% endblock %}
