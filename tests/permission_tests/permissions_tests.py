@@ -5,6 +5,7 @@ from django.test import TestCase, RequestFactory
 from tokenize import String
 
 from xf.uc_dashboards.models import Page
+from xf.xf_crud.model_forms import XFModelForm
 from xf.xf_crud.permission_mixin import XFPermissionMixin
 
 
@@ -27,6 +28,11 @@ class XFPermissionsTestCase(TestCase):
             class Meta:
                 model = Page
 
+        class TestForm(XFModelForm):
+            class Meta:
+                model = Page
+                fields = '__all__'
+
         test_data['model_class'] = Page
         test_data['model_instance'] = Page.objects.first()
         test_data['permission_mixin_class'] = TestClassExtendsMixin
@@ -41,6 +47,9 @@ class XFPermissionsTestCase(TestCase):
             codename='delete_page',
             defaults={'name': "Can delete page"},
         )
+
+        test_data['model_form'] = TestForm
+        test_data['model_form_instance'] = TestForm()
 
         return test_data
 
