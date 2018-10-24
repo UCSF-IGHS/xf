@@ -5,13 +5,9 @@ from django.db.models import QuerySet, Model
 
 class XFAutoCompleteView(autocomplete.Select2QuerySetView):
 
-    def _process_forwarded_parameters(self):
-        self._set_model_from_model_name()
-        self._set_model_field_name()
-
     def get_queryset(self) -> QuerySet:
 
-        self._process_forwarded_parameters()
+        self.process_forwarded_parameters()
 
         if self.model is None:
             return Model.objects.none()
@@ -19,15 +15,20 @@ class XFAutoCompleteView(autocomplete.Select2QuerySetView):
         if not self.request.user.is_authenticated:
             return self.model.objects.none()
 
-        queryset = self.model.objects.all()
+        self.queryset = self.model.objects.all()
+        search_string = self.q
 
-        if self.q:
+        if search_string:
             kwargs = {
-                '{0}__{1}'.format(self.model_field_name, 'istartswith'): self.q,
+                '{0}__{1}'.format(self.model_field_name, 'istartswith'): search_string,
             }
-            queryset = queryset.filter(**kwargs)
+            self.queryset = self.queryset.filter(**kwargs)
 
-        return queryset
+        return self.queryset
+
+    def process_forwarded_parameters(self):
+        self._set_model_from_model_name()
+        self._set_model_field_name()
 
     def _set_model_from_model_name(self):
 

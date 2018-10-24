@@ -15,7 +15,7 @@ class AutoCompleteViewTestCase(XFPermissionsTestCase):
             "_user_search_field": "username"
         }
 
-        view._process_forwarded_parameters()
+        view.process_forwarded_parameters()
 
         self.assertEqual(view.model, User, 'Expected model to be User')
         self.assertEqual(view.model_field_name, 'username', "Expected the search model_field_name to be 'username'")
