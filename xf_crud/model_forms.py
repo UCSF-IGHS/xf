@@ -161,9 +161,9 @@ class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
         """
 
         if self.instance.pk is None:
-            return False
+            return True
 
-        return True
+        return False
 
 
     def prepare_form_for_save(self, instance):
