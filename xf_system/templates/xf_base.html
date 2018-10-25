@@ -21,6 +21,7 @@
 
     <!-- jQuery -->
     <script src="{% static "gla/vendors/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "autocomplete_light/jquery.init.js" %}"></script>
 
 
     <!-- Internal uh AJAX Library -->
@@ -361,6 +362,11 @@
 <script src="{% static "gla/vendors/datatables.net-scroller/js/datatables.scroller.min.js" %}"></script>
 <script src="{% static "gla/vendors/select2/dist/js/select2.full.min.js" %}"></script>
 
+<!-- auto complete select2 -->
+<script src="{% static "autocomplete_light/autocomplete.init.js" %}"></script>
+<script src="{% static "autocomplete_light/jquery.post-setup.js" %}"></script>
+<script src="{% static "autocomplete_light/forward.js" %}"></script>
+<script src="{% static "autocomplete_light/select2.js" %}"></script>
 
 <!-- bootstrap-datetimepicker -->
 <script src="{% static "gla/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js" %}"></script>
@@ -399,7 +405,8 @@
         {% endblock %}
 
     });
-
+    <!-- make select2 search box focusable in modal window -->
+    $.fn.modal.Constructor.prototype.enforceFocus = function() {};
 
 </script>
 {% block extrajs %}{% endblock %}
