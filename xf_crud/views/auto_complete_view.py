@@ -41,7 +41,7 @@ class XFAutoCompleteView(autocomplete.Select2QuerySetView):
         model_name = None
 
         for key, value in self.forwarded.items():
-            if key.endswith('_model'):
+            if key.endswith('model'):
                 model_name = value
                 self.forwarded.pop(key)
                 break
@@ -55,7 +55,7 @@ class XFAutoCompleteView(autocomplete.Select2QuerySetView):
     def _set_model_field_name(self):
 
         for key, value in self.forwarded.items():
-            if key.endswith('_search_field'):
+            if key.endswith('search_field'):
                 self.model_field_name = value
                 self.forwarded.pop(key)
                 break
