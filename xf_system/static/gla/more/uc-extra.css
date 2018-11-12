@@ -329,3 +329,9 @@ body {
 .action-column {
     margin-right: 0;
 }
+
+/** Multiple-select allow height stretch  **/
+.select2-selection--multiple {
+    height: auto;
+    width: inherit;
+}
