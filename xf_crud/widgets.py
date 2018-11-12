@@ -52,6 +52,8 @@ class MissingTextInput(widgets.TextInput):
 
 
 class XFDatePickerInput(widgets.DateInput):
+    template_name = "widgets/date_input.html"
+
     def __init__(self, attrs=None, format='%Y-%m-%d'):
         attrs = {'class': 'date-field datepicker'}
         super().__init__(attrs, format)

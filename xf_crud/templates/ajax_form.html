@@ -5,10 +5,26 @@
 {% block content_main %}
 
     <script>
+        function setAs(value) {
+            return value;
+        }
+
         $(document).ready(function () {
 
             // Date picker
-            $(".datepicker").datetimepicker({format: 'YYYY-MM-DD'});
+            $(".datepicker").datetimepicker({
+                format: "YYYY-MM-DD",
+                widgetPositioning: {
+                    horizontal: 'right',
+                    vertical: 'auto'
+                },
+                showTodayButton: setAs(true),
+                showClear: setAs(true),
+                showClose: setAs(true)
+            });
+            $('.btn').click(function() {
+                $(".datepicker", $(this).closest(".input-group")).focus();
+            });
         });
 
         if (typeof crud_form_loaded == 'function') {

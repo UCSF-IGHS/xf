@@ -1,0 +1,6 @@
+<div class="input-group date">
+    <input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %} />
+    <span class="input-group-addon btn">
+          <span class="glyphicon-calendar glyphicon"></span>
+    </span>
+</div>
