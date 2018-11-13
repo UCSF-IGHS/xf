@@ -40,6 +40,7 @@ class MissingTextInput(widgets.TextInput):
 
         self.blank_checked_initially = not is_new_entity
         self.blank_text = blank_text
+        self.is_date_picker = is_date_picker
         if is_date_picker:
             attrs = {'class': 'date-field datepicker'}
         super().__init__(attrs)
@@ -48,6 +49,7 @@ class MissingTextInput(widgets.TextInput):
         context = self.get_context(name, value, attrs)
         context["widget"]["blank_checked_initially"] = self.blank_checked_initially
         context["widget"]["blank_text"] = self.blank_text
+        context["widget"]["is_date_picker"] = self.is_date_picker
         return self._render(self.template_name, context, renderer)
 
 

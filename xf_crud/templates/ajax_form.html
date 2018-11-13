@@ -11,6 +11,11 @@
 
         $(document).ready(function () {
 
+            // Monday is the first day of the week
+            moment.lang('en', {
+              week: { dow: 1 }
+            });
+
             // Date picker
             $(".datepicker").datetimepicker({
                 format: "YYYY-MM-DD",
