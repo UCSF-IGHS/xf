@@ -54,6 +54,7 @@
     <link href="{% static "gla/vendors/bootstrap-multiselect/dist/css/bootstrap-multiselect.css" %}" rel="stylesheet">
     <script src="{% static "gla/vendors/bootstrap-multiselect/dist/js/bootstrap-multiselect.js" %}"></script>
 
+    <link href="{% static "gla/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" %}" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="{% static "gla/build/css/custom.min.css" %}" rel="stylesheet">
@@ -397,6 +398,33 @@
 
 <script type="text/javascript">
     $(function () {
+
+        function setAs(value) {
+            return value;
+        }
+
+        $(document).ready(function () {
+
+            // Monday is the first day of the week
+            moment.locale('en', {
+              week: { dow: 1 }
+            });
+
+            // Date picker
+            $(".datepicker").datetimepicker({
+                format: "YYYY-MM-DD",
+                widgetPositioning: {
+                    horizontal: 'auto',
+                    vertical: 'auto'
+                },
+                showTodayButton: setAs(true),
+                showClear: setAs(true),
+                showClose: setAs(true)
+            });
+            $('.btn').click(function() {
+                $(".datepicker", $(this).closest(".input-group")).focus();
+            });
+        });
 
         //bindAjax(); // uhih - defined in ajax.js
         setTimeout(bindAjax, 0);

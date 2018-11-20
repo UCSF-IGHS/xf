@@ -5,10 +5,31 @@
 {% block content_main %}
 
     <script>
+        function setAs(value) {
+            return value;
+        }
+
         $(document).ready(function () {
 
+            // Monday is the first day of the week
+            moment.locale('en', {
+              week: { dow: 1 }
+            });
+
             // Date picker
-            $(".datepicker").datetimepicker({format: 'YYYY-MM-DD'});
+            $(".datepicker").datetimepicker({
+                format: "YYYY-MM-DD",
+                widgetPositioning: {
+                    horizontal: 'auto',
+                    vertical: 'auto'
+                },
+                showTodayButton: setAs(true),
+                showClear: setAs(true),
+                showClose: setAs(true)
+            });
+            $('.btn').click(function() {
+                $(".datepicker", $(this).closest(".input-group")).focus();
+            });
         });
 
         if (typeof crud_form_loaded == 'function') {

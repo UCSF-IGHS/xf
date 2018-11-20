@@ -1,0 +1,12 @@
+<div class="input-group date" style="margin-bottom:unset">
+    <input type="{{ widget.type }}" name="{{ widget.name }}"
+            {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}
+            {% if widget.value == None %}
+            {% if widget.blank_checked_initially %} disabled {% endif %}
+            {% endif %}
+            {% include "django/forms/widgets/attrs.html" %} />
+    <span name="{{ widget.name }}_btn" id="id_{{ widget.name }}_btn"
+            class="input-group-addon btn {% if widget.value == None %}{% if widget.blank_checked_initially %} disabled {% endif %}{% endif %}">
+          <span class="glyphicon-calendar glyphicon"></span>
+    </span>
+</div>

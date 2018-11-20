@@ -437,16 +437,19 @@ function CreateEmbedURL(url) {
 function UnknownCheckBoxChange(checkbox) {
 
     var inputField = $("#" + $(checkbox).attr('xf_blank_control'));
+    var datePickerBtn = $("#" + $(checkbox).attr('xf_datepicker_button'));
     if( $(checkbox).is(':checked') ) {
         //alert(inputField);
         inputField.val("")
         //inputField.prop('required',false);
         inputField.prop('disabled',true);
+        datePickerBtn.addClass('disabled');
     }
     else {
         inputField.val("")
         //inputField.prop('required',true);
         inputField.prop('disabled',false);
+        datePickerBtn.removeClass('disabled');
     }
 }
 

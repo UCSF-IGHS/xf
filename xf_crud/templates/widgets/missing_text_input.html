@@ -1,9 +1,13 @@
-<input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %}
+{% if widget.is_date_picker %}
+    {% include "widgets/date_input.html" %}
+{% else %}
+    <input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %}
        value="{{ widget.value|stringformat:'s' }}"{% endif %}
         {% if widget.value == None %}
         {% if widget.blank_checked_initially %} disabled {% endif %}
         {% endif %}
         {% include "django/forms/widgets/attrs.html" %} />
+{% endif %}
 <div class="checkbox">
     <label>
         <input type="checkbox" class="flat xf-unknown-checkbox"
@@ -11,6 +15,7 @@
                checked
                {% endif %}
                name="{{ widget.name }}_blank" id="id_{{ widget.name }}_blank"
+                {% if widget.is_date_picker %} xf_datepicker_button="id_{{ widget.name }}_btn" {% endif %}
                xf_blank_control="id_{{ widget.name }}"> {{ widget.blank_text }}
     </label>
 </div>
