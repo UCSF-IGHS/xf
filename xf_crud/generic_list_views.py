@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.views.generic import ListView, FormView
 
 from xf.xf_crud.ajax_mixins import XFAjaxViewMixin
-from xf.xf_crud.mixins import XFCrudMixin
+from xf.xf_crud.mixins import XFCrudMixin, XFExportMixin
 from xf.xf_crud.model_lists import XFModelList
 from xf.xf_crud.permission_mixin import XFPermissionMixin
 from xf.xf_system.views import XFNavigationViewMixin
@@ -12,7 +12,7 @@ import uuid
 
 
 
-class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
+class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin, XFExportMixin):
 
     paginate_by = 10
     generic = False
@@ -133,6 +133,9 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
             self.list_class.kwargs = kwargs
 
         self.list_class.prepare_actions()
+
+        if self.request.GET.get('format') is not None:
+            return self.get_formatted_content()
 
         return super(XFGenericListView, self).get(request, *args, **kwargs)
 

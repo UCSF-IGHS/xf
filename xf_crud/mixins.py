@@ -1,7 +1,13 @@
+import csv
+from datetime import datetime
+from django.http import HttpResponse, StreamingHttpResponse
+from django.template.defaultfilters import lower
 from django.urls import reverse_lazy, reverse
 
 
 #from xf.xf_crud.xf_classes import XFUIBuilder
+from io import StringIO, BytesIO
+from pytz import unicode
 
 
 class XFCrudMixin(object):
@@ -100,3 +106,43 @@ class XFCrudMixin(object):
     def get_model_name_for_crud_view(self):
         return self.get_form_class().Meta.model.__name__.lower()
 
+
+class XFExportMixin(object):
+
+    def get_formatted_content(self):
+        response_format = self.request.GET.get('format')
+
+        if response_format == 'csv':
+            complete_field_list = []
+            for field in self.model._meta.fields:
+                complete_field_list.append(field.name)
+
+            export_data = self.list_class.get_queryset(self.search_string, self.model, "").\
+                values_list(*complete_field_list)
+
+            def stream():
+                buffer_ = StringIO()
+                writer = csv.writer(buffer_)
+                write_header = True
+
+                for row in export_data:
+                    if write_header:
+                        writer.writerow(complete_field_list)
+                        buffer_.seek(0)
+                        data = buffer_.read()
+                        buffer_.seek(0)
+                        buffer_.truncate()
+                        yield data
+                        write_header = False
+
+                    writer.writerow(row)
+                    buffer_.seek(0)
+                    data = buffer_.read()
+                    buffer_.seek(0)
+                    buffer_.truncate()
+                    yield data
+
+            response = StreamingHttpResponse(stream(), content_type="text/csv")
+            response['Content-Disposition'] = 'attachment; filename="{}-{}.csv"'.format(lower(self.model._meta),
+                                                                                        datetime.now())
+            return response
