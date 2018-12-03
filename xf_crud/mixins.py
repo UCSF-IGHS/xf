@@ -127,20 +127,18 @@ class XFExportMixin(object):
 
                 for row in export_data:
                     if write_header:
-                        writer.writerow(complete_field_list)
-                        buffer_.seek(0)
-                        data = buffer_.read()
-                        buffer_.seek(0)
-                        buffer_.truncate()
-                        yield data
+                        yield from write_row_data(buffer_, row, writer)
                         write_header = False
 
-                    writer.writerow(row)
-                    buffer_.seek(0)
-                    data = buffer_.read()
-                    buffer_.seek(0)
-                    buffer_.truncate()
-                    yield data
+                    yield from write_row_data(buffer_, row, writer)
+
+            def write_row_data(buffer_, row, writer):
+                writer.writerow(row)
+                buffer_.seek(0)
+                data = buffer_.read()
+                buffer_.seek(0)
+                buffer_.truncate()
+                yield data
 
             response = StreamingHttpResponse(stream(), content_type="text/csv")
             response['Content-Disposition'] = 'attachment; filename="{}-{}.csv"'.format(lower(self.model._meta),
