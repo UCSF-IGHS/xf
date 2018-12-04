@@ -1,10 +1,15 @@
+import csv
+
+from datetime import datetime
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, StreamingHttpResponse
+from django.template.defaultfilters import lower
 from django.views.generic import ListView, FormView
+from io import StringIO
 
 from xf.xf_crud.ajax_mixins import XFAjaxViewMixin
-from xf.xf_crud.mixins import XFCrudMixin, XFExportMixin
+from xf.xf_crud.mixins import XFCrudMixin
 from xf.xf_crud.model_lists import XFModelList
 from xf.xf_crud.permission_mixin import XFPermissionMixin
 from xf.xf_system.views import XFNavigationViewMixin
@@ -12,7 +17,7 @@ import uuid
 
 
 
-class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin, XFExportMixin):
+class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
 
     paginate_by = 10
     generic = False
@@ -21,6 +26,8 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin, XFExportMi
 
     def __init__(self, *args, **kwargs):
         super(XFGenericListView, self).__init__(**kwargs)
+        self.search_string = ""
+        self.request = None
 
         if kwargs['list_class'] is not None:
             self.list_class = kwargs['list_class'](kwargs['model'])
@@ -119,11 +126,7 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin, XFExportMi
 
     def get(self, request, *args, **kwargs):
 
-        # Get the search string from the text box, if entered - needed by the sub class
-        #TODO: Fix The Search
-
         self.search_string = request.GET.get('search_string', '')
-        #self.search_string = ""
         self.request = request
 
         # Add user
@@ -134,9 +137,6 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin, XFExportMi
 
         self.list_class.prepare_actions()
 
-        if self.request.GET.get('format') is not None:
-            return self.get_formatted_content()
-
         return super(XFGenericListView, self).get(request, *args, **kwargs)
 
 
@@ -144,7 +144,6 @@ class XFListView(XFGenericListView, XFPermissionMixin, XFAjaxViewMixin):
     """
     A list view that requires authentication. This should be used as a base class.
     """
-
     def __init__(self, *args, **kwargs):
         super(XFListView, self).__init__(*args, **kwargs)
         self.id = str(uuid.uuid4()).replace("-", "_")
@@ -203,23 +202,48 @@ class XFListView(XFGenericListView, XFPermissionMixin, XFAjaxViewMixin):
         context["search"] = "search" in self.list_class.supported_crud_operations and self.user_has_model_permission(
             "list")
 
-        # context["add"] = "add" in self.list_class.supported_crud_operations and self.user_has_model_permission(
-        #     "add")
-        # context["change"] = "change" in self.list_class.supported_crud_operations and self.user_has_model_permission(
-        #     "change")
-        # context["view"] = "view" in self.list_class.supported_crud_operations and self.user_has_model_permission(
-        #     "view")
-        # context["delete"] = "delete" in self.list_class.supported_crud_operations and self.user_has_model_permission(
-        #     "delete")
+
+class XFCSVListView(XFListView):
+
+    def get(self, request, *args, **kwargs):
+        super(XFCSVListView, self).get(request, *args, **kwargs)
+
+        complete_field_list = []
+        for field in self.model._meta.fields:
+            complete_field_list.append(field.name)
+
+        export_data = self.list_class.get_queryset(self.search_string, self.model, "").values_list(*complete_field_list)
+
+        def stream():
+            buffer_ = StringIO()
+            writer = csv.writer(buffer_)
+            write_header = True
+
+            for row in export_data:
+                if write_header:
+                    yield from write_row_data(buffer_, complete_field_list, writer)
+                    write_header = False
+
+                yield from write_row_data(buffer_, row, writer)
+
+        def write_row_data(buffer_, row, writer):
+            writer.writerow(row)
+            buffer_.seek(0)
+            data = buffer_.read()
+            buffer_.seek(0)
+            buffer_.truncate()
+            yield data
+
+        response = StreamingHttpResponse(stream(), content_type="text/csv")
+        response['Content-Disposition'] = 'attachment; filename="{}-{}.csv"'.format(lower(self.model._meta),
+                                                                                    datetime.now())
+        return response
 
 
 class XFRelatedListView(XFListView):
 
-
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -233,8 +257,6 @@ class XFUnsafeListView(XFGenericListView):
     """
     A list view used for non-authenticated items. This list view does not restrict any access.
     """
-
-
     def get_context_data(self, **kwargs):
         self.context = context = super(XFUnsafeListView, self).get_context_data(**kwargs)
         context['search_string'] = self.search_string
@@ -280,4 +302,3 @@ class XFContextFormView(FormView):
         together.
         """
         pass
-
