@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from xf.xf_crud.generic_crud_views import XFDetailView, XFUpdateView, XFDeleteView, XFCreateView
-from xf.xf_crud.generic_list_views import XFListView, XFRelatedListView, XFCSVListView
+from xf.xf_crud.generic_list_views import XFListView, XFRelatedListView, XFCSVContentView
 from xf.xf_crud.model_forms import XFModelForm
 from xf.xf_crud.model_lists import XFModelList
 from xf.xf_crud.xf_crud_helpers import mmodelform_factory
@@ -124,8 +124,8 @@ class XFCrudURLBuilder:
 
 
     def get_csv_url(self, url_operation_name="csv-export",
-                     view_class_type=XFCSVListView,
-                     list_class_type=XFModelList):
+                    view_class_type=XFCSVContentView,
+                    list_class_type=XFModelList):
 
         return url(r'^%s/%s/csv-export' % (self.url_app_name, self.url_model_name),
                    view_class_type.as_view(model=self.model_type, generic=True,

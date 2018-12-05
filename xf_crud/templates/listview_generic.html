@@ -32,10 +32,10 @@
                 <div class="col-md-2">
                         {% for action in screen_actions %}
 
-                                    <a class="btn btn-default {% if forloop.counter == 1 %} btn-primary  {% endif %} " {% if action.use_ajax %}data-toggle="modal"
+                                    <a id="screen_action_{{ forloop.counter }}_{{ action.action_name }}" class="btn btn-default {% if forloop.counter == 1 %} btn-primary  {% endif %} " {% if action.use_ajax %}data-toggle="modal"
                                         data-target="#frmDlg" html-target="#frmDlgHtml" {% endif %}
                                        {% if action.next_url %}data-next-url="{{ action.next_url }}" {% endif %}
-                                           href="{% url action.url_name%}?{{ new_initial_data }}">
+                                           href="{% url action.url_name%}?{{ new_initial_data|default:action.initial_data|default_if_none:'' }}">
                                         {{ action.action_caption }}</a>
                         {% endfor %}
                 </div>
@@ -84,7 +84,7 @@
                 {% if search %}
                 <form class="form-search2 mxlget" method="get" id="frmSearch4" html-target="ctxObjectList_{{ list_url_id }}" action="{{ current_url }}">
                     <div class="input-group">
-                        <input type="text" class="form-control" name="search_string" value="{{ search_string }}" id="txtSearchString"
+                        <input type="text" class="form-control" id="search_string" name="search_string" value="{{ search_string }}" id="txtSearchString"
                                placeholder="{{ search_hint }}">
                         <span class="input-group-btn ">
                       <button class="btn btn-default" type="submit">Go!</button><a href="{{ current_url }}"
@@ -161,6 +161,28 @@
         }).parent('li').addClass('current-page').parents('ul').slideDown(function() {
             setContentHeight();
         }).parent().addClass('active');
+
+        $('#frmSearch4').submit(function() {
+
+            {# append search string to screen actions #}
+            {% if screen_actions|length > 0 %}
+                {% for action in screen_actions %}
+                    {% if action.action_name == 'csv-export' %}
+                        var search_string = $('#search_string').val();
+                        if(search_string != null && search_string.length > 0) {
+                            var _href = $("#screen_action_{{ forloop.counter }}_{{ action.action_name }}").attr("href");
+                            if(_href.includes('search_string')) {
+                                _href = _href.replace(/(search_string=)[^=&]*/ig, '$1' + encodeURIComponent(search_string));
+                            }
+                            else {
+                                _href += (_href.endsWith("?") ? 'search_string=': '&search_string=') + search_string;
+                            }
+                            $("#screen_action_{{ forloop.counter }}_{{ action.action_name }}").attr("href", _href);
+                        }
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        });
 
     </script>
 

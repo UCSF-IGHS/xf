@@ -27,6 +27,7 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
     def __init__(self, *args, **kwargs):
         super(XFGenericListView, self).__init__(**kwargs)
         self.search_string = ""
+        self.search_field = ""
         self.request = None
 
         if kwargs['list_class'] is not None:
@@ -127,6 +128,7 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
     def get(self, request, *args, **kwargs):
 
         self.search_string = request.GET.get('search_string', '')
+        self.search_field = request.GET.get('search_field', '')
         self.request = request
 
         # Add user
@@ -134,6 +136,7 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
             self.list_class.user = self.request.user
             self.list_class.request = self.request
             self.list_class.kwargs = kwargs
+            self.list_class.search_field = self.search_field
 
         self.list_class.prepare_actions()
 
@@ -203,10 +206,13 @@ class XFListView(XFGenericListView, XFPermissionMixin, XFAjaxViewMixin):
             "list")
 
 
-class XFCSVListView(XFListView):
+class XFCSVContentView(XFListView):
+
+    def __init__(self, *args, **kwargs):
+        super(XFCSVContentView, self).__init__(*args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        super(XFCSVListView, self).get(request, *args, **kwargs)
+        super(XFCSVContentView, self).get(request, *args, **kwargs)
 
         complete_field_list = []
         for field in self.model._meta.fields:
