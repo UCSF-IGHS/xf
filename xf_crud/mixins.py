@@ -1,7 +1,4 @@
-from django.urls import reverse_lazy, reverse
-
-
-#from xf.xf_crud.xf_classes import XFUIBuilder
+from django.urls import reverse
 
 
 class XFCrudMixin(object):
@@ -13,7 +10,6 @@ class XFCrudMixin(object):
         self.app_name = ""
         self.form_name = ""
         self.model_url_part = ""
-        #self.ui_builder = XFUIBuilder(url_app_name=self.app_name, model_type=None, form_class_type=self.form_name, list_class_type=None)
 
     def add_crud_urls_to_context(self, context):
         context['url_name_list'] = "%s_%s_list" % (self.get_app_name(), self.get_model_name())
@@ -62,16 +58,12 @@ class XFCrudMixin(object):
         self.form_class = self.get_form_class()
         self.form = self.get_form(self.form_class)
 
-        pass
-
 
     def _process_url_name_with_app_and_model_name(self, url):
         try:
             return url % (self.app_name, self.model_url_part)
         except:
             return url
-
-
 
 
     def get_app_name(self):
@@ -99,4 +91,3 @@ class XFCrudMixin(object):
 
     def get_model_name_for_crud_view(self):
         return self.get_form_class().Meta.model.__name__.lower()
-
