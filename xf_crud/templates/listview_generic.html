@@ -35,7 +35,7 @@
                                     <a id="screen_action_{{ forloop.counter }}_{{ action.action_name }}" class="btn btn-default {% if forloop.counter == 1 %} btn-primary  {% endif %} " {% if action.use_ajax %}data-toggle="modal"
                                         data-target="#frmDlg" html-target="#frmDlgHtml" {% endif %}
                                        {% if action.next_url %}data-next-url="{{ action.next_url }}" {% endif %}
-                                           href="{% url action.url_name%}?{{ new_initial_data|default:action.initial_data|default_if_none:'' }}">
+                                           href="{% url action.url_name%}?{{ new_initial_data }}">
                                         {{ action.action_caption }}</a>
                         {% endfor %}
                 </div>
