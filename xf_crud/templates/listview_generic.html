@@ -84,7 +84,7 @@
                 {% if search %}
                 <form class="form-search2 mxlget" method="get" id="frmSearch4" html-target="ctxObjectList_{{ list_url_id }}" action="{{ current_url }}">
                     <div class="input-group">
-                        <input type="text" class="form-control" id="search_string" name="search_string" value="{{ search_string }}" id="txtSearchString"
+                        <input type="text" class="form-control" name="search_string" value="{{ search_string }}" id="txtSearchString"
                                placeholder="{{ search_hint }}">
                         <span class="input-group-btn ">
                       <button class="btn btn-default" type="submit">Go!</button><a href="{{ current_url }}"
@@ -168,7 +168,7 @@
             {% if screen_actions|length > 0 %}
                 {% for action in screen_actions %}
                     {% if action.action_name == 'csv-export' %}
-                        var search_string = $('#search_string').val();
+                        var search_string = $('#txtSearchString').val();
                         if(search_string != null && search_string.length > 0) {
                             var _href = $("#screen_action_{{ forloop.counter }}_{{ action.action_name }}").attr("href");
                             if(_href.includes('search_string')) {
