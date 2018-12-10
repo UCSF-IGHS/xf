@@ -26,13 +26,13 @@ function bindAjax() {
     });
 
     // This binds all the GET forms
-    $(".mxlget").submit(function() {
+    $(".mxlget").unbind('submit.mxlget').bind('submit.mxlget', function() {
         event.preventDefault();
         getform(event.target);
     });
 
     // This binds all the AJAX links
-    $(".mxlajax").click(function() {
+    $(".mxlajax").unbind('click.mxlajax').bind('click.mxlajax', function() {
         event.preventDefault();
         gethtml($(this));
     });
@@ -78,7 +78,7 @@ function bindAjax() {
     })
 
     // Set up the search field to clear after clicking the Clear button
-    $("#lnkClear").click(function(){ $("#txtSearchString").val(""); });
+    $("#lnkClear").unbind('click.lnkclear').bind('click.lnkclear', function(){ $("#txtSearchString").val(""); });
 
     /* Clickable table rows and cells */
     /* Cells work better when using drop down buttons in the row */
