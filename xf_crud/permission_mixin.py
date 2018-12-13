@@ -1,7 +1,5 @@
 
-from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
-from django.http import Http404, HttpResponseForbidden
 
 
 class XFPermissionMixin(object):
