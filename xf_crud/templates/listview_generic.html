@@ -119,6 +119,14 @@
 
                 <div id="ctxObjectList_{{ list_url_id }}" href="{{ list_url }}">
 
+                {% if object_list|length == 0 %}
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <h6>No records to display</h6>
+                        </div>
+                    </div>
+                {% else %}
+
                     {% block object_list %}{% endblock %}
 
                     <span class="current">Page {{ page_obj.number }} of {{ paginator.num_pages }}.</span>
@@ -137,6 +145,8 @@
                             </li>
                         {% endif %}
                     </ul>
+
+                {% endif %}
                 </div>
             </div>
         </div>

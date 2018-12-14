@@ -4,6 +4,13 @@
 
     <div class="list-view">
 
+        {% if object_list|length == 0 %}
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h6>No records to display</h6>
+                </div>
+            </div>
+        {% else %}
 
         <div id="ctxObjectList_{{ list_url_id }}" href="./all">
             {% block object_list %}{% endblock %}
@@ -26,6 +33,7 @@
                     {% endif %}
                 </ul>
             {% endif %}
+        {% endif %}
     </div>
 
 
