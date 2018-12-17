@@ -11,8 +11,10 @@ from django.utils.translation import get_language
 from django.views.generic import TemplateView
 
 import xf.uc_dashboards
+from xf.uc_dashboards.models.dataset import DataSet
 from xf.uc_dashboards.models.perspective import Perspective
 from xf.uc_dashboards.models.widget import Widget
+from xf.uc_dashboards.views.custom_dataset_loader_base import XFCustomDataSetLoaderBase
 
 
 class WidgetView(TemplateView):
@@ -137,44 +139,55 @@ class WidgetView(TemplateView):
 
             if self.widget.widget_type != Widget.TEXT_BLOCK:
 
-                params = []
-                sql_query = self.widget.sql_query
-                conn = self.get_connection(self.widget.database_key)
+                if self.widget.dataset is not None:
+                    if self.widget.dataset.dataset_type == DataSet.CUSTOM:
+                        rows = self.load_custom_dataset(self.widget.dataset, self.request, **self.kwargs)
+                    else:
+                        rows = self.load_sql_dataset(self.widget.dataset, self.request)
+                else:
 
-                if self.widget.filters:
-                    filters = ast.literal_eval(self.widget.filters)
-                    for filter in filters:
-                        multiselect = filter.endswith('[]')
-                        filter = filter[:-2] if multiselect else filter
-                        params.append(self.request.GET.get(filter, ''))
-                        try:
-                            sql_query = sql_query.replace("@" + filter, conn.literal(
-                                "'" + "', '".join(self.request.GET.getlist(filter, '')) + "'"
-                                if multiselect else conn.literal(self.request.GET.get(filter, ''))))
-                        except:
-                            # UNSAFE!!!!
-                            # TODO: FIX
-                            sql_query = sql_query.replace("@" + filter,
-                                                          "'" + "', '".join(self.request.GET.getlist(filter, '')) + "'"
-                                                          if multiselect else "'" + self.request.GET.get(filter,
-                                                                                                         '') + "'")
+                    params = []
+                    sql_query = self.widget.sql_query
+                    conn = self.get_connection(self.widget.database_key)
 
-                # Add a perspective code as a filter, which allows you to filter any widget based on the current perspective
-                # Very useful if you want to filter a filter based on a perspective
-                if self.perspective:
-                    sql_query = sql_query.replace("@perspective_code", self.perspective.code)
+                    if self.widget.filters:
+                        filters = ast.literal_eval(self.widget.filters)
+                        for filter in filters:
+                            multiselect = filter.endswith('[]')
+                            filter = filter[:-2] if multiselect else filter
+                            params.append(self.request.GET.get(filter, ''))
+                            try:
+                                sql_query = sql_query.replace("@" + filter, conn.literal(
+                                    "'" + "', '".join(self.request.GET.getlist(filter, '')) + "'"
+                                    if multiselect else conn.literal(self.request.GET.get(filter, ''))))
+                            except:
+                                # UNSAFE!!!!
+                                # TODO: FIX
+                                sql_query = sql_query.replace("@" + filter,
+                                                              "'" + "', '".join(self.request.GET.getlist(filter, '')) + "'"
+                                                              if multiselect else "'" + self.request.GET.get(filter,
+                                                                                                             '') + "'")
 
-                # Send the locale code to the database
-                locale = get_language()
-                sql_query = sql_query.replace("@locale_code", locale)
+                    # Add a perspective code as a filter, which allows you to filter any widget based on the current perspective
+                    # Very useful if you want to filter a filter based on a perspective
+                    if self.perspective:
+                        sql_query = sql_query.replace("@perspective_code", self.perspective.code)
 
-                try:
-                    cursor = conn.cursor()
-                    cursor.execute(sql_query)
-                    rows = cursor.fetchall()
-                finally:
-                    # conn.close()
-                    pass
+                    # Send the locale code to the database
+                    locale = get_language()
+                    sql_query = sql_query.replace("@locale_code", locale)
+
+                    # Send current user to the database
+                    if not self.request.user.is_anonymous and self.request.user.is_authenticated:
+                        sql_query = sql_query.replace("@user_id", str(self.request.user.id))
+
+                    try:
+                        cursor = conn.cursor()
+                        cursor.execute(sql_query)
+                        rows = cursor.fetchall()
+                    finally:
+                        # conn.close()
+                        pass
 
             # print sql_query
 
@@ -219,7 +232,7 @@ class WidgetView(TemplateView):
 
                 # Convert the result set from the SQL query into a dictionary
                 rows = self.result_set_to_dict(rows, column_names)
-                context["rows"] = rows;
+                context["rows"] = rows
                 context["data_columns"] = self.data_columns
                 if len(rows) > 0:
                     context["tile_width"] = int(12 / len(rows))
@@ -325,3 +338,66 @@ class WidgetView(TemplateView):
                 return t
 
         return super(WidgetView, self).response_class(request, template, context, **response_kwargs)
+
+    def load_sql_dataset(self, dataset: DataSet, request):
+
+        if dataset.custom_daset_loader is not None and dataset.custom_daset_loader != '':
+            return self.load_custom_dataset(dataset, request)
+
+        params = []
+        sql_query = dataset.sql_query
+        conn = self.get_connection(dataset.database_key)
+
+        if dataset.filters:
+            filters = ast.literal_eval(dataset.filters)
+            for ds_filter in filters:
+                multi_select = ds_filter.endswith('[]')
+                ds_filter = ds_filter[:-2] if multi_select else ds_filter
+                params.append(request.GET.get(ds_filter, ''))
+                try:
+                    sql_query = sql_query.replace("@" + ds_filter, conn.literal(
+                        "'" + "', '".join(request.GET.getlist(ds_filter, '')) + "'"
+                        if multi_select else conn.literal(request.GET.get(ds_filter, ''))))
+                except:
+                    # UNSAFE!!!!
+                    # TODO: FIX
+                    sql_query = sql_query.replace("@" + ds_filter,
+                                                  "'" + "', '".join(request.GET.getlist(ds_filter, '')) + "'"
+                                                  if multi_select else "'" + request.GET.get(ds_filter,
+                                                                                                 '') + "'")
+
+        # Add a perspective code as a filter, which allows you to filter any widget based on the current perspective
+        # Very useful if you want to filter a filter based on a perspective
+        if self.perspective:
+            sql_query = sql_query.replace("@perspective_code", self.perspective.code)
+
+        # Send the locale code to the database
+        locale = get_language()
+        sql_query = sql_query.replace("@locale_code", locale)
+
+        # Send current user to the database
+        if not request.user.is_anonymous and request.user.is_authenticated:
+            sql_query = sql_query.replace("@user_id", str(request.user.id))
+
+        try:
+            cursor = conn.cursor()
+            cursor.execute(sql_query)
+            rows = cursor.fetchall()
+        finally:
+            # conn.close()
+            pass
+
+        return rows
+
+    def load_custom_dataset(self, dataset: DataSet, request, **kwargs):
+
+        dataset_class = self._load_custom_dataset_class(dataset.custom_daset_loader)
+        dataset_loader: XFCustomDataSetLoaderBase = dataset_class()
+        return dataset_loader.load_dataset(dataset, request, **kwargs)
+
+    def _load_custom_dataset_class(self, class_name: str):
+        components = class_name.split('.')
+        mod = __import__(components[0])
+        for comp in components[1:]:
+            mod = getattr(mod, comp)
+        return mod
