@@ -11,6 +11,7 @@ from modeltranslation.admin import TranslationAdmin
 
 from xf.uc_dashboards.models import HTMLField, GroupProfile, UserProfile, NavigationSection, Page, Template, PageType, \
     PageStatus, PageSection, Widget, Tag
+from xf.uc_dashboards.models.dataset import DataSet
 from xf.uc_dashboards.models.perspective import Perspective
 from xf.uc_dashboards.models.xf_viz_site_settings import XFVizSiteSettings
 from xf.xf_system.models import XFSiteSettings
@@ -69,6 +70,33 @@ class PerspectiveAdmin(TranslationAdmin):
 #    save_as = True;
 
 
+class DataSetAdmin(admin.ModelAdmin):
+
+    list_display = ('name', 'code', 'dataset_type', 'database_key')
+    list_filter = ('dataset_type',)
+    save_as = True
+    formfield_overrides = {HTMLField: {'widget': forms.Textarea(attrs={'class': 'ckeditor'})}, }
+    fieldsets = (
+        ('General', {
+            'fields': ('name', 'code', 'dataset_type', 'custom_daset_loader', 'permissions_to_view', 'allow_anonymous', 'external_source_url', )
+        }),
+        ('SQL', {
+            'classes': ('collapse',),
+            'fields': ('database_key', 'sql_query', )
+        }),
+
+        ('Data', {
+            'classes': ('collapse',),
+            'fields': ('filters', 'data_columns',)
+        }),
+
+        ('Other', {
+            'classes': ('collapse',),
+            'fields': ('custom_attributes',),
+        }),
+    )
+
+
 
 class WidgetTypeAdmin(TranslationAdmin):
 
@@ -82,7 +110,7 @@ class WidgetTypeAdmin(TranslationAdmin):
         }),
         ('SQL', {
             'classes': ('collapse',),
-            'fields': ('sql_query', 'filters', 'database_key')
+            'fields': ('dataset', 'sql_query', 'filters', 'database_key')
         }),
 
         ('Data', {
@@ -144,6 +172,7 @@ admin.site.register(Template, TemplateAdmin)
 admin.site.register(PageType, PageTypeAdmin)
 admin.site.register(PageStatus, PageStatusAdmin)
 admin.site.register(PageSection, PageSectionAdmin)
+admin.site.register(DataSet, DataSetAdmin)
 admin.site.register(Widget, WidgetTypeAdmin)
 admin.site.register(Tag, TagAdmin)
 admin.site.register(Perspective, PerspectiveAdmin)
