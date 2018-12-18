@@ -69,11 +69,12 @@ class WidgetView(TemplateView):
 
         return context
 
-    def result_set_to_dict(self, result_set, qkeys):
+    def result_set_to_dict(self, result_set, widget_keys, result_set_keys=None):
         """
-        This function helps to create a dictionar object out of a SQL query
+        This function helps to create a dictionary object out of a SQL query
         :param result_set:
-        :param qkeys:
+        :param widget_keys:
+        :param result_set_keys:
         :return:
         """
 
@@ -82,8 +83,9 @@ class WidgetView(TemplateView):
         for row in result_set:
             i = 0
             cur_row = {}
-            for key in qkeys:
-                cur_row[key] = row[i]
+            for key in widget_keys:
+                data_index = i if result_set_keys is None else result_set_keys.index(key)
+                cur_row[key] = row[data_index]
                 i = i + 1
             fdicts.append(cur_row)
         return fdicts
@@ -223,15 +225,22 @@ class WidgetView(TemplateView):
                             self.widget.widget_type == Widget.STACKED_BAR_GRAPH or \
                             self.widget.widget_type == Widget.BAR_GRAPH_HORIZONTAL:
 
-                column_names = []
+                widget_column_names = []
                 for line in self.widget.data_columns.split('\n'):
                     # Add entire column line to data_columns array, which is passed to template
                     data_column = ast.literal_eval('{' + line + '}')
                     self.data_columns.append(data_column)
-                    column_names.append(data_column['column_name'])
+                    widget_column_names.append(data_column['column_name'])
+
+                dataset_column_names = None
+                if self.widget.dataset is not None and self.widget.dataset.data_columns != '':
+                    dataset_column_names = []
+                    for line in self.widget.dataset.data_columns.split('\n'):
+                        data_column = ast.literal_eval('{' + line + '}')
+                        dataset_column_names.append(data_column['column_name'])
 
                 # Convert the result set from the SQL query into a dictionary
-                rows = self.result_set_to_dict(rows, column_names)
+                rows = self.result_set_to_dict(rows, widget_column_names, dataset_column_names)
                 context["rows"] = rows
                 context["data_columns"] = self.data_columns
                 if len(rows) > 0:

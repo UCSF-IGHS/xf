@@ -70,7 +70,7 @@ class WidgetViewTestCase(XFTestCaseData):
         self.assertEqual(len(context['rows']), 1, "Expected only 1 row for the home page returned from database")
         self.assertTrue(context['rows'][0]['title'] == 'Home Page',
                         "Expected the page returned to have title 'Home Page'")
-        self.assertTrue(context['rows'][0]['slug'] == 1)
+        self.assertTrue(context['rows'][0]['slug'] == "home")
 
         self.assertTrue(context['paging'] == 'yes', "We should have a context variable called 'paging'")
 
@@ -119,6 +119,35 @@ class WidgetViewTestCase(XFTestCaseData):
 
         self.assertTrue(loaded_class == TestableCustomDataSetLoader, "Expected TestableCustomDataSetLoader class "
                                                                      "to be loaded")
+
+    def test_data_columns_for_template(self):
+
+        test_data = self._generate_widget_view_test_data()
+        view = test_data['widget_view']
+
+        two_column_widget = test_data['table_listing_home_page']
+        two_column_widget.sql_query = two_column_widget.filters = \
+            two_column_widget.database_key = two_column_widget.filters = ''
+        two_column_widget.data_columns = \
+            "'column_name': 'slug', 'table_column_caption': 'The slug', 'table_column_width': '10%',\n" \
+            " 'column_name': 'title', 'table_column_caption': 'The title', 'table_column_width': '10%',"
+
+        seven_column_dataset = test_data['home_page_custom_dataset']
+        two_column_widget.dataset = seven_column_dataset
+        two_column_widget.save()
+        view.widget = two_column_widget
+
+        request = self.generate_request(path='/')
+        request = self.setup_request(request, test_data['user'])
+        view.request = request
+
+        context = view.get_context_data()
+
+        for row in context['rows']:
+            self.assertTrue('title' in row, "Expected the page returned to have title 'Home Page'")
+            self.assertTrue('slug' in row)
+
+        self.assertTrue(context['paging'] == 'yes', "We should have a context variable called 'paging'")
 
 
 class TestableCustomDataSetLoader(XFCustomDataSetLoaderBase):

@@ -63,6 +63,10 @@ class DataSet(models.Model):
         null=True,
         help_text="Quoted and comma-separated list of string values with filter names from the query string"
     )
+    data_columns = models.TextField(
+        blank=True,
+        help_text="All columns in this dataset. One per line. Must be a Python dictionary format."
+    )
     database_key = models.CharField(
         max_length=150, blank=True,
         help_text='The key from the settings file to use for the data connection for this widget.'

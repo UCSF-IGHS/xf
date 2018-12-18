@@ -84,11 +84,20 @@ class XFTestCaseData(XFTestCase):
             name='Dataset with homepage data',
             code=str(uuid.uuid4()),
             dataset_type=DataSet.SQL,
-            sql_query="select * from uc_dashboards_page where title=@thetitle",
+            sql_query="select slug, title, main_title, text, page_id, allow_anonymous, about "
+                      "from uc_dashboards_page "
+                      "where title=@thetitle",
             filters="'thetitle',",
             database_key='default',
             custom_attributes="'paging':'yes',",
-            allow_anonymous=False
+            allow_anonymous=False,
+            data_columns="'column_name' : 'slug', 'table_column_caption': 'The slug',\n"
+                         "'column_name' : 'title', 'table_column_caption': 'The title',\n"
+                         "'column_name' : 'main_title', 'table_column_caption': 'Main title',\n"
+                         "'column_name' : 'text', 'table_column_caption': 'The text',\n"
+                         "'column_name' : 'page_id', 'table_column_caption': 'Page ID',\n"
+                         "'column_name' : 'allow_anonymous', 'table_column_caption': 'Open?',\n"
+                         "'column_name' : 'about', 'table_column_caption': 'About',"
         )
         home_page_dataset.save()
         test_data['home_page_dataset'] = home_page_dataset
