@@ -1,15 +1,13 @@
 from django.core.exceptions import PermissionDenied
 
-from xf.tests.permission_tests.permissions_tests import XFPermissionsTestCase
+from xf.tests.xf_test_case_data import XFTestCaseData
 
 
-class PermissionMixinTestCase(XFPermissionsTestCase):
-
-    fixtures = ['default_pages_and_perspectives_data.json']
+class PermissionMixinTestCase(XFTestCaseData):
 
     def test_assert_has_perm_returns_false_if_user_has_no_permission(self):
 
-        test_data = self._generate_test_data()
+        test_data = self._generate_permissions_test_data()
         user = test_data['user']
 
         instance = test_data['class_instance']
@@ -19,11 +17,11 @@ class PermissionMixinTestCase(XFPermissionsTestCase):
 
     def test_assert_has_perm_returns_true_if_user_has_permission(self):
 
-        test_data = self._generate_test_data()
+        test_data = self._generate_permissions_test_data()
         user = test_data['user']
 
         model = test_data['model_class']
-        user.assign_model_permission('delete_{}'.format(model._meta.model_name), model)
+        user.assign_model_permission('delete', model)
 
         instance = test_data['class_instance']
         instance.set_requesting_user(user)
@@ -34,7 +32,7 @@ class PermissionMixinTestCase(XFPermissionsTestCase):
 
     def test_ensure_group_or_403_throws_permission_denied_if_user_not_in_group(self):
 
-        test_data = self._generate_test_data()
+        test_data = self._generate_permissions_test_data()
         user = test_data['user']
 
         instance = test_data['class_instance']
@@ -49,7 +47,7 @@ class PermissionMixinTestCase(XFPermissionsTestCase):
 
     def test_ensure_group_or_403_does_not_throw_permission_denied_if_user_in_group(self):
 
-        test_data = self._generate_test_data()
+        test_data = self._generate_permissions_test_data()
         user = test_data['user']
 
         instance = test_data['class_instance']
@@ -66,7 +64,7 @@ class PermissionMixinTestCase(XFPermissionsTestCase):
 
     def test_ensure_groups_or_403_throws_permission_denied_if_user_not_in_groups(self):
 
-        test_data = self._generate_test_data()
+        test_data = self._generate_permissions_test_data()
         user = test_data['user']
 
         instance = test_data['class_instance']
@@ -82,7 +80,7 @@ class PermissionMixinTestCase(XFPermissionsTestCase):
 
     def test_ensure_groups_or_403_does_not_throw_permission_denied_if_user_in_groups(self):
 
-        test_data = self._generate_test_data()
+        test_data = self._generate_permissions_test_data()
         user = test_data['user']
 
         instance = test_data['class_instance']
@@ -100,7 +98,7 @@ class PermissionMixinTestCase(XFPermissionsTestCase):
 
     def test_assert_ensure_set_context_perm_throws_permission_denied_if_user_has_permission(self):
 
-        test_data = self._generate_test_data()
+        test_data = self._generate_permissions_test_data()
         user = test_data['user']
 
         instance = test_data['class_instance']
@@ -113,11 +111,11 @@ class PermissionMixinTestCase(XFPermissionsTestCase):
 
     def test_assert_ensure_set_context_perm_sets_permission_in_context(self):
 
-        test_data = self._generate_test_data()
+        test_data = self._generate_permissions_test_data()
         user = test_data['user']
 
         model = test_data['model_class']
-        user.assign_model_permission('delete_{}'.format(model._meta.model_name), model)
+        user.assign_model_permission('delete', model)
 
         instance = test_data['class_instance']
         instance.set_requesting_user(user)

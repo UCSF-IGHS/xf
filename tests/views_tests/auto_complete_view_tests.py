@@ -1,11 +1,11 @@
 from django.contrib.auth.models import User
 from django.test import RequestFactory
 
-from xf.tests.permission_tests.permissions_tests import XFPermissionsTestCase
+from xf.tests.xf_test_case_data import XFTestCaseData
 from xf.xf_crud.views.auto_complete_view import XFAutoCompleteView
 
 
-class AutoCompleteViewTestCase(XFPermissionsTestCase):
+class AutoCompleteViewTestCase(XFTestCaseData):
 
     def test_process_forwarded_parameters(self):
 
@@ -23,7 +23,7 @@ class AutoCompleteViewTestCase(XFPermissionsTestCase):
 
     def test_get_queryset(self):
 
-        test_data = self._generate_test_data()
+        test_data = self._generate_permissions_test_data()
 
         view = XFAutoCompleteView()
         view.forwarded = {
