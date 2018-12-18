@@ -179,6 +179,7 @@ class WidgetView(TemplateView):
             # print sql_query
 
             context["widget_id"] += self.widget.slug.replace("-", "_")
+            context["widget_slug"] = self.widget.slug
             context["caption"] = self.widget.title
             context["extra_text"] = self.widget.sub_text
             context["widget_type"] = self.widget.widget_type
@@ -186,6 +187,7 @@ class WidgetView(TemplateView):
 
             if self.perspective:
                 context["perspective_code"] = self.perspective.code
+                context["perspective_slug"] = self.perspective.slug
 
             # Custom attributes
             if self.widget.custom_attributes != "":
