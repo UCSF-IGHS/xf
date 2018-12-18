@@ -26,6 +26,7 @@ class WidgetView(TemplateView):
         # Data columns that may be displayed
         super(WidgetView, self).__init__()
         self.data_columns = []
+        self.result_set_columns = []
         self.widget = None
 
     def dispatch(self, request, *args, **kwargs):
@@ -152,36 +153,7 @@ class WidgetView(TemplateView):
                     sql_query = self.widget.sql_query
                     conn = self.get_connection(self.widget.database_key)
 
-                    if self.widget.filters:
-                        filters = ast.literal_eval(self.widget.filters)
-                        for filter in filters:
-                            multiselect = filter.endswith('[]')
-                            filter = filter[:-2] if multiselect else filter
-                            params.append(self.request.GET.get(filter, ''))
-                            try:
-                                sql_query = sql_query.replace("@" + filter, conn.literal(
-                                    "'" + "', '".join(self.request.GET.getlist(filter, '')) + "'"
-                                    if multiselect else conn.literal(self.request.GET.get(filter, ''))))
-                            except:
-                                # UNSAFE!!!!
-                                # TODO: FIX
-                                sql_query = sql_query.replace("@" + filter,
-                                                              "'" + "', '".join(self.request.GET.getlist(filter, '')) + "'"
-                                                              if multiselect else "'" + self.request.GET.get(filter,
-                                                                                                             '') + "'")
-
-                    # Add a perspective code as a filter, which allows you to filter any widget based on the current perspective
-                    # Very useful if you want to filter a filter based on a perspective
-                    if self.perspective:
-                        sql_query = sql_query.replace("@perspective_code", self.perspective.code)
-
-                    # Send the locale code to the database
-                    locale = get_language()
-                    sql_query = sql_query.replace("@locale_code", locale)
-
-                    # Send current user to the database
-                    if not self.request.user.is_anonymous and self.request.user.is_authenticated:
-                        sql_query = sql_query.replace("@user_id", str(self.request.user.id))
+                    sql_query = self.add_parameters_to_query(conn, params, sql_query, self.widget.filters)
 
                     try:
                         cursor = conn.cursor()
@@ -232,15 +204,17 @@ class WidgetView(TemplateView):
                     self.data_columns.append(data_column)
                     widget_column_names.append(data_column['column_name'])
 
-                dataset_column_names = None
+                result_set_column_names = None
                 if self.widget.dataset is not None and self.widget.dataset.data_columns != '':
-                    dataset_column_names = []
+                    result_set_column_names = []
                     for line in self.widget.dataset.data_columns.split('\n'):
                         data_column = ast.literal_eval('{' + line + '}')
-                        dataset_column_names.append(data_column['column_name'])
+                        self.result_set_columns.append(data_column)
+                        result_set_column_names.append(data_column['column_name'])
+                    context["result_set_columns"] = self.result_set_columns
 
                 # Convert the result set from the SQL query into a dictionary
-                rows = self.result_set_to_dict(rows, widget_column_names, dataset_column_names)
+                rows = self.result_set_to_dict(rows, widget_column_names, result_set_column_names)
                 context["rows"] = rows
                 context["data_columns"] = self.data_columns
                 if len(rows) > 0:
@@ -308,6 +282,36 @@ class WidgetView(TemplateView):
                 self.widget.widget_type == Widget.PIE \
                 else False
 
+    def add_parameters_to_query(self, conn, params, sql_query, query_filters):
+        if query_filters:
+            filters = ast.literal_eval(query_filters)
+            for filter in filters:
+                multiselect = filter.endswith('[]')
+                filter = filter[:-2] if multiselect else filter
+                params.append(self.request.GET.get(filter, ''))
+                try:
+                    sql_query = sql_query.replace("@" + filter, conn.literal(
+                        "'" + "', '".join(self.request.GET.getlist(filter, '')) + "'"
+                        if multiselect else conn.literal(self.request.GET.get(filter, ''))))
+                except:
+                    # UNSAFE!!!!
+                    # TODO: FIX
+                    sql_query = sql_query.replace("@" + filter,
+                                                  "'" + "', '".join(self.request.GET.getlist(filter, '')) + "'"
+                                                  if multiselect else "'" + self.request.GET.get(filter,
+                                                                                                 '') + "'")
+        # Add a perspective code as a filter, which allows you to filter any widget based on the current perspective
+        # Very useful if you want to filter a filter based on a perspective
+        if self.perspective:
+            sql_query = sql_query.replace("@perspective_code", self.perspective.code)
+        # Send the locale code to the database
+        locale = get_language()
+        sql_query = sql_query.replace("@locale_code", locale)
+        # Send current user to the database
+        if not self.request.user.is_anonymous and self.request.user.is_authenticated:
+            sql_query = sql_query.replace("@user_id", str(self.request.user.id))
+        return sql_query
+
     def get_template2(self, template_name, using=None):
         """
         Loads and returns a template for the given name.
@@ -357,36 +361,7 @@ class WidgetView(TemplateView):
         sql_query = dataset.sql_query
         conn = self.get_connection(dataset.database_key)
 
-        if dataset.filters:
-            filters = ast.literal_eval(dataset.filters)
-            for ds_filter in filters:
-                multi_select = ds_filter.endswith('[]')
-                ds_filter = ds_filter[:-2] if multi_select else ds_filter
-                params.append(request.GET.get(ds_filter, ''))
-                try:
-                    sql_query = sql_query.replace("@" + ds_filter, conn.literal(
-                        "'" + "', '".join(request.GET.getlist(ds_filter, '')) + "'"
-                        if multi_select else conn.literal(request.GET.get(ds_filter, ''))))
-                except:
-                    # UNSAFE!!!!
-                    # TODO: FIX
-                    sql_query = sql_query.replace("@" + ds_filter,
-                                                  "'" + "', '".join(request.GET.getlist(ds_filter, '')) + "'"
-                                                  if multi_select else "'" + request.GET.get(ds_filter,
-                                                                                                 '') + "'")
-
-        # Add a perspective code as a filter, which allows you to filter any widget based on the current perspective
-        # Very useful if you want to filter a filter based on a perspective
-        if self.perspective:
-            sql_query = sql_query.replace("@perspective_code", self.perspective.code)
-
-        # Send the locale code to the database
-        locale = get_language()
-        sql_query = sql_query.replace("@locale_code", locale)
-
-        # Send current user to the database
-        if not request.user.is_anonymous and request.user.is_authenticated:
-            sql_query = sql_query.replace("@user_id", str(request.user.id))
+        sql_query = self.add_parameters_to_query(conn, params, sql_query, dataset.filters)
 
         try:
             cursor = conn.cursor()

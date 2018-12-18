@@ -78,3 +78,6 @@ class DataSet(models.Model):
 
     class Meta:
         unique_together = (('code',),)
+
+    def __str__(self):
+        return self.name
