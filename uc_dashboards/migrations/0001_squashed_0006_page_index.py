@@ -195,7 +195,7 @@ class Migration(migrations.Migration):
                                           help_text='A code for this perspective. The code will be used to preset filters.',
                                           max_length=128)),
                 ('default_page',
-                 models.ForeignKey(default=0, help_text='The default page that will be displayed when a user logs on.',
+                 models.ForeignKey(default=1, help_text='The default page that will be displayed when a user logs on.',
                                    on_delete=django.db.models.deletion.CASCADE, to='uc_dashboards.Page')),
             ],
         ),
