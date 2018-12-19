@@ -11,6 +11,9 @@ __author__ = 'Fitti'
 from django.conf.urls import include, url
 from xf.xf_crud.generic_crud_views import XFDetailView, XFUpdateView, XFDeleteView, XFCreateView
 
+# Providing ability to inject custom delete view (soft delete support), may be removed when
+# class based implementation is done - WaH -- 2018-12-19
+_delete_view = XFDeleteView
 
 def mmodelform_factory(model, form=XFModelForm, fields=None, exclude=None,
                        formfield_callback=None, widgets=None):
@@ -115,7 +118,7 @@ def crudurl(appname: object, modelname: object, model_type: object, form_class_t
 
     if 'delete' in list_class.supported_crud_operations:
         urls.append(url(r'^%s/%s/(?P<pk>[-\w]+)/delete' % (appname, modelname),
-                        XFDeleteView.as_view(model=model_type, success_url="%s/%s/" % (appname, modelname),
+                        _delete_view.as_view(model=model_type, success_url="%s/%s/" % (appname, modelname),
                                              app_name=appname,
                                              model_url_part=modelname), name="%s_%s_delete" % (appname, modelname)))
 
