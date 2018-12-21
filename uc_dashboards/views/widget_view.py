@@ -155,13 +155,7 @@ class WidgetView(TemplateView):
 
                     sql_query = self.add_parameters_to_query(conn, params, sql_query, self.widget.filters)
 
-                    try:
-                        cursor = conn.cursor()
-                        cursor.execute(sql_query)
-                        rows = cursor.fetchall()
-                    finally:
-                        # conn.close()
-                        pass
+                    rows = self.execute_sql_query(conn, sql_query)
 
             # print sql_query
 
@@ -284,6 +278,16 @@ class WidgetView(TemplateView):
                 self.widget.widget_type == Widget.PIE \
                 else False
 
+    def execute_sql_query(self, conn, sql_query):
+        try:
+            cursor = conn.cursor()
+            cursor.execute(sql_query)
+            rows = cursor.fetchall()
+        finally:
+            # conn.close()
+            pass
+        return rows
+
     def add_parameters_to_query(self, conn, params, sql_query, query_filters):
         if query_filters:
             filters = ast.literal_eval(query_filters)
@@ -312,6 +316,7 @@ class WidgetView(TemplateView):
         # Send current user to the database
         if not self.request.user.is_anonymous and self.request.user.is_authenticated:
             sql_query = sql_query.replace("@user_id", str(self.request.user.id))
+
         return sql_query
 
     def get_template2(self, template_name, using=None):
@@ -365,13 +370,7 @@ class WidgetView(TemplateView):
 
         sql_query = self.add_parameters_to_query(conn, params, sql_query, dataset.filters)
 
-        try:
-            cursor = conn.cursor()
-            cursor.execute(sql_query)
-            rows = cursor.fetchall()
-        finally:
-            # conn.close()
-            pass
+        rows = self.execute_sql_query(conn, sql_query)
 
         return rows
 

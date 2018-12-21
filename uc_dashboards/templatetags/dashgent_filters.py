@@ -53,6 +53,18 @@ def columnwidth(value):
     return "col-md-12 col-sm-12 col-xs-12"
 
 
+@register.filter(name='lookup_in_dict')
+def lookup_in_dictionary(value, arg):
+
+    if value is None or arg is None:
+        return None
+
+    for item in value:
+        if item[list(arg.keys())[0]] == list(arg.values())[0]:
+            return arg
+
+    return None
+
 @register.filter(name='lookup')
 def cut(value, arg):
     #if value.has_key(arg):

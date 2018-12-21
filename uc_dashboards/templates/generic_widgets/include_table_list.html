@@ -13,9 +13,6 @@
         </tr>
         </thead>
         <tbody>
-        {% if custom_attr|lookup:'server_side' == 'yes'%}
-            {# body rendered by ajax #}
-        {% else %}
         {% for row in rows %}
             <tr>
             {% for data_column in data_columns %}
@@ -28,7 +25,6 @@
             {% endfor %}
             </tr>
         {% endfor %}
-        {% endif %}
         </tbody>
     </table>
 
@@ -38,32 +34,20 @@
         $(function () {
 
             {% if custom_attr|lookup:'dynamic' == 'yes'%}
-                var {{ widget_id }} =
-                $('#{{ widget_id }}_table').DataTable({
-                    "serverSide": {% if custom_attr|lookup:'server_side' == 'yes'%}true{% else %}false{% endif %},
-                    "processing": {% if custom_attr|lookup:'server_side' == 'yes'%}true{% else %}false{% endif %},
-                    "paging": {% if custom_attr|lookup:'paging' == 'yes'%}true{% else %}false{% endif %},
-                    "searching": {% if custom_attr|lookup:'searching' == 'yes'%}true{% else %}false{% endif %},
-                    "info": {% if custom_attr|lookup:'info' == 'yes'%}true{% else %}false{% endif %}
-                    {% if custom_attr|lookup:'allow_downloads' == 'yes'%}
-                    ,dom: 'Bfrtip',
-                    buttons: [
-                        {extend: 'copy', className: 'btn-xs'},
-                        {extend: 'csv', className: 'btn-xs'},
-                        {extend: 'pdf', className: 'btn-xs'},
-                        {extend: 'print', className: 'btn-xs'}
+            var {{ widget_id }} =
+            $('#{{ widget_id }}_table').DataTable({
+                "paging": false,
+                "searching": false,
+                "info": false
+                {% if custom_attr|lookup:'allow_downloads' == 'yes'%}
+                ,dom: 'Bfrtip',
+                buttons: [
+                    {extend: 'copy', className: 'btn-xs'},
+                    {extend: 'csv', className: 'btn-xs'},
+                    {extend: 'pdf', className: 'btn-xs'},
+                    {extend: 'print', className: 'btn-xs'}
 
-                    ],
-                    {% if custom_attr|lookup:'server_side' == 'yes'%}
-                        ajax: {
-                            url: "{% url 'widgets' perspective_slug widget_slug 'json' %}",
-                        },
-                        columns:[
-                            {% for data_column in data_columns %}
-                                { data: "{{ data_column|lookup:'column_name' }}", width: "{{ data_column|lookup:'table_column_width' }}" },
-                            {% endfor %}
-                        ]
-                    {% endif %}
+                ]
                 {% endif %}
             });
 
