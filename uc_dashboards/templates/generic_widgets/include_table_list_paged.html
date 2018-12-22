@@ -37,7 +37,7 @@
                     }
                 }
                 catch (e) {
-                    // console.log(e.message);
+                    console.log(e.message);
                 }
             };
 
@@ -51,25 +51,19 @@
                     data.length = -1;
 
                     dt.one('preDraw', function (e, settings) {
-                        // Call the original action function
                         oldExportAction(self, e, dt, button, config);
 
                         dt.one('preXhr', function (e, s, data) {
-                            // DataTables thinks the first item displayed is index 0, but we're not drawing that.
-                            // Set the property to what it was before exporting.
                             settings._iDisplayStart = oldStart;
                             data.start = oldStart;
                         });
 
-                        // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
                         setTimeout(dt.ajax.reload, 0);
 
-                        // Prevent rendering of the full data to the DOM
                         return false;
                     });
                 });
 
-                // Requery the server with the new one-time export settings
                 dt.ajax.reload();
             };
 
@@ -103,7 +97,21 @@
                     data: function (data) {
                         {# remove unnecessary payload #}
                         data.columns = '_';
-                        return data;
+
+                        {# add any filters on the page #}
+                        var form_elements, index;
+                        var filters = {};
+
+                        form_elements = document.querySelectorAll('input, textarea, select');
+                        for (index = 0; index < form_elements.length; ++index) {
+                            var element_id = form_elements[index].id;
+                            var element_value = $('#'+element_id).val();
+                            if(element_value && !!element_id) {
+                                filters[element_id] = element_value;
+                            }
+                        }
+
+                        return $.extend( {}, data, filters);
                     }
                 },
                 columns:[
