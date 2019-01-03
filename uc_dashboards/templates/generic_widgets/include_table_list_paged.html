@@ -99,15 +99,20 @@
                         data.columns = '_';
 
                         {# add any filters on the page #}
-                        var form_elements, index;
+                        var form_elements, index, indexe;
                         var filters = {};
 
-                        form_elements = document.querySelectorAll('input, textarea, select');
-                        for (index = 0; index < form_elements.length; ++index) {
-                            var element_id = form_elements[index].id;
-                            var element_value = $('#'+element_id).val();
-                            if(element_value && !!element_id) {
-                                filters[element_id] = element_value;
+                        var filter_bar_form = document.getElementsByClassName("filter-bar")[0].children[0];
+                        var element_types = ['select', 'input', 'textarea'];
+
+                        for (indexe = 0; indexe < element_types.length; ++indexe) {
+                            form_elements = filter_bar_form.getElementsByTagName(element_types[indexe]);
+                            for (index = 0; index < form_elements.length; ++index) {
+                                var element_id = form_elements[index].id;
+                                var element_value = $('#' + element_id).val();
+                                if (element_value && element_id) {
+                                    filters[element_id] = element_value;
+                                }
                             }
                         }
 

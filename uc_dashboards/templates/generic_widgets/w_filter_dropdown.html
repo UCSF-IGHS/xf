@@ -49,6 +49,9 @@
                     placeholder: stripTags("{{ widget.text }}"),
                     allowClear: true,
                 });
+            {% if request.GET|lookup:widget.code|length > 0 %}
+                $("#{{ widget.code }}").val({{ request.GET|lookup:widget.code }}).trigger("change");
+            {% endif %}
         {% endif %}
 
     });

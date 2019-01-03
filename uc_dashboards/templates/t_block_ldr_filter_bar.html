@@ -1,0 +1,24 @@
+{% comment %}
+Creates an "tile panel". Loads the widget controls synchronously on main UI thread. Should be used
+cautiously in instances where filters are expected to load before other widgets on the page.
+{% endcomment %}
+
+{% include 't_block_ajxldr_filter_bar.html' %}
+
+<script  type="text/javascript">
+     $(function () {
+
+         $("#widget-{{ widget_slug }}").removeClass("uh-ajax-autoload");
+
+         $.ajax({
+             async: false,
+             type: "GET",
+             url: $("#widget-{{ widget_slug }}").attr('widget-url') + "",
+             success: function(data)
+             {
+                $("#widget-{{ widget_slug }}").html(data);
+                {#bindAjax();#}
+             }
+        });
+      });
+</script>
