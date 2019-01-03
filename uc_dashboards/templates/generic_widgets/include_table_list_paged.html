@@ -67,9 +67,6 @@
                 dt.ajax.reload();
             };
 
-
-
-
             var {{ widget_id }} =
             $('#{{ widget_id }}_table').DataTable({
                 "serverSide": true,
@@ -93,31 +90,12 @@
                     ],
                 {% endif %}
                 ajax: {
-                    url: "{% url 'widgets-api' perspective_slug widget_slug 'json' %}",
+                    url: "{% url 'widgets-api' perspective_slug widget_slug 'json' %}{{ filter_query_string }}",
                     data: function (data) {
-                        {# remove unnecessary payload #}
+                        {#remove unnecessary payload #}
                         data.columns = '_';
-
-                        {# add any filters on the page #}
-                        var form_elements, index, indexe;
-                        var filters = {};
-
-                        var filter_bar_form = document.getElementsByClassName("filter-bar")[0].children[0];
-                        var element_types = ['select', 'input', 'textarea'];
-
-                        for (indexe = 0; indexe < element_types.length; ++indexe) {
-                            form_elements = filter_bar_form.getElementsByTagName(element_types[indexe]);
-                            for (index = 0; index < form_elements.length; ++index) {
-                                var element_id = form_elements[index].id;
-                                var element_value = $('#' + element_id).val();
-                                if (element_value && element_id) {
-                                    filters[element_id] = element_value;
-                                }
-                            }
-                        }
-
-                        return $.extend( {}, data, filters);
-                    }
+                        return data;
+                     }
                 },
                 columns:[
                     {% for data_column in result_set_columns %}
