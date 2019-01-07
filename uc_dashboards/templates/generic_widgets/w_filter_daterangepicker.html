@@ -90,7 +90,8 @@
                 {% else %}
                     maxDate: moment(),
                 {% endif %}
-                autoApply: true,
+                autoApply: false,
+                autoUpdateInput: true,
                 showCustomRangeLabel: {% if custom_attr|lookup:'show_ranges' == 'yes' %}true{% else %}false{% endif %},
                 showDropdowns: true,
                 showWeekNumbers: {% if custom_attr|lookup:'week_numbers' == 'yes' %}true{% else %}false{% endif %},
@@ -106,18 +107,15 @@
                         'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
                         'Last 7 Days': [moment().subtract(6, 'days'), moment()],
                         'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                        'Last 90 days': [moment().subtract(89, 'days'), moment()],
                         'This Month': [moment().startOf('month'), moment().endOf('month')],
                         'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month')
-                            .endOf('month')],
-                        'Last Year': [moment().subtract(1, 'year').add(1,'day'), moment()],
+                            .endOf('month')]
                     },
                 {% endif %}
                 opens: 'left',
                 buttonClasses: ['btn btn-default'],
                 applyClass: 'btn-small btn-primary',
                 cancelClass: 'btn-small',
-                parentEl: "body",
                 format: 'DD/MM/YYYY',
                 separator: ' to ',
                 locale: {

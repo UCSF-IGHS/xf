@@ -335,3 +335,16 @@ body {
 .tranform_y20 {
     transform: translateY(20%);
 }
+
+.calendar.first.left {
+    float: left;
+}
+
+.calendar.second.right {
+    float: left;
+}
+
+body > div.daterangepicker.dropdown-menu.opensleft.show-calendar > div:nth-child(3) {
+    float: left;
+}
+
