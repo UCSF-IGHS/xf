@@ -89,10 +89,12 @@ table a.btn-link {
     min-height: 40px;
     padding-right: 20px;
     padding-left: 5px;
+    margin-bottom: 5px;
 }
 .filter-buttons {
     float: right;
     min-height: 40px;
+    margin-right: 5px;
 }
 
 .nav-md.stripped .container.body .filter-bar {
@@ -328,4 +330,8 @@ body {
 
 .action-column {
     margin-right: 0;
+}
+
+.tranform_y20 {
+    transform: translateY(20%);
 }
