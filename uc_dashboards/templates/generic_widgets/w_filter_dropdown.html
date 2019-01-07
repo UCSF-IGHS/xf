@@ -6,6 +6,7 @@
 {% block widget_main %}
     <select id="{{ widget.code }}" name="{{ widget.code }}"
             class="{% if multiselect == 'yes' %}multiselect-ui hidden{% else %}select2_single{%  endif %} form-control"
+            style="width: 100%"
              {% if multiselect == 'yes' %}multiple="multiple"{% endif %}>
 
         {% with data_columns|columnnameforkey:'id' as id_column %}
