@@ -88,9 +88,9 @@
                     dom: 'Bfrtip',
                     buttons: [
                         {% if custom_attr|lookup:'allow_downloads' == 'yes'%}
-                            {extend: 'csv', className: 'btn-xs', action: newExportAction },
-                            {extend: 'excel', className: 'btn-xs', action: newExportAction},
-                            {extend: 'pdf', className: 'btn-xs', action: newExportAction},
+                            {extend: 'csv', extension: '.csv', title: '{{ widget.slug }}', className: 'btn-xs', action: newExportAction },
+                            {extend: 'excel', extension: '.xlsx', title: '{{ widget.slug }}', className: 'btn-xs', action: newExportAction},
+                            {extend: 'pdf', extension: '.pdf', title: '{{ widget.slug }}', className: 'btn-xs', action: newExportAction},
                             {% if custom_attr|lookup:'print' == 'yes'%}
                                 {extend: 'print', className: 'btn-xs', action: newExportAction},
                             {% endif %}
