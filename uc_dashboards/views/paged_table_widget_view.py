@@ -51,6 +51,8 @@ class PagedTableWidgetView(WidgetView):
         custom_attributes = ast.literal_eval("{ %s }" % attributes)
         if 'offset' in custom_attributes:
             self.offset = custom_attributes['offset']
+        else:
+            self.offset = 'OFFSET @offset'
         super().load_widget_data(context)
 
 
