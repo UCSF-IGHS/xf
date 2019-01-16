@@ -183,6 +183,7 @@ class WidgetView(TemplateView):
 
             if self.widget.widget_type == Widget.PIE or \
                             self.widget.widget_type == Widget.TABLE or \
+                            self.widget.widget_type == Widget.PAGED_TABLE or \
                             self.widget.widget_type == Widget.MAP or \
                             self.widget.widget_type == Widget.FILTER_DROP_DOWN or \
                             self.widget.widget_type == Widget.TILES or \
@@ -279,6 +280,8 @@ class WidgetView(TemplateView):
                 else False
 
     def execute_sql_query(self, conn, sql_query):
+        if self.widget.widget_type == Widget.PAGED_TABLE:
+            return {} # paged table will get data later by api
         try:
             cursor = conn.cursor()
             cursor.execute(sql_query)
