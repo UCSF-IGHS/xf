@@ -30,11 +30,13 @@ class Widget(models.Model):
     BAR_GRAPH_HORIZONTAL = '12'
     GAUGE = '13'
     STACKED_BAR_GRAPH = '14'
+    PAGED_TABLE = '15'
     OTHER = '0'
 
     WIDGET_TYPE_CHOICES = (
         (PIE, 'Pie'),
         (TABLE, 'Table'),
+        (PAGED_TABLE, 'Paged table'),
         (TILES, 'Tiles'),
         (EASY_PIE, 'Easy pie'),
         (LINE_GRAPH, 'Line graph'),
