@@ -86,7 +86,7 @@
                     minDate: mindate,
                 {% endif %}
                 {% if custom_attr|lookup:'max'|length > 0 %}
-                    maxDate: '{{ custom_attr|lookup:'max' }}',
+                    maxDate: {{ custom_attr|lookup:'max'|safe }},
                 {% else %}
                     maxDate: moment(),
                 {% endif %}
