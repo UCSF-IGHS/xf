@@ -1,0 +1,144 @@
+{% extends "t_xpanel_control_base.html" %}
+{% load dashgent_filters %}
+
+{% block caption %}
+    {{ caption }}
+{% endblock %}
+
+{% block spanner %}
+    {% include "generic_widgets/include_more_menu.html" %}
+{% endblock %}
+
+{% block widget_main %}
+    {% if renderer == None or renderer == "default" %}
+
+       {% include 'generic_widgets/include_sub_text.html' %}
+
+       <table class="table table-hover
+                {% if custom_attr|lookup:'height' %}" style="height: {{ custom_attr|lookup:'height' }}"  {% else %} table200"{% endif %}
+                id="{{ widget_id }}_table">
+            <thead>
+                <tr>
+                    {% for data_column in result_set_columns %}
+                        <th>{{ data_column|lookup:'table_column_caption' }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <script type="text/javascript">
+
+            $(function () {
+
+                var oldExportAction = function (self, e, dt, button, config) {
+                    try {
+                        if (button[0].className.indexOf('buttons-excel') >= 0 || button[0].className.indexOf('buttons-csv') >= 0) {
+                            if ($.fn.dataTable.ext.buttons.excelHtml5.available(dt, config)) {
+                                $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config);
+                            }
+                            else {
+                                $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                            }
+                        } else if (button[0].className.indexOf('buttons-print') >= 0) {
+                            $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
+                        }
+                    }
+                    catch (e) {
+                        console.log(e.message);
+                    }
+                };
+
+                var newExportAction = function (e, dt, button, config) {
+                    var self = this;
+                    var oldStart = dt.settings()[0]._iDisplayStart;
+
+                    dt.one('preXhr', function (e, s, data) {
+                        // Just this once, load all data from the server...
+                        data.start = 0;
+                        data.length = -1;
+
+                        dt.one('preDraw', function (e, settings) {
+                            oldExportAction(self, e, dt, button, config);
+
+                            dt.one('preXhr', function (e, s, data) {
+                                settings._iDisplayStart = oldStart;
+                                data.start = oldStart;
+                            });
+
+                            setTimeout(dt.ajax.reload, 0);
+
+                            return false;
+                        });
+                    });
+
+                    dt.ajax.reload();
+                };
+
+                var {{ widget_id }} =
+                $('#{{ widget_id }}_table').DataTable({
+                    "serverSide": true,
+                    "processing": true,
+                    "paging": {% if custom_attr|lookup:'paging' == 'yes'%}true{% else %}false{% endif %},
+                    "searching": {% if custom_attr|lookup:'searching' == 'yes'%}true{% else %}false{% endif %},
+                    "info": {% if custom_attr|lookup:'info' == 'yes'%}true{% else %}false{% endif %},
+                    {% if custom_attr|lookup:'page_length'%}
+                        "pageLength": {{ custom_attr|lookup:'page_length' }},
+                    {% endif %}
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {% if custom_attr|lookup:'allow_downloads' == 'yes'%}
+                            {extend: 'csv', extension: '.csv', title: '{{ widget.slug }}', className: 'btn-xs', action: newExportAction },
+                            {extend: 'excel', extension: '.xlsx', title: '{{ widget.slug }}', className: 'btn-xs', action: newExportAction},
+                            {extend: 'pdf', extension: '.pdf', title: '{{ widget.slug }}', className: 'btn-xs', action: newExportAction},
+                            {% if custom_attr|lookup:'print' == 'yes'%}
+                                {extend: 'print', className: 'btn-xs', action: newExportAction},
+                            {% endif %}
+                            {% if custom_attr|lookup:'copy' == 'yes'%}
+                                {extend: 'copy', className: 'btn-xs'},
+                            {% endif %}
+                        {% endif %}
+                    ],
+                    ajax: {
+                        url: "{% url 'widgets-api' perspective_slug widget_slug 'json' %}{{ filter_query_string }}",
+                        data: function (data) {
+                            {#remove unnecessary payload #}
+                            data.columns = '_';
+                            return data;
+                         }
+                    },
+                    columns:[
+                        {% for data_column in result_set_columns %}
+                            {% if data_column|lookup:'column_name' == data_columns|lookup_in_dict:data_column|lookup:'column_name' %}
+                                { data: "{{ data_column|lookup:'column_name' }}" },
+                            {% else %}
+                                { data: "{{ data_column|lookup:'column_name' }}", visible: false },
+                            {% endif %}
+                        {% endfor %}
+                    ]
+                });
+
+                {% if custom_attr|lookup:'allow_downloads' == 'yes'%}
+
+                    function moveExportButton(source, target, text) {
+                        var button = $('#{{ widget_id}}_table_wrapper ' + source);
+                        button.appendTo($('#{{ widget_id }}' + target));
+                        button.removeClass('btn');
+                        button.removeClass('btn-xs');
+                        button.removeClass('btn-default');
+                        button.text(text);
+                    }
+                    
+                    moveExportButton('.buttons-csv', '_export_csv', 'Download as CSV');
+                    moveExportButton('.buttons-excel', '_export_excel', 'Download as Excel');
+                    moveExportButton('.buttons-pdf', '_export_pdf', 'Download as PDF');
+                    moveExportButton('.buttons-print', '_export_print', 'Print');
+                    moveExportButton('.buttons-copy', '_export_copy', 'Copy to clipboard');
+                    $('#{{ widget_id}}_table_wrapper .dt-buttons').hide();
+                {% endif %}
+
+            });
+        </script>
+
+    {% endif %}
+{% endblock %}

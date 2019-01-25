@@ -11,8 +11,10 @@ from django.utils.translation import get_language
 from django.views.generic import TemplateView
 
 import xf.uc_dashboards
+from xf.uc_dashboards.models.dataset import DataSet
 from xf.uc_dashboards.models.perspective import Perspective
 from xf.uc_dashboards.models.widget import Widget
+from xf.uc_dashboards.views.custom_dataset_loader_base import XFCustomDataSetLoaderBase
 
 
 class WidgetView(TemplateView):
@@ -24,6 +26,7 @@ class WidgetView(TemplateView):
         # Data columns that may be displayed
         super(WidgetView, self).__init__()
         self.data_columns = []
+        self.result_set_columns = []
         self.widget = None
 
     def dispatch(self, request, *args, **kwargs):
@@ -67,11 +70,12 @@ class WidgetView(TemplateView):
 
         return context
 
-    def result_set_to_dict(self, result_set, qkeys):
+    def result_set_to_dict(self, result_set, widget_keys, result_set_keys=None):
         """
-        This function helps to create a dictionar object out of a SQL query
+        This function helps to create a dictionary object out of a SQL query
         :param result_set:
-        :param qkeys:
+        :param widget_keys:
+        :param result_set_keys:
         :return:
         """
 
@@ -80,8 +84,9 @@ class WidgetView(TemplateView):
         for row in result_set:
             i = 0
             cur_row = {}
-            for key in qkeys:
-                cur_row[key] = row[i]
+            for key in widget_keys:
+                data_index = i if result_set_keys is None else result_set_keys.index(key)
+                cur_row[key] = row[data_index]
                 i = i + 1
             fdicts.append(cur_row)
         return fdicts
@@ -137,48 +142,25 @@ class WidgetView(TemplateView):
 
             if self.widget.widget_type != Widget.TEXT_BLOCK:
 
-                params = []
-                sql_query = self.widget.sql_query
-                conn = self.get_connection(self.widget.database_key)
+                if self.widget.dataset is not None:
+                    if self.widget.dataset.dataset_type == DataSet.CUSTOM:
+                        rows = self.load_custom_dataset(self.widget.dataset, self.request, **self.kwargs)
+                    else:
+                        rows = self.load_sql_dataset(self.widget.dataset, self.request)
+                else:
 
-                if self.widget.filters:
-                    filters = ast.literal_eval(self.widget.filters)
-                    for filter in filters:
-                        multiselect = filter.endswith('[]')
-                        filter = filter[:-2] if multiselect else filter
-                        params.append(self.request.GET.get(filter, ''))
-                        try:
-                            sql_query = sql_query.replace("@" + filter, conn.literal(
-                                "'" + "', '".join(self.request.GET.getlist(filter, '')) + "'"
-                                if multiselect else conn.literal(self.request.GET.get(filter, ''))))
-                        except:
-                            # UNSAFE!!!!
-                            # TODO: FIX
-                            sql_query = sql_query.replace("@" + filter,
-                                                          "'" + "', '".join(self.request.GET.getlist(filter, '')) + "'"
-                                                          if multiselect else "'" + self.request.GET.get(filter,
-                                                                                                         '') + "'")
+                    params = []
+                    sql_query = self.widget.sql_query
+                    conn = self.get_connection(self.widget.database_key)
 
-                # Add a perspective code as a filter, which allows you to filter any widget based on the current perspective
-                # Very useful if you want to filter a filter based on a perspective
-                if self.perspective:
-                    sql_query = sql_query.replace("@perspective_code", self.perspective.code)
+                    sql_query = self.add_parameters_to_query(conn, params, sql_query, self.widget.filters)
 
-                # Send the locale code to the database
-                locale = get_language()
-                sql_query = sql_query.replace("@locale_code", locale)
-
-                try:
-                    cursor = conn.cursor()
-                    cursor.execute(sql_query)
-                    rows = cursor.fetchall()
-                finally:
-                    # conn.close()
-                    pass
+                    rows = self.execute_sql_query(conn, sql_query)
 
             # print sql_query
 
             context["widget_id"] += self.widget.slug.replace("-", "_")
+            context["widget_slug"] = self.widget.slug
             context["caption"] = self.widget.title
             context["extra_text"] = self.widget.sub_text
             context["widget_type"] = self.widget.widget_type
@@ -186,6 +168,7 @@ class WidgetView(TemplateView):
 
             if self.perspective:
                 context["perspective_code"] = self.perspective.code
+                context["perspective_slug"] = self.perspective.slug
 
             # Custom attributes
             if self.widget.custom_attributes != "":
@@ -200,6 +183,7 @@ class WidgetView(TemplateView):
 
             if self.widget.widget_type == Widget.PIE or \
                             self.widget.widget_type == Widget.TABLE or \
+                            self.widget.widget_type == Widget.PAGED_TABLE or \
                             self.widget.widget_type == Widget.MAP or \
                             self.widget.widget_type == Widget.FILTER_DROP_DOWN or \
                             self.widget.widget_type == Widget.TILES or \
@@ -210,16 +194,25 @@ class WidgetView(TemplateView):
                             self.widget.widget_type == Widget.STACKED_BAR_GRAPH or \
                             self.widget.widget_type == Widget.BAR_GRAPH_HORIZONTAL:
 
-                column_names = []
+                widget_column_names = []
                 for line in self.widget.data_columns.split('\n'):
                     # Add entire column line to data_columns array, which is passed to template
                     data_column = ast.literal_eval('{' + line + '}')
                     self.data_columns.append(data_column)
-                    column_names.append(data_column['column_name'])
+                    widget_column_names.append(data_column['column_name'])
+
+                result_set_column_names = None
+                if self.widget.dataset is not None and self.widget.dataset.data_columns != '':
+                    result_set_column_names = []
+                    for line in self.widget.dataset.data_columns.split('\n'):
+                        data_column = ast.literal_eval('{' + line + '}')
+                        self.result_set_columns.append(data_column)
+                        result_set_column_names.append(data_column['column_name'])
+                    context["result_set_columns"] = self.result_set_columns
 
                 # Convert the result set from the SQL query into a dictionary
-                rows = self.result_set_to_dict(rows, column_names)
-                context["rows"] = rows;
+                rows = self.result_set_to_dict(rows, widget_column_names, result_set_column_names)
+                context["rows"] = rows
                 context["data_columns"] = self.data_columns
                 if len(rows) > 0:
                     context["tile_width"] = int(12 / len(rows))
@@ -286,6 +279,49 @@ class WidgetView(TemplateView):
                 self.widget.widget_type == Widget.PIE \
                 else False
 
+    def execute_sql_query(self, conn, sql_query):
+        if self.widget.widget_type == Widget.PAGED_TABLE:
+            return {} # paged table will get data later by api
+        try:
+            cursor = conn.cursor()
+            cursor.execute(sql_query)
+            rows = cursor.fetchall()
+        finally:
+            # conn.close()
+            pass
+        return rows
+
+    def add_parameters_to_query(self, conn, params, sql_query, query_filters):
+        if query_filters:
+            filters = ast.literal_eval(query_filters)
+            for filter in filters:
+                multiselect = filter.endswith('[]')
+                filter = filter[:-2] if multiselect else filter
+                params.append(self.request.GET.get(filter, ''))
+                try:
+                    sql_query = sql_query.replace("@" + filter, conn.literal(
+                        "'" + "', '".join(self.request.GET.getlist(filter, '')) + "'"
+                        if multiselect else conn.literal(self.request.GET.get(filter, ''))))
+                except:
+                    # UNSAFE!!!!
+                    # TODO: FIX
+                    sql_query = sql_query.replace("@" + filter,
+                                                  "'" + "', '".join(self.request.GET.getlist(filter, '')) + "'"
+                                                  if multiselect else "'" + self.request.GET.get(filter,
+                                                                                                 '') + "'")
+        # Add a perspective code as a filter, which allows you to filter any widget based on the current perspective
+        # Very useful if you want to filter a filter based on a perspective
+        if self.perspective:
+            sql_query = sql_query.replace("@perspective_code", self.perspective.code)
+        # Send the locale code to the database
+        locale = get_language()
+        sql_query = sql_query.replace("@locale_code", locale)
+        # Send current user to the database
+        if not self.request.user.is_anonymous and self.request.user.is_authenticated:
+            sql_query = sql_query.replace("@user_id", str(self.request.user.id))
+
+        return sql_query
+
     def get_template2(self, template_name, using=None):
         """
         Loads and returns a template for the given name.
@@ -325,3 +361,31 @@ class WidgetView(TemplateView):
                 return t
 
         return super(WidgetView, self).response_class(request, template, context, **response_kwargs)
+
+    def load_sql_dataset(self, dataset: DataSet, request):
+
+        if dataset.custom_daset_loader is not None and dataset.custom_daset_loader != '':
+            return self.load_custom_dataset(dataset, request)
+
+        params = []
+        sql_query = dataset.sql_query
+        conn = self.get_connection(dataset.database_key)
+
+        sql_query = self.add_parameters_to_query(conn, params, sql_query, dataset.filters)
+
+        rows = self.execute_sql_query(conn, sql_query)
+
+        return rows
+
+    def load_custom_dataset(self, dataset: DataSet, request, **kwargs):
+
+        dataset_class = self._load_custom_dataset_class(dataset.custom_daset_loader)
+        dataset_loader: XFCustomDataSetLoaderBase = dataset_class()
+        return dataset_loader.load_dataset(dataset, request, **kwargs)
+
+    def _load_custom_dataset_class(self, class_name: str):
+        components = class_name.split('.')
+        mod = __import__(components[0])
+        for comp in components[1:]:
+            mod = getattr(mod, comp)
+        return mod

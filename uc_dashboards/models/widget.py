@@ -1,6 +1,7 @@
 from django.contrib.auth.models import Group
 from django.db import models
 
+from xf.uc_dashboards.models.dataset import DataSet
 from xf.uc_dashboards.models.html_field import HTMLField
 from xf.uc_dashboards.models.tag import Tag
 from xf.uc_dashboards.models.template import Template
@@ -29,11 +30,13 @@ class Widget(models.Model):
     BAR_GRAPH_HORIZONTAL = '12'
     GAUGE = '13'
     STACKED_BAR_GRAPH = '14'
+    PAGED_TABLE = '15'
     OTHER = '0'
 
     WIDGET_TYPE_CHOICES = (
         (PIE, 'Pie'),
         (TABLE, 'Table'),
+        (PAGED_TABLE, 'Paged table'),
         (TILES, 'Tiles'),
         (EASY_PIE, 'Easy pie'),
         (LINE_GRAPH, 'Line graph'),
@@ -75,6 +78,9 @@ class Widget(models.Model):
         default=OTHER,
         help_text='The type of widget'
     )
+    dataset = models.ForeignKey(
+        DataSet, blank=True, null=True,
+        help_text='A previously prepared dataset that will be used to load the data.')
     sql_query = models.TextField(
         blank=True,
         help_text='Tables/Pie: The SQL query to run with this widget'

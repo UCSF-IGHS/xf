@@ -9,6 +9,7 @@ from django.contrib.auth import views as auth_views
 
 from xf.uc_dashboards.views.dashboard_page_view import DashboardPageView
 from xf.uc_dashboards.views.start_view import StartView
+from xf.uc_dashboards.views.paged_table_widget_view import PagedTableWidgetView
 from xf.uc_dashboards.views.widget_view import WidgetView
 from xf.uc_dashboards.views import helper_functions as uc_dashboard_views
 
@@ -18,6 +19,7 @@ urlpatterns = [
     url(r'^accounts/logout/$', auth_views.logout, {'next_page': '/'}, name='logout' ),
     url(r'^widgets/(?P<perspective_slug>[-\w]+)/(?P<slug>[-\w]+)/$', WidgetView.as_view(), name='widgets'),
     url(r'^widgets/(?P<slug>[-\w]+)/$', WidgetView.as_view(), name='widgets'),
+    url(r'^widgets/(?P<perspective_slug>[-\w]+)/(?P<slug>[-\w]+)/(?P<format>[-\w]+)/$', PagedTableWidgetView.as_view(), name='widgets-api'),
     url(r'^start/$', StartView.as_view(), name='dashboards', kwargs={'slug': 'welcome'}),
     url(r'^dashboards/perspectives/clear/$', uc_dashboard_views.clear_perspective, name='clear_perspective'),
     url(r'^perspectives/(?P<slug>[-\w]+)/$', uc_dashboard_views.load_perspective, name='load_perspective'),

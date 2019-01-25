@@ -36,9 +36,9 @@
             {% if custom_attr|lookup:'dynamic' == 'yes'%}
             var {{ widget_id }} =
             $('#{{ widget_id }}_table').DataTable({
-                "paging": {% if custom_attr|lookup:'paging' == 'yes'%}true{% else %}false{% endif %},
-                "searching": {% if custom_attr|lookup:'searching' == 'yes'%}true{% else %}false{% endif %},
-                "info": {% if custom_attr|lookup:'info' == 'yes'%}true{% else %}false{% endif %}
+                "paging": false,
+                "searching": false,
+                "info": false
                 {% if custom_attr|lookup:'allow_downloads' == 'yes'%}
                 ,dom: 'Bfrtip',
                 buttons: [
