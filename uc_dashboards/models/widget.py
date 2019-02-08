@@ -140,3 +140,6 @@ class Widget(models.Model):
 
     class Meta:
         unique_together = (('slug',),)
+
+    def natural_key(self):
+        return (self.slug,)
