@@ -21,7 +21,7 @@ class XFAutoCompleteView(autocomplete.Select2QuerySetView):
         kwargs = {}
         if search_string:
             kwargs = {
-                '{0}__{1}'.format(self.model_field_name, 'istartswith'): search_string,
+                '{0}__{1}'.format(self.model_field_name, 'icontains'): search_string,
             }
 
         if self.forwarded:
