@@ -348,3 +348,8 @@ body > div.daterangepicker.dropdown-menu.opensleft.show-calendar > div:nth-child
     float: left;
 }
 
+/** Multiple-select allow height stretch  **/
+.select2-selection--multiple {
+    height: auto;
+    width: inherit;
+}
