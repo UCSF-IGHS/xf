@@ -13,5 +13,8 @@ class Tag(models.Model):
     class Meta:
         unique_together = (('text',),)
 
+    def natural_key(self):
+        return (self.text,)
+
     def __str__(self):
         return self.text

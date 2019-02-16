@@ -21,5 +21,8 @@ class PageType(models.Model):
     class Meta:
         unique_together = (('code',),)
 
+    def natural_key(self):
+        return (self.code,)
+
     def __str__(self):
         return self.name
