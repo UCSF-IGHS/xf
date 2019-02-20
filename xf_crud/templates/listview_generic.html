@@ -95,6 +95,9 @@
                     </div>
                 </form>
                 {% endif %}
+                {% if search_help_text %}
+                    <p class="help-text"><em>{{ search_help_text|safe }}</em></p>
+                {% endif %}
             </div>
 
 
