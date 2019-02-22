@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('caption', models.CharField(max_length=50)),
-                ('index', models.IntegerField(default=0)),
+                ('index', models.IntegerField(default=1)),
                 ('icon', models.CharField(blank=True, max_length=50)),
                 ('parent_section', models.ForeignKey(blank=True, help_text='Specify a parent navigation section, or leave it empty if it is a top section', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='child_sections', to='uc_dashboards.NavigationSection')),
             ],
