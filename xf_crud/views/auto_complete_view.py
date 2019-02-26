@@ -15,20 +15,23 @@ class XFAutoCompleteView(autocomplete.Select2QuerySetView):
         if not self.request.user.is_authenticated:
             return self.model.objects.none()
 
-        self.queryset = self.model.objects.all()
         search_string = self.q
+        if hasattr(self.model, 'auto_complete'):
+            self.queryset = self.model.auto_complete.get_matched_data(user=self.request.user, search_string=search_string)
+        else:
+            self.queryset = self.model.objects.all()
 
-        kwargs = {}
-        if search_string:
-            kwargs = {
-                '{0}__{1}'.format(self.model_field_name, 'icontains'): search_string,
-            }
+            kwargs = {}
+            if search_string:
+                kwargs = {
+                    '{0}__{1}'.format(self.model_field_name, 'icontains'): search_string,
+                }
 
-        if self.forwarded:
-            for key, value in self.forwarded.items():
-                kwargs['{0}__{1}'.format(key, 'exact')] = value
+            if self.forwarded:
+                for key, value in self.forwarded.items():
+                    kwargs['{0}__{1}'.format(key, 'exact')] = value
 
-        self.queryset = self.queryset.filter(**kwargs)
+            self.queryset = self.queryset.filter(**kwargs)
 
         return self.queryset
 

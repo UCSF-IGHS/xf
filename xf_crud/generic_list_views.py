@@ -78,6 +78,7 @@ class XFGenericListView(ListView, XFNavigationViewMixin, XFCrudMixin):
                 # https://hynek.me/articles/hasattr/
                 context['preset_filter_list'] = self.list_class.preset_filters
                 context['preset_filter'] = self.kwargs['preset_filter'] if 'preset_filter' in self.kwargs else ""
+                context['search_help_text'] = self.list_class.search_help_text
             except:
                 pass
 
