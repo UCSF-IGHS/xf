@@ -46,6 +46,7 @@
 
             <div class="nav navbar-right col-md-5">
                 {% if search %}
+                    <img id="imgLoader" src="{% static "gla/images/loader.gif" %}" alt="..." style="float:left; margin-right:16px; display:none;" />
                 <form class="form-search2 mxlget" method="get" id="frmSearch4_{{ list_url_id }}" html-target="ctxObjectList_{{ list_url_id }}" action="{{ list_url }}">
                     <div class="input-group">
                         <input type="text" class="form-control" name="search_string" value="{{ search_string }}" id="txtSearchString"

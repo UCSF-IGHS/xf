@@ -82,15 +82,19 @@
 
             <div class="nav navbar-right col-md-5">
                 {% if search %}
+
+                <img id="imgLoader" src="{% static "gla/images/loader.gif" %}" alt="..." style="float:left; margin-right:16px; visibility:hidden;" />
+
                 <form class="form-search mxlget" method="get" id="frmSearch4_{{ list_url_id }}" html-target="ctxObjectList_{{ list_url_id }}" action="{{ current_url }}">
                     <div class="input-group">
                         <input type="text" class="form-control" name="search_string" value="{{ search_string }}" id="txtSearchString"
                                placeholder="{{ search_hint }}">
                         <span class="input-group-btn ">
-                      <button class="btn btn-default" type="submit">Go!</button><a href="{{ current_url }}"
-                                                                                   class="btn btn-default mxlajax"
-                                                                                   html-target="ctxObjectList_{{ list_url_id }}"
-                                                                                   id="lnkClear">Clear</a>
+                        <button class="btn btn-default" type="submit">Go!</button>
+                        <a href="{{ current_url }}" class="btn btn-default mxlajax"
+                           html-target="ctxObjectList_{{ list_url_id }}"
+                           id="lnkClear">Clear
+                        </a>
                     </span>
                     </div>
                 </form>

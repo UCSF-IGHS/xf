@@ -257,10 +257,16 @@ function getform(e) {
         type: "GET",
         url: url,
         data: $("#" + e.id).serialize(), // serializes the form's elements.
+        beforeSend: function() {
+            $('#imgLoader').css('visibility','visible');
+        },
         success: function(data)
         {
             $("#" + htmlTarget).html(data);
             bindAjax();
+        },
+        complete: function() {
+            $('#imgLoader').css('visibility','hidden');
         }
     });
 }
