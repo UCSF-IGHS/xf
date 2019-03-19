@@ -178,7 +178,7 @@
             setContentHeight();
         }).parent().addClass('active');
 
-        $('#frmSearch4').submit(function() {
+        $('.mxlget').on('submit', function() {
 
             {# append search string to screen actions #}
             {% if screen_actions|length > 0 %}
