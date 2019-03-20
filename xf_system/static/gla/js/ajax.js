@@ -257,10 +257,16 @@ function getform(e) {
         type: "GET",
         url: url,
         data: $("#" + e.id).serialize(), // serializes the form's elements.
+        beforeSend: function() {
+            showLoading( $(form) );
+        },
         success: function(data)
         {
             $("#" + htmlTarget).html(data);
             bindAjax();
+        },
+        complete: function() {
+            hideLoading( $(form) );
         }
     });
 }
@@ -270,10 +276,21 @@ function gethtml(source) {
     var htmlTarget = source.attr('html-target');
     var url = CreateAJAXURL(source.attr('href'));
 
+    var elem = $(source).closest('form');
+    showLoading(elem);
     $("#" + htmlTarget).load(url, function() {
         // Always rebind after loading HTML
+        hideLoading(elem);
         bindAjax();
     });
+}
+
+function showLoading(elem) {
+    if (elem) elem.find('.loader').css('visibility','visible');
+}
+
+function hideLoading(elem) {
+    if (elem) elem.find('.loader').css('visibility','hidden');
 }
 
 
