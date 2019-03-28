@@ -4864,7 +4864,7 @@ S2.define('select2/defaults',[
       amdLanguageBase: './i18n/',
       closeOnSelect: true,
       debug: false,
-      dropdownAutoWidth: false,
+      dropdownAutoWidth: true,
       escapeMarkup: Utils.escapeMarkup,
       language: EnglishTranslation,
       matcher: matcher,
@@ -5162,6 +5162,9 @@ S2.define('select2/core',[
       if (elementWidth <= 0) {
         return 'auto';
       }
+
+      if (elementWidth == 100)
+          return '100%';
 
       return elementWidth + 'px';
     }
