@@ -17,7 +17,9 @@ class XFAutoCompleteView(autocomplete.Select2QuerySetView):
 
         search_string = self.q
         if hasattr(self.model, 'auto_complete'):
-            self.queryset = self.model.auto_complete.get_matched_data(user=self.request.user, search_string=search_string)
+            self.queryset = self.model.auto_complete.get_matched_data(user=self.request.user,
+                                                                      search_string=search_string,
+                                                                      **self.forwarded)
         else:
             self.queryset = self.model.objects.all()
 

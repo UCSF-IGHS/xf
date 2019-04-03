@@ -27,8 +27,6 @@
     "fields": {
         "caption": "Welcome",
         "caption_en_gb": "Welcome",
-        "caption_pt": null,
-        "caption_nl": null,
         "index": 0,
         "parent_section": null,
         "icon": "",
@@ -41,8 +39,6 @@
     "fields": {
         "caption": "default-child",
         "caption_en_gb": "default-child",
-        "caption_pt": null,
-        "caption_nl": null,
         "index": 0,
         "parent_section": [
             "navigation-section-1"
@@ -57,8 +53,6 @@
     "fields": {
         "title": "page-section",
         "title_en_gb": "page-section",
-        "title_pt": null,
-        "title_nl": null,
         "code": "page-section-1"
     }
 },
@@ -134,16 +128,10 @@
     "fields": {
         "title": "Home Page",
         "title_en_gb": "Home Page",
-        "title_pt": null,
-        "title_nl": null,
         "main_title": "Home Page",
         "main_title_en_gb": "Home Page",
-        "main_title_pt": null,
-        "main_title_nl": null,
         "text": "<h1>Welcome</h1>\r\n\r\n<p>If you are seeing this, you have successfully set up XF Viz.</p>\r\n\r\n<p>This is a default home page.</p>\r\n\r\n<p>It uses a basic page template.</p>",
         "text_en_gb": "<h1>Welcome</h1>\r\n\r\n<p>If you are seeing this, you have successfully set up XF Viz.</p>\r\n\r\n<p>This is a default home page.</p>\r\n\r\n<p>It uses a basic page template.</p>",
-        "text_pt": "",
-        "text_nl": "",
         "slug": "home",
         "allow_anonymous": false,
         "section": [
@@ -165,12 +153,8 @@
         "page_status": null,
         "data_sources": null,
         "data_sources_en_gb": null,
-        "data_sources_pt": null,
-        "data_sources_nl": null,
         "about": null,
         "about_en_gb": null,
-        "about_pt": null,
-        "about_nl": null,
         "widgets": "",
         "custom_attributes": "",
         "permissions_to_view": [],
@@ -182,16 +166,10 @@
     "fields": {
         "title": "Login",
         "title_en_gb": "Login",
-        "title_pt": null,
-        "title_nl": null,
         "main_title": "Login here",
         "main_title_en_gb": "Login here",
-        "main_title_pt": null,
-        "main_title_nl": null,
         "text": "<h2>Welcome to XF</h2>\r\n\r\n<p>This is the default page that will be shown to users who have not yet logged on to this site.</p>\r\n\r\n<p>The URL for this page is set in <code>LOGIN_URL</code> in settings.</p>\r\n\r\n<p>If users browse here while logged on, the log on window on the right will not be shown.</p>",
         "text_en_gb": "<h2>Welcome to XF</h2>\r\n\r\n<p>This is the default page that will be shown to users who have not yet logged on to this site.</p>\r\n\r\n<p>The URL for this page is set in <code>LOGIN_URL</code> in settings.</p>\r\n\r\n<p>If users browse here while logged on, the log on window on the right will not be shown.</p>",
-        "text_pt": "",
-        "text_nl": "",
         "slug": "login",
         "allow_anonymous": true,
         "section": [
@@ -211,12 +189,8 @@
         "page_status": null,
         "data_sources": null,
         "data_sources_en_gb": null,
-        "data_sources_pt": null,
-        "data_sources_nl": null,
         "about": null,
         "about_en_gb": null,
-        "about_pt": null,
-        "about_nl": null,
         "widgets": "",
         "custom_attributes": "",
         "permissions_to_view": [],
@@ -232,16 +206,10 @@
     "fields": {
         "title": "Sample dashboard",
         "title_en_gb": "Sample dashboard",
-        "title_pt": null,
-        "title_nl": null,
         "main_title": "This is a sample dashboard",
         "main_title_en_gb": "This is a sample dashboard",
-        "main_title_pt": null,
-        "main_title_nl": null,
         "text": "",
         "text_en_gb": "",
-        "text_pt": "",
-        "text_nl": "",
         "slug": "sample-dashboard",
         "allow_anonymous": false,
         "section": [
@@ -263,12 +231,8 @@
         "page_status": null,
         "data_sources": null,
         "data_sources_en_gb": null,
-        "data_sources_pt": null,
-        "data_sources_nl": null,
         "about": null,
         "about_en_gb": null,
-        "about_pt": null,
-        "about_nl": null,
         "widgets": "",
         "custom_attributes": "",
         "permissions_to_view": [],
@@ -280,8 +244,6 @@
     "fields": {
         "name": "Default perspective",
         "name_en_gb": "Default perspective",
-        "name_pt": null,
-        "name_nl": null,
         "code": "default-perspective",
         "slug": "default-perspective",
         "default_page": [
