@@ -39,6 +39,22 @@ class WidgetViewTestCase(XFTestCaseData):
 
         self.assertTrue(context['paging'] == 'yes', "We should have a context variable called 'paging'")
 
+    def test_get_context_data_for_session_variable_filters(self):
+        test_data = self._generate_widget_view_test_data()
+
+        view = test_data['widget_view']
+        view.widget = test_data['table_listing_with_session_filter']
+
+        request = self.generate_request(path='/?thetitle=Home Page', user=test_data['user'])
+        request = self.setup_request(request, test_data['user'], {'thetitle': 'Home Page'})
+        view.request = request
+
+        context = view.get_context_data()
+
+        self.assertEqual(len(context['rows']), 1, "Expected only 1 row for the home page returned from database")
+        self.assertTrue(context['rows'][0]['title'] == 'Home Page',
+                        "Expected the page returned to have title 'Home Page'")
+
     def test_get_context_data_from_sql_dataset(self):
 
         test_data = self._generate_widget_view_test_data()
