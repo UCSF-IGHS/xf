@@ -320,11 +320,10 @@ class WidgetView(TemplateView):
         if not self.request.user.is_anonymous and self.request.user.is_authenticated:
             sql_query = sql_query.replace("@user_id", str(self.request.user.id))
 
-        # add session variables to context
+        # add session variables to sql query
         for key, value in self.request.session.items():
-                sql_query = sql_query.replace("$" + key,"'" + str(value) + "'")
-                                              # "'" + "', '".join(value) + "'"
-                                              # if type(value) is list else "'" + str(value) + "'")
+                sql_query = sql_query.replace("$" + key, "'" + str(value) + "'")
+
         return sql_query
 
     def get_template2(self, template_name, using=None):
