@@ -103,7 +103,7 @@ class XFTestCase(TestCase):
         request.session.save()
 
         if session_data is not None:
-            for key, value in session_data:
+            for key, value in session_data.items():
                 request.session[key] = value
                 request.session.save()
         return request

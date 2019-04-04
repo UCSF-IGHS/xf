@@ -76,6 +76,21 @@ class XFTestCaseData(XFTestCase):
         )
         table_widget.save()
 
+        table_widget1 = Widget(
+            title='Table data 2',
+            slug='table-data-session',
+            widget_type=Widget.TABLE,
+            sql_query="select * from uc_dashboards_page where title=$thetitle",
+            database_key='default',
+            data_columns="'column_name' : 'slug', 'table_column_caption': 'The slug', 'table_column_width': '10%',\n"
+                         "'column_name' : 'title', 'table_column_caption': 'The title', 'table_column_width': '10%',",
+            custom_attributes="'paging':'yes',",
+            allow_anonymous=False,
+            template_id=template.id
+        )
+        table_widget1.save()
+        test_data['table_listing_with_session_filter'] = table_widget1
+
         test_data['template'] = template
         test_data['table_listing_home_page'] = table_widget
         test_data['user'] = self.generate_user()
