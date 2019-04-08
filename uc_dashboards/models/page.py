@@ -62,7 +62,7 @@ class Page(models.Model):
                                           help_text='Check this field if you want to display the filter bar. Otherwise it will be hidden.')
     index = models.IntegerField(blank=True, default=0,
                                 help_text='Pages with a lower index will be added to the navigation tree before those with a higher index. This is used to sort the navigation tree.')
-    tags = models.ManyToManyField(Tag, related_name='pages', blank=True, null=True)
+    tags = models.ManyToManyField(Tag, related_name='pages', blank=True)
     page_status = models.ForeignKey(
         PageStatus, blank=True, null=True,
         related_name='page_status',
