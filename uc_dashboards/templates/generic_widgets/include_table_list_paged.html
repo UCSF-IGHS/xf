@@ -14,9 +14,7 @@
 
        {% include 'generic_widgets/include_sub_text.html' %}
 
-       <table class="table table-hover
-                {% if custom_attr|lookup:'height' %}" style="height: {{ custom_attr|lookup:'height' }}"  {% else %} table200"{% endif %}
-                id="{{ widget_id }}_table">
+       <table class="table table-hover" id="{{ widget_id }}_table">
             <thead>
                 <tr>
                     {% for data_column in result_set_columns %}
@@ -103,8 +101,7 @@
                         url: "{% url 'widgets-api' perspective_slug widget_slug 'json' %}{{ filter_query_string }}",
                         data: function (data) {
                             {#remove unnecessary payload #}
-                            data.columns = '_';
-                            return data;
+                            delete data.columns;
                          }
                     },
                     columns:[
@@ -115,7 +112,14 @@
                                 { data: "{{ data_column|lookup:'column_name' }}", visible: false },
                             {% endif %}
                         {% endfor %}
-                    ]
+                    ],
+                    "initComplete": function( settings, json ) {
+                        {% if height == None %}
+                            $("#{{ widget_id }}_table").closest('.x_panel').addClass('{{ height|default:"fixed_height_660" }}');
+                        {% else %}
+                            $("#{{ widget_id }}_table").closest('.x_panel').css("height", "{{ height }}");
+                        {% endif %}
+                    }
                 });
 
                 {% if custom_attr|lookup:'allow_downloads' == 'yes'%}
