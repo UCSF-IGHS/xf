@@ -9,6 +9,7 @@ from django.forms.models import ModelForm, ModelChoiceField
 #import floppyforms as forms
 #from floppyforms.widgets import PasswordInput
 from xf.xf_crud.model_lists import XFCrudAssetLoaderMixIn
+from xf.xf_crud.models import XFCodeTable
 from xf.xf_crud.widgets import StaticTextWidget, StaticSelectWidget, MissingTextInput, XFDatePickerInput
 
 
@@ -99,11 +100,23 @@ class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
 
         for field in self.fields:
             if isinstance(self.fields[field], ModelChoiceField):
-                self.fields[field].widget = StaticSelectWidget(choices=self.fields[field].choices)
+                model = self.fields[field].queryset.model
+                if self.is_code_table(model):
+                    all_field_choices = model.all_choices.values_list('id', 'name').all()
+                    self.fields[field].widget = StaticSelectWidget(choices=all_field_choices)
+                else:
+                    self.fields[field].widget = StaticSelectWidget(choices=self.fields[field].choices)
             else:
                 self.fields[field].widget = StaticTextWidget()
 
-        pass
+    def is_code_table(self, model):
+        for _model in model.__bases__:
+            if _model is not XFCodeTable:
+                return self.is_code_table(_model)
+            else:
+                return True
+
+        return False
 
     def make_xf_dateinputs(self):
         for field in self.fields:
