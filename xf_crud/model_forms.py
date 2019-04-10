@@ -102,7 +102,7 @@ class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
             if isinstance(self.fields[field], ModelChoiceField):
                 model = self.fields[field].queryset.model
                 if self.is_code_table(model):
-                    all_field_choices = model.all_choices.values_list('id', 'name').all()
+                    all_field_choices = model.objects.values_list('id', 'name').all()
                     self.fields[field].widget = StaticSelectWidget(choices=all_field_choices)
                 else:
                     self.fields[field].widget = StaticSelectWidget(choices=self.fields[field].choices)
