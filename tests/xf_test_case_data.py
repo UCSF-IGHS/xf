@@ -136,3 +136,22 @@ class XFTestCaseData(XFTestCase):
         test_data['widget_view'] = view
 
         return test_data
+
+
+    def _generate_derived_class_test_data(self):
+        test_data = {}
+
+        class GrandParent():
+            pass
+
+        class Parent(GrandParent):
+            pass
+
+        class Child(Parent):
+            pass
+
+        test_data['grand_parent_class'] = GrandParent
+        test_data['parent_class'] = Parent
+        test_data['child_class'] = Child
+
+        return test_data

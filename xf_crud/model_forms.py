@@ -101,7 +101,7 @@ class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
         for field in self.fields:
             if isinstance(self.fields[field], ModelChoiceField):
                 model = self.fields[field].queryset.model
-                if self.is_code_table(model):
+                if self.is_a(model, XFCodeTable):
                     all_field_choices = model.objects.values_list('id', 'name').all()
                     self.fields[field].widget = StaticSelectWidget(choices=all_field_choices)
                 else:
@@ -109,10 +109,11 @@ class XFModelForm(ModelForm, XFCrudAssetLoaderMixIn):
             else:
                 self.fields[field].widget = StaticTextWidget()
 
-    def is_code_table(self, model):
-        for _model in model.__bases__:
-            if _model is not XFCodeTable:
-                return self.is_code_table(_model)
+    @classmethod
+    def is_a(cls, child_class, parent_class):
+        for _class in child_class.__bases__:
+            if _class is not parent_class:
+                return cls.is_a(_class, parent_class)
             else:
                 return True
 
