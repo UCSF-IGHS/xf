@@ -115,7 +115,7 @@
                     ],
                     "initComplete": function( settings, json ) {
                         {% if height == None %}
-                            $("#{{ widget_id }}_table").closest('.x_panel').addClass('{{ height|default:"fixed_height_660" }}');
+                            $("#{{ widget_id }}_table").closest('.x_panel').addClass('{{ height|default:"full_height" }}');
                         {% else %}
                             $("#{{ widget_id }}_table").closest('.x_panel').css("height", "{{ height }}");
                         {% endif %}

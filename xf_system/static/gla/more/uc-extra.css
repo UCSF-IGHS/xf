@@ -354,6 +354,6 @@ body > div.daterangepicker.dropdown-menu.opensleft.show-calendar > div:nth-child
     width: inherit;
 }
 
-.fixed_height_660 {
-    height: 660px;
+.full_height {
+    height: 100%;
 }
