@@ -14,6 +14,7 @@ ACTION_PREINITIALISED_RELATED_INSTANCE = 4
 ACTION_RELATED_INSTANCE = 5
 ACTION_OPEN_LINK = 6
 ACTION_OPEN_LINK_NEW_WINDOW = 7
+ACTION_OPEN_LINK_FROM_INSTANCE_FIELD = 8
 
 
 
@@ -37,6 +38,7 @@ class XFUIAction:
                  default_action = False,
                  related_field = None,
                  url = None,
+                 url_field=None
                  ):
         self.use_ajax = use_ajax
         self.permission_required = permission_required
@@ -44,6 +46,7 @@ class XFUIAction:
         self.action_name = action_name
         self.related_field = related_field
         self.url = url
+        self.url_field = url_field
         if url_name is None:
             self.url_name = "%s_%s_" + action_name
         else:
