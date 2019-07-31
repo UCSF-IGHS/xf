@@ -118,3 +118,27 @@
 
     {% endif %}
 {% endif %}
+
+{% if action.action_type == 8 %}
+    {# Link #}
+
+    {% if object|candoaction:action == True%}
+
+    <a  {% if action.use_ajax %}
+        data-toggle="modal"
+        data-target="#frmDlg"
+        html-target="#frmDlgHtml"
+        object_list="#ctxObjectList_{{ list_url_id }}"
+    {% endif %}
+            {% if action.next_url %}
+        data-next-url="{{ action.next_url }}"
+            {% endif %}
+        href="{{ object|getattribute:action.url_field  }}"
+        class="{{ css_class }} {% if action.default_action %} btn-success{% endif %}"
+    >
+        {{ caption }}
+
+    </a>
+
+    {% endif %}
+{% endif %}
