@@ -1,0 +1,24 @@
+Source-Visible Licence v1.0
+
+Copyright © 2025 / The University of California, San Francisco
+
+1. Permission to View
+
+You are granted a non-transferable, revocable licence to view the source code for evaluation purposes only.
+
+2. Prohibited Actions
+
+Unless you have explicit written permission from the copyright holder, you may not:
+	•	Modify, copy, share, or distribute this software or its source code.
+	•	Use, execute, or incorporate this software in any capacity, personal or commercial.
+	•	Create derivative works based on this software.
+
+3. No Warranty & Liability
+
+This software is provided “as is”, without any warranties. The copyright holder assumes no liability for its use or misuse.
+
+4. Termination
+
+Any violation of this licence automatically terminates your rights to access the code.
+
+For permissions beyond the scope of this licence, contact [Your Contact Information].
